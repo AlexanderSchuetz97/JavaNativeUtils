@@ -19,6 +19,18 @@
             <url>https://www.gnu.org/licenses/lgpl-3.0.txt</url>
         </license>
     </licenses>
+    <developers>
+        <developer>
+            <id>AlexanderSchuetz97</id>
+            <name>Alexander Schuetz</name>
+            <email>aschuetz@protonmail.com</email>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git://github.com/AlexanderSchuetz97/JavaNativeUtils.git</connection>
+        <developerConnection>scm:git:ssh://github.com:AlexanderSchuetz97/JavaNativeUtils.git</developerConnection>
+        <url>https://github.com/AlexanderSchuetz97/JavaNativeUtils/tree/master</url>
+    </scm>
 
     <dependencies>
         <dependency>

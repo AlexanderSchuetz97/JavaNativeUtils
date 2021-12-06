@@ -3,5 +3,6 @@
 *.class
 *.so
 *.log
+*.dll
 config.sh
 target/
