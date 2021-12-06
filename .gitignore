@@ -1,0 +1,7 @@
+# Default ignored files
+.idea/
+*.class
+*.so
+*.log
+config.sh
+target/
