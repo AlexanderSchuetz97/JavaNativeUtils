@@ -71,15 +71,17 @@ public final class NativeUtils {
 
         try {
             NativeLibraryLoaderHelper.loadNativeLibraries();
-        } catch (UnsatisfiedLinkError err) {
+        } catch (LinkageError err) {
             System.err.println("Failed to load native library for NativeUtils: " + err.getMessage());
             instance = new NoopNativeUtil();
+            return instance;
         }
 
 
         String tempOS = System.getProperty("os.name");
         if (tempOS == null) {
             instance = new NoopNativeUtil();
+            return instance;
         }
 
         tempOS = tempOS.toLowerCase();
