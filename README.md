@@ -14,7 +14,7 @@ Maven:
 <dependency>
     <groupId>io.github.alexanderschuetz97</groupId>
     <artifactId>JavaNativeUtils</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
 </dependency>
 ````
 
@@ -108,14 +108,14 @@ Accessing sun.misc.Unsafe is also non-trivial in newer Java Versions depending o
 * Java 7 or newer
 
 ### Supported Operating Systems / Architectures
-#### Windows
-* i386
+#### Windows (Vista or newer)
+* i386 
 * amd64
 #### Linux
-* i386
-* amd64
-* armhf
-* aarch64 (untested, automatic loading may not work since its no where documented what "os.arch" is on aarch64)
+* i386 (GLIBC 2.3.4 or newer)
+* amd64 (GLIBC 2.3.4 or newer)
+* armhf (GLIBC 2.4 or newer)
+* aarch64 (GLIBC 2.17 or newer) (untested, automatic loading may not work since its no where documented what "os.arch" is on aarch64)
 
 If an unsupported operating system or processor architecture is used then getWindowsUtil() or getLinuxUtil() throws an exception.
 To check if the current system supports linux or windows syscalls use the isLinux() or isWindows() method.
