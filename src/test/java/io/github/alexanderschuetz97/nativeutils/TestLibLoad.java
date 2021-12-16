@@ -17,12 +17,23 @@
 // in the COPYING & COPYING.LESSER files in top level directory of JavaNativeUtils.
 // If not, see <https://www.gnu.org/licenses/>.
 //
-package io.github.alexanderschuetz97.nativeutils.api;
+package io.github.alexanderschuetz97.nativeutils;
 
-public interface NativeUtil {
+import io.github.alexanderschuetz97.nativeutils.impl.NativeLibraryLoaderHelper;
+import org.junit.Assert;
+import org.junit.Test;
 
-    boolean isWindows();
+import java.util.Map;
 
-    boolean isLinux();
+public class TestLibLoad {
 
+    @Test
+    public void testReadAll() {
+        Map<String, byte[]> theMap = NativeLibraryLoaderHelper.getNativeLibraryBinaries();
+        for (Map.Entry<String, byte[]> e : theMap.entrySet()) {
+            Assert.assertNotNull(e.getKey(), e.getValue());
+        }
+
+        Assert.assertEquals(6, theMap.size());
+    }
 }

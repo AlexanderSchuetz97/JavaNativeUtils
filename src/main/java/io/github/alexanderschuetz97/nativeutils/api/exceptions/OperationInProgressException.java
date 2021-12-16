@@ -17,12 +17,20 @@
 // in the COPYING & COPYING.LESSER files in top level directory of JavaNativeUtils.
 // If not, see <https://www.gnu.org/licenses/>.
 //
-package io.github.alexanderschuetz97.nativeutils.api;
+package io.github.alexanderschuetz97.nativeutils.api.exceptions;
 
-public interface NativeUtil {
+import java.io.IOException;
 
-    boolean isWindows();
+/**
+ * Exception thrown when an operation that is still running and being attempted in the background took longer to complete
+ * than some timeout value. The status of the background operation has to be retrieved by some other syscall depending on the syscall that caused this exception to be thrown.
+ */
+public class OperationInProgressException extends IOException {
+    public OperationInProgressException() {
+        super();
+    }
 
-    boolean isLinux();
-
+    public OperationInProgressException(String message) {
+        super(message);
+    }
 }

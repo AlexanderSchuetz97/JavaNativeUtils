@@ -34,12 +34,12 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	(JNIEnv * env, jobject inst, jstring target, jstring linkpath) {
 
 	if (linkpath == NULL) {
-		illegalArgs(env, "linkpath is null");
+		throwIllegalArgumentsExc(env, "linkpath is null");
 		return;
 	}
 
 	if (target == NULL) {
-		illegalArgs(env, "target is null");
+		throwIllegalArgumentsExc(env, "target is null");
 		return;
 	}
 
@@ -130,12 +130,12 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
   (JNIEnv * env, jobject inst, jstring target, jstring linkpath) {
 
 	if (linkpath == NULL) {
-		illegalArgs(env, "linkpath is null");
+		throwIllegalArgumentsExc(env, "linkpath is null");
 		return;
 	}
 
 	if (target == NULL) {
-		illegalArgs(env, "target is null");
+		throwIllegalArgumentsExc(env, "target is null");
 		return;
 	}
 

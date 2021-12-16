@@ -32,12 +32,12 @@
 JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_CreateSymbolicLinkA
   (JNIEnv * env, jobject inst, jstring link, jstring target, jboolean isDir, jboolean isDev) {
 	if (link == NULL) {
-		illegalArgs(env, "link is null");
+		throwIllegalArgumentsExc(env, "link is null");
 		return;
 	}
 
 	if (target == NULL) {
-		illegalArgs(env, "target is null");
+		throwIllegalArgumentsExc(env, "target is null");
 		return;
 	}
 
@@ -78,12 +78,12 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_CreateHardLinkA
   (JNIEnv * env, jobject inst, jstring link, jstring target) {
 	if (link == NULL) {
-		illegalArgs(env, "link is null");
+		throwIllegalArgumentsExc(env, "link is null");
 		return;
 	}
 
 	if (target == NULL) {
-		illegalArgs(env, "target is null");
+		throwIllegalArgumentsExc(env, "target is null");
 		return;
 	}
 

@@ -36,7 +36,7 @@
 JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_chdir
   (JNIEnv * env, jobject inst, jstring path) {
 	if (path == NULL) {
-		illegalArgs(env, "path is null");
+		throwIllegalArgumentsExc(env, "path is null");
 		return;
 	}
 

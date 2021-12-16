@@ -32,7 +32,7 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
   (JNIEnv * env, jobject inst, jstring path, jint access, jboolean allowDelete, jboolean allowRead, jboolean allowWrite, jobject openMode, jint attributes) {
 
 	if (path == NULL) {
-		illegalArgs(env, "path is null");
+		throwIllegalArgumentsExc(env, "path is null");
 		return (jlong) (uintptr_t) INVALID_HANDLE_VALUE;
 	}
 
@@ -54,7 +54,7 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 			mode = TRUNCATE_EXISTING;
 			break;
 		default:
-			illegalArgs(env, "invalid openMode");
+			throwIllegalArgumentsExc(env, "invalid openMode");
 			return (jlong) (uintptr_t) INVALID_HANDLE_VALUE;
 	}
 

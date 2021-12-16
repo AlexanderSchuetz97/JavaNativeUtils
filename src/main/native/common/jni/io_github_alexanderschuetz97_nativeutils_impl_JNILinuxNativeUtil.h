@@ -17,6 +17,142 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    to_struct_timeval
+ * Signature: (J)[B
+ */
+JNIEXPORT jbyteArray JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_to_1struct_1timeval
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    from_struct_timeval
+ * Signature: ([B)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_from_1struct_1timeval
+  (JNIEnv *, jobject, jbyteArray);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    to_sockaddr_in
+ * Signature: (Ljava/net/InetSocketAddress;)Lio/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr;
+ */
+JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_to_1sockaddr_1in
+  (JNIEnv *, jobject, jobject);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    from_sockaddr_in
+ * Signature: (Lio/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr;)Ljava/net/InetSocketAddress;
+ */
+JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_from_1sockaddr_1in
+  (JNIEnv *, jobject, jobject);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    to_sockaddr_un
+ * Signature: (Ljava/lang/String;)Lio/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr;
+ */
+JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_to_1sockaddr_1un
+  (JNIEnv *, jobject, jstring);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    from_sockaddr_un
+ * Signature: (Lio/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_from_1sockaddr_1un
+  (JNIEnv *, jobject, jobject);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    socket
+ * Signature: (III)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_socket
+  (JNIEnv *, jobject, jint, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    poll
+ * Signature: ([Lio/github/alexanderschuetz97/nativeutils/api/structs/PollFD;I)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_poll
+  (JNIEnv *, jobject, jobjectArray, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    read
+ * Signature: (I[BII)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_read
+  (JNIEnv *, jobject, jint, jbyteArray, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    write
+ * Signature: (I[BII)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_write
+  (JNIEnv *, jobject, jint, jbyteArray, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    recvfrom
+ * Signature: (I[BIIILio/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr;)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_recvfrom
+  (JNIEnv *, jobject, jint, jbyteArray, jint, jint, jint, jobject);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    connect
+ * Signature: (ILio/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr;)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_connect
+  (JNIEnv *, jobject, jint, jobject);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    getsockopt
+ * Signature: (III)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_getsockopt__III
+  (JNIEnv *, jobject, jint, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    getsockopt
+ * Signature: (IIII)[B
+ */
+JNIEXPORT jbyteArray JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_getsockopt__IIII
+  (JNIEnv *, jobject, jint, jint, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    setsockopt
+ * Signature: (IIII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_setsockopt__IIII
+  (JNIEnv *, jobject, jint, jint, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    setsockopt
+ * Signature: (III[B)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_setsockopt__III_3B
+  (JNIEnv *, jobject, jint, jint, jint, jbyteArray);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    close
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_close
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
  * Method:    fnctl_F_SETLK
  * Signature: (ILio/github/alexanderschuetz97/nativeutils/api/LinuxNativeUtil/fnctl_F_SETLK_Mode;JJ)Z
  */

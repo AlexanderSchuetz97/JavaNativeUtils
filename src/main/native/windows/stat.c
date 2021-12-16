@@ -37,7 +37,7 @@ void handleError(JNIEnv * env, int err, const char* path) {
 			throwFileNotFoundExc(env, path);
 			break;
 		case (EINVAL):
-			illegalArgs(env, "path is invalid");
+			throwIllegalArgumentsExc(env, "path is invalid");
 			break;
 		default:
 			unknownError(env, err);
@@ -55,7 +55,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
   (JNIEnv * env, jobject inst, jstring path) {
 
 	if (path == NULL) {
-		illegalArgs(env, "path is null");
+		throwIllegalArgumentsExc(env, "path is null");
 		return NULL;
 	}
 
@@ -111,7 +111,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
   (JNIEnv * env, jobject inst, jstring path) {
 
 	if (path == NULL) {
-		illegalArgs(env, "path is null");
+		throwIllegalArgumentsExc(env, "path is null");
 		return NULL;
 	}
 

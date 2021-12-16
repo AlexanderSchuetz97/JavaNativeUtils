@@ -55,7 +55,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 		mMode = _LK_UNLCK;
 		break;
 	default:
-		illegalArgs(env, "mode is invalid");
+		throwIllegalArgumentsExc(env, "mode is invalid");
 		return false;
 	}
 
@@ -72,7 +72,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 		case EDEADLOCK:
 			return false;
 		case EINVAL:
-			illegalArgs(env, "_locking");
+			throwIllegalArgumentsExc(env, "_locking");
 			return false;
 		default:
 			unknownError(env, err);

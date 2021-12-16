@@ -19,10 +19,13 @@
 //
 package io.github.alexanderschuetz97.nativeutils.impl;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Utility to load the native libraries. It can be used to unpack the .so/.dll files from the jar and load them into the jvm.
@@ -31,7 +34,7 @@ import java.io.InputStream;
  */
 public class NativeLibraryLoaderHelper {
 
-    private static final int EXPECTED_NATIVE_LIB_VERSION = 0;
+    private static final int EXPECTED_NATIVE_LIB_VERSION = 1;
 
     /**
      * Flag to indicate if already loaded.
@@ -50,12 +53,90 @@ public class NativeLibraryLoaderHelper {
         loadNativeLibraries(System.getProperty("java.io.tmpdir"));
     }
 
+    private static byte[] readLib(String name) {
+        InputStream tempInput = NativeLibraryLoaderHelper.class.getResourceAsStream(name);
+        if (tempInput == null) {
+            return null;
+        }
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        byte[] tempBuf = new byte[512];
+        try {
+            int i = 0;
+            while (i != -1) {
+                    i = tempInput.read(tempBuf);
+                if (i > 0) {
+                    baos.write(tempBuf, 0, i);
+                }
+            }
+
+            tempInput.close();
+        } catch (IOException e) {
+            return null;
+        }
+
+        return baos.toByteArray();
+    }
+
+    /**
+     * Helper method to get all shared lib binaries in a map, so you can load them yourself more easily.
+     */
+    public static Map<String, byte[]> getNativeLibraryBinaries() {
+        Map<String, byte[]> theMap = new HashMap<>();
+        theMap.put("java_native_utils_amd64.so", readLib("/java_native_utils_amd64.so"));
+        theMap.put("java_native_utils_i386.so", readLib("/java_native_utils_i386.so"));
+        theMap.put("java_native_utils_armhf.so", readLib("/java_native_utils_armhf.so"));
+        theMap.put("java_native_utils_aarch64.so", readLib("/java_native_utils_aarch64.so"));
+        theMap.put("java_native_utils_amd64.dll", readLib("/java_native_utils_amd64.dll"));
+        theMap.put("java_native_utils_i386.dll", readLib("/java_native_utils_i386.dll"));
+        return theMap;
+    }
+
+    /**
+     * Shortcut to System.load so it loads a library using JavaNativeUtils Classloader.
+     */
+    public synchronized static void load(String file) throws LinkageError {
+        if (loaded) {
+            return;
+        }
+
+        boolean succ = false;
+        long v = 0;
+        try {
+            v = getNativeLibVersion();
+            succ = true;
+        } catch (UnsatisfiedLinkError error) {
+
+        }
+
+        if (succ) {
+            if (v != EXPECTED_NATIVE_LIB_VERSION) {
+                throw new UnsatisfiedLinkError("Wrong java_native_utils lib version was loaded expected " + EXPECTED_NATIVE_LIB_VERSION + " got " + v);
+            }
+
+            loaded = true;
+        }
+
+        System.load(file);
+        v = getNativeLibVersion();
+        if (v != EXPECTED_NATIVE_LIB_VERSION) {
+            throw new UnsatisfiedLinkError("Wrong java_native_utils lib version was loaded expected " + EXPECTED_NATIVE_LIB_VERSION + " got " + v);
+        }
+        loaded = true;
+    }
+
     /**
      * Will load the native libraries if necessary.
      * If the loading fails then a LinkageError is thrown.
      * The given path will be used as a directory to unpack the native libraries to.
      * If the directory at the given path does not exist it will be created.
-     * If that fails that fails a LinkageError is thrown.
+     * If that fails a LinkageError is thrown.
+     *
+     * This method tries to guess the OS and architecture of your system based on System Properties.
+     * Due to lack of documentation this is not perfect and may fail even tho your system would be supported.
+     * In this case you may have to load the correct library by hand by calling getSharedLibraryBinaries and writing
+     * your desired library to a file and calling load on it.
      *
      * @throws LinkageError
      */
@@ -109,6 +190,18 @@ public class NativeLibraryLoaderHelper {
             tempArch = "armhf";
         }
 
+        if (tempArch.equals("arm64")) {
+            tempArch = "aarch64";
+        }
+
+        if (tempArch.equals("x86")) {
+            tempArch = "i386";
+        }
+
+        if (tempArch.equals("x64") || tempArch.equals("x86_64")) {
+            tempArch = "amd64";
+        }
+
         String tempOS = System.getProperty("os.name");
         if (tempOS == null) {
             throw new UnsatisfiedLinkError("Cannot load native libraries because the operating system couldn't be detected!");
@@ -127,7 +220,7 @@ public class NativeLibraryLoaderHelper {
                 }
                 loadLib(tempFile, "java_native_utils_" + tempArch + ".dll");
             } else {
-                throw new UnsatisfiedLinkError("Operating system is not windows or linux and thus not supported!");
+                throw new UnsatisfiedLinkError("Operating system is not windows or linux and thus not supported! Value: " + tempOS);
             }
         } catch (IOException e) {
             throw new LinkageError("IO Error while writing native library to a temporary file!", e);

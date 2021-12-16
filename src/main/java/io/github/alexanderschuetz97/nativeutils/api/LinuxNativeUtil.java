@@ -20,13 +20,17 @@
 package io.github.alexanderschuetz97.nativeutils.api;
 
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.InvalidFileDescriptorException;
+import io.github.alexanderschuetz97.nativeutils.api.exceptions.OperationInProgressException;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.QuotaExceededException;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
+import io.github.alexanderschuetz97.nativeutils.api.structs.PollFD;
+import io.github.alexanderschuetz97.nativeutils.api.structs.Sockaddr;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Stat;
 
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.FileSystemLoopException;
@@ -44,6 +48,127 @@ public interface LinuxNativeUtil extends NativeReflection {
     }
 
     int getFD(FileDescriptor fd);
+
+    /**
+     * Converts a time value in milliseconds to a native timeval.
+     */
+    byte[] to_struct_timeval(long milliseconds);
+
+    /**
+     * Converts a native timeval to a long (milliseconds)
+     * @throws NullPointerException if the array is null
+     * @throws ArrayIndexOutOfBoundsException if the array is too small.
+     */
+    long from_struct_timeval(byte[] timeval);
+
+    /**
+     * returns a native struct sockaddr_in or sockaddr_in6 for the given address
+     *
+     * @throws IllegalArgumentException if the address returns invalid/null/non ipv4|6 values for port or address.
+     */
+    Sockaddr to_sockaddr_in(InetSocketAddress address) throws IllegalArgumentException;
+
+    /**
+     * returns a {@link InetSocketAddress} for the given native socket address
+     * @throws IllegalArgumentException if Sockaddr is not AF_INET or AF_INET6 or {@link Sockaddr#address} has wrong length for its respective protocol.
+     */
+    InetSocketAddress from_sockaddr_in(Sockaddr sockaddr) throws IllegalArgumentException;
+
+    /**
+     * returns native struct sockaddr_un for given path.
+     *
+     * @throws IllegalArgumentException if path is too long (>107 characters)
+     */
+    Sockaddr to_sockaddr_un(String path) throws IllegalArgumentException;
+
+    /**
+     * returns the String path from a native unix socket address.
+     * @throws IllegalArgumentException if Sockaddr is not AF_UNIX, has invalid size or last byte in address is not 0.
+     */
+    String from_sockaddr_un(Sockaddr sockaddr) throws IllegalArgumentException;
+
+    /**
+     * See man socket for information on the parameters.
+     * THIS METHOD WILL BLOCK FOR EVER IF THE TARGET IP DOES NOT RESPOND UNLESS A TIMEOUT HAS BEEN SPECIFIED VIA setsockopt.
+     *
+     * @throws IllegalArgumentException if the arguments are invalid
+     * @throws UnsupportedOperationException if the protocol or address family is not supported by the operating system.
+     * @throws AccessDeniedException if the process does not have permission to create a socket of the requested type.
+     * @throws QuotaExceededException if the limit of file descriptors/sockets has been reached for the process/system
+     * @throws UnknownNativeErrorException protocol specific errors depends on input parameters.
+     * @throws OperationInProgressException if a timeout has been specified.
+     *       call poll with POLLOUT+POLLERR to check if it is done
+     *       or call close() to cancel.
+     */
+    int socket(int domain, int type, int protocol)  throws IllegalArgumentException, UnsupportedOperationException, AccessDeniedException, QuotaExceededException, UnknownNativeErrorException, OperationInProgressException;
+
+    /**
+     * timeout in milliseconds
+     */
+    int poll(PollFD[] fds, int timeout) throws IllegalArgumentException, UnknownNativeErrorException;
+
+    /**
+     * Reads from a file descriptor. Returns the number of bytes read into the buffer. Will read up to "len" bytes.
+     * May return 0 for non blocking file descriptors that do not have data available.
+     */
+    int read(int fd, byte[] buffer, int off, int len) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException;
+
+    /**
+     * Write to a file descriptor
+     * returns the number of bytes written from the buffer.
+     * may return 0 for non blocking file descriptors that are not ready to write data.
+     */
+    int write(int fd, byte[] buffer, int off, int len) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException;
+
+    /**
+     * The Output parameter sockaddr may be null if you are not interested in this information.
+     *
+     * @param fd file descriptor to the socket.
+     * @param buffer the buffer, must not be null.
+     * @param off offset in the buffer
+     * @param len max len of bytes to fill into buffer. If you are receiving datagrams then any excess bytes may be discarded.
+     * @param flags flags for recvfrom.
+     * @param sockaddr This param will contain the info from where the data was received. Pass null if you don't care about this info.
+     * @return the number of bytes read. -1 is EOF. 0 is possible if the socket fd is set to be non-blocking and no data is available.
+     */
+    int recvfrom(int fd, byte[] buffer, int off, int len, int flags, Sockaddr sockaddr) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException;
+
+    /**
+     * calls connect using a generic socket address.
+     * @param fd obtained from "socket"
+     * @param sockaddr socket address to connect to.
+     */
+    void connect(int fd, Sockaddr sockaddr) throws InvalidFileDescriptorException, IllegalArgumentException, UnsupportedOperationException;
+
+    /**
+     * returns a "int" socket option.
+     * Most commonly used socket options are int values.
+     */
+    int getsockopt(int fd, int level, int optname) throws InvalidFileDescriptorException, IllegalArgumentException, UnsupportedOperationException;
+
+
+    /**
+     * returns a custom payload socket option.
+     * @param payloadSize the maximum size of the payload. This is used to allocate a temporary buffer in native code. The actual returned payload may have a smaller size.
+     */
+    byte[] getsockopt(int fd, int level, int optname, int payloadSize) throws InvalidFileDescriptorException, IllegalArgumentException, UnsupportedOperationException;
+
+    /**
+     * sets a int socket option.
+     * Most commonly used socket options are int values.
+     */
+    void setsockopt(int fd, int level, int optname, int payload) throws InvalidFileDescriptorException, IllegalArgumentException, UnsupportedOperationException;
+
+    /**
+     * Sets a custom payload socket option.
+     */
+    void setsockopt(int fd, int level, int optname, byte[] payload) throws InvalidFileDescriptorException, IllegalArgumentException, UnsupportedOperationException;
+
+
+    /**
+     * Close a file descriptor
+     */
+    void close(int fd) throws InvalidFileDescriptorException, IOException;
 
     /**
      * This call will never block. It returns true if the desired lock could be aquired, false otherwise.

@@ -31,7 +31,6 @@
 #define COMMON_H_
 
 
-//io.github.alexanderschuetz97.nativeutils.structs.Stat
 jclass StatClass;
 jmethodID StatClassConstructor;
 jfieldID StatClass_dev;
@@ -62,6 +61,20 @@ jfieldID Win32FileAttributeData_ftCreationTimeHigh;
 jfieldID Win32FileAttributeData_ftCreationTimeLow;
 
 
+jclass PollFD;
+int PollFD_PollEvent_values_size;
+jobject* PollFD_PollEvent_values;
+jfieldID PollFD_fd;
+jfieldID PollFD_events;
+jfieldID PollFD_revents;
+
+jclass Sockaddr;
+jmethodID SockaddrConstructor;
+jfieldID Sockaddr_addressFamily;
+jfieldID Sockaddr_address;
+
+
+
 
 /*
  * Throw unknown error exception
@@ -80,17 +93,36 @@ int getFD(JNIEnv * env, jobject fd);
 
 void setFD(JNIEnv * env, jobject fd, int value);
 
+jobject getInetAddressFromByteArray(JNIEnv * env, jbyteArray array);
+
+jobject getInetSocketAddress(JNIEnv * env, jobject inetaddress, jint port);
+
+jobject getAddressFromInetSocketAddress(JNIEnv * env, jobject address);
+
+jint getPortFromInetSocketAddress(JNIEnv * env, jobject address);
+
+jbyteArray getAddressFromInetAddress(JNIEnv * env, jobject address);
+
 intptr_t getHandle(JNIEnv * env, jobject fd);
 
 bool isStatic(JNIEnv *env, jobject field);
 
 jclass getDeclareingClass(JNIEnv * env, jobject field);
 
+jobject new_iterator(JNIEnv * env, jobject collection);
+
+jobject iterator_next(JNIEnv * env, jobject iterator);
+
+void collection_add(JNIEnv * env, jobject collection, jobject value);
+
+void collection_clear(JNIEnv * env, jobject collection);
 
 /*
  * throw illegal argument exception with given message.
  */
-void illegalArgs(JNIEnv * env, const char* message);
+void throwIllegalArgumentsExc(JNIEnv * env, const char* message);
+
+void throwIllegalStateException(JNIEnv * env, const char* message);
 
 int getEnumOrdinal(JNIEnv * env, jobject e);
 
@@ -98,11 +130,19 @@ void throwOOM(JNIEnv * env, const char* message);
 
 void throwIOExc(JNIEnv * env, const char* message);
 
+void throwOperationInProgressException(JNIEnv * env, const char* message);
+
 void throwNullPointerException(JNIEnv * env, const char* message);
 
 void throwUnsupportedExc(JNIEnv * env, const char* message);
 
 void throwFSReadOnly(JNIEnv * env);
+
+void throwBindException(JNIEnv * env, const char* message);
+
+void throwConnectException(JNIEnv * env, const char* message);
+
+void throwSocketTimeoutException(JNIEnv * env, const char* message);
 
 void throwQuotaExceededException(JNIEnv * env, const char* file, const char* other, const char* reason);
 

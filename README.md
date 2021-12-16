@@ -14,7 +14,7 @@ Maven:
 <dependency>
     <groupId>io.github.alexanderschuetz97</groupId>
     <artifactId>JavaNativeUtils</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
 </dependency>
 ````
 
@@ -45,6 +45,14 @@ if (NativeUtils.isWindows()) {
 * lstat
 * chdir
 * strerror_r
+* socket
+* connect
+* read
+* write
+* getsockopt
+* setsockopt
+* close
+* recvfrom
 
 #### Windows
 * _locking
@@ -130,6 +138,7 @@ Requirements:
 * gcc compiler (x86)
 * gcc compiler (i386)
 * gcc compiler (armhf)
+* gcc compiler (aarch64)
 * make
 * bash
 * linux JDK 7 or newer
