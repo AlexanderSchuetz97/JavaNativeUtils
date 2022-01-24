@@ -1,5 +1,5 @@
 //
-// Copyright Alexander Schütz, 2021
+// Copyright Alexander Schütz, 2021-2022
 //
 // This file is part of JavaNativeUtils.
 //
@@ -24,5 +24,7 @@ public interface NativeUtil {
     boolean isWindows();
 
     boolean isLinux();
+
+    boolean isJVM();
 
 }

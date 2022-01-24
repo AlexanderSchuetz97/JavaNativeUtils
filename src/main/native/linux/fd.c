@@ -1,5 +1,5 @@
 //
-// Copyright Alexander Schütz, 2021
+// Copyright Alexander Schütz, 2021-2022
 //
 // This file is part of JavaNativeUtils.
 //
@@ -22,12 +22,27 @@
 
 #include <errno.h>
 #include <unistd.h>
+#include <fcntl.h>
+#include <assert.h>
 
 #ifndef __USE_GNU
 #define __USE_GNU
 #endif
+
+
 #include <poll.h>
 
+#ifndef __USE_FILE_OFFSET64
+#define __USE_FILE_OFFSET64
+#endif
+#ifndef __USE_LARGEFILE64
+#define __USE_LARGEFILE64
+#endif
+
+#include <sys/mman.h>
+
+
+static_assert(sizeof(off_t) <= sizeof(jlong), "off_t doesnt fit in jlong");
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
  * Method:    getFD
@@ -38,6 +53,250 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	return getFD(env, fdo);
 }
 
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    lseek
+ * Signature: (IJLio/github/alexanderschuetz97/nativeutils/api/LinuxNativeUtil/lseek_whence;)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_lseek
+  (JNIEnv * env, jobject inst, jint fd, jlong off, jobject jwhence) {
+	int whence;
+	int ordinal = getEnumOrdinal(env, jwhence);
+	switch(ordinal) {
+	case(0):
+			whence = SEEK_SET;
+			break;
+	case(1):
+			whence = SEEK_CUR;
+			break;
+	case(2):
+			whence = SEEK_END;
+			break;
+	default:
+		throwIllegalArgumentsExc(env, "whence");
+		return -1;
+	}
+
+	off_t res = lseek((int) fd, (off_t) off, whence);
+	if (res == -1) {
+		int err = errno;
+		switch(err) {
+		case(ESPIPE):
+		case(EBADF):
+			throwBadFileDescriptor(env);
+			return -1;
+		case(EINVAL):
+			throwIOExc(env, "the resulting file offset would be negative, or beyond the end of a seekable device.");
+			return -1;
+		case(EOVERFLOW):
+			throwIOExc(env, "The resulting file offset cannot be represented in a 64 bit number");
+			return -1;
+		default:
+			throwUnknownError(env, err);
+			return -1;
+		}
+	}
+
+	return (jlong) res;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    open
+ * Signature: (Ljava/lang/String;I)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_open__Ljava_lang_String_2I
+	(JNIEnv * env, jobject inst, jstring path, jint flags) {
+	const char * ptr = (*env)->GetStringUTFChars(env, path, NULL);
+	if (ptr == NULL) {
+		throwOOM(env, "GetStringUTFChars");
+		return -1;
+	}
+
+	while(true) {
+		int fd = open(ptr, (int) flags);
+
+		if (fd == -1) {
+			int err = errno;
+			switch(err) {
+				case(EACCES):
+					throwFSAccessDenied(env, ptr, NULL, NULL);
+				break;
+				case(EBUSY):
+					throwFSAccessDenied(env, ptr, NULL, "exclusive access not possible");
+				break;
+				case(EDQUOT):
+					throwQuotaExceededException(env, ptr, NULL, NULL);
+				break;
+				case(EEXIST):
+					throwFileAlreadyExistsExc(env, ptr, NULL, NULL);
+				break;
+				case(EINTR):
+					continue;
+				case(EINVAL):
+					throwIllegalArgumentsExc(env, "open");
+				break;
+				case(EISDIR):
+					//TODO
+					throwIOExc(env, "path refers to a directory");
+				break;
+				case(ELOOP):
+					throwFSLoop(env, ptr);
+				break;
+				case(EMFILE):
+					throwQuotaExceededException(env, ptr, NULL, "per process limit of open files exceeded");
+				break;
+				case(ENAMETOOLONG):
+					throwInvalidPath(env, ptr, "path too long");
+				break;
+				case(ENFILE):
+					throwQuotaExceededException(env, ptr, NULL, "The system-wide limit on the total number of open files has been reached.");
+				break;
+				case(ENOENT):
+					throwFileNotFoundExc(env, ptr);
+				break;
+				case(ENOMEM):
+					throwOOM(env, "pipe or kernel");
+				break;
+				case(ENOSPC):
+					throwIOExc(env, "file was to be created but the device is full");
+				break;
+				case(ENOTDIR):
+					throwNotDirectoryException(env, ptr);
+				break;
+				case(ENXIO):
+					throwIOExc(env, "ENXIO");
+				break;
+				case(EOPNOTSUPP):
+					throwIOExc(env, "The filesystem containing pathname does not support O_TMPFILE.");
+				break;
+				case(EOVERFLOW):
+					throwIOExc(env, "The file is too large to be opened");
+				break;
+				case(EPERM):
+					throwFSAccessDenied(env, ptr, NULL, "The operation was prevented by a file seal");
+				break;
+				case(EROFS):
+					throwFSReadOnly(env);
+				break;
+				case(ETXTBSY):
+					throwFSAccessDenied(env, ptr, NULL, "write access to a executable, swap or kernel firmware file was requested");
+				break;
+				case(EWOULDBLOCK):
+					(*env)->ReleaseStringUTFChars(env, path, ptr);
+					return -1;
+				default:
+					throwUnknownError(env, err);
+				break;
+			}
+			(*env)->ReleaseStringUTFChars(env, path, ptr);
+			return -1;
+		}
+
+		(*env)->ReleaseStringUTFChars(env, path, ptr);
+		return (jint) fd;
+
+	}
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    open
+ * Signature: (Ljava/lang/String;II)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_open__Ljava_lang_String_2II
+  (JNIEnv * env, jobject inst, jstring path, jint flags, jint mode) {
+	const char * ptr = (*env)->GetStringUTFChars(env, path, NULL);
+	if (ptr == NULL) {
+		throwOOM(env, "GetStringUTFChars");
+		return -1;
+	}
+
+	while(true) {
+		int fd = open(ptr, (int) flags, (mode_t) mode);
+
+		if (fd == -1) {
+			int err = errno;
+			switch(err) {
+				case(EACCES):
+					throwFSAccessDenied(env, ptr, NULL, NULL);
+				break;
+				case(EBUSY):
+					throwFSAccessDenied(env, ptr, NULL, "exclusive access not possible");
+				break;
+				case(EDQUOT):
+					throwQuotaExceededException(env, ptr, NULL, NULL);
+				break;
+				case(EEXIST):
+					throwFileAlreadyExistsExc(env, ptr, NULL, NULL);
+				break;
+				case(EINTR):
+					continue;
+				case(EINVAL):
+					throwIllegalArgumentsExc(env, "open");
+				break;
+				case(EISDIR):
+					//TODO
+					throwIOExc(env, "path refers to a directory");
+				break;
+				case(ELOOP):
+					throwFSLoop(env, ptr);
+				break;
+				case(EMFILE):
+					throwQuotaExceededException(env, ptr, NULL, "per process limit of open files exceeded");
+				break;
+				case(ENAMETOOLONG):
+					throwInvalidPath(env, ptr, "path too long");
+				break;
+				case(ENFILE):
+					throwQuotaExceededException(env, ptr, NULL, "The system-wide limit on the total number of open files has been reached.");
+				break;
+				case(ENOENT):
+					throwFileNotFoundExc(env, ptr);
+				break;
+				case(ENOMEM):
+					throwOOM(env, "pipe or kernel");
+				break;
+				case(ENOSPC):
+					throwIOExc(env, "file was to be created but the device is full");
+				break;
+				case(ENOTDIR):
+					throwNotDirectoryException(env, ptr);
+				break;
+				case(ENXIO):
+					throwIOExc(env, "ENXIO");
+				break;
+				case(EOPNOTSUPP):
+					throwIOExc(env, "The filesystem containing pathname does not support O_TMPFILE.");
+				break;
+				case(EOVERFLOW):
+					throwIOExc(env, "The file is too large to be opened");
+				break;
+				case(EPERM):
+					throwFSAccessDenied(env, ptr, NULL, "The operation was prevented by a file seal");
+				break;
+				case(EROFS):
+					throwFSReadOnly(env);
+				break;
+				case(ETXTBSY):
+					throwFSAccessDenied(env, ptr, NULL, "write access to a executable, swap or kernel firmware file was requested");
+				break;
+				case(EWOULDBLOCK):
+					(*env)->ReleaseStringUTFChars(env, path, ptr);
+					return -1;
+				default:
+					throwUnknownError(env, err);
+				break;
+			}
+			(*env)->ReleaseStringUTFChars(env, path, ptr);
+			return -1;
+		}
+
+		(*env)->ReleaseStringUTFChars(env, path, ptr);
+		return (jint) fd;
+
+	}
+}
 
 
 /*
@@ -57,7 +316,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 		int err = errno;
 		switch(err) {
 		case(EBADF):
-			badFileDescriptor(env);
+			throwBadFileDescriptor(env);
 			return;
 		case(EINTR):
 			continue;
@@ -236,7 +495,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 				throwOOM(env, "Kernel Memory");
 				return -1;
 			default:
-				unknownError(env, err);
+				throwUnknownError(env, err);
 				return -1;
 		}
 	}
@@ -292,9 +551,6 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	}
 
 	while(true) {
-
-
-
 		size_t r = read(fd, data+off, len);
 
 		if (r == 0) {
@@ -322,7 +578,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 			case(EAGAIN):
 				return 0;
 			case(EBADF):
-				badFileDescriptor(env);
+				throwBadFileDescriptor(env);
 				return -1;
 			case EINVAL:
 				throwIllegalArgumentsExc(env, "file descriptor is unsuitable for reading or buffer size does not match the required buffer size");
@@ -334,7 +590,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 				throwIllegalArgumentsExc(env, "file descriptor refers to a directory");
 				return -1;
 			default:
-				unknownError(env, err);
+				throwUnknownError(env, err);
 				return -1;
 		}
 	}
@@ -382,7 +638,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 			case(EAGAIN):
 				return 0;
 			case(EBADF):
-				badFileDescriptor(env);
+				throwBadFileDescriptor(env);
 				return -1;
 			case(EDESTADDRREQ):
 				throwIllegalStateException(env, "file descriptor refers to a datagram socket for which a peer address has not been set using connect.");
@@ -412,9 +668,140 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 				throwIllegalArgumentsExc(env, "file descriptor refers to a directory");
 				return -1;
 			default:
-				unknownError(env, err);
+				throwUnknownError(env, err);
 				return -1;
 		}
 	}
+}
 
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    _munmap
+ * Signature: (JJ)J
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil__1munmap
+  (JNIEnv * env, jclass clazz, jlong ptr, jlong size) {
+	void * vptr = (void *) (uintptr_t) ptr;
+	if (vptr == NULL) {
+		throwNullPointerException(env, "ptr");
+		return;
+	}
+
+	int res = munmap(vptr, (size_t) size);
+
+	if (res != -1) {
+		return;
+	}
+
+	int err = errno;
+	if (err == EINVAL) {
+		throwIllegalArgumentsExc(env, "alignment of size/ptr is wrong");
+		return;
+	}
+
+	throwUnknownError(env, err);
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    _mmap
+ * Signature: (IJIZZJ)V
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil__1mmap
+  (JNIEnv * env, jclass clazz, jint fd, jlong length, jint flags, jboolean read, jboolean write, jlong offset) {
+
+	int prot;
+	if (read && write) {
+		prot = PROT_READ | PROT_WRITE;
+	} else if (read) {
+		prot = PROT_READ;
+	} else if (write) {
+		prot = PROT_WRITE;
+	} else {
+		prot = PROT_NONE;
+	}
+
+	void * res = mmap64(NULL, (size_t) length, prot, flags, fd, (__off64_t) offset);
+	if (res != MAP_FAILED) {
+		return (jlong) (uintptr_t) res;
+	}
+
+	int err = errno;
+	switch(err) {
+	case(EACCES):
+		throwIllegalStateException(env, "FD is incompatible with the requested flags.");
+		return -1;
+	case(EAGAIN):
+		throwIllegalArgumentsExc(env, "The file has been locked, or too much memory has been locked");
+		return -1;
+	case(EBADF):
+		throwBadFileDescriptor(env);
+		return -1;
+	case(EINVAL):
+		throwIllegalArgumentsExc(env, "alignment of arguments is invalid");
+		return -1;
+	case(ENFILE):
+		throwQuotaExceededException(env, NULL, NULL, "The system-wide limit on the total number of open files has been reached.");
+		return -1;
+	case(ENODEV):
+		throwUnsupportedExc(env, "The underlying filesystem of the specified file does not support memory mapping.");
+		return -1;
+	case(ENOMEM):
+		throwOOM(env, "not enough memory to create mapping or the maximum number of memory mappings has been reached");
+		return -1;
+	case(EOVERFLOW):
+		throwOOM(env, "mapping is too large for 32bit architecture");
+		return -1;
+	case(EPERM):
+		throwFSAccessDenied(env, NULL, NULL, "The operation was prevented by a file seal or the MAP_HUGETLB was present and the process is not privileged.");
+		return -1;
+	case(ETXTBSY):
+		throwIllegalStateException(env, "MAP_DENYWRITE was set but the object specified by fd is open for writing.");
+		return -1;
+	default:
+		throwUnknownError(env, err);
+		return -1;
+	}
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    _msync
+ * Signature: (JJJZ)J
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil__1msync
+  (JNIEnv * env, jclass clazz, jlong ptr, jlong off, jlong len, jboolean invalidate) {
+	void * vptr = (void *) (uintptr_t) ptr;
+	if (vptr == NULL) {
+		throwNullPointerException(env, "ptr");
+		return;
+	}
+
+	vptr+=off;
+	int flags = MS_SYNC;
+
+	if (invalidate) {
+		flags |= MS_INVALIDATE;
+	}
+
+	if (msync(vptr, len, flags) == 0) {
+		return;
+	}
+
+	int err = errno;
+
+	switch(err) {
+	case(EBUSY):
+		throwFSAccessDenied(env, NULL, NULL, "cant invalidate region due to memory lock");
+		return;
+	case(EINVAL):
+		throwIllegalArgumentsExc(env, "ptr+off is not a multiple of PAGESIZE");
+		return;
+	case(ENOMEM):
+		throwIllegalStateException(env, "The indicated memory (or part of it) was not mapped.");
+		return;
+	default:
+		throwUnknownError(env, err);
+		return;
+	}
 }

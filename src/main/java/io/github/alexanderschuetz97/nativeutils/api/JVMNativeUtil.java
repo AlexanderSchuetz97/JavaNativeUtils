@@ -1,5 +1,5 @@
 //
-// Copyright Alexander Schütz, 2021
+// Copyright Alexander Schütz, 2021-2022
 //
 // This file is part of JavaNativeUtils.
 //
@@ -19,9 +19,38 @@
 //
 package io.github.alexanderschuetz97.nativeutils.api;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
-public interface NativeReflection extends NativeUtil {
+public interface JVMNativeUtil extends NativeUtil {
+
+
+    /**
+     * Defines a class in the given classloader.
+     * @param name MUST BE IN JNI NOTATION. for example "org.example.MyClass" would be "org/example/MyClass"
+     * @return the defined class
+     *
+     * @throws ClassFormatError if the bytes in buf are not a valid class
+     * @throws ClassCircularityError if the class would be its own superclass
+     * @throws SecurityException if name starts with "java."
+     */
+    Class<?> DefineClass(String name, ClassLoader loader, byte[] bytes, int off, int len) throws ClassFormatError, ClassCircularityError, SecurityException;
+
+    void MonitorEnter(Object obj);
+
+    void MonitorExit(Object obj);
+
+    <T> T AllocObject(Class<T> clazz);
+
+    /**
+     * This method allows throwing of checked exceptions in methods that do not declare them as checked exceptions.
+     * @throws NullPointerException if the given throwable is null
+     * @throws Throwable the given throwable
+     * @return never returns without throwing an exception. Return type RuntimeException only exists to trick compiler to allow for "throw util.Throw(...)" pattern
+     */
+    RuntimeException Throw(Throwable throwable);
+
 
     /*
      * How to type Signature:
@@ -38,6 +67,15 @@ public interface NativeReflection extends NativeUtil {
      * 2D Array -> [[TYPE (ex int[][] -> [[I
      * ND Array -> N times [ followed by TYPE
      */
+
+    NativeMethod FromReflectedMethod(Method method);
+
+    <R> NativeMethod<R, R> FromReflectedMethod(Constructor<R> method);
+
+
+    <R, D> NativeMethod<R, D> GetMethodID(Class<D> declaring, String name, String signature);
+
+    <R, D> NativeMethod<R, D> GetStaticMethodID(Class<D> declaring, String name, String signature);
 
     /**
      * Gets a native reference to a java field from a given Reflection field.

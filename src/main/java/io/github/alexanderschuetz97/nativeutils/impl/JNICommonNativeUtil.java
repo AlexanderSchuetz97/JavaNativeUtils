@@ -1,5 +1,5 @@
 //
-// Copyright Alexander Schütz, 2021
+// Copyright Alexander Schütz, 2021-2022
 //
 // This file is part of JavaNativeUtils.
 //
@@ -20,22 +20,32 @@
 package io.github.alexanderschuetz97.nativeutils.impl;
 
 import io.github.alexanderschuetz97.nativeutils.api.NativeField;
-import io.github.alexanderschuetz97.nativeutils.api.NativeReflection;
+import io.github.alexanderschuetz97.nativeutils.api.NativeMemory;
+import io.github.alexanderschuetz97.nativeutils.api.JVMNativeUtil;
+import io.github.alexanderschuetz97.nativeutils.api.NativeMethod;
+import io.github.alexanderschuetz97.nativeutils.api.PointerHandler;
+
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Objects;
 
-public class JNICommonNativeUtil implements NativeReflection {
+public abstract class JNICommonNativeUtil implements JVMNativeUtil {
+
+    public native int getPointerSize();
 
     @Override
-    public boolean isWindows() {
-        return false;
+    public boolean isJVM() {
+        return true;
     }
 
+    public native void MonitorEnter(Object obj);
+
+    public native void MonitorExit(Object obj);
+
     @Override
-    public boolean isLinux() {
-        return false;
-    }
+    public native Class<?> DefineClass(String name, ClassLoader loader, byte[] bytes, int off, int len);
 
     @Override
     public NativeField FromReflectedField(Field field) {
@@ -48,6 +58,8 @@ public class JNICommonNativeUtil implements NativeReflection {
         return new JNINativeField(field.getDeclaringClass(), field.getType(), field.getName(), ref, Modifier.isStatic(field.getModifiers()));
     }
 
+
+
     native long _FromReflectedField(Field field);
 
     native Field _ToReflectedField(Class declaring, long field, boolean isStatic);
@@ -55,6 +67,88 @@ public class JNICommonNativeUtil implements NativeReflection {
     native long _GetFieldID(Class clazz, String fieldName, String signature);
 
     native long _GetStaticFieldID(Class clazz, String fieldName, String signature);
+
+    native long _FromReflectedMethod(Object method);
+
+    native Object _ToReflectedMethod(Class declaring, long field, boolean isStatic);
+
+    native long _GetMethodID(Class clazz, String fieldName, String signature);
+
+    native long _GetStaticMethodID(Class clazz, String fieldName, String signature);
+
+    @Override
+    public native RuntimeException Throw(Throwable throwable);
+
+    static native Object _AllocObject(Class clazz);
+
+    @Override
+    public <T> T AllocObject(Class<T> clazz) {
+        if (clazz.isPrimitive()) {
+            throw new IllegalArgumentException("cannot allocate object from primitive class");
+        }
+
+        return (T) _AllocObject(clazz);
+    }
+
+    @Override
+    public <R> NativeMethod<R, R> FromReflectedMethod(Constructor<R> method) {
+        long id = _FromReflectedMethod(Objects.requireNonNull(method));
+        if (id == 0) {
+            return null;
+        }
+
+        return new JNINativeMethod("<init>", method.getDeclaringClass(), id, method.getParameterTypes(), Modifier.isStatic(method.getModifiers()), method.getDeclaringClass());
+    }
+
+    @Override
+    public NativeMethod FromReflectedMethod(Method method) {
+        long id = _FromReflectedMethod(Objects.requireNonNull(method));
+        if (id == 0) {
+            return null;
+        }
+        return new JNINativeMethod(method.getName(), method.getDeclaringClass(), id, method.getParameterTypes(), Modifier.isStatic(method.getModifiers()), method.getReturnType());
+    }
+
+    @Override
+    public <R, D> NativeMethod<R, D> GetMethodID(Class<D> declaring, String methodName, String signature) {
+        Objects.requireNonNull(declaring, "declaring class is null");
+        if (declaring.isPrimitive()) {
+            return null;
+        }
+        long id = _GetMethodID(declaring, Objects.requireNonNull(methodName, "methodName is null"), Objects.requireNonNull(signature, "signature is null"));
+        if (id == 0) {
+            return null;
+        }
+
+        Object method = _ToReflectedMethod(declaring, id, false);
+        if (method instanceof Constructor) {
+            Constructor<?> constructor = (Constructor<?>) method;
+            return new JNINativeMethod("<init>", constructor.getDeclaringClass(), id, constructor.getParameterTypes(), Modifier.isStatic(constructor.getModifiers()), constructor.getDeclaringClass());
+        }
+
+        Method jMethod = (Method) method;
+        return new JNINativeMethod(jMethod.getName(), jMethod.getDeclaringClass(), id, jMethod.getParameterTypes(), Modifier.isStatic(jMethod.getModifiers()), jMethod.getReturnType());
+    }
+
+    @Override
+    public <R, D> NativeMethod<R, D> GetStaticMethodID(Class<D> declaring, String methodName, String signature) {
+        Objects.requireNonNull(declaring, "declaring class is null");
+        Objects.requireNonNull(methodName, "methodName is null");
+        if (declaring.isPrimitive()) {
+            return null;
+        }
+        //Static class initializer
+        if ("<cinit>".equals(methodName)) {
+            return null;
+        }
+
+        long id = _GetStaticMethodID(declaring, methodName, Objects.requireNonNull(signature, "signature is null"));
+        if (id == 0) {
+            return null;
+        }
+        Method method = (Method) _ToReflectedMethod(declaring, id, true);
+        return new JNINativeMethod(method.getName(), method.getDeclaringClass(), id, method.getParameterTypes(), Modifier.isStatic(method.getModifiers()), method.getReturnType());
+    }
 
     @Override
     public NativeField GetFieldID(Class clazz, String fieldName, String signature) {
@@ -76,6 +170,47 @@ public class JNICommonNativeUtil implements NativeReflection {
 
         Field field = _ToReflectedField(clazz, ref, false);
         return new JNINativeField(field.getDeclaringClass(), field.getType(), field.getName(), ref, true);
+    }
+
+    protected static native long _malloc(long size);
+
+    private static final PointerHandler FREE_HANDLER = new PointerHandler() {
+        @Override
+        public void handleClose(long ptr, long size, boolean read, boolean write) {
+            _free(ptr);
+        }
+
+        @Override
+        public void handleSync(long ptr, long size, boolean read, boolean write, long offset, long length, boolean invalidate) {
+            //NOOP.
+        }
+    };
+
+    protected static native void _free(long ptr);
+
+
+
+    /**
+     * Any calls to the resulting NativeMemory may cause the JVM to die due to a SEGFAULT is size is not specified correctly.
+     * the close() and sync() methods are noops.
+     *
+     * @param ptr pointer to the data
+     * @param size -1 if unknown.
+     */
+    public NativeMemory pointer(long ptr, long size, PointerHandler handler) throws NullPointerException {
+        if (size < 0) {
+            size = Long.MAX_VALUE;
+        }
+        return new JNINativeMemory(ptr, size, true, true, handler);
+    }
+
+    public NativeMemory malloc(long size) throws OutOfMemoryError, IllegalArgumentException {
+        if (size <= 0) {
+            throw new IllegalArgumentException("size <= 0");
+        }
+
+        long nPtr = _malloc(size);
+        return new JNINativeMemory(nPtr, size, true, true, FREE_HANDLER);
     }
 
 

@@ -1,5 +1,5 @@
 //
-// Copyright Alexander Schütz, 2021
+// Copyright Alexander Schütz, 2021-2022
 //
 // This file is part of JavaNativeUtils.
 //
@@ -43,6 +43,19 @@ public final class NativeUtils {
         return get().isLinux();
     }
 
+    public static boolean isJVM() {
+        return get().isJVM();
+    }
+
+    public static JVMNativeUtil getJVMUtil() {
+        NativeUtil util = get();
+        if (util instanceof JVMNativeUtil) {
+            return (JVMNativeUtil) util;
+        }
+
+        throw new UnsupportedOperationException("JVM functions not supported.");
+    }
+
     public static LinuxNativeUtil getLinuxUtil() {
         NativeUtil util = get();
         if (util instanceof LinuxNativeUtil) {
@@ -72,7 +85,8 @@ public final class NativeUtils {
         try {
             NativeLibraryLoaderHelper.loadNativeLibraries();
         } catch (LinkageError err) {
-            System.err.println("Failed to load native library for NativeUtils: " + err.getMessage());
+            System.err.println("Failed to load native library for NativeUtils.");
+            err.printStackTrace();
             instance = new NoopNativeUtil();
             return instance;
         }

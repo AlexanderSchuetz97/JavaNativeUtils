@@ -6,7 +6,7 @@
 
     <groupId>io.github.alexanderschuetz97</groupId>
     <artifactId>JavaNativeUtils</artifactId>
-    <version>1.2</version>
+    <version>1.5</version>
     <packaging>bundle</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>

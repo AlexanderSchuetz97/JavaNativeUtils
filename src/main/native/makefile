@@ -1,5 +1,5 @@
 #
-# Copyright Alexander Schütz, 2021
+# Copyright Alexander Schütz, 2021-2022
 #
 # This file is part of JavaNativeUtils.
 #
@@ -227,7 +227,7 @@ windows_i386: $(WINDOWS_OBJECTS_I386)
 	@echo ""
 	@echo "Linking windows dynamic linker library for i386"
 	@mkdir -p $(TARGET_DIR)
-	$(WINDOWS_CC_I386) -shared -o $(TARGET_DIR)/java_native_utils_i386.dll $(WINDOWS_OBJECTS_I386) $(WINDOWS_LIBS)
+	$(WINDOWS_CC_I386) -Wl,--export-all-symbols -Wl,--add-stdcall-alias -m32 -shared -o $(TARGET_DIR)/java_native_utils_i386.dll $(WINDOWS_OBJECTS_I386) $(WINDOWS_LIBS)
 	@echo ""
 
 linux_amd64: $(LINUX_OBJECTS_AMD64)

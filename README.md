@@ -14,7 +14,7 @@ Maven:
 <dependency>
     <groupId>io.github.alexanderschuetz97</groupId>
     <artifactId>JavaNativeUtils</artifactId>
-    <version>1.2</version>
+    <version>1.5</version>
 </dependency>
 ````
 
@@ -53,6 +53,11 @@ if (NativeUtils.isWindows()) {
 * setsockopt
 * close
 * recvfrom
+* recvmsg (includes CMSG HDR parsing)
+* mmap
+* msync
+* munmap
+* getpagesize
 
 #### Windows
 * _locking
@@ -66,50 +71,41 @@ if (NativeUtils.isWindows()) {
 * CloseHandle
 * strerror_s
 * FormatMessageA
+* SetupDiGetClassDevsA
+* SetupDiEnumDeviceInterfaces
+* SetupDiGetDeviceInterfaceDetail
+* SetupDiDestroyDeviceInfoList
+* DeviceIoControl
+* CreateEventA
+* ResetEvent
+* WaitForSingleObject
+* WaitForMultipleObjects
 
 ### List of exposed JNI Functions (All OS)
 ### Reflection
 Reason: In newer Java Versions (17+) Reflection was gutted and is no longer able to access private Fields. <br>
-All those methods are also availabe in sun.misc.Unsafe. <br>
+All those methods are also available in sun.misc.Unsafe. <br>
 Accessing sun.misc.Unsafe is also non-trivial in newer Java Versions depending on how your application/library is deployed/used.
+
+(X) is a substitute for this set "Object, Long, Int, Short, Char, Byte, Float, Double"
+
 * FromReflectedField
 * GetFieldID
-* GetObjectField
-* GetStaticObjectField
-* GetIntField
-* GetStaticIntField
-* GetLongField
-* GetStaticLongField
-* GetDoubleField
-* GetStaticDoubleField
-* GetFloatField
-* GetStaticFloatField
-* GetShortField
-* GetStaticShortField
-* GetCharField
-* GetStaticCharField
-* GetByteField
-* GetStaticByteField
-* GetBooleanField
-* GetStaticBooleanField
-* SetObjectField
-* SetStaticObjectField
-* SetIntField
-* SetStaticIntField
-* SetLongField
-* SetStaticLongField
-* SetDoubleField
-* SetStaticDoubleField
-* SetFloatField
-* SetStaticFloatField
-* SetShortField
-* SetStaticShortField
-* SetCharField
-* SetStaticCharField
-* SetByteField
-* SetStaticByteField
-* SetBooleanField
-* SetStaticBooleanField
+* Get(X)Field
+* GetStatic(X)Field
+* Set(X)Field
+* SetStatic(X)Field
+* FromReflectedMethod
+* GetMethodID
+* GetStaticMethodID
+* Call(X)Method
+* CallStatic(X)Method
+* AllocObject
+* NewObject
+* DefineClass
+* MonitorEnter
+* MonitorExit
+* Throw
 
 
 ## Dependencies

@@ -1,5 +1,5 @@
 //
-// Copyright Alexander Schütz, 2021
+// Copyright Alexander Schütz, 2021-2022
 //
 // This file is part of JavaNativeUtils.
 //
@@ -19,6 +19,10 @@
 //
 package io.github.alexanderschuetz97.nativeutils.api.exceptions;
 
+/**
+ * This exception signals the occurance of a native error with a given code.
+ * The meaning of the code depends on the context and OS of the syscall made.
+ */
 public class UnknownNativeErrorException extends Exception {
 
     private long code;

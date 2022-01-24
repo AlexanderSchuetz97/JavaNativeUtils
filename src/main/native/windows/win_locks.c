@@ -1,5 +1,5 @@
 //
-// Copyright Alexander Schütz, 2021
+// Copyright Alexander Schütz, 2021-2022
 //
 // This file is part of JavaNativeUtils.
 //
@@ -39,7 +39,7 @@
 JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil__1locking
   (JNIEnv * env, jobject inst, jint fd, jobject mode, jlong len) {
 	if (fd == -1) {
-		badFileDescriptor(env);
+		throwBadFileDescriptor(env);
 		return false;
 	}
 
@@ -62,12 +62,11 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 
 	if (_locking(fd, mMode, len) == -1) {
 		int err = errno;
-		printf("err %i\n", err);
 		switch(err) {
 		case EACCES:
 			return false;
 		case EBADF:
-			badFileDescriptor(env);
+			throwBadFileDescriptor(env);
 			return false;
 		case EDEADLOCK:
 			return false;
@@ -75,7 +74,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 			throwIllegalArgumentsExc(env, "_locking");
 			return false;
 		default:
-			unknownError(env, err);
+			throwUnknownError(env, err);
 			return false;
 		}
 	}
@@ -93,7 +92,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 
 	HANDLE h = (HANDLE) (uintptr_t) fd;
 	if (h == INVALID_HANDLE_VALUE) {
-		badFileDescriptor(env);
+		throwBadFileDescriptor(env);
 		return false;
 	}
 
@@ -122,7 +121,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 			case(ERROR_IO_PENDING):
 				return false;
 			default:
-				unknownError(env, error);
+				throwUnknownError(env, error);
 				return false;
 		}
 	}
@@ -140,7 +139,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 
 	HANDLE h = (HANDLE) (uintptr_t) fd;
 	if (h == INVALID_HANDLE_VALUE) {
-		badFileDescriptor(env);
+		throwBadFileDescriptor(env);
 		return false;
 	}
 
@@ -159,7 +158,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 			case (ERROR_NOT_LOCKED):
 				return false;
 			default:
-				unknownError(env, error);
+				throwUnknownError(env, error);
 				return false;
 		}
 	}

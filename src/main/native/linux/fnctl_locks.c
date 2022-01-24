@@ -1,5 +1,5 @@
 //
-// Copyright Alexander Schütz, 2021
+// Copyright Alexander Schütz, 2021-2022
 //
 // This file is part of JavaNativeUtils.
 //
@@ -45,7 +45,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	}
 
 	if (fd == -1) {
-		badFileDescriptor(env);
+		throwBadFileDescriptor(env);
 		return -1;
 	}
 
@@ -65,10 +65,10 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 			case (EAGAIN):
 				break;
 			case (EBADF):
-				badFileDescriptor(env);
+				throwBadFileDescriptor(env);
 				return false;
 			default:
-				unknownError(env, err);
+				throwUnknownError(env, err);
 				return false;
 		}
 	}
@@ -102,7 +102,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	}
 
 	if (fd == -1) {
-		badFileDescriptor(env);
+		throwBadFileDescriptor(env);
 		return;
 	}
 
@@ -120,10 +120,10 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 			case (EAGAIN):
 				break;
 			case (EBADF):
-				badFileDescriptor(env);
+				throwBadFileDescriptor(env);
 				return;
 			default:
-				unknownError(env, err);
+				throwUnknownError(env, err);
 				return;
 		}
 	}
@@ -154,7 +154,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 	}
 
 	if (fd == -1) {
-		badFileDescriptor(env);
+		throwBadFileDescriptor(env);
 		return false;
 	}
 
@@ -175,10 +175,10 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 			case (EAGAIN):
 				return false;
 			case (EBADF):
-				badFileDescriptor(env);
+				throwBadFileDescriptor(env);
 				return false;
 			default:
-				unknownError(env, err);
+				throwUnknownError(env, err);
 				return false;
 		}
 	}

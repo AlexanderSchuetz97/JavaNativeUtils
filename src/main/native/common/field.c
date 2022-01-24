@@ -1,5 +1,5 @@
 //
-// Copyright Alexander Schütz, 2021
+// Copyright Alexander Schütz, 2021-2022
 //
 // This file is part of JavaNativeUtils.
 //
@@ -19,7 +19,7 @@
 //
 #include "./jni/io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil.h"
 #include "common.h"
-
+#include "stdlib.h"
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil

@@ -1,5 +1,5 @@
 //
-// Copyright Alexander Schütz, 2021
+// Copyright Alexander Schütz, 2021-2022
 //
 // This file is part of JavaNativeUtils.
 //
@@ -21,6 +21,7 @@ package io.github.alexanderschuetz97.nativeutils;
 
 import io.github.alexanderschuetz97.nativeutils.api.LinuxNativeUtil;
 import io.github.alexanderschuetz97.nativeutils.api.NativeUtils;
+import io.github.alexanderschuetz97.nativeutils.api.structs.GUID;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Sockaddr;
 import org.junit.Assert;
 import org.junit.Test;
@@ -74,5 +75,11 @@ public class TestConversions {
             String s2 = util.from_sockaddr_un(sockaddr);
             Assert.assertEquals(""+i, s, s2);
         }
+    }
+
+    @Test
+    public void testGUID() {
+        GUID guid = new GUID("6B29FC40-CA47-1067-B31D-00DD010662DA");
+        Assert.assertEquals("6B29FC40-CA47-1067-B31D-00DD010662DA", guid.toString());
     }
 }

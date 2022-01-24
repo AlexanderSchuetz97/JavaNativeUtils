@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright Alexander Schütz, 2021
+# Copyright Alexander Schütz, 2021-2022
 #
 # This file is part of JavaNativeUtils.
 #
@@ -67,8 +67,8 @@ $JAVAH_COMMAND -cp src/main/java -d src/main/native/common/jni io.github.alexand
 $JAVAH_COMMAND -cp src/main/java -d src/main/native/common/jni io.github.alexanderschuetz97.nativeutils.impl.JNICommonNativeUtil
 $JAVAH_COMMAND -cp src/main/java -d src/main/native/common/jni io.github.alexanderschuetz97.nativeutils.impl.JNIWindowsNativeUtil
 $JAVAH_COMMAND -cp src/main/java -d src/main/native/common/jni io.github.alexanderschuetz97.nativeutils.impl.JNINativeField
-
-
+$JAVAH_COMMAND -cp src/main/java -d src/main/native/common/jni io.github.alexanderschuetz97.nativeutils.impl.JNINativeMemory
+$JAVAH_COMMAND -cp src/main/java -d src/main/native/common/jni io.github.alexanderschuetz97.nativeutils.impl.JNINativeMethod
 
 cd src/main/native
 make clean

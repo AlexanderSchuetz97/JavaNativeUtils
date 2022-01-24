@@ -1,5 +1,5 @@
 //
-// Copyright Alexander Schütz, 2021
+// Copyright Alexander Schütz, 2021-2022
 //
 // This file is part of JavaNativeUtils.
 //
@@ -40,7 +40,7 @@ void handleError(JNIEnv * env, int err, const char* path) {
 			throwIllegalArgumentsExc(env, "path is invalid");
 			break;
 		default:
-			unknownError(env, err);
+			throwUnknownError(env, err);
 			break;
 	}
 }
@@ -128,7 +128,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 
 	if (result == 0) {
 		DWORD err = GetLastError();
-		unknownError(env, err);
+		throwUnknownError(env, err);
 		return NULL;
 	}
 

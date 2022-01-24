@@ -1,5 +1,5 @@
 //
-// Copyright Alexander Schütz, 2021
+// Copyright Alexander Schütz, 2021-2022
 //
 // This file is part of JavaNativeUtils.
 //
@@ -79,7 +79,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 		throwNotDirectoryException(env, chars);
 		break;
 	default:
-		unknownError(env, err);
+		throwUnknownError(env, err);
 		break;
 	}
 

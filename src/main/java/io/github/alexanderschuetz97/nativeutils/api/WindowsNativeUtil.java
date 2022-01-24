@@ -1,5 +1,5 @@
 //
-// Copyright Alexander Schütz, 2021
+// Copyright Alexander Schütz, 2021-2022
 //
 // This file is part of JavaNativeUtils.
 //
@@ -20,8 +20,12 @@
 package io.github.alexanderschuetz97.nativeutils.api;
 
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.InvalidFileDescriptorException;
+import io.github.alexanderschuetz97.nativeutils.api.exceptions.MutexAbandonedException;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.SharingViolationException;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
+import io.github.alexanderschuetz97.nativeutils.api.structs.GUID;
+import io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInfoData;
+import io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInterfaceData;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Stat;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Win32FileAttributeData;
 
@@ -29,7 +33,7 @@ import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.nio.file.FileAlreadyExistsException;
 
-public interface WindowsNativeUtil extends NativeReflection {
+public interface WindowsNativeUtil extends JVMNativeUtil, NativeUtil {
 
     /**
      * see https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/locking?view=msvc-170
@@ -49,6 +53,12 @@ public interface WindowsNativeUtil extends NativeReflection {
      * Returns the HANDLE (void *) based file descriptor of the given java FileDescriptor or -1 (INVALID_HANDLE_VALUE) if it is invalid.
      */
     long getHandle(FileDescriptor fd);
+
+    /**
+     * Returns size of void* or windows HANDLE datatype in bytes. Either 4 or 8 bytes.
+     * The returned value is constant.
+     */
+    int getPointerSize();
 
     /**
      * returns true if successful false if not.
@@ -74,6 +84,22 @@ public interface WindowsNativeUtil extends NativeReflection {
      * returns true if successful false if not.
      */
     boolean UnlockFileEx(long handle, long start, long len) throws UnknownNativeErrorException, InvalidFileDescriptorException;
+
+    /**
+     * Allocates a new pointer of the given size
+     * @throws OutOfMemoryError if malloc returns NULL
+     * @throws IllegalArgumentException if size is <= 0
+     */
+    NativeMemory malloc(long size) throws OutOfMemoryError, IllegalArgumentException;
+
+    /**
+     * Any calls to the resulting NativeMemory may cause the JVM to die due to a SEGFAULT is size is not specified correctly.
+     * the close() and sync() methods are noops.
+     *
+     * @param ptr pointer to the data
+     * @param size -1 if unknown.
+     */
+    NativeMemory pointer(long ptr, long size, PointerHandler handler) throws NullPointerException;
 
 
     Stat _stat64(String path) throws UnknownNativeErrorException, FileNotFoundException, IllegalArgumentException;
@@ -133,6 +159,117 @@ public interface WindowsNativeUtil extends NativeReflection {
      * This holds especially true for a HANDLE aquired by calling #getHandle
      */
     void CloseHandle(long handle) throws UnknownNativeErrorException, InvalidFileDescriptorException;
+
+    /**
+     * Convenience method that uses the SetupDiGetClassDevsA+SetupDiEnumDeviceInterfaces+SetupDiGetDeviceInterfaceDetail
+     * Syscalls to provide the return value of SetupDiGetDeviceInterfaceDetail into a iterable for easier use.
+     *
+     * @param deviceClass for SetupDiGetClassDevsA, can be null
+     * @param enumerator for SetupDiGetClassDevsA, can be null
+     * @param flags for SetupDiGetClassDevsA
+     * @param interfaceClass for SetupDiEnumDeviceInterfaces, can NOT be null
+     */
+    Iterable<String> iterateDeviceInterfaces(GUID deviceClass, String enumerator, int flags, GUID interfaceClass) throws UnknownNativeErrorException;
+
+    /**
+     * Create a device enumeration for connected hardware devices.
+     * Returns a HANDLE to the enumeration that must be destroyed by calling SetupDiDestroyDeviceInfoList
+     * @param hwndParent set to '0' for absence of a parent device class
+     * @param Enumerator can be null
+     * @param ClassGuid can be null
+     */
+    long SetupDiGetClassDevsA(GUID ClassGuid, String Enumerator, long hwndParent, int flags) throws UnknownNativeErrorException;
+
+    /**
+     * Get a device element from the device set.
+     *
+     * @param DeviceInfoSet obtained from SetupDiGetClassDevsA
+     * @param DeviceInfoData can be null (the syscall that returns this is not yet implemented)
+     * @param InterfaceClassGuid can NOT be null
+     * @param index index from the set. Starts at 0, increment to iterate over the devices.
+     * @return an element from the set or null if there is no more data.
+     */
+    SpDeviceInterfaceData SetupDiEnumDeviceInterfaces(long DeviceInfoSet, SpDeviceInfoData DeviceInfoData, GUID InterfaceClassGuid, int index) throws UnknownNativeErrorException;
+
+    /**
+     * Get detailed info from a device.
+     *
+     * @param DeviceInfoSet obtained from SetupDiGetClassDevsA
+     * @param DeviceInterfaceData obtained from SetupDiEnumDeviceInterfaces
+     * @param outputData may be null if not needed. Output parameter
+     *
+     * @return return device path as String.
+     */
+    String SetupDiGetDeviceInterfaceDetail(long DeviceInfoSet, SpDeviceInterfaceData DeviceInterfaceData, SpDeviceInfoData outputData);
+
+    /**
+     * Destroys a handle created by SetupDiGetClassDevsA
+     */
+    void SetupDiDestroyDeviceInfoList(long handle) throws UnknownNativeErrorException;
+
+    /**
+     * Sends a control code directly to a specified device driver, causing the corresponding device to perform the corresponding operation.
+     *
+     * @param hDevice device handle, probably obtained from CreateFileA with
+     * @param dwIoControlCode device specific code of the operation
+     * @param inBuffer input buffer, can be null
+     * @param outBuffer output buffer, can be null
+     * @return returns the amount of bytes filled into outBuffer
+     */
+    int DeviceIoControl(long hDevice, int dwIoControlCode, byte[] inBuffer, int inOff, int inLen, byte[] outBuffer, int outOff, int outLen) throws UnknownNativeErrorException;
+
+    /**
+     * Sends a control code directly to a specified device driver, causing the corresponding device to perform the corresponding operation.
+     *
+     * @param hDevice device handle, probably obtained from CreateFileA with
+     * @param dwIoControlCode device specific code of the operation
+     * @param inBuffer input buffer memory, can be null
+     * @param outBuffer output buffer memory, can be null
+     * @return returns the amount of bytes filled into outBuffer
+     */
+    int DeviceIoControl(long hDevice, int dwIoControlCode, NativeMemory inBuffer, long inOff, int inLen, NativeMemory outBuffer, long outOff, int outLen) throws UnknownNativeErrorException;
+
+    /**
+     * Helper function for CTL_CODE macro that can be used to generate the dwIoControlCode for the DeviceIoControl function.
+     * The return value of this method is constant.
+     */
+    int CTL_CODE(int DeviceType, int Function, int Method, int Access);
+
+    /**
+     * Returns a newly event handle from the OS.
+     * CloseHandle destroys this handle.
+     *
+     * @param lpEventAttributes pointer treated as LPSECURITY_ATTRIBUTES
+     * @param manualReset if true then the event must be manually reset by calling ResetEvent
+     * @param initalState if true then the event is initally set and must be first manually reset using ResetEvent
+     * @param name name of the event, may be null.
+     * @return the handle to the event.
+     */
+    long CreateEventA(long lpEventAttributes, boolean manualReset, boolean initalState, String name) throws UnknownNativeErrorException;
+
+
+    /**
+     * Resets the given event handle.
+     */
+    void ResetEvent(long handle) throws UnknownNativeErrorException;
+
+    /**
+     * Waits for a single event handle. Be aware that Java has no way to interrupt this call.
+     * @param handle the handle
+     * @param millis timeout in millis
+     * @return true if the wait was successfull false on timeout
+     */
+    boolean WaitForSingleObject(long handle, int millis) throws UnknownNativeErrorException, InvalidFileDescriptorException, MutexAbandonedException;
+
+    /**
+     * Wait for any or all event handles in a handle array. Be aware that Java has no way to interrupt this call.
+     *
+     * @param handles handles array. May not be null. May not be larger than 64.
+     * @param millis the timeout in milliseconds.
+     * @param waitAll wait for every handle in the array.
+     * @return the index of the handle that was sucessfully waited on. -1 for timeout. returns 0 upon success if waitAll flag is set to true.
+     */
+    int WaitForMultipleObjects(long[] handles, int millis, boolean waitAll) throws UnknownNativeErrorException, InvalidFileDescriptorException, MutexAbandonedException;
 
     /**
      * Returns a english string repesentation of the native error code.

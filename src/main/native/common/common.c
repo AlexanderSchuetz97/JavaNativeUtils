@@ -1,5 +1,5 @@
 //
-// Copyright Alexander Schütz, 2021
+// Copyright Alexander Schütz, 2021-2022
 //
 // This file is part of JavaNativeUtils.
 //
@@ -23,6 +23,14 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <assert.h>
+
+//These checks have to be somewhere
+static_assert(sizeof(uintptr_t) <= sizeof(jlong), "pointer doesnt fit in jlong");
+static_assert(sizeof(jshort) == 2, "jshort is not 2 byte");
+static_assert(sizeof(jint) == 4, "jint is not 4 byte");
+static_assert(sizeof(jlong) == 8, "jlong is not 8 byte");
+static_assert(sizeof(jbyte) == 1, "jbyte is not 1 byte");
 
 
 jclass fdClass = NULL;
@@ -38,6 +46,9 @@ jmethodID badFDConstructor = NULL;
 
 jclass unknownErrorClass = NULL;
 jmethodID unknownErrorConstructor = NULL;
+
+jclass MutexAbandonedException = NULL;
+jmethodID MutexAbandonedExceptionConstructor = NULL;
 
 jclass IllegalArgumentException = NULL;
 jclass IllegalStateException = NULL;
@@ -71,10 +82,10 @@ jclass QuotaExceededException = NULL;
 jmethodID QuotaExceededExceptionConstructor = NULL;
 
 jclass Field = NULL;
-jmethodID Field_getModifier;
-jmethodID Field_getDeclaringClass;
+jmethodID Field_getModifier = NULL;
+jmethodID Field_getDeclaringClass = NULL;
 
-jclass NullPointerException;
+jclass NullPointerException = NULL;
 
 jclass SharingViolationException = NULL;
 jmethodID SharingViolationExceptionConstructor = NULL;
@@ -93,16 +104,37 @@ jmethodID Collection_clear = NULL;
 jmethodID Collection_size = NULL;
 jmethodID Collection_iterator = NULL;
 
+jclass ArrayList = NULL;
+jmethodID ArrayListConstructor = NULL;
+
 jclass Iterator = NULL;
 jmethodID Iterator_next = NULL;
 jmethodID Iterator_hasNext = NULL;
 
 jclass OperationInProgressException = NULL;
 
-jclass InetSocketAddress;
-jmethodID InetSocketAddressConstructor;
-jmethodID InetSocketAddress_getPort;
-jmethodID InetSocketAddress_getAddress;
+jclass InetSocketAddress = NULL;
+jmethodID InetSocketAddressConstructor = NULL;
+jmethodID InetSocketAddress_getPort = NULL;
+jmethodID InetSocketAddress_getAddress = NULL;
+
+jclass Integer;
+jfieldID Integer_value;
+jclass Long;
+jfieldID Long_value;
+jclass Short;
+jfieldID Short_value;
+jclass Byte;
+jfieldID Byte_value;
+jclass Boolean;
+jfieldID Boolean_value;
+jclass Double;
+jfieldID Double_value;
+jclass Float;
+jfieldID Float_value;
+jclass Character;
+jfieldID Character_value;
+
 
 
 
@@ -113,7 +145,7 @@ jmethodID InetSocketAddress_getAddress;
  */
 JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_NativeLibraryLoaderHelper_getNativeLibVersion
   (JNIEnv * env, jclass clazz) {
-	return 1;
+	return 4;
 }
 
 
@@ -129,6 +161,10 @@ void delRefs(JNIEnv * env) {
 
 	if (unknownErrorClass != NULL) {
 		(*env) -> DeleteGlobalRef(env, unknownErrorClass);
+	}
+
+	if (MutexAbandonedException != NULL) {
+		(*env) -> DeleteGlobalRef(env, MutexAbandonedException);
 	}
 
 	if (IllegalArgumentException != NULL) {
@@ -256,6 +292,140 @@ void delRefs(JNIEnv * env) {
 		(*env)->DeleteGlobalRef(env, Sockaddr);
 	}
 
+	if (Msghdr != NULL) {
+		(*env)->DeleteGlobalRef(env, Msghdr);
+	}
+
+	if (Iovec != NULL) {
+		(*env)->DeleteGlobalRef(env, Iovec);
+	}
+
+	if (ArrayList != NULL) {
+		(*env)->DeleteGlobalRef(env, ArrayList);
+	}
+
+	if (Cmsghdr != NULL) {
+		(*env)->DeleteGlobalRef(env, Cmsghdr);
+	}
+
+	if (GUID_Class != NULL) {
+		(*env)->DeleteGlobalRef(env, GUID_Class);
+	}
+
+	if (SpDeviceInfoData != NULL) {
+		(*env)->DeleteGlobalRef(env, SpDeviceInfoData);
+	}
+
+	if (SpDeviceInterfaceData != NULL) {
+		(*env)->DeleteGlobalRef(env, SpDeviceInterfaceData);
+	}
+
+	if (JNINativeMemory != NULL) {
+		(*env)->DeleteGlobalRef(env, JNINativeMemory);
+	}
+
+	if (Integer != NULL) {
+		(*env)->DeleteGlobalRef(env, Integer);
+	}
+
+	if (Long != NULL) {
+		(*env)->DeleteGlobalRef(env, Long);
+	}
+
+	if (Short != NULL) {
+		(*env)->DeleteGlobalRef(env, Short);
+	}
+
+	if (Byte != NULL) {
+		(*env)->DeleteGlobalRef(env, Byte);
+	}
+
+	if (Boolean != NULL) {
+		(*env)->DeleteGlobalRef(env, Boolean);
+	}
+
+	if (Double != NULL) {
+		(*env)->DeleteGlobalRef(env, Double);
+	}
+
+	if (Float != NULL) {
+		(*env)->DeleteGlobalRef(env, Float);
+	}
+
+	if (Character != NULL) {
+		(*env)->DeleteGlobalRef(env, Character);
+	}
+
+	Integer = NULL;
+	Integer_value = NULL;
+	Long = NULL;
+	Long_value = NULL;
+	Short = NULL;
+	Short_value = NULL;
+	Byte = NULL;
+	Byte_value = NULL;
+	Boolean = NULL;
+	Boolean_value = NULL;
+	Double = NULL;
+	Double_value = NULL;
+	Float = NULL;
+	Float_value = NULL;
+	Character = NULL;
+	Character_value = NULL;
+
+
+	GUID_Class = NULL;
+	GUID_constructor = NULL;
+	GUID_data1 = NULL;
+	GUID_data2 = NULL;
+	GUID_data3 = NULL;
+	GUID_data4 = NULL;
+
+	SpDeviceInfoData = NULL;
+	SpDeviceInfoData_cbSize = NULL;
+	SpDeviceInfoData_InterfaceClassGuid = NULL;
+	SpDeviceInfoData_DevInst = NULL;
+	SpDeviceInfoData_InterfaceClassGuid = NULL;
+	SpDeviceInfoData_ptr = NULL;
+
+	SpDeviceInterfaceData = NULL;
+	SpDeviceInterfaceData_constructor = NULL;
+	SpDeviceInterfaceData_cbSize = NULL;
+	SpDeviceInterfaceData_InterfaceClassGuid = NULL;
+	SpDeviceInterfaceData_flags = NULL;
+	SpDeviceInterfaceData_InterfaceClassGuid = NULL;
+	SpDeviceInterfaceData_ptr = NULL;
+
+	MutexAbandonedException = NULL;
+	MutexAbandonedExceptionConstructor = NULL;
+
+
+	Cmsghdr = NULL;
+	CmsghdrConstructor = NULL;
+	Cmsghdr_payload = NULL;
+	Cmsghdr_cmsg_type = NULL;
+	Cmsghdr_cmsg_level = NULL;
+
+	ArrayList = NULL;
+	ArrayListConstructor = NULL;
+
+	Iovec = NULL;
+	Iovec_len = NULL;
+	Iovec_off = NULL;
+	Iovec_payload = NULL;
+	Iovec_size = NULL;
+
+	Msghdr = NULL;
+	Msghdr_complete = NULL;
+	Msghdr_controlDataTruncated = NULL;
+	Msghdr_errQueue = NULL;
+	Msghdr_msg_control = NULL;
+	Msghdr_msg_controllen = NULL;
+	Msghdr_msg_iov = NULL;
+	Msghdr_msg_name = NULL;
+	Msghdr_outOfBand = NULL;
+	Msghdr_truncated = NULL;
+
 	Sockaddr = NULL;
 	Sockaddr_address = NULL;
 	Sockaddr_addressFamily = NULL;
@@ -358,7 +528,11 @@ void delRefs(JNIEnv * env) {
 	fdHandleField = NULL;
 	AccessDeniedExceptionConstructor = NULL;
 	InvalidPathExceptionConstructor = NULL;
+
+	JNINativeMemory_ptr = NULL;
 }
+
+
 
 jclass makeGlobalClassRef(JNIEnv * env, const char * name) {
 	jclass clazz = (*env) ->FindClass(env, name);
@@ -433,6 +607,252 @@ bool makeRefs(JNIEnv * env) {
 		return false;
 	}
 
+	Integer = makeGlobalClassRef(env, "java/lang/Integer");
+	if (Integer == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find java/lang/Integer");
+		return false;
+	}
+
+	Integer_value = (*env)->GetFieldID(env, Integer, "value", "I");
+	if (Integer_value == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find java/lang/Integer.value");
+		return false;
+	}
+
+	Long = makeGlobalClassRef(env, "java/lang/Long");
+	if (Long == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find java/lang/Long");
+		return false;
+	}
+
+	Long_value = (*env)->GetFieldID(env, Long, "value", "J");
+	if (Long_value == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find java/lang/Long.value");
+		return false;
+	}
+
+	Short = makeGlobalClassRef(env, "java/lang/Short");
+	if (Short == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find java/lang/Short");
+		return false;
+	}
+
+	Short_value = (*env)->GetFieldID(env, Short, "value", "S");
+	if (Short_value == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find java/lang/Short.value");
+		return false;
+	}
+
+	Byte = makeGlobalClassRef(env, "java/lang/Byte");
+	if (Byte == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find java/lang/Byte");
+		return false;
+	}
+
+	Byte_value = (*env)->GetFieldID(env, Byte, "value", "B");
+	if (Byte_value == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find java/lang/Byte.value");
+		return false;
+	}
+
+	Boolean = makeGlobalClassRef(env, "java/lang/Boolean");
+	if (Boolean == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find java/lang/Boolean");
+		return false;
+	}
+
+	Boolean_value = (*env)->GetFieldID(env, Boolean, "value", "Z");
+	if (Boolean_value == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find java/lang/Boolean.value");
+		return false;
+	}
+
+	Character = makeGlobalClassRef(env, "java/lang/Character");
+	if (Character == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find java/lang/Character");
+		return false;
+	}
+
+	Character_value = (*env)->GetFieldID(env, Character, "value", "C");
+	if (Character_value == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find java/lang/Character.value");
+		return false;
+	}
+
+	Float = makeGlobalClassRef(env, "java/lang/Float");
+	if (Float == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find java/lang/Float");
+		return false;
+	}
+
+	Float_value = (*env)->GetFieldID(env, Float, "value", "F");
+	if (Float_value == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find java/lang/Float.value");
+		return false;
+	}
+
+	Double = makeGlobalClassRef(env, "java/lang/Double");
+	if (Double == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find java/lang/Double");
+		return false;
+	}
+
+	Double_value = (*env)->GetFieldID(env, Double, "value", "D");
+	if (Double_value == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find java/lang/Double.value");
+		return false;
+	}
+
+	JNINativeMemory = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/impl/JNINativeMemory");
+	if (JNINativeMemory == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/impl/JNINativeMemory");
+		return false;
+	}
+
+	JNINativeMemory_ptr = (*env)->GetFieldID(env, JNINativeMemory, "ptr", "J");
+	if (JNINativeMemory_ptr == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/impl/JNINativeMemory.ptr");
+		return false;
+	}
+
+	GUID_Class = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/GUID");
+	if (GUID_Class == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/GUID");
+		return false;
+	}
+
+	GUID_constructor = (*env)->GetMethodID(env, GUID_Class, "<init>", "()V");
+	if (GUID_constructor == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/GUID.<init>()V");
+		return false;
+	}
+
+	GUID_data1 = (*env)->GetFieldID(env, GUID_Class, "data1", "I");
+	if (GUID_data1 == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/GUID.data1");
+		return false;
+	}
+
+	GUID_data2 = (*env)->GetFieldID(env, GUID_Class, "data2", "S");
+	if (GUID_data2 == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/GUID.data2");
+		return false;
+	}
+
+	GUID_data3 = (*env)->GetFieldID(env, GUID_Class, "data3", "S");
+	if (GUID_data3 == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/GUID.data3");
+		return false;
+	}
+	GUID_data4 = (*env)->GetFieldID(env, GUID_Class, "data4", "[B");
+	if (GUID_data4 == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/GUID.data4");
+		return false;
+	}
+
+	SpDeviceInfoData = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData");
+	if (SpDeviceInfoData == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData");
+		return false;
+	}
+
+	SpDeviceInfoData_cbSize = (*env)->GetFieldID(env, SpDeviceInfoData, "cbSize", "I");
+	if (SpDeviceInfoData_cbSize == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData.cbSize");
+		return false;
+	}
+
+	SpDeviceInfoData_InterfaceClassGuid = (*env)->GetFieldID(env, SpDeviceInfoData, "InterfaceClassGuid", "Lio/github/alexanderschuetz97/nativeutils/api/structs/GUID;");
+	if (SpDeviceInfoData_InterfaceClassGuid == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData.InterfaceClassGuid");
+		return false;
+	}
+
+	SpDeviceInfoData_DevInst = (*env)->GetFieldID(env, SpDeviceInfoData, "DevInst", "I");
+	if (SpDeviceInfoData_cbSize == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData.DevInst");
+		return false;
+	}
+
+	SpDeviceInfoData_ptr = (*env)->GetFieldID(env, SpDeviceInfoData, "ptr", "J");
+	if (SpDeviceInfoData_cbSize == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData.ptr");
+		return false;
+	}
+
+	SpDeviceInterfaceData = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData");
+	if (SpDeviceInterfaceData == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData");
+		return false;
+	}
+
+	SpDeviceInterfaceData_constructor = (*env)->GetMethodID(env, SpDeviceInterfaceData, "<init>", "()V");
+	if (SpDeviceInterfaceData_constructor == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData.<init>()V");
+		return false;
+	}
+
+	SpDeviceInterfaceData_cbSize = (*env)->GetFieldID(env, SpDeviceInterfaceData, "cbSize", "I");
+	if (SpDeviceInterfaceData_cbSize == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData.cbSize");
+		return false;
+	}
+
+	SpDeviceInterfaceData_InterfaceClassGuid = (*env)->GetFieldID(env, SpDeviceInterfaceData, "InterfaceClassGuid", "Lio/github/alexanderschuetz97/nativeutils/api/structs/GUID;");
+	if (SpDeviceInterfaceData_InterfaceClassGuid == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData.InterfaceClassGuid");
+		return false;
+	}
+
+	SpDeviceInterfaceData_flags = (*env)->GetFieldID(env, SpDeviceInterfaceData, "flags", "I");
+	if (SpDeviceInterfaceData_flags == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData.flags");
+		return false;
+	}
+
+
+	SpDeviceInterfaceData_ptr = (*env)->GetFieldID(env, SpDeviceInterfaceData, "ptr", "J");
+	if (SpDeviceInterfaceData_ptr == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData.ptr");
+		return false;
+	}
+
+
 	Sockaddr = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr");
 	if (Sockaddr == NULL) {
 		(*env) -> ExceptionClear(env);
@@ -465,6 +885,41 @@ bool makeRefs(JNIEnv * env) {
 	if (OperationInProgressException == NULL) {
 		(*env) -> ExceptionClear(env);
 		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/OperationInProgressException");
+		return false;
+	}
+
+
+	Cmsghdr = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Cmsghdr");
+	if (Cmsghdr == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Cmsghdr");
+	}
+
+	CmsghdrConstructor = (*env)->GetMethodID(env, Cmsghdr, "<init>", "()V");
+	if (CmsghdrConstructor == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Cmsghdr.<init>()V");
+		return false;
+	}
+
+	Cmsghdr_payload = (*env)->GetFieldID(env, Cmsghdr, "payload", "[B");
+	if (Cmsghdr_payload == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Cmsghdr.payload");
+		return false;
+	}
+
+	Cmsghdr_cmsg_type = (*env)->GetFieldID(env, Cmsghdr, "cmsg_type", "I");
+	if (Cmsghdr_cmsg_type == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Cmsghdr.cmsg_type");
+		return false;
+	}
+
+	Cmsghdr_cmsg_level = (*env)->GetFieldID(env, Cmsghdr, "cmsg_level", "I");
+	if (Cmsghdr_cmsg_level == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Cmsghdr.cmsg_level");
 		return false;
 	}
 
@@ -532,6 +987,110 @@ bool makeRefs(JNIEnv * env) {
 	}
 
 
+	Msghdr = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Msghdr");
+	if (Msghdr == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Msghdr");
+		return false;
+	}
+
+	Msghdr_msg_iov = (*env)->GetFieldID(env, Msghdr, "msg_iov", "[Lio/github/alexanderschuetz97/nativeutils/api/structs/Iovec;");
+	if (Msghdr_msg_iov == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Msghdr.msg_iov");
+		return false;
+	}
+
+	Msghdr_msg_control = (*env)->GetFieldID(env, Msghdr, "msg_control", "[B");
+	if (Msghdr_msg_control == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Msghdr.msg_control");
+		return false;
+	}
+
+	Msghdr_msg_controllen = (*env)->GetFieldID(env, Msghdr, "msg_controllen", "I");
+	if (Msghdr_msg_control == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Msghdr.msg_controllen");
+		return false;
+	}
+
+	Msghdr_msg_name = (*env)->GetFieldID(env, Msghdr, "msg_name", "Lio/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr;");
+	if (Msghdr_msg_name == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Msghdr.msg_name");
+		return false;
+	}
+
+	Msghdr_complete = (*env)->GetFieldID(env, Msghdr, "complete", "Z");
+	if (Msghdr_complete == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Msghdr.complete");
+		return false;
+	}
+
+	Msghdr_truncated = (*env)->GetFieldID(env, Msghdr, "truncated", "Z");
+	if (Msghdr_truncated == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Msghdr.truncated");
+		return false;
+	}
+
+	Msghdr_controlDataTruncated = (*env)->GetFieldID(env, Msghdr, "controlDataTruncated", "Z");
+	if (Msghdr_controlDataTruncated == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Msghdr.controlDataTruncated");
+		return false;
+	}
+
+	Msghdr_outOfBand = (*env)->GetFieldID(env, Msghdr, "outOfBand", "Z");
+	if (Msghdr_outOfBand == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Msghdr.outOfBand");
+		return false;
+	}
+
+	Msghdr_errQueue = (*env)->GetFieldID(env, Msghdr, "errQueue", "Z");
+	if (Msghdr_errQueue == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Msghdr.errQueue");
+		return false;
+	}
+
+	Iovec = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Iovec");
+	if (Iovec == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Iovec");
+		return false;
+	}
+
+	Iovec_off = (*env)->GetFieldID(env, Iovec, "off", "I");
+	if (Iovec_off == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Iovec.off");
+		return false;
+	}
+
+	Iovec_len = (*env)->GetFieldID(env, Iovec, "len", "I");
+	if (Iovec_len == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Iovec.len");
+		return false;
+	}
+
+	Iovec_size = (*env)->GetFieldID(env, Iovec, "size", "I");
+	if (Iovec_size == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Iovec.size");
+		return false;
+	}
+
+	Iovec_payload = (*env)->GetFieldID(env, Iovec, "payload", "[B");
+	if (Iovec_payload == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Iovec.payload");
+		return false;
+	}
 
 
 
@@ -570,6 +1129,21 @@ bool makeRefs(JNIEnv * env) {
 		(*env) -> ThrowNew(env, Exception, "cant find java/util/Collection.iterator()Ljava/util/Iterator;");
 		return false;
 	}
+
+	ArrayList = makeGlobalClassRef(env, "java/util/ArrayList");
+	if (ArrayList == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find java/util/ArrayList");
+		return false;
+	}
+
+	ArrayListConstructor = (*env)->GetMethodID(env, ArrayList, "<init>", "()V");
+	if (ArrayList == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find java/util/ArrayList.<init>()V");
+		return false;
+	}
+
 
 
 	Iterator = makeGlobalClassRef(env, "java/util/Iterator");
@@ -947,6 +1521,20 @@ bool makeRefs(JNIEnv * env) {
 		return false;
 	}
 
+	MutexAbandonedException = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/exceptions/MutexAbandonedException");
+	if (MutexAbandonedException == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/MutexAbandonedException");
+		return false;
+	}
+
+	MutexAbandonedExceptionConstructor = (*env) ->GetMethodID(env, MutexAbandonedException, "<init>", "(J)V");
+	if (MutexAbandonedExceptionConstructor == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/MutexAbandonedException.<init>(J)V");
+		return false;
+	}
+
 	InvalidPathException = makeGlobalClassRef(env, "java/nio/file/InvalidPathException");
 	if (InvalidPathException == NULL) {
 		(*env) -> ExceptionClear(env);
@@ -1056,6 +1644,62 @@ void delRef(JNIEnv * env, jobject obj) {
 	(*env) -> DeleteLocalRef(env, obj);
 }
 
+jint unboxInt(JNIEnv * env, jobject box) {
+	if (box == NULL) {
+		return 0;
+	}
+	return (*env)->GetIntField(env, box, Integer_value);
+}
+
+jlong unboxLong(JNIEnv * env, jobject box) {
+	if (box == NULL) {
+		return 0;
+	}
+	return (*env)->GetLongField(env, box, Long_value);
+}
+
+jshort unboxShort(JNIEnv * env, jobject box) {
+	if (box == NULL) {
+		return 0;
+	}
+	return (*env)->GetShortField(env, box, Short_value);
+}
+
+jboolean unboxBool(JNIEnv * env, jobject box) {
+	if (box == NULL) {
+		return 0;
+	}
+	return (*env)->GetBooleanField(env, box, Boolean_value);
+}
+
+jchar unboxChar(JNIEnv * env, jobject box) {
+	if (box == NULL) {
+		return 0;
+	}
+	return (*env)->GetCharField(env, box, Character_value);
+}
+
+jbyte unboxByte(JNIEnv * env, jobject box) {
+	if (box == NULL) {
+		return 0;
+	}
+	return (*env)->GetByteField(env, box, Byte_value);
+}
+
+jdouble unboxDouble(JNIEnv * env, jobject box) {
+	if (box == NULL) {
+		return 0;
+	}
+	return (*env)->GetDoubleField(env, box, Double_value);
+}
+
+jfloat unboxFloat(JNIEnv * env, jobject box) {
+	if (box == NULL) {
+		return 0;
+	}
+	return (*env)->GetFloatField(env, box, Float_value);
+}
+
 jstring toJString(JNIEnv * env, const char* data) {
 	if (data == NULL) {
 		return NULL;
@@ -1068,7 +1712,7 @@ jstring toJString(JNIEnv * env, const char* data) {
 	return str;
 }
 
-void unknownError(JNIEnv * env, jlong code) {
+void throwUnknownError(JNIEnv * env, jlong code) {
 	jobject inst = (*env) -> NewObject(env, unknownErrorClass, unknownErrorConstructor, code);
 	if (inst == NULL) {
 		//OOM already thrown
@@ -1078,7 +1722,17 @@ void unknownError(JNIEnv * env, jlong code) {
 	(*env)->DeleteLocalRef(env, inst);
 }
 
-void badFileDescriptor(JNIEnv * env) {
+void throwMutexAbandonedException(JNIEnv * env, jlong handle) {
+	jobject inst = (*env) -> NewObject(env, MutexAbandonedException, MutexAbandonedExceptionConstructor, handle);
+	if (inst == NULL) {
+		//OOM already thrown
+		return;
+	}
+	(*env)->Throw( env, inst );
+	(*env)->DeleteLocalRef(env, inst);
+}
+
+void throwBadFileDescriptor(JNIEnv * env) {
 	jobject inst = (*env) -> NewObject(env, badFDClass, badFDConstructor);
 	(*env)->Throw( env, inst );
 	(*env)->DeleteLocalRef(env, inst );
@@ -1089,9 +1743,7 @@ void throwFSLoop(JNIEnv * env, const char* file) {
 }
 
 void throwUnsupportedExc(JNIEnv * env, const char* message) {
-	unknownError(env, 9999);
-
-	//(*env)->ThrowNew( env, UnsupportedOperationException, message);
+	(*env)->ThrowNew( env, UnsupportedOperationException, message);
 }
 
 void throwFSReadOnly(JNIEnv * env) {
@@ -1136,7 +1788,7 @@ void throwInvalidPath(JNIEnv * env, const char* path, const char* reason) {
 		return;
 	}
 
-	(*env)->Throw( env, inst );
+	(*env)->Throw(env, inst);
 	(*env)->DeleteLocalRef(env, inst);
 }
 
@@ -1366,6 +2018,10 @@ void collection_clear(JNIEnv * env, jobject collection) {
 	(*env)->CallVoidMethod(env, collection, Collection_clear);
 }
 
+jobject new_array_list(JNIEnv * env) {
+	return (*env)->NewObject(env, ArrayList, ArrayListConstructor);
+}
+
 int getEnumOrdinal(JNIEnv * env, jobject e) {
 	if (e == NULL) {
 		return -1;
@@ -1399,3 +2055,5 @@ JNIEXPORT void JNICALL JNI_OnUnload(JavaVM *vm, void *reserved) {
 
 	delRefs(env);
 }
+
+

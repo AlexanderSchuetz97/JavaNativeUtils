@@ -1,5 +1,5 @@
 //
-// Copyright Alexander Schütz, 2021
+// Copyright Alexander Schütz, 2021-2022
 //
 // This file is part of JavaNativeUtils.
 //
@@ -58,7 +58,7 @@ void handleError(JNIEnv * env, int err, const char* path) {
 		throwFSAccessDenied(env, path, NULL, "Search permission is denied for one of the directories in the path prefix of path.");
 		return;
 	case (EBADF):
-		badFileDescriptor(env);
+		throwBadFileDescriptor(env);
 		return;
 	case (ELOOP):
 		throwFSLoop(env, path);
@@ -79,7 +79,7 @@ void handleError(JNIEnv * env, int err, const char* path) {
 		throwIOExc(env, "An I/O error occurred.");
 		return;
 	default:
-		unknownError(env, err);
+		throwUnknownError(env, err);
 		return;
 	}
 }
@@ -125,7 +125,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
   (JNIEnv *env, jobject inst, jint fd) {
 
 	if (fd == -1) {
-		badFileDescriptor(env);
+		throwBadFileDescriptor(env);
 		return NULL;
 	}
 

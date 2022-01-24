@@ -17,6 +17,30 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    open
+ * Signature: (Ljava/lang/String;I)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_open__Ljava_lang_String_2I
+  (JNIEnv *, jobject, jstring, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    open
+ * Signature: (Ljava/lang/String;II)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_open__Ljava_lang_String_2II
+  (JNIEnv *, jobject, jstring, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    lseek
+ * Signature: (IJLio/github/alexanderschuetz97/nativeutils/api/LinuxNativeUtil/lseek_whence;)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_lseek
+  (JNIEnv *, jobject, jint, jlong, jobject);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
  * Method:    to_struct_timeval
  * Signature: (J)[B
  */
@@ -102,6 +126,54 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
  */
 JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_recvfrom
   (JNIEnv *, jobject, jint, jbyteArray, jint, jint, jint, jobject);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    recvmsg
+ * Signature: (ILio/github/alexanderschuetz97/nativeutils/api/structs/Msghdr;I)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_recvmsg
+  (JNIEnv *, jobject, jint, jobject, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    getpagesize
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_getpagesize
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    parseCMSG_HDR
+ * Signature: ([BI)Ljava/util/Collection;
+ */
+JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_parseCMSG_1HDR
+  (JNIEnv *, jobject, jbyteArray, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    _munmap
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil__1munmap
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    _mmap
+ * Signature: (IJIZZJ)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil__1mmap
+  (JNIEnv *, jclass, jint, jlong, jint, jboolean, jboolean, jlong);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    _msync
+ * Signature: (JJJZ)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil__1msync
+  (JNIEnv *, jclass, jlong, jlong, jlong, jboolean);
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil

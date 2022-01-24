@@ -1,5 +1,5 @@
 //
-// Copyright Alexander Schütz, 2021
+// Copyright Alexander Schütz, 2021-2022
 //
 // This file is part of JavaNativeUtils.
 //
@@ -34,7 +34,7 @@ import java.util.Map;
  */
 public class NativeLibraryLoaderHelper {
 
-    private static final int EXPECTED_NATIVE_LIB_VERSION = 1;
+    private static final int EXPECTED_NATIVE_LIB_VERSION = 4;
 
     /**
      * Flag to indicate if already loaded.
@@ -238,6 +238,8 @@ public class NativeLibraryLoaderHelper {
 
 
     private static void loadLib(File aBase, String aLibName) throws IOException {
+        //System.out.println("loading lib " + aLibName);
+
         File tempLibFile = new File(aBase, aLibName);
         StringBuilder tempBuilder = new StringBuilder();
         while (tempLibFile.exists()) {
@@ -251,26 +253,40 @@ public class NativeLibraryLoaderHelper {
 
         tempLibFile.deleteOnExit();
 
+        InputStream tempInput = null;
         FileOutputStream tempFaos = new FileOutputStream(tempLibFile);
+        try {
+            byte[] tempBuf = new byte[512];
 
-        byte[] tempBuf = new byte[512];
+            tempInput = NativeLibraryLoaderHelper.class.getResourceAsStream("/" + aLibName);
+            if (tempInput == null) {
+                throw new IOException("The shared library file " + aLibName + " was not found by getResourceAsStream " +
+                        "its either not there or this class was loaded by a classloader that doesnt support resources well!");
+            }
+            int i = 0;
+            while (i != -1) {
+                i = tempInput.read(tempBuf);
+                if (i > 0) {
+                    tempFaos.write(tempBuf, 0, i);
+                }
+            }
 
-        InputStream tempInput = NativeLibraryLoaderHelper.class.getResourceAsStream("/" + aLibName);
-        if (tempInput == null) {
-            throw new IOException("The shared library file " + aLibName + " was not found by getResourceAsStream " +
-                    "its either not there or this class was loaded by a classloader that doesnt support resources well!");
-        }
-        int i = 0;
-        while (i != -1) {
-            i = tempInput.read(tempBuf);
-            if (i > 0) {
-                tempFaos.write(tempBuf, 0, i);
+            tempFaos.flush();
+        } finally {
+            try {
+                tempFaos.close();
+            } catch (IOException e) {
+                //DC
+            }
+            try {
+                if (tempInput != null) {
+                    tempInput.close();
+                }
+            } catch (IOException e) {
+                //DC
             }
         }
 
-        tempFaos.flush();
-        tempFaos.close();
-        tempInput.close();
 
         System.load(tempLibFile.getAbsolutePath());
         tempLibFile.delete();

@@ -1,5 +1,5 @@
 //
-// Copyright Alexander Schütz, 2021
+// Copyright Alexander Schütz, 2021-2022
 //
 // This file is part of JavaNativeUtils.
 //
@@ -21,18 +21,23 @@ package io.github.alexanderschuetz97.nativeutils;
 
 import io.github.alexanderschuetz97.nativeutils.api.LinuxConst;
 import io.github.alexanderschuetz97.nativeutils.api.LinuxNativeUtil;
+import io.github.alexanderschuetz97.nativeutils.api.NativeMemory;
 import io.github.alexanderschuetz97.nativeutils.api.NativeUtils;
-import io.github.alexanderschuetz97.nativeutils.api.structs.PollFD;
+import io.github.alexanderschuetz97.nativeutils.api.PointerHandler;
+import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
+import io.github.alexanderschuetz97.nativeutils.api.structs.Cmsghdr;
+import io.github.alexanderschuetz97.nativeutils.api.structs.Iovec;
+import io.github.alexanderschuetz97.nativeutils.api.structs.Msghdr;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Sockaddr;
+import io.github.alexanderschuetz97.nativeutils.api.structs.Stat;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.net.Inet4Address;
-import java.net.Inet6Address;
+import java.io.SyncFailedException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
-import java.util.EnumSet;
+import java.util.Collection;
 
 public class SocketTests {
 
@@ -67,5 +72,70 @@ public class SocketTests {
         System.out.println(new String(bb, 0, rr, StandardCharsets.UTF_8));
 
         lni.close(fd);
+    }
+
+    @Test
+    @Ignore
+    public void test2() throws Exception {
+        final LinuxNativeUtil lni = NativeUtils.getLinuxUtil();
+        int i = lni.socket(LinuxConst.AF_UNIX, LinuxConst.SOCK_STREAM, 0);
+        lni.setsockopt(i,LinuxConst.SOL_SOCKET, LinuxConst.SO_RCVTIMEO, lni.to_struct_timeval(5000));
+        lni.connect(i, lni.to_sockaddr_un("/tmp/shmemsock"));
+        Iovec buf = new Iovec(8);
+        byte[] ctl = new byte[1024];
+        byte[] payload = buf.getPayload();
+
+        Sockaddr sockaddr = new Sockaddr();
+        Msghdr msghdr = new Msghdr(new Iovec[]{buf}, sockaddr, ctl);
+        int x = lni.recvmsg(i, msghdr, 0);
+        System.out.println(x);
+        System.out.println(lni.from_sockaddr_un(sockaddr));
+
+
+        x = lni.recvmsg(i, msghdr, 0);
+        System.out.println(x);
+        System.out.println(lni.from_sockaddr_un(sockaddr));
+
+        int peer = (payload[0] & 0xff) + ((payload[1] & 0xff) << 8);
+        System.out.println(peer);
+
+        x = lni.recvmsg(i, msghdr, 0);
+        System.out.println(x);
+        System.out.println(lni.from_sockaddr_un(sockaddr));
+
+        Collection<Cmsghdr> parsed = lni.parseCMSG_HDR(msghdr.getMsg_control(), msghdr.getMsg_controllen());
+        System.out.println(parsed);
+        Cmsghdr first = parsed.iterator().next();
+        byte[] pl = first.getPayload();
+        int fd = (pl[0] & 0xff) + ((pl[1] & 0xff) << 8) + ((pl[2] & 0xff) << 16) + ((pl[3] & 0xff) << 24);
+        System.out.println(fd);
+        Stat stat = lni.fstat(fd);
+        System.out.println(stat.getSize());
+        System.out.println(lni.getpagesize());
+
+        long memPtr = lni.mmap(fd, stat.getSize(), LinuxConst.MAP_SHARED, true, true, 0);
+        NativeMemory mem = lni.pointer(memPtr, stat.getSize(), new PointerHandler() {
+            @Override
+            public void handleClose(long ptr, long size, boolean read, boolean write) {
+                try {
+                    lni.munmap(ptr, size);
+                } catch (UnknownNativeErrorException e) {
+                    //DC
+                }
+            }
+
+            @Override
+            public void handleSync(long ptr, long size, boolean read, boolean write, long offset, long length, boolean invalidate) throws SyncFailedException {
+
+            }
+        });
+
+        System.out.println(mem);
+        mem.write(1, 4);
+        System.out.println(mem.readInt(0));
+        mem.close();
+
+
+        lni.close(i);
     }
 }

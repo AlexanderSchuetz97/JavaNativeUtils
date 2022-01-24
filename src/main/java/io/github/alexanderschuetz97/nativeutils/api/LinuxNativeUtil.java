@@ -1,5 +1,5 @@
 //
-// Copyright Alexander Schütz, 2021
+// Copyright Alexander Schütz, 2021-2022
 //
 // This file is part of JavaNativeUtils.
 //
@@ -23,6 +23,8 @@ import io.github.alexanderschuetz97.nativeutils.api.exceptions.InvalidFileDescri
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.OperationInProgressException;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.QuotaExceededException;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
+import io.github.alexanderschuetz97.nativeutils.api.structs.Cmsghdr;
+import io.github.alexanderschuetz97.nativeutils.api.structs.Msghdr;
 import io.github.alexanderschuetz97.nativeutils.api.structs.PollFD;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Sockaddr;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Stat;
@@ -37,8 +39,9 @@ import java.nio.file.FileSystemLoopException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.NotDirectoryException;
 import java.nio.file.ReadOnlyFileSystemException;
+import java.util.Collection;
 
-public interface LinuxNativeUtil extends NativeReflection {
+public interface LinuxNativeUtil extends NativeUtil {
 
 
     enum fnctl_F_SETLK_Mode {
@@ -48,6 +51,31 @@ public interface LinuxNativeUtil extends NativeReflection {
     }
 
     int getFD(FileDescriptor fd);
+
+    /**
+     * Returns size of void* datatype in bytes. Either 4 or 8 bytes.
+     * The returned value is constant.
+     */
+    int getPointerSize();
+
+    /**
+     * returns the fd.
+     * -1 is only returned if the flag O_NONBLOCK is set and the operation would block.
+     */
+    int open(String path, int flags) throws AccessDeniedException, QuotaExceededException, IOException, FileSystemLoopException, InvalidPathException, FileNotFoundException, ReadOnlyFileSystemException, UnknownNativeErrorException;
+
+    /**
+     * returns the fd.
+     * -1 is only returned if the flag O_NONBLOCK is set and the operation would block.
+     */
+    int open(String path, int flags, int mode) throws AccessDeniedException, QuotaExceededException, IOException, FileSystemLoopException, InvalidPathException, FileNotFoundException, ReadOnlyFileSystemException, UnknownNativeErrorException;
+
+    enum lseek_whence {
+        SEEK_SET,
+        SEEK_CUR,
+        SEEK_END
+    }
+    long lseek(int fd, long off, lseek_whence whence) throws IOException, InvalidFileDescriptorException, UnknownNativeErrorException;
 
     /**
      * Converts a time value in milliseconds to a native timeval.
@@ -60,6 +88,7 @@ public interface LinuxNativeUtil extends NativeReflection {
      * @throws ArrayIndexOutOfBoundsException if the array is too small.
      */
     long from_struct_timeval(byte[] timeval);
+
 
     /**
      * returns a native struct sockaddr_in or sockaddr_in6 for the given address
@@ -100,7 +129,7 @@ public interface LinuxNativeUtil extends NativeReflection {
      *       call poll with POLLOUT+POLLERR to check if it is done
      *       or call close() to cancel.
      */
-    int socket(int domain, int type, int protocol)  throws IllegalArgumentException, UnsupportedOperationException, AccessDeniedException, QuotaExceededException, UnknownNativeErrorException, OperationInProgressException;
+    int socket(int domain, int type, int protocol)  throws IllegalArgumentException, UnsupportedOperationException, AccessDeniedException, QuotaExceededException, UnknownNativeErrorException;
 
     /**
      * timeout in milliseconds
@@ -134,11 +163,83 @@ public interface LinuxNativeUtil extends NativeReflection {
     int recvfrom(int fd, byte[] buffer, int off, int len, int flags, Sockaddr sockaddr) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException;
 
     /**
+     * receive a message on a socket. This method can be used if data should be read from a socket into multiple segments of memory or if special metadata is needed.
+     *
+     * @param fd the file descriptor
+     * @return the amount of bytes read into the iovecs
+     */
+    int recvmsg(int fd, Msghdr msghdr, int flags);
+
+    /**
+     * Returns the page size of the operating system in bytes.
+     */
+    int getpagesize();
+
+
+    /**
+     * Parse the CMSG header in the byte array.
+     * @param msg_control from {@link Msghdr}
+     */
+    Collection<Cmsghdr> parseCMSG_HDR(byte[] msg_control, int msg_controllen);
+
+    /**
+     * Maps a file descriptor into memory.
+     * Note: the native parameter addr to mmap is always 0.
+     *
+     * @param fd the file descriptor.
+     * @param length
+     * @param flags
+     * @param read
+     * @param write
+     * @param offset file offset for the memory mapping. Only matters if the fd refers to a file.
+     * @return A memory mapping that MUST BE FREED by using the cl
+     */
+    long mmap(int fd, long length, int flags, boolean read, boolean write, long offset) throws IllegalArgumentException, QuotaExceededException, InvalidFileDescriptorException, AccessDeniedException, IllegalStateException, UnsupportedOperationException;
+
+    /**
+     * Sync memory mapping to disk
+     *
+     * @param ptr pointer to the address
+     * @param off offset from the pointer
+     * @param len length of the memory to sync
+     * @param invalidate invalidate memory mappings of other processes
+     * @throws AccessDeniedException if a memory lock exists for the region and the invalidate flag is set to true.
+     * @throws IllegalStateException if the memory or a part of it is not mapped by mmap
+     * @throws IllegalArgumentException if ptr+off % getpagesize() != 0
+     */
+    void msync(long ptr, long off, long len, boolean invalidate) throws AccessDeniedException, IllegalStateException, IllegalArgumentException, UnknownNativeErrorException;
+
+    /**
+     * Unmap a pointer
+     * @param ptr pointer to the address
+     * @param size size of the memory mapping
+     * @throws IllegalArgumentException if ptr/size do not correspond to a valid memory mapping.
+     * @throws UnknownNativeErrorException
+     */
+    void munmap(long ptr, long size) throws UnknownNativeErrorException;
+
+    /**
+     * Allocates a new pointer of the given size
+     * @throws OutOfMemoryError if malloc returns NULL
+     * @throws IllegalArgumentException if size is <= 0
+     */
+    NativeMemory malloc(long size) throws OutOfMemoryError, IllegalArgumentException;
+
+    /**
+     * Any calls to the resulting NativeMemory may cause the JVM to die due to a SEGFAULT is size is not specified correctly.
+     * the close() and sync() methods are noops.
+     *
+     * @param ptr pointer to the data
+     * @param size -1 if unknown.
+     */
+    NativeMemory pointer(long ptr, long size, PointerHandler handler) throws NullPointerException;
+
+    /**
      * calls connect using a generic socket address.
      * @param fd obtained from "socket"
      * @param sockaddr socket address to connect to.
      */
-    void connect(int fd, Sockaddr sockaddr) throws InvalidFileDescriptorException, IllegalArgumentException, UnsupportedOperationException;
+    void connect(int fd, Sockaddr sockaddr) throws InvalidFileDescriptorException, IllegalArgumentException, UnsupportedOperationException, OperationInProgressException;
 
     /**
      * returns a "int" socket option.
@@ -163,6 +264,7 @@ public interface LinuxNativeUtil extends NativeReflection {
      * Sets a custom payload socket option.
      */
     void setsockopt(int fd, int level, int optname, byte[] payload) throws InvalidFileDescriptorException, IllegalArgumentException, UnsupportedOperationException;
+
 
 
     /**

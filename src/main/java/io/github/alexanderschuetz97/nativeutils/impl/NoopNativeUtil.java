@@ -1,5 +1,5 @@
 //
-// Copyright Alexander Schütz, 2021
+// Copyright Alexander Schütz, 2021-2022
 //
 // This file is part of JavaNativeUtils.
 //
@@ -31,6 +31,11 @@ public class NoopNativeUtil implements NativeUtil {
 
     @Override
     public boolean isLinux() {
+        return false;
+    }
+
+    @Override
+    public boolean isJVM() {
         return false;
     }
 }

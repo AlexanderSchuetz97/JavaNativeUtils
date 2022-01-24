@@ -9,6 +9,38 @@ extern "C" {
 #endif
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    getPointerSize
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_getPointerSize
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    MonitorEnter
+ * Signature: (Ljava/lang/Object;)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_MonitorEnter
+  (JNIEnv *, jobject, jobject);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    MonitorExit
+ * Signature: (Ljava/lang/Object;)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_MonitorExit
+  (JNIEnv *, jobject, jobject);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    DefineClass
+ * Signature: (Ljava/lang/String;Ljava/lang/ClassLoader;[BII)Ljava/lang/Class;
+ */
+JNIEXPORT jclass JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_DefineClass
+  (JNIEnv *, jobject, jstring, jobject, jbyteArray, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
  * Method:    _FromReflectedField
  * Signature: (Ljava/lang/reflect/Field;)J
  */
@@ -38,6 +70,70 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICo
  */
 JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil__1GetStaticFieldID
   (JNIEnv *, jobject, jclass, jstring, jstring);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    _FromReflectedMethod
+ * Signature: (Ljava/lang/Object;)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil__1FromReflectedMethod
+  (JNIEnv *, jobject, jobject);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    _ToReflectedMethod
+ * Signature: (Ljava/lang/Class;JZ)Ljava/lang/Object;
+ */
+JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil__1ToReflectedMethod
+  (JNIEnv *, jobject, jclass, jlong, jboolean);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    _GetMethodID
+ * Signature: (Ljava/lang/Class;Ljava/lang/String;Ljava/lang/String;)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil__1GetMethodID
+  (JNIEnv *, jobject, jclass, jstring, jstring);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    _GetStaticMethodID
+ * Signature: (Ljava/lang/Class;Ljava/lang/String;Ljava/lang/String;)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil__1GetStaticMethodID
+  (JNIEnv *, jobject, jclass, jstring, jstring);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    Throw
+ * Signature: (Ljava/lang/Throwable;)Ljava/lang/RuntimeException;
+ */
+JNIEXPORT jthrowable JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_Throw
+  (JNIEnv *, jobject, jthrowable);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    _AllocObject
+ * Signature: (Ljava/lang/Class;)Ljava/lang/Object;
+ */
+JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil__1AllocObject
+  (JNIEnv *, jclass, jclass);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    _malloc
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil__1malloc
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    _free
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil__1free
+  (JNIEnv *, jclass, jlong);
 
 #ifdef __cplusplus
 }

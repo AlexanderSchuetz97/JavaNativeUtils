@@ -1,5 +1,5 @@
 //
-// Copyright Alexander Schütz, 2021
+// Copyright Alexander Schütz, 2021-2022
 //
 // This file is part of JavaNativeUtils.
 //
@@ -73,18 +73,65 @@ jmethodID SockaddrConstructor;
 jfieldID Sockaddr_addressFamily;
 jfieldID Sockaddr_address;
 
+jclass Msghdr;
+jfieldID Msghdr_msg_iov;
+jfieldID Msghdr_msg_control;
+jfieldID Msghdr_msg_controllen;
+jfieldID Msghdr_msg_name;
+jfieldID Msghdr_complete;
+jfieldID Msghdr_truncated;
+jfieldID Msghdr_controlDataTruncated;
+jfieldID Msghdr_outOfBand;
+jfieldID Msghdr_errQueue;
 
 
 
-/*
- * Throw unknown error exception
- */
-void unknownError(JNIEnv * env, jlong code);
+jclass Iovec;
+jfieldID Iovec_payload;
+jfieldID Iovec_off;
+jfieldID Iovec_len;
+jfieldID Iovec_size;
 
-/**
- * throw bad fd exception
- */
-void badFileDescriptor(JNIEnv * env);
+jclass Cmsghdr;
+jmethodID CmsghdrConstructor;
+jfieldID Cmsghdr_payload;
+jfieldID Cmsghdr_cmsg_type;
+jfieldID Cmsghdr_cmsg_level;
+
+jclass GUID_Class;
+jmethodID GUID_constructor;
+jfieldID GUID_data1;
+jfieldID GUID_data2;
+jfieldID GUID_data3;
+jfieldID GUID_data4;
+
+jclass SpDeviceInfoData;
+jfieldID SpDeviceInfoData_cbSize;
+jfieldID SpDeviceInfoData_InterfaceClassGuid;
+jfieldID SpDeviceInfoData_DevInst;
+jfieldID SpDeviceInfoData_ptr;
+
+jclass SpDeviceInterfaceData;
+jmethodID SpDeviceInterfaceData_constructor;
+jfieldID SpDeviceInterfaceData_cbSize;
+jfieldID SpDeviceInterfaceData_InterfaceClassGuid;
+jfieldID SpDeviceInterfaceData_flags;
+jfieldID SpDeviceInterfaceData_InterfaceClassGuid;
+jfieldID SpDeviceInterfaceData_ptr;
+
+jclass JNINativeMemory;
+jfieldID JNINativeMemory_ptr;
+
+
+jint unboxInt(JNIEnv * env, jobject box);
+jlong unboxLong(JNIEnv * env, jobject box);
+jshort unboxShort(JNIEnv * env, jobject box);
+jboolean unboxBool(JNIEnv * env, jobject box);
+jchar unboxChar(JNIEnv * env, jobject box);
+jbyte unboxByte(JNIEnv * env, jobject box);
+jdouble unboxDouble(JNIEnv * env, jobject box);
+jfloat unboxFloat(JNIEnv * env, jobject box);
+
 
 /*
  * get int fd from FileDescriptor object or -1 if null.
@@ -117,6 +164,11 @@ void collection_add(JNIEnv * env, jobject collection, jobject value);
 
 void collection_clear(JNIEnv * env, jobject collection);
 
+jobject new_array_list(JNIEnv * env);
+
+
+int getEnumOrdinal(JNIEnv * env, jobject e);
+
 /*
  * throw illegal argument exception with given message.
  */
@@ -124,7 +176,17 @@ void throwIllegalArgumentsExc(JNIEnv * env, const char* message);
 
 void throwIllegalStateException(JNIEnv * env, const char* message);
 
-int getEnumOrdinal(JNIEnv * env, jobject e);
+/*
+ * Throw unknown error exception
+ */
+void throwUnknownError(JNIEnv * env, jlong code);
+
+void throwMutexAbandonedException(JNIEnv * env, jlong handle);
+
+/**
+ * throw bad fd exception
+ */
+void throwBadFileDescriptor(JNIEnv * env);
 
 void throwOOM(JNIEnv * env, const char* message);
 

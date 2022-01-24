@@ -1,5 +1,5 @@
 //
-// Copyright Alexander Schütz, 2021
+// Copyright Alexander Schütz, 2021-2022
 //
 // This file is part of JavaNativeUtils.
 //
@@ -66,7 +66,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 	(*env)->ReleaseStringUTFChars(env, target, targetBuf);
 
 	if (!success) {
-		unknownError(env, GetLastError());
+		throwUnknownError(env, GetLastError());
 	}
 }
 
@@ -103,6 +103,6 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 	(*env)->ReleaseStringUTFChars(env, target, targetBuf);
 
 	if (!success) {
-		unknownError(env, GetLastError());
+		throwUnknownError(env, GetLastError());
 	}
 }

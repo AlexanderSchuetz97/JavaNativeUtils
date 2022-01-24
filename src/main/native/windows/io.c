@@ -1,5 +1,5 @@
 //
-// Copyright Alexander Schütz, 2021
+// Copyright Alexander Schütz, 2021-2022
 //
 // This file is part of JavaNativeUtils.
 //
@@ -94,7 +94,7 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 			throwFileAlreadyExistsExc(env, str, NULL, NULL);
 			break;
 		default:
-			unknownError(env, err);
+			throwUnknownError(env, err);
 			break;
 		}
 
@@ -116,11 +116,136 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 	HANDLE h = (HANDLE) (uintptr_t) handle;
 
 	if (h == INVALID_HANDLE_VALUE) {
-		badFileDescriptor(env);
+		throwBadFileDescriptor(env);
 		return;
 	}
 
 	if (!CloseHandle(h)) {
-		unknownError(env, GetLastError());
+		throwUnknownError(env, GetLastError());
 	}
 }
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    DeviceIoControl
+ * Signature: (JI[BII[BII)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_DeviceIoControl__JI_3BII_3BII
+  (JNIEnv * env, jobject inst, jlong jhandle, jint ctrlCode, jbyteArray inBuffer, jint inOff, jint inLen, jbyteArray outBuffer, jint outOff, jint outLen) {
+	DWORD inSize = 0;
+	DWORD outSize = 0;
+	jbyte* in = NULL;
+	jbyte* out = NULL;
+	LPVOID inO = NULL;
+	LPVOID outO = NULL;
+	DWORD resLen = 0;
+
+	HANDLE h = (HANDLE) (uintptr_t) jhandle;
+
+	if (h == INVALID_HANDLE_VALUE) {
+		throwBadFileDescriptor(env);
+		return 0;
+	}
+
+	if (inBuffer != NULL) {
+		inSize = (*env)->GetArrayLength(env, inBuffer);
+		if (inOff < 0 || inLen < 0 || inSize < inOff+inLen) {
+			throwIllegalArgumentsExc(env, "inBuffer offset/length");
+			return 0;
+		}
+	}
+
+	if (outBuffer != NULL) {
+		outSize = (*env)->GetArrayLength(env, outBuffer);
+		if (outOff < 0 || outLen < 0 || outSize < outOff+outLen) {
+			throwIllegalArgumentsExc(env, "outBuffer offset/length");
+			return 0;
+		}
+	}
+
+	if (inBuffer != NULL) {
+		in = (LPVOID) (*env)->GetByteArrayElements(env, inBuffer, NULL);
+		if (in == NULL) {
+			throwOOM(env, "GetByteArrayElements");
+			return 0;
+		}
+
+		inO = (LPVOID) (in+inOff);
+	}
+
+	if (outBuffer != NULL) {
+		out = (LPVOID) (*env)->GetByteArrayElements(env, outBuffer, NULL);
+		if (out == NULL) {
+			if (inBuffer != NULL) {
+				(*env)->ReleaseByteArrayElements(env, inBuffer, in, JNI_OK);
+			}
+			throwOOM(env, "GetByteArrayElements");
+			return 0;
+		}
+
+		outO = (LPVOID) (out+outOff);
+	}
+
+	WINBOOL succ = DeviceIoControl(h, (DWORD) ctrlCode, inO,inSize, outO, outSize, &resLen, NULL);
+	if (succ) {
+		if (inBuffer != NULL) {
+			(*env)->ReleaseByteArrayElements(env, inBuffer, in, JNI_OK);
+		}
+		if (outBuffer != NULL) {
+			(*env)->ReleaseByteArrayElements(env, outBuffer, out, JNI_OK);
+		}
+		return resLen;
+	}
+
+	if (inBuffer != NULL) {
+		(*env)->ReleaseByteArrayElements(env, inBuffer, (jbyte*) in, JNI_ABORT);
+	}
+	if (outBuffer != NULL) {
+		(*env)->ReleaseByteArrayElements(env, outBuffer, (jbyte*) out, JNI_ABORT);
+	}
+
+	throwUnknownError(env, GetLastError());
+	return 0;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    DeviceIoControl
+ * Signature: (JIJJIJJI)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_DeviceIoControl__JIJJIJJI
+  (JNIEnv * env, jclass clazz, jlong jhandle, jint ctrlCode, jlong in, jlong inOff, jint inLen, jlong out, jlong outOff, jint outLen) {
+	HANDLE h = (HANDLE) (uintptr_t) jhandle;
+
+	if (h == INVALID_HANDLE_VALUE) {
+		throwBadFileDescriptor(env);
+		return 0;
+	}
+
+	LPVOID inP = (LPVOID) (uintptr_t) in;
+	LPVOID outP = (LPVOID) (uintptr_t) out;
+
+	if (inP != NULL) {
+		inP+=inOff;
+	}
+
+	if (outP != NULL) {
+		outP+=outOff;
+	}
+
+	DWORD resLen = 0;
+
+	WINBOOL succ = DeviceIoControl(h, (DWORD) ctrlCode, inP, inLen, outP, outLen, &resLen, NULL);
+	if (succ) {
+		return resLen;
+	}
+
+	throwUnknownError(env, GetLastError());
+	return 0;
+
+}
+
+
+
+
+

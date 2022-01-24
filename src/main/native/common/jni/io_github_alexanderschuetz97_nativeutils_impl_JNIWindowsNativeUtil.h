@@ -97,6 +97,86 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    SetupDiGetClassDevsA
+ * Signature: (Lio/github/alexanderschuetz97/nativeutils/api/structs/GUID;Ljava/lang/String;JI)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_SetupDiGetClassDevsA
+  (JNIEnv *, jobject, jobject, jstring, jlong, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    SetupDiEnumDeviceInterfaces
+ * Signature: (JLio/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData;Lio/github/alexanderschuetz97/nativeutils/api/structs/GUID;I)Lio/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData;
+ */
+JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_SetupDiEnumDeviceInterfaces
+  (JNIEnv *, jobject, jlong, jobject, jobject, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    SetupDiGetDeviceInterfaceDetail
+ * Signature: (JLio/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData;Lio/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_SetupDiGetDeviceInterfaceDetail
+  (JNIEnv *, jobject, jlong, jobject, jobject);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    SetupDiDestroyDeviceInfoList
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_SetupDiDestroyDeviceInfoList
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    DeviceIoControl
+ * Signature: (JI[BII[BII)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_DeviceIoControl__JI_3BII_3BII
+  (JNIEnv *, jobject, jlong, jint, jbyteArray, jint, jint, jbyteArray, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    DeviceIoControl
+ * Signature: (JIJJIJJI)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_DeviceIoControl__JIJJIJJI
+  (JNIEnv *, jclass, jlong, jint, jlong, jlong, jint, jlong, jlong, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    CreateEventA
+ * Signature: (JZZLjava/lang/String;)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_CreateEventA
+  (JNIEnv *, jobject, jlong, jboolean, jboolean, jstring);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    ResetEvent
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_ResetEvent
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    WaitForSingleObject
+ * Signature: (JI)Z
+ */
+JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_WaitForSingleObject
+  (JNIEnv *, jobject, jlong, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    WaitForMultipleObjects
+ * Signature: ([JIZ)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_WaitForMultipleObjects
+  (JNIEnv *, jobject, jlongArray, jint, jboolean);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
  * Method:    strerror_s
  * Signature: (I)Ljava/lang/String;
  */

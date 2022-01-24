@@ -1,3 +1,22 @@
+//
+// Copyright Alexander Schütz, 2021-2022
+//
+// This file is part of JavaNativeUtils.
+//
+// JavaNativeUtils is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// JavaNativeUtils is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+//
+// A copy of the GNU Lesser General Public License should be provided
+// in the COPYING & COPYING.LESSER files in top level directory of JavaNativeUtils.
+// If not, see <https://www.gnu.org/licenses/>.
+//
 #include "../common/jni/io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil.h"
 #include "../common/common.h"
 
@@ -8,6 +27,8 @@
 #include <sys/un.h>
 #include <sys/socket.h>
 #include <endian.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
@@ -28,15 +49,8 @@ JNIEXPORT jbyteArray JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_
 		return NULL;
 	}
 
-	jbyte* data = (*env)->GetByteArrayElements(env, array, NULL);
-	if (data == NULL) {
-		(*env)->DeleteLocalRef(env, array);
-		throwOOM(env, "GetByteArrayElements");
-		return NULL;
-	}
+	(*env)->SetByteArrayRegion(env, array, 0, sizeof(struct timeval), (jbyte*) &tv);
 
-	memcpy(data, &tv, sizeof(struct timeval));
-	(*env)->ReleaseByteArrayElements(env, array, data, JNI_OK);
 	return array;
 }
 
@@ -411,22 +425,23 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 
 	jsize len = (*env)->GetArrayLength(env, jstruct);
 
-	if (len != sizeof(struct sockaddr_un)) {
+	if (len > sizeof(struct sockaddr_un) && len > sizeof(sa_family_t)+1) {
 		(*env)->DeleteLocalRef(env, jstruct);
 		throwIllegalArgumentsExc(env, "address.address has wrong size for AF_UNIX");
 		return NULL;
 	}
 
-	struct sockaddr_un* ptr  = (struct sockaddr_un*) (*env)->GetByteArrayElements(env, jstruct, NULL);
-	if (ptr->sun_path[107] != 0) {
-		(*env)->ReleaseByteArrayElements(env, jstruct, (jbyte*) ptr, JNI_ABORT);
+	jbyte* bptr = (*env)->GetByteArrayElements(env, jstruct, NULL);
+	struct sockaddr_un* ptr  = (struct sockaddr_un*) bptr;
+	if (bptr[len-1] != 0) {
+		(*env)->ReleaseByteArrayElements(env, jstruct,  bptr, JNI_ABORT);
 		(*env)->DeleteLocalRef(env, jstruct);
 		throwIllegalArgumentsExc(env, "address.address last byte is not 0");
 		return NULL;
 	}
 
 	jstring result = (*env)->NewStringUTF(env, (const char *) ptr->sun_path);
-	(*env)->ReleaseByteArrayElements(env, jstruct, (jbyte*) ptr, JNI_ABORT);
+	(*env)->ReleaseByteArrayElements(env, jstruct, bptr, JNI_ABORT);
 	(*env)->DeleteLocalRef(env, jstruct);
 
 	if (result == NULL) {
@@ -435,3 +450,15 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 
 	return result;
 }
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    getpagesize
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_getpagesize
+  (JNIEnv * env, jobject inst) {
+	return (jint) getpagesize();
+}
+
+

@@ -1,5 +1,5 @@
 //
-// Copyright Alexander Schütz, 2021
+// Copyright Alexander Schütz, 2021-2022
 //
 // This file is part of JavaNativeUtils.
 //
@@ -123,5 +123,54 @@ public interface LinuxConst {
     int SCM_TIMESTAMPING_PKTINFO = 58;
     int SO_PEERGROUPS = 59;
     int SO_ZEROCOPY = 60;
+
+    /**
+     * CMSG HDR type for file descriptor transfer
+     */
+    int SCM_RIGHTS = 1;
+    //FOR MMAP FLAGS
+    int MAP_SHARED = 1;
+    int MAP_PRIVATE = 2;
+
+    /////
+    // Open flags
+    ////
+
+    int O_ACCMODE = 0003;
+    int O_RDONLY = 00;
+    int O_WRONLY = 01;
+    int O_RDWR = 02;
+    int O_CREAT = 0100;
+    int O_EXCL = 0200;
+    int O_NOCTTY = 0400;
+    int O_TRUNC = 01000;
+    int O_APPEND = 02000;
+    int O_NONBLOCK = 04000;
+    int O_NDELAY = O_NONBLOCK;
+    int O_SYNC = 04010000;
+    int O_FSYNC = O_SYNC;
+    int O_ASYNC = 020000;
+    int O_LARGEFILE = 0100000;
+    int O_DIRECTORY = 0200000;
+    int O_NOFOLLOW = 0400000;
+    int O_CLOEXEC = 02000000;
+    int O_DIRECT = 040000;
+    int O_NOATIME = 01000000;
+    int O_PATH = 010000000;
+    int O_DSYNC = 010000;
+    int O_RSYNC = (020000000 | O_DIRECTORY);
+
+    int S_IRUSR = 0400;
+    int S_IWUSR = 0200;
+    int S_IXUSR = 0100;
+    int S_IRGRP = S_IRUSR >> 3;
+    int S_IWGRP = S_IWUSR >> 3;
+    int S_IXGRP = S_IXUSR >> 3;
+    int S_IROTH = S_IRGRP >> 3;
+    int S_IWOTH = S_IWGRP >> 3;
+    int S_IXOTH = S_IXGRP >> 3;
+    int S_IRWXU = S_IRUSR | S_IWUSR | S_IXUSR;
+    int S_IRWXG = S_IRWXU >> 3;
+    int S_IRWXO = S_IRWXG >> 3;
 }
 

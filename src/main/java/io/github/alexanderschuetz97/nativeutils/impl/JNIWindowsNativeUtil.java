@@ -1,5 +1,5 @@
 //
-// Copyright Alexander Schütz, 2021
+// Copyright Alexander Schütz, 2021-2022
 //
 // This file is part of JavaNativeUtils.
 //
@@ -19,16 +19,19 @@
 //
 package io.github.alexanderschuetz97.nativeutils.impl;
 
-import io.github.alexanderschuetz97.nativeutils.api.NativeField;
+import io.github.alexanderschuetz97.nativeutils.api.NativeMemory;
 import io.github.alexanderschuetz97.nativeutils.api.WindowsNativeUtil;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
+import io.github.alexanderschuetz97.nativeutils.api.structs.GUID;
+import io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInfoData;
+import io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInterfaceData;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Stat;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Win32FileAttributeData;
 
 import java.io.FileDescriptor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.Objects;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements WindowsNativeUtil {
 
@@ -64,6 +67,110 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
 
     @Override
     public native void CloseHandle(long handle) throws UnknownNativeErrorException;
+
+    @Override
+    public Iterable<String> iterateDeviceInterfaces(GUID deviceClass, String enumerator, int flags, GUID interfaceClass) throws UnknownNativeErrorException {
+        if (interfaceClass == null) {
+            throw new NullPointerException("interfaceClass");
+        }
+
+        long handle = SetupDiGetClassDevsA(deviceClass, enumerator, 0, flags);
+        Collection<String> strCol = new LinkedList<>();
+        int i = 0;
+        while(true) {
+            SpDeviceInterfaceData spi = SetupDiEnumDeviceInterfaces(handle, null, interfaceClass, i++);
+            if (spi == null) {
+                break;
+            }
+            strCol.add(SetupDiGetDeviceInterfaceDetail(handle, spi, null));
+        }
+
+
+        return strCol;
+    }
+
+    @Override
+    public native long SetupDiGetClassDevsA(GUID ClassGuid, String Enumerator, long hwndParent, int flags) throws UnknownNativeErrorException;
+
+    @Override
+    public native SpDeviceInterfaceData SetupDiEnumDeviceInterfaces(long DeviceInfoSet, SpDeviceInfoData DeviceInfoData, GUID InterfaceClassGuid, int index) throws UnknownNativeErrorException;
+
+    @Override
+    public native String SetupDiGetDeviceInterfaceDetail(long DeviceInfoSet, SpDeviceInterfaceData DeviceInterfaceData, SpDeviceInfoData output);
+
+    @Override
+    public native void SetupDiDestroyDeviceInfoList(long handle) throws UnknownNativeErrorException;
+
+    @Override
+    public native int DeviceIoControl(long hDevice, int dwIoControlCode, byte[] inBuffer, int inOff, int inLen, byte[] outBuffer, int outOff, int outLen) throws UnknownNativeErrorException;
+
+    @Override
+    public int DeviceIoControl(long hDevice, int dwIoControlCode, NativeMemory inBuffer, long inOff, int inLen, NativeMemory outBuffer, long outOff, int outLen) throws UnknownNativeErrorException {
+        long inB = 0;
+        long outB = 0;
+        ReentrantReadWriteLock.ReadLock inBL = null;
+        ReentrantReadWriteLock.ReadLock outBL = null;
+        try {
+            if (inBuffer != null) {
+                inBL = inBuffer.readLock();
+                inBL.lock();
+                if (inOff < 0 || inLen < 0) {
+                    throw new IllegalArgumentException("inBuffer offset/length");
+                }
+                if (!inBuffer.isReadable() || !inBuffer.isValid(inOff, inLen)) {
+                    throw new IllegalArgumentException("inBuffer offset/length out of bounds or not readable");
+                }
+
+
+                inB = inBuffer.getNativePointer();
+            }
+
+            if (outBuffer != null) {
+                outBL = outBuffer.readLock();
+                outBL.lock();
+                if (inOff < 0 || inLen < 0) {
+                    throw new IllegalArgumentException("outBuffer offset/length");
+                }
+                if (!outBuffer.isWriteable() || !outBuffer.isValid(inOff, inLen)) {
+                    throw new IllegalArgumentException("outBuffer offset/length out of bounds or not writeable");
+                }
+
+
+                outB = outBuffer.getNativePointer();
+            }
+
+            return DeviceIoControl(hDevice, dwIoControlCode, inB, inOff, inLen, outB, outOff, outLen);
+        } finally {
+            if (inBL != null) {
+                inBL.unlock();
+            }
+
+            if (outBL != null) {
+                outBL.unlock();
+            }
+        }
+    }
+
+    protected static native int DeviceIoControl(long hDevice, int dwIoControlCode, long inBuffer, long inOff, int inLen, long outBuffer, long outOff, int outLen) throws UnknownNativeErrorException;
+
+    @Override
+    public int CTL_CODE(int DeviceType, int Function, int Method, int Access) {
+        //NO need to jni for this.
+        return (DeviceType << 16) | (Access << 14) | (Function << 2) | (Method);
+    }
+
+    @Override
+    public native long CreateEventA(long lpEventAttributes, boolean manualReset, boolean initalState, String name) throws UnknownNativeErrorException;
+
+    @Override
+    public native void ResetEvent(long handle) throws UnknownNativeErrorException;
+
+    @Override
+    public native boolean WaitForSingleObject(long handle, int millis) throws UnknownNativeErrorException;
+
+    @Override
+    public native int WaitForMultipleObjects(long[] handles, int millis, boolean waitAll) throws UnknownNativeErrorException;
+
 
     @Override
     public native String strerror_s(int errno);
