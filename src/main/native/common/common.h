@@ -20,6 +20,7 @@
 #include <jni.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <stddef.h>
 
 #ifdef _WIN32
 #undef _WIN32_WINNT
@@ -29,6 +30,8 @@
 
 #ifndef COMMON_H_
 #define COMMON_H_
+
+
 
 
 jclass StatClass;
@@ -122,6 +125,25 @@ jfieldID SpDeviceInterfaceData_ptr;
 jclass JNINativeMemory;
 jfieldID JNINativeMemory_ptr;
 
+jclass Utsname;
+jmethodID Utsname_constructor;
+jfieldID Utsname_sysname;
+jfieldID Utsname_nodename;
+jfieldID Utsname_release;
+jfieldID Utsname_version;
+jfieldID Utsname_machine;
+
+
+jclass RegData;
+jmethodID RegData_Object;
+jmethodID RegData_Int;
+jmethodID RegData_Long;
+jobject* RegData_types;
+int RegData_types_size;
+
+jclass String_Class;
+
+
 
 jint unboxInt(JNIEnv * env, jobject box);
 jlong unboxLong(JNIEnv * env, jobject box);
@@ -132,6 +154,12 @@ jbyte unboxByte(JNIEnv * env, jobject box);
 jdouble unboxDouble(JNIEnv * env, jobject box);
 jfloat unboxFloat(JNIEnv * env, jobject box);
 
+
+
+
+
+
+bool setStringField(JNIEnv  * env, jobject obj, jfieldID field, const char * str);
 
 /*
  * get int fd from FileDescriptor object or -1 if null.
@@ -163,6 +191,12 @@ jobject iterator_next(JNIEnv * env, jobject iterator);
 void collection_add(JNIEnv * env, jobject collection, jobject value);
 
 void collection_clear(JNIEnv * env, jobject collection);
+
+wchar_t * toWCharsMalloc(JNIEnv * env, jstring str);
+
+bool toWChars(JNIEnv * env, jstring str, wchar_t* wchars);
+
+jstring fromWChars(JNIEnv * env, wchar_t* wchars);
 
 jobject new_array_list(JNIEnv * env);
 
@@ -210,7 +244,11 @@ void throwQuotaExceededException(JNIEnv * env, const char* file, const char* oth
 
 void throwFSLoop(JNIEnv * env, const char* file);
 
+void throwNotLinkException(JNIEnv * env, const char* file, const char* other, const char* reason);
+
 void throwFSAccessDenied(JNIEnv * env, const char* file, const char* other, const char* reason);
+
+void throwPermissionDeniedException(JNIEnv * env, const char* file, const char* reason);
 
 void throwShareingViolationException(JNIEnv * env, const char* file, const char* other, const char* reason);
 

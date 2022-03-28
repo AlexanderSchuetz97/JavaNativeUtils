@@ -6,7 +6,7 @@
 
     <groupId>io.github.alexanderschuetz97</groupId>
     <artifactId>JavaNativeUtils</artifactId>
-    <version>1.5</version>
+    <version>1.6</version>
     <packaging>bundle</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -175,7 +175,7 @@
                             <executable>/usr/bin/env</executable>
                             <arguments>
                                 <argument>bash</argument>
-                                <argument>${basedir}/compile_native.sh</argument>
+                                <argument>${basedir}/compile_docker_start.sh</argument>
                             </arguments>
                         </configuration>
                     </execution>

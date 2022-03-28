@@ -27,6 +27,8 @@
 
 
 
+
+
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
  * Method:    supportsAtomicOperations
@@ -51,7 +53,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_supports16ByteCompareAndSet
   (JNIEnv * env, jobject inst) {
 #if defined(__amd64__)
-	return true;
+	return supportsCas16();
 #else
 	return false;
 #endif
@@ -69,6 +71,25 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 #else
 	return true;
 #endif
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    off
+ * Signature: (JJ)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_off
+  (JNIEnv * env, jclass clazz, jlong ptr, jlong off) {
+	if (ptr == 0) {
+		throwNullPointerException(env, "ptr");
+		return 0;
+	}
+
+	void * v = (void*) (uintptr_t) ptr;
+
+	v+=off;
+
+	return (jlong) (uintptr_t) v;
 }
 
 /*

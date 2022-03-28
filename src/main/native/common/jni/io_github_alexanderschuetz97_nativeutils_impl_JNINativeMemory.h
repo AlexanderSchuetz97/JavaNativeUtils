@@ -33,6 +33,14 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    off
+ * Signature: (JJ)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_off
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
  * Method:    write
  * Signature: (JJ[BII)V
  */

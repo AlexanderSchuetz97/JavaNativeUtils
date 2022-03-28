@@ -56,8 +56,6 @@ public class ReflectionTests {
         TClass t = nm.CallAnyMethod(null, 5);
         Assert.assertNotNull(t);
         Assert.assertEquals(5, t.x);
-
-
     }
 
     @Test
@@ -144,6 +142,7 @@ public class ReflectionTests {
         public int x;
 
         public TClass(int i) {
+            System.out.println("XXXX");
             x = i;
         }
     }

@@ -21,6 +21,7 @@ package io.github.alexanderschuetz97.nativeutils.api;
 
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.InvalidFileDescriptorException;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.OperationInProgressException;
+import io.github.alexanderschuetz97.nativeutils.api.exceptions.PermissionDeniedException;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.QuotaExceededException;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Cmsghdr;
@@ -28,6 +29,7 @@ import io.github.alexanderschuetz97.nativeutils.api.structs.Msghdr;
 import io.github.alexanderschuetz97.nativeutils.api.structs.PollFD;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Sockaddr;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Stat;
+import io.github.alexanderschuetz97.nativeutils.api.structs.Utsname;
 
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
@@ -38,6 +40,7 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.FileSystemLoopException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.NotDirectoryException;
+import java.nio.file.NotLinkException;
 import java.nio.file.ReadOnlyFileSystemException;
 import java.util.Collection;
 
@@ -57,6 +60,26 @@ public interface LinuxNativeUtil extends NativeUtil {
      * The returned value is constant.
      */
     int getPointerSize();
+
+    /**
+     * queries the cpu for info.<br>
+     *
+     * the returned int[] is null if the requested code/subcode is not supported by the cpu otherwise
+     * it has the length of 4 and contains the registers in this oder: <br>
+     * 0 -> EAX <br>
+     * 1 -> EBX <br>
+     * 2 -> ECX <br>
+     * 3 -> EDX <br>
+     *
+     * Note: on non X86/AMD64 this will always return null.
+     */
+    int[] __get_cpuid_count(int code, int subcode);
+
+    /**
+     * Returns the CPU Model string.
+     * Example for Intel CPU's would be "GenuineIntel"
+     */
+    String __get_cpuid_count_model();
 
     /**
      * returns the fd.
@@ -391,4 +414,105 @@ public interface LinuxNativeUtil extends NativeUtil {
      * Returns a english string repesentation of the native error code
      */
     String strerror_r(int errno);
+
+    /**
+     * Set an environment variable.
+     * Note that the map in System.getenv() is most likely cached by the jvm at the start of the process.
+     * You will need to use reflection to modify it.
+     *
+     * @param key name of the variable
+     * @param value new value of the variable
+     * @param overwrite overwrite the variable if it is present already or not.
+     * @throws NullPointerException if key or value is null
+     * @throws IllegalArgumentException if key contains "=" or is empty
+     * @throws UnknownNativeErrorException if an unexpected error occurs.
+     */
+    void setenv(String key, String value, boolean overwrite) throws UnknownNativeErrorException;
+
+    /**
+     * Get an environment variable.
+     *
+     * @param key name of the variable
+     * @return the value or null
+     *
+     * @throws NullPointerException if key is null
+     * @throws IllegalArgumentException if key contains "=" or is empty
+     * @throws UnknownNativeErrorException if an unexpected error occurs.
+     */
+    String getenv(String key) throws UnknownNativeErrorException;
+
+
+    /**
+     * removes a enviroment variable if it exists.
+     * Theres no way to tell if the variable did or did not exist prior to this call.
+     *
+     * @throws NullPointerException if key is null
+     * @throws IllegalArgumentException if key contains "=" or is empty
+     * @throws UnknownNativeErrorException if an unexpected native error occurs.
+     */
+    void unsetenv(String key) throws  UnknownNativeErrorException;
+
+    /**
+     * performs word expansion like a posix-shell.
+     * Note: This internally calls wordfree()
+     * @param allowCommands if true then commands are allowed. Do not use this for untrusted user input as they can run any system command they want. example "$(ls)" would insert the output of "ls" into the result.
+     * @param useStdErr if true then errors that occur during command execution are passed to stderr. if false then the errors are ignored. if allowCommands is false then this parameter is meaningless.
+     * @param allowUndef if true then undefined variables are substituted with "". If false then an IllegalArgumentException is thrown when an unknown variable is encountered.
+     * @throws IllegalArgumentException if the argument has invalid syntax, contains commands when not allowed or contains undefined variable when not allowed.
+     */
+    String[] wordexp(String expression, boolean allowCommands, boolean useStdErr, boolean allowUndef) throws IllegalArgumentException;
+
+    /**
+     * gets information about the unix system.
+     */
+    Utsname uname();
+
+    /**
+     * returns the resolved path of the symlink
+     *
+     * @param path the path of the sym link to resolve
+     * @return the target of the link, never null
+     * @throws NullPointerException if path is null
+     * @throws NotLinkException if path exists but is not a symbolic link
+     * @throws UnknownNativeErrorException if an unexpected native error occurs
+     * @throws InvalidPathException if the path is invalid (too long for example)
+     * @throws IOException if an io error occurs while reading the link location from the physical disk
+     * @throws FileSystemLoopException if too many symlinks have to be followed to resolve components of the path
+     * @throws AccessDeniedException  if the current process does not have permission to resolve the path or read the target of the link
+     * @throws FileNotFoundException if the path does not exist.
+     * @throws NotDirectoryException if a component of the path is not a directory (or link to a directory) but rather a file/something else.
+     */
+    String readlink(String path) throws NotLinkException, UnknownNativeErrorException, InvalidPathException, IOException, FileSystemLoopException, AccessDeniedException, FileNotFoundException, NotDirectoryException;
+
+    /**
+     * resolves all symbolic links in the given path.
+     *
+     * @param path path to be resolved
+     * @return resolved path without symbolic links
+     * @throws NullPointerException if path is null
+     * @throws AccessDeniedException if read or search permission was denied for a component of the path prefix
+     * @throws IOException If an io error occurs while reading from the file system
+     * @throws FileSystemLoopException if too many symlinks have to be followed to resolve components of the path
+     * @throws InvalidPathException if the path is too long
+     * @throws FileNotFoundException if the file referenced by the path does not exist
+     * @throws NotDirectoryException if a component of the path is not a directory
+     * @throws UnknownNativeErrorException if an unexpected native error occurs
+     */
+    String realpath(String path) throws AccessDeniedException, IOException, FileSystemLoopException, InvalidPathException, FileNotFoundException, NotDirectoryException, UnknownNativeErrorException;
+
+    /**
+     * change file modifier
+     *
+     * @param path the path to the file
+     * @param mode the new file mode
+     * @throws NullPointerException if path is null
+     * @throws AccessDeniedException if the process does not have permissions to resolve path
+     * @throws PermissionDeniedException if the process does not have permissions the change the file mode
+     * @throws IOException if an io error occurs while changing the file mode
+     * @throws FileSystemLoopException if too many symlinks have to be followed to resolve components of the path
+     * @throws InvalidPathException if the path is too long
+     * @throws FileNotFoundException if the file does not exist
+     * @throws NotDirectoryException if a component of the path is not a directory
+     */
+    void chmod(String path, int mode) throws AccessDeniedException, PermissionDeniedException, IOException, FileSystemLoopException, InvalidPathException, FileNotFoundException, NotDirectoryException;
 }

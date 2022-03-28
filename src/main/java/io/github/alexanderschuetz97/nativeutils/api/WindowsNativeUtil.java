@@ -24,6 +24,7 @@ import io.github.alexanderschuetz97.nativeutils.api.exceptions.MutexAbandonedExc
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.SharingViolationException;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
 import io.github.alexanderschuetz97.nativeutils.api.structs.GUID;
+import io.github.alexanderschuetz97.nativeutils.api.structs.RegData;
 import io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInfoData;
 import io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInterfaceData;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Stat;
@@ -33,7 +34,7 @@ import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.nio.file.FileAlreadyExistsException;
 
-public interface WindowsNativeUtil extends JVMNativeUtil, NativeUtil {
+public interface WindowsNativeUtil extends NativeUtil {
 
     /**
      * see https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/locking?view=msvc-170
@@ -59,6 +60,26 @@ public interface WindowsNativeUtil extends JVMNativeUtil, NativeUtil {
      * The returned value is constant.
      */
     int getPointerSize();
+
+    /**
+     * queries the cpu for info.<br>
+     *
+     * the returned int[] is null if the requested code/subcode is not supported by the cpu otherwise
+     * it has the length of 4 and contains the registers in this oder: <br>
+     * 0 -> EAX <br>
+     * 1 -> EBX <br>
+     * 2 -> ECX <br>
+     * 3 -> EDX <br>
+     *
+     * Note: on non X86/AMD64 this will always return null.
+     */
+    int[] __get_cpuid_count(int code, int subcode);
+
+    /**
+     * Returns the CPU Model string.
+     * Example for Intel CPU's would be "GenuineIntel"
+     */
+    String __get_cpuid_count_model();
 
     /**
      * returns true if successful false if not.
@@ -153,6 +174,20 @@ public interface WindowsNativeUtil extends JVMNativeUtil, NativeUtil {
      * @throws FileAlreadyExistsException CREATE_ALWAYS when the file already exists
      */
     long CreateFileA(String lpFileName, int access, boolean allowDelete, boolean allowRead, boolean allowWrite, CreateFileA_createMode openMode, int attributes) throws FileAlreadyExistsException, SharingViolationException, UnknownNativeErrorException;
+
+    /**
+     * opens a windows handle for a given path.
+     * @param lpFileName the path to the file
+     * @param access flag integer for meaning of bits see https://docs.microsoft.com/en-us/windows/win32/secauthz/access-mask
+     * @param allowDelete allow another process to delete the file while it is opened by this process
+     * @param allowRead allow another process to read the file while it is opened by this process
+     * @param allowWrite allow another process to write the file while it is opened by this process
+     * @param openMode defines how the file is opened
+     * @param attributes flag integer for meaning of bits see https://docs.microsoft.com/en-us/windows/win32/fileio/file-attribute-constants
+     * @return valid windows HANDLE never returns INVALID_HANDLE
+     * @throws FileAlreadyExistsException CREATE_ALWAYS when the file already exists
+     */
+    long CreateFileW(String lpFileName, int access, boolean allowDelete, boolean allowRead, boolean allowWrite, CreateFileA_createMode openMode, int attributes) throws FileAlreadyExistsException, SharingViolationException, UnknownNativeErrorException;
 
     /**
      * Closes a windows handle. I do NOT recommend calling this with a handle that you did not create.
@@ -282,4 +317,43 @@ public interface WindowsNativeUtil extends JVMNativeUtil, NativeUtil {
      * This only works for all calls to methods that start with a capital case letter.
      */
     String FormatMessageA(int lastError);
+
+    String GetVolumePathNameW(String path) throws UnknownNativeErrorException;
+
+    String GetModuleFileNameA(long hModule) throws UnknownNativeErrorException;
+
+    void SetEnvironmentVariableA(String name, String value) throws UnknownNativeErrorException;
+
+    String ExpandEnvironmentStringsA(String str) throws UnknownNativeErrorException;
+
+    String GetEnvironmentVariableA(String name) throws UnknownNativeErrorException;
+
+    enum Path_VolumeName {
+        VOLUME_NAME_DOS,
+        VOLUME_NAME_GUID,
+        VOLUME_NAME_NT,
+        VOLUME_NAME_NONE,
+    }
+
+    String GetFinalPathNameByHandleA(long handle, boolean normalize, Path_VolumeName volumeName) throws UnknownNativeErrorException, InvalidFileDescriptorException;
+
+    String GetFinalPathNameByHandleW(long handle, boolean normalize, Path_VolumeName volumeName) throws UnknownNativeErrorException, InvalidFileDescriptorException;
+
+    int GetFileAttributesA(String str) throws UnknownNativeErrorException;
+
+    void SetFileAttributesA(String str, int attr) throws UnknownNativeErrorException;
+
+    long RegOpenKeyExA(long hkey, String subKey, int options, int sam) throws UnknownNativeErrorException;
+
+    void RegCloseKey(long hkey) throws UnknownNativeErrorException;
+
+    /**
+     * Read a registry value.
+     *
+     * @param hkey the hkey obtained from RegOpenKeyExA
+     * @param valueName the name of the value to read
+     * @return the value of the key
+     * @throws UnknownNativeErrorException
+     */
+    RegData RegQueryValueExA(long hkey, String valueName) throws UnknownNativeErrorException;
 }

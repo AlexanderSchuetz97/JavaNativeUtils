@@ -76,6 +76,51 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	return (*env)->AllocObject(env, dec);
 }
 
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    NewGlobalRef
+ * Signature: (Ljava/lang/Object;)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_NewGlobalRef
+  (JNIEnv * env, jobject inst, jobject obj) {
+	if (obj == NULL) {
+		throwNullPointerException(env, "obj");
+		return 0;
+	}
+
+	return (jlong) (uintptr_t) (*env)->NewGlobalRef(env, obj);
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    DeleteGlobalRef
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_DeleteGlobalRef
+  (JNIEnv * env, jobject inst, jlong ref) {
+	if (ref == 0) {
+		throwNullPointerException(env, "ref");
+		return;
+	}
+
+	(*env)->DeleteGlobalRef(env, (jobject) (uintptr_t) ref);
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    NewLocalRef
+ * Signature: (J)Ljava/lang/Object;
+ */
+JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_NewLocalRef
+  (JNIEnv * env, jobject inst, jlong ref) {
+	if (ref == 0) {
+		throwNullPointerException(env, "ref");
+		return NULL;
+	}
+
+	return (*env)->NewLocalRef(env, (jobject) (uintptr_t) ref);
+}
+
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil

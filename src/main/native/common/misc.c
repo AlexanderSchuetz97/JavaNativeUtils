@@ -20,15 +20,52 @@
 #include "../common/jni/io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil.h"
 #include "../common/common.h"
 #include <stdlib.h>
-
+#if (defined(__amd64__) || defined(__i386__))
+#include <cpuid.h>
+#endif
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
- * Method:    getPointerSize
+ * Method:    cpuID
+ * Signature: (II)[I
+ */
+JNIEXPORT jintArray JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_cpuID
+  (JNIEnv * env, jobject inst, jint code, jint subcode) {
+#if (defined(__amd64__) || defined(__i386__))
+	int leaf = (int) code;
+	int subleaf = (int) subcode;
+	int ints[4];
+
+	int res = __get_cpuid_count(leaf, subleaf, &ints[0], &ints[1], &ints[2], &ints[3]);
+
+	if (res == 0) {
+		return NULL;
+	}
+
+	jintArray ir = (*env)->NewIntArray(env, 4);
+	if (ir == NULL) {
+		throwOOM(env, "NewIntArray");
+		return NULL;
+	}
+
+	const jint jints[4] = {
+			ints[0], ints[1], ints[2], ints[3]
+	};
+
+	(*env)->SetIntArrayRegion(env, ir, 0, 4, jints);
+	return ir;
+#else
+	return NULL;
+#endif
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    _getPointerSize
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_getPointerSize
-  (JNIEnv * env, jobject inst) {
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil__1getPointerSize
+  (JNIEnv * env, jclass clazz) {
 	return sizeof(void*);
 }
 
@@ -62,3 +99,5 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICom
 
 	free(vptr);
 }
+
+

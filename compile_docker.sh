@@ -21,45 +21,26 @@
 
 
 
-echo "Building the native libraries for JavaNativeUtils"
-
-#load config
-if [ -f config.sh ]
-then
-source config.sh
-else
-echo "Configuration file not found, this project requires a windows jdk and a linux jdk in order to build"
-echo "Because of this, you will have to manually specify the path to both jdk homes in the file config.sh"
-echo "This file will now be created, edit it, input your paths and then try again"
-touch config.sh
-echo "#!/usr/bin/env bash" > config.sh
-echo "#You may want to change this to use the javah command from the LINUX_JDK if your system jdk is not the same as your LINUX_JDK" >> config.sh
-echo "export JAVAH_COMMAND=javah" >> config.sh
-echo "#If you are running a normal 64 bit linux change this to just gcc if you dont have gcc multi-lib installed" >> config.sh
-echo "export LINUX_CC_AMD64=/usr/bin/x86_64-linux-gnu-gcc" >> config.sh
-echo "export LINUX_CC_I386=/usr/bin/i686-linux-gnu-gcc" >> config.sh
-echo "export LINUX_CC_ARMHF=/usr/bin/arm-linux-gnueabihf-gcc" >> config.sh
-echo "export LINUX_CC_AARCH64=/usr/bin/aarch64-linux-gnu-gcc" >> config.sh
-echo "export LINUX_JDK=" >> config.sh
-echo "#You will have to change this unless you are using mingw-cross to compile the windows dll" >> config.sh
-echo "export WINDOWS_CC_AMD64=/usr/bin/x86_64-w64-mingw32-gcc-win32" >> config.sh
-echo "export WINDOWS_CC_I386=/usr/bin/i686-w64-mingw32-gcc" >> config.sh
-echo "export WINDOWS_JDK=" >> config.sh
-echo "#You may change this to any combination of the following: \"windows_amd64 windows_i386 linux_amd64 linux_i386 linux_armhf linux_aarch64\"" >> config.sh
-echo "export BUILD_TARGETS=\"all\"" >> config.sh
-echo "#-U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=0 -fno-stack-protector are added to prevent dependencies to new GLIBC versions. This makes the build more portable to older systems. If you dont care about this remove this." >> config.sh
-echo "export LINUX_ADDITIONAL_CC_FLAGS=\"-U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=0 -fno-stack-protector\"" >> config.sh
-chmod +x config.sh
-exit -1
-fi
-
+echo "Building the native libraries for JavaNativeUtils using Docker"
+cd /src
+export JAVAH_COMMAND="javah -encoding utf-8"
+export LINUX_CC_AMD64=/usr/bin/x86_64-linux-gnu-gcc
+export LINUX_CC_I386=/usr/bin/i686-linux-gnu-gcc
+export LINUX_CC_ARMHF=/usr/bin/arm-linux-gnueabihf-gcc
+export LINUX_CC_AARCH64=/usr/bin/aarch64-linux-gnu-gcc
+export LINUX_JDK=/usr/lib/jvm/java-8-openjdk-amd64
+export WINDOWS_CC_AMD64=/usr/bin/x86_64-w64-mingw32-gcc-win32
+export WINDOWS_CC_I386=/usr/bin/i686-w64-mingw32-gcc
+export WINDOWS_JDK=/windowsJDK/jdk8u292-b10
+export BUILD_TARGETS="all"
+#windows_amd64 windows_i386
+export LINUX_ADDITIONAL_CC_FLAGS="-D_FILE_OFFSET_BITS=64"
 #Cleanup
 rm -rf src/main/native/common/jni
 mkdir -p src/main/native/common/jni
 rm -f src/main/resources/*.dll
 rm -f src/main/resources/*.so
-rm -f src/main/native_src.tar
-rm -f src/resources/native_src.tar
+
 
 #Building headers
 $JAVAH_COMMAND -cp src/main/java -d src/main/native/common/jni io.github.alexanderschuetz97.nativeutils.impl.NativeLibraryLoaderHelper
@@ -70,11 +51,16 @@ $JAVAH_COMMAND -cp src/main/java -d src/main/native/common/jni io.github.alexand
 $JAVAH_COMMAND -cp src/main/java -d src/main/native/common/jni io.github.alexanderschuetz97.nativeutils.impl.JNINativeMemory
 $JAVAH_COMMAND -cp src/main/java -d src/main/native/common/jni io.github.alexanderschuetz97.nativeutils.impl.JNINativeMethod
 
+
 cd src/main/native
 make clean
 
-make $BUILD_TARGETS
+make -j 12 $BUILD_TARGETS
 cd ../resources/
+
+#Container creates them as "root" this may cause issues...
+chmod 777 *.so
+chmod 777 *.dll
 
 #Confirm success
 

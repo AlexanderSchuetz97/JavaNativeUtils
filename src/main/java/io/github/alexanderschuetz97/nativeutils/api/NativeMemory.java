@@ -74,6 +74,12 @@ public interface NativeMemory extends AutoCloseable {
     long getNativePointer();
 
     /**
+     * returns the native pointer to the given offset.
+     * Warning: to ensure that the close() method is not called while the pointer is used it is recommended to acquire the readLock or writeLock of this memory while using the native pointer.
+     */
+    long getNativePointer(long off);
+
+    /**
      * Returns the read lock of this native memory object. While the read lock is held calls to "close" will block.
      * This lock will be acquired automatically by any operation (read & write) to prevent async
      * segmentation faults due to other threads calling close. You may wish to manually acquire this lock to perform bulk operations.
@@ -124,6 +130,13 @@ public interface NativeMemory extends AutoCloseable {
     void write(long offset, byte aByte);
 
     /**
+     * writes a pointer value to the given offset.
+     *
+     * This may be a 64 bit or 32 bit write.
+     */
+    void writePointer(long offset, long ptr);
+
+    /**
      * writes 4 bytes to the offset address.
      */
     void write(long offset, int aInt);
@@ -169,6 +182,11 @@ public interface NativeMemory extends AutoCloseable {
      * read 8 bytes from the offset address.
      */
     long readLong(long offset);
+
+    /**
+     * read a pointer from the given offset. Either a 32 bit or 64 bit read.
+     */
+    long readPointer(long offset);
 
     /**
      * read 4 bytes from the offset address.
@@ -410,8 +428,6 @@ public interface NativeMemory extends AutoCloseable {
      * Is 16 Byte compare and set supported?
      * returns false on anything except amd64 architecture
      *
-     * Note: old amd64 cpu's do not support cmpxchg16b this method does not check this via CPUID instruction so calling this on
-     * ancient hardware may crash the JVM. (Anything that can run windows 10 or newer will support cmpxchg16b)
      */
     boolean supports16ByteCompareAndSet();
 

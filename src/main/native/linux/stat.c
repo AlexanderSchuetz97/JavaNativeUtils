@@ -26,6 +26,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <assert.h>
 
 jobject fillStat(JNIEnv * env, struct stat* theStat) {
 	jobject myStat = (*env) -> NewObject(env, StatClass, StatClassConstructor);
@@ -172,3 +173,77 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 
 	return fillStat(env, &theStat);
 }
+
+static_assert(sizeof(mode_t) <= sizeof(jint), "mode_t doesnt fit in jint");
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    chmod
+ * Signature: (Ljava/lang/String;I)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_chmod
+  (JNIEnv * env, jobject inst, jstring path, jint mode) {
+	if (path == NULL) {
+		throwIllegalArgumentsExc(env, "path is null");
+		return;
+	}
+
+	const char* thePath = (*env) ->GetStringUTFChars(env, path, NULL);
+	if (thePath == NULL) {
+		throwOOM(env, "GetStringUTFChars");
+		return;
+	}
+
+	int res = chmod(thePath, (mode_t) mode);
+
+	if (res == 0) {
+		(*env)->ReleaseStringUTFChars(env, path, thePath);
+		return;
+	}
+
+	int err = errno;
+
+	switch(err) {
+	case(EACCES):
+		throwFSAccessDenied(env, thePath, NULL, "Search permission is denied on a component of the path prefix.");
+		(*env)->ReleaseStringUTFChars(env, path, thePath);
+		return;
+	case(EIO):
+		(*env)->ReleaseStringUTFChars(env, path, thePath);
+		throwIOExc(env, "An I/O error occurred");
+		return;
+	case(ELOOP):
+		throwFSLoop(env, thePath);
+		(*env)->ReleaseStringUTFChars(env, path, thePath);
+		return;
+	case(ENAMETOOLONG):
+		throwInvalidPath(env, thePath, "path is too long");
+		(*env)->ReleaseStringUTFChars(env, path, thePath);
+		return;
+	case(ENOENT):
+		throwFileNotFoundExc(env, thePath);
+		(*env)->ReleaseStringUTFChars(env, path, thePath);
+		return;
+	case(ENOMEM):
+		(*env)->ReleaseStringUTFChars(env, path, thePath);
+		throwOOM(env, "Insufficient kernel memory was available");
+		return;
+	case(ENOTDIR):
+		throwNotDirectoryException(env, thePath);
+		(*env)->ReleaseStringUTFChars(env, path, thePath);
+		return;
+	case(EPERM):
+		throwPermissionDeniedException(env, thePath, "The process does not have permission to change the file mode or the file is marked immuatable.");
+		(*env)->ReleaseStringUTFChars(env, path, thePath);
+		return;
+	case(EROFS):
+		(*env)->ReleaseStringUTFChars(env, path, thePath);
+		throwFSReadOnly(env);
+		return;
+	default:
+		(*env)->ReleaseStringUTFChars(env, path, thePath);
+		throwUnknownError(env, err);
+		return;
+	}
+}
+

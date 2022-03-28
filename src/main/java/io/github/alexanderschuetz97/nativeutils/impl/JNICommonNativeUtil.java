@@ -29,11 +29,16 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 public abstract class JNICommonNativeUtil implements JVMNativeUtil {
 
-    public native int getPointerSize();
+    public int getPointerSize() {
+        return _getPointerSize();
+    }
+
+    native static int _getPointerSize();
 
     @Override
     public boolean isJVM() {
@@ -58,7 +63,25 @@ public abstract class JNICommonNativeUtil implements JVMNativeUtil {
         return new JNINativeField(field.getDeclaringClass(), field.getType(), field.getName(), ref, Modifier.isStatic(field.getModifiers()));
     }
 
+    public native int[] __get_cpuid_count(int code, int subcode);
 
+    public String __get_cpuid_count_model() {
+        int[] model = __get_cpuid_count(0, 0);
+        return model == null ? null : new String(new byte[] {
+                (byte)  (model[1] >> 0),
+                (byte) (model[1] >> 8),
+                (byte) (model[1] >> 16),
+                (byte) (model[1] >>> 24),
+                (byte) (model[3] >> 0),
+                (byte) (model[3] >> 8),
+                (byte) (model[3] >> 16),
+                (byte) (model[3] >> 24),
+                (byte) (model[2] >> 0),
+                (byte) (model[2] >> 8),
+                (byte) (model[2] >> 16),
+                (byte) (model[2] >> 24),
+        }, StandardCharsets.UTF_8);
+    }
 
     native long _FromReflectedField(Field field);
 
@@ -80,6 +103,15 @@ public abstract class JNICommonNativeUtil implements JVMNativeUtil {
     public native RuntimeException Throw(Throwable throwable);
 
     static native Object _AllocObject(Class clazz);
+
+    @Override
+    public native long NewGlobalRef(Object obj);
+
+    @Override
+    public native void DeleteGlobalRef(long ref);
+
+    @Override
+    public native <T> T NewLocalRef(long ref);
 
     @Override
     public <T> T AllocObject(Class<T> clazz) {

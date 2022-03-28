@@ -14,7 +14,7 @@ Maven:
 <dependency>
     <groupId>io.github.alexanderschuetz97</groupId>
     <artifactId>JavaNativeUtils</artifactId>
-    <version>1.5</version>
+    <version>1.6</version>
 </dependency>
 ````
 
@@ -58,6 +58,7 @@ if (NativeUtils.isWindows()) {
 * msync
 * munmap
 * getpagesize
+* __get_cpuid_count (from cpuid.h)
 
 #### Windows
 * _locking
@@ -80,6 +81,10 @@ if (NativeUtils.isWindows()) {
 * ResetEvent
 * WaitForSingleObject
 * WaitForMultipleObjects
+* __get_cpuid_count (from cpuid.h)
+* RegOpenKeyExA
+* RegCloseKey
+* RegQueryValueExA
 
 ### List of exposed JNI Functions (All OS)
 ### Reflection
@@ -100,12 +105,15 @@ Accessing sun.misc.Unsafe is also non-trivial in newer Java Versions depending o
 * GetStaticMethodID
 * Call(X)Method
 * CallStatic(X)Method
+### Other JNI Methods
 * AllocObject
-* NewObject
 * DefineClass
 * MonitorEnter
 * MonitorExit
 * Throw
+* NewGlobalRef
+* DeleteGlobalRef
+* NewLocalRef
 
 
 ## Dependencies
@@ -116,10 +124,10 @@ Accessing sun.misc.Unsafe is also non-trivial in newer Java Versions depending o
 * i386 
 * amd64
 #### Linux
-* i386 (GLIBC 2.3.4 or newer)
-* amd64 (GLIBC 2.3.4 or newer)
-* armhf (GLIBC 2.4 or newer)
-* aarch64 (GLIBC 2.17 or newer) (untested, automatic loading may not work since its no where documented what "os.arch" is on aarch64)
+* i386 (GLIBC 2.17 or newer)
+* amd64 (GLIBC 2.17 or newer)
+* armhf (GLIBC 2.17 or newer)
+* aarch64 (GLIBC 2.17 or newer) (untested, automatic loading may not work since there is no documentation what "os.arch" is on aarch64)
 
 If an unsupported operating system or processor architecture is used then getWindowsUtil() or getLinuxUtil() throws an exception.
 To check if the current system supports linux or windows syscalls use the isLinux() or isWindows() method.
@@ -129,41 +137,17 @@ To check if the current system supports linux or windows syscalls use the isLinu
 Building JavaNativeUtils on Windows is currently not possible.
 #### Linux:
 Requirements:
-* mingw-cross (x86)
-* mingw-cross (i386)
-* gcc compiler (x86)
-* gcc compiler (i386)
-* gcc compiler (armhf)
-* gcc compiler (aarch64)
-* make
 * bash
-* linux JDK 7 or newer
-* Windows JDK 7 or newer (only for headers, optional you can skip this requirement by adjusting config)
+* docker
+* docker-compose
 
-JDK 7 (Oracle), 8 (OpenJDK) and 11 (OpenJDK) were tested.
-On a 64 bit Ubuntu 20.04 all requirements for building can be installed by running:
-````
-sudo apt-get install build-essential gcc-mingw-w64 openjdk-8-jdk gcc-mingw-w64-i686 gcc-mingw-w64-x86-64 gcc-i686-linux-gnu gcc-arm-linux-gnueabihf gcc-aarch64-linux-gnu 
-````
-You may have to adjust this command if you desire a different JDK version.
-
-To get the Windows JDK either copy the JDK home directory from a Windows installation or use other means
-(such as msiextract or unzip) to extract the JDK home directory from a Windows setup file.
-
-It is not required to run anything using the Windows JDK. The only relevant files for JavaNativeUtils
-are inside the "include" folder. You can safely delete everything else as long as you do not change the folder structure.
-It is recommended but not required to use the same JDK version for Windows and Linux because the
-JNI headers for Windows are generated using the Linux JDK's javah command to avoid having to run a Windows binary.
+Building for the first time will build the docker image to compile the native libraries. 
+This will take a few minutes depending on your internet connection speed. You will only have to do this once
+unless you delete/remove the containers/images.
 
 To build:
 1. clone the git repository
 2. run:
-````
-bash compile_native.sh
-````
-3. edit the newly created config.sh file and enter the paths for your Windows JDK home and Linux JDK home.
-4. (optional) Adjust the build targets to for example disable windows building or use a different compiler
-5. run:
 ````
 maven -Dmaven.test.skip=true -Dgpg.skip clean install
 ````

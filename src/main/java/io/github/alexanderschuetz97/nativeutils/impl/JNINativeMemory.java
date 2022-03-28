@@ -84,6 +84,15 @@ class JNINativeMemory implements NativeMemory {
     }
 
     @Override
+    public long getNativePointer(long off) {
+        if (off < 0 || off >= size) {
+            throw new IllegalArgumentException("out of bounds");
+        }
+
+        return off(ptr, off);
+    }
+
+    @Override
     public ReentrantReadWriteLock.ReadLock readLock() {
         return this.rLock;
     }
@@ -233,6 +242,16 @@ class JNINativeMemory implements NativeMemory {
     }
 
     @Override
+    public void writePointer(long offset, long ptr) {
+        if (JNICommonNativeUtil._getPointerSize() == 4) {
+            write(offset, (int) ptr);
+            return;
+        }
+
+        write(offset, ptr);
+    }
+
+    @Override
     public void write(long offset, int aInt) {
         lockForWrite(offset, 4);
         try {
@@ -327,6 +346,15 @@ class JNINativeMemory implements NativeMemory {
         } finally {
             rLock.unlock();
         }
+    }
+
+    @Override
+    public long readPointer(long offset) {
+        if (JNICommonNativeUtil._getPointerSize() == 4) {
+            return readInt(offset);
+        }
+
+        return readLong(offset);
     }
 
     @Override
@@ -691,6 +719,8 @@ class JNINativeMemory implements NativeMemory {
     }
 
     //NATIVE STUFF
+    static native long off(long ptr, long offset);
+
     /*
      * Read/Write
      */
@@ -756,8 +786,6 @@ class JNINativeMemory implements NativeMemory {
      * data has to be 32 bytes long and first 16 bytes is expect next 16 bytes is update.
      */
     static native boolean compareAndSet(long ptr, long offset, byte[] data);
-
-
 
     native boolean spinAndSet(long ptr, long offset, long expect, long update, long aSpinTime, long aTimeout);
     native void spinAndSet(long ptr, long offset, long expect, long update, long aSpinTime);

@@ -29,6 +29,7 @@
 #include <endian.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/utsname.h>
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
@@ -459,6 +460,52 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_getpagesize
   (JNIEnv * env, jobject inst) {
 	return (jint) getpagesize();
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    uname
+ * Signature: ()Lio/github/alexanderschuetz97/nativeutils/api/structs/Utsname;
+ */
+JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_uname
+  (JNIEnv * env, jobject inst) {
+
+	struct utsname uts;
+	memset(&uts, 0, sizeof(struct utsname));
+	uname(&uts);
+	uts.machine[_UTSNAME_MACHINE_LENGTH-1] = 0;
+	uts.nodename[_UTSNAME_NODENAME_LENGTH-1] = 0;
+	uts.release[_UTSNAME_RELEASE_LENGTH-1] = 0;
+	uts.sysname[_UTSNAME_SYSNAME_LENGTH-1] = 0;
+	uts.version[_UTSNAME_VERSION_LENGTH-1] = 0;
+
+	jobject utsname = (*env)->NewObject(env, Utsname, Utsname_constructor);
+	if (utsname == NULL) {
+		throwOOM(env, "NewObject");
+		return NULL;
+	}
+
+	if (!setStringField(env, utsname, Utsname_sysname, (const char*) &uts.sysname)) {
+		return NULL;
+	}
+
+	if (!setStringField(env, utsname, Utsname_machine, (const char*) &uts.machine)) {
+		return NULL;
+	}
+
+	if (!setStringField(env, utsname, Utsname_nodename, (const char*) &uts.nodename)) {
+		return NULL;
+	}
+
+	if (!setStringField(env, utsname, Utsname_release, (const char*) &uts.release)) {
+		return NULL;
+	}
+
+	if (!setStringField(env, utsname, Utsname_version, (const char*) &uts.version)) {
+		return NULL;
+	}
+
+	return utsname;
 }
 
 

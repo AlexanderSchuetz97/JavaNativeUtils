@@ -37,11 +37,42 @@ public interface JVMNativeUtil extends NativeUtil {
      */
     Class<?> DefineClass(String name, ClassLoader loader, byte[] bytes, int off, int len) throws ClassFormatError, ClassCircularityError, SecurityException;
 
+    /**
+     * Enter a monitor. This is equivalent to the beginning of a synchronized block/method.
+     */
     void MonitorEnter(Object obj);
 
+    /**
+     * Exit from a monitor entered by MonitorEnter. This MUST NOT be used to leave a monitor acquired by a synchronized block/method.
+     */
     void MonitorExit(Object obj);
 
+    /**
+     * creates a instance of a object without calling a constructor.
+     */
     <T> T AllocObject(Class<T> clazz);
+
+    /**
+     * returns a global reference that can be stored to a java object.
+     * The given java object will not be garbage collected/finalized unless DeleteGlobalRef is called with the returned value
+     * @throws NullPointerException if obj is null
+     * @return opaque native reference long. This value must NEVER be modified or the DeleteGlobalRef/NewLocalRef method will crash the jvm if a modified value is used.
+     */
+    long NewGlobalRef(Object obj);
+
+    /**
+     * Deletes a global ref. After deletion the ref must no longer be used. if the Object referred to by the given ref
+     * is no longer referenced elsewhere it will be garbage collected.
+     *
+     * If a "ref" long value is used after calling DeleteGlobalRef the jvm may crash.
+     */
+    void DeleteGlobalRef(long ref);
+
+    /**
+     * Resolves a Global ref into a "object".
+     * Note: you can safely use the object even after DeleteGlobalRef has already been called on the ref passed to this method.
+     */
+    <T> T NewLocalRef(long ref);
 
     /**
      * This method allows throwing of checked exceptions in methods that do not declare them as checked exceptions.
@@ -68,13 +99,25 @@ public interface JVMNativeUtil extends NativeUtil {
      * ND Array -> N times [ followed by TYPE
      */
 
+    /**
+     * reflection method to native method.
+     */
     NativeMethod FromReflectedMethod(Method method);
 
+    /**
+     * reflection constructor to native method.
+     */
     <R> NativeMethod<R, R> FromReflectedMethod(Constructor<R> method);
 
 
+    /**
+     * Get non static native method by signature
+     */
     <R, D> NativeMethod<R, D> GetMethodID(Class<D> declaring, String name, String signature);
 
+    /**
+     * Get static native method by signature
+     */
     <R, D> NativeMethod<R, D> GetStaticMethodID(Class<D> declaring, String name, String signature);
 
     /**

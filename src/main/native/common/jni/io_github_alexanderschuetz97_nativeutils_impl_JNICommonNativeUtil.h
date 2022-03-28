@@ -9,11 +9,11 @@ extern "C" {
 #endif
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
- * Method:    getPointerSize
+ * Method:    _getPointerSize
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_getPointerSize
-  (JNIEnv *, jobject);
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil__1getPointerSize
+  (JNIEnv *, jclass);
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
@@ -38,6 +38,14 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICom
  */
 JNIEXPORT jclass JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_DefineClass
   (JNIEnv *, jobject, jstring, jobject, jbyteArray, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    __get_cpuid_count
+ * Signature: (II)[I
+ */
+JNIEXPORT jintArray JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil__1_1get_1cpuid_1count
+  (JNIEnv *, jobject, jint, jint);
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
@@ -118,6 +126,30 @@ JNIEXPORT jthrowable JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_
  */
 JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil__1AllocObject
   (JNIEnv *, jclass, jclass);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    NewGlobalRef
+ * Signature: (Ljava/lang/Object;)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_NewGlobalRef
+  (JNIEnv *, jobject, jobject);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    DeleteGlobalRef
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_DeleteGlobalRef
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    NewLocalRef
+ * Signature: (J)Ljava/lang/Object;
+ */
+JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_NewLocalRef
+  (JNIEnv *, jobject, jlong);
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil

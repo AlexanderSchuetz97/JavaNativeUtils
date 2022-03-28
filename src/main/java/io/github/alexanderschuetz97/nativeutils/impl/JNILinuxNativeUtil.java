@@ -28,6 +28,7 @@ import io.github.alexanderschuetz97.nativeutils.api.structs.Msghdr;
 import io.github.alexanderschuetz97.nativeutils.api.structs.PollFD;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Sockaddr;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Stat;
+import io.github.alexanderschuetz97.nativeutils.api.structs.Utsname;
 
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
@@ -38,6 +39,7 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.FileSystemLoopException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.NotDirectoryException;
+import java.nio.file.NotLinkException;
 import java.nio.file.ReadOnlyFileSystemException;
 import java.util.Collection;
 
@@ -180,6 +182,30 @@ public class JNILinuxNativeUtil extends JNICommonNativeUtil implements LinuxNati
     @Override
     public native String strerror_r(int errno);
 
+    @Override
+    public native void setenv(String key, String value, boolean overwrite) throws UnknownNativeErrorException;
+
+    @Override
+    public native String getenv(String key) throws UnknownNativeErrorException;
+
+    @Override
+    public native void unsetenv(String key) throws UnknownNativeErrorException;
+
+    @Override
+    public native String[] wordexp(String expression, boolean allowCommands, boolean useStdErr, boolean allowUndef);
+
+    @Override
+    public native Utsname uname();
+
+    @Override
+    public native String readlink(String path) throws NotLinkException;
+
+    @Override
+    public native String realpath(String path) throws AccessDeniedException, IOException, FileSystemLoopException, InvalidPathException, FileNotFoundException, NotDirectoryException;
+
+    @Override
+    public native void chmod(String path, int mode) throws AccessDeniedException, IOException, FileSystemLoopException, InvalidPathException, FileNotFoundException, NotDirectoryException;
+    
     @Override
     public native Stat lstat(String path) throws InvalidFileDescriptorException;
 

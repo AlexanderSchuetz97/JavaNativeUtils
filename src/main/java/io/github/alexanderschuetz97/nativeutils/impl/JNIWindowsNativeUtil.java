@@ -21,14 +21,18 @@ package io.github.alexanderschuetz97.nativeutils.impl;
 
 import io.github.alexanderschuetz97.nativeutils.api.NativeMemory;
 import io.github.alexanderschuetz97.nativeutils.api.WindowsNativeUtil;
+import io.github.alexanderschuetz97.nativeutils.api.exceptions.InvalidFileDescriptorException;
+import io.github.alexanderschuetz97.nativeutils.api.exceptions.SharingViolationException;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
 import io.github.alexanderschuetz97.nativeutils.api.structs.GUID;
+import io.github.alexanderschuetz97.nativeutils.api.structs.RegData;
 import io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInfoData;
 import io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInterfaceData;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Stat;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Win32FileAttributeData;
 
 import java.io.FileDescriptor;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -64,6 +68,9 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
 
     @Override
     public native long CreateFileA(String lpFileName, int access, boolean allowDelete, boolean allowRead, boolean allowWrite, CreateFileA_createMode openMode, int attributes) throws UnknownNativeErrorException;
+
+    @Override
+    public native long CreateFileW(String lpFileName, int access, boolean allowDelete, boolean allowRead, boolean allowWrite, CreateFileA_createMode openMode, int attributes) throws FileAlreadyExistsException, SharingViolationException, UnknownNativeErrorException;
 
     @Override
     public native void CloseHandle(long handle) throws UnknownNativeErrorException;
@@ -177,6 +184,42 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
 
     @Override
     public native String FormatMessageA(int lastError);
+
+    @Override
+    public native String GetVolumePathNameW(String path);
+
+    @Override
+    public native String GetModuleFileNameA(long hModule) throws UnknownNativeErrorException;
+
+    @Override
+    public native void SetEnvironmentVariableA(String name, String value) throws UnknownNativeErrorException;
+
+    @Override
+    public native String ExpandEnvironmentStringsA(String str) throws UnknownNativeErrorException;
+
+    @Override
+    public native String GetEnvironmentVariableA(String name) throws UnknownNativeErrorException;
+
+    @Override
+    public native String GetFinalPathNameByHandleA(long handle, boolean normalize, Path_VolumeName volumeName) throws UnknownNativeErrorException, InvalidFileDescriptorException;
+
+    @Override
+    public native String GetFinalPathNameByHandleW(long handle, boolean normalize, Path_VolumeName volumeName) throws UnknownNativeErrorException, InvalidFileDescriptorException;
+
+    @Override
+    public native int GetFileAttributesA(String str) throws UnknownNativeErrorException;
+
+    @Override
+    public native void SetFileAttributesA(String str, int attr) throws UnknownNativeErrorException;
+
+    @Override
+    public native long RegOpenKeyExA(long hkey, String subKey, int options, int sam) throws UnknownNativeErrorException;
+
+    @Override
+    public native void RegCloseKey(long hkey) throws UnknownNativeErrorException;
+
+    @Override
+    public native RegData RegQueryValueExA(long hkey, String valueName) throws UnknownNativeErrorException;
 
     @Override
     public boolean isWindows() {

@@ -24,6 +24,7 @@
 #include <string.h>
 #include <errno.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
@@ -214,4 +215,186 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	(*env)->ReleaseStringUTFChars( env, target, targetString);
 
 	return;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    readlink
+ * Signature: (Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_readlink
+  (JNIEnv * env, jobject inst, jstring path) {
+
+	if (path == NULL) {
+		throwNullPointerException(env, "path");
+		return NULL;
+	}
+
+	const char* ptr = (*env)->GetStringUTFChars(env, path, NULL);
+	if (ptr == NULL) {
+		throwOOM(env, "GetStringUTFChars");
+		return NULL;
+	}
+
+	if (ptr[0] == 0) {
+		throwInvalidPath(env, ptr, "path is empty");
+		(*env)->ReleaseStringUTFChars(env, path, ptr);
+		return NULL;
+	}
+
+	size_t size = 512;
+	while (true) {
+		char * buf = (char *)malloc(size+1);
+		if (buf == NULL) {
+			(*env)->ReleaseStringUTFChars(env, path, ptr);
+			throwOOM(env, "malloc");
+			return NULL;
+		}
+
+		size_t actual = readlink(ptr, buf, size);
+		if (actual < 0) {
+
+			free((void*) buf);
+
+			int err = errno;
+			switch(err) {
+				case(EACCES):
+					throwFSAccessDenied(env, ptr, NULL, NULL);
+					(*env)->ReleaseStringUTFChars(env, path, ptr);
+					return NULL;
+				case(EINVAL):
+					throwNotLinkException(env, ptr, NULL, NULL);
+					(*env)->ReleaseStringUTFChars(env, path, ptr);
+					return NULL;
+				case(EIO):
+					(*env)->ReleaseStringUTFChars(env, path, ptr);
+					throwIOExc(env, "I/O error");
+					return NULL;
+				case(ELOOP):
+					throwFSLoop(env, ptr);
+					(*env)->ReleaseStringUTFChars(env, path, ptr);
+					return NULL;
+				case(ENAMETOOLONG):
+					throwInvalidPath(env, ptr, "The pathname, or a component of the pathname, is too long.");
+					(*env)->ReleaseStringUTFChars(env, path, ptr);
+					return NULL;
+				case(ENOENT):
+					throwFileNotFoundExc(env, ptr);
+					(*env)->ReleaseStringUTFChars(env, path, ptr);
+					return NULL;
+				case(ENOTDIR):
+					throwNotDirectoryException(env, ptr);
+					(*env)->ReleaseStringUTFChars(env, path, ptr);
+					return NULL;
+				case(ENOMEM):
+					(*env)->ReleaseStringUTFChars(env, path, ptr);
+					throwOOM(env, "Insufficient kernel memory was available.");
+					return NULL;
+				default:
+					(*env)->ReleaseStringUTFChars(env, path, ptr);
+					throwUnknownError(env, err);
+					return NULL;
+			}
+		}
+
+		if (actual < size) {
+
+			(*env)->ReleaseStringUTFChars(env, path, ptr);
+			//readlink does not append 0 byte jvm needs it tho buf is always bigger than size by 1.
+			buf[actual] = 0;
+			jstring str = (*env)->NewStringUTF(env, (const char*) buf);
+			free((void*) buf);
+			if (str == NULL) {
+				throwOOM(env, "NewStringUTF");
+			}
+			return str;
+		}
+
+		free((void*) buf);
+		size*=2;
+		if (size > 0xffff) {
+			(*env)->ReleaseStringUTFChars(env, path, ptr);
+			throwIOExc(env, "symbolic link points to a path longer than 65565 bytes!");
+			return NULL;
+		}
+	}
+
+}
+
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    realpath
+ * Signature: (Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_realpath
+(JNIEnv * env, jobject inst, jstring path) {
+	if (path == NULL) {
+		throwNullPointerException(env, "path");
+		return NULL;
+	}
+
+	const char* ptr = (*env)->GetStringUTFChars(env, path, NULL);
+	if (ptr == NULL) {
+		throwOOM(env, "GetStringUTFChars");
+		return NULL;
+	}
+
+	if (ptr[0] == 0) {
+		throwInvalidPath(env, ptr, "path is empty");
+		(*env)->ReleaseStringUTFChars(env, path, ptr);
+		return NULL;
+	}
+
+	const char * res = (const char *) realpath(ptr, NULL);
+
+	if (res != NULL) {
+		(*env)->ReleaseStringUTFChars(env, path, ptr);
+		jstring new = (*env)->NewStringUTF(env, res);
+		free((void*)res);
+		if (new == NULL) {
+			throwOOM(env, "NewStringUTF");
+		}
+		return new;
+	}
+
+	int err = errno;
+	switch(err) {
+		case(EACCES):
+			throwFSAccessDenied(env, ptr, NULL, NULL);
+			(*env)->ReleaseStringUTFChars(env, path, ptr);
+			return NULL;
+		case(EINVAL):
+			throwNotLinkException(env, ptr, NULL, NULL);
+			(*env)->ReleaseStringUTFChars(env, path, ptr);
+			return NULL;
+		case(EIO):
+			(*env)->ReleaseStringUTFChars(env, path, ptr);
+			throwIOExc(env, "I/O error");
+			return NULL;
+		case(ELOOP):
+			throwFSLoop(env, ptr);
+			(*env)->ReleaseStringUTFChars(env, path, ptr);
+			return NULL;
+		case(ENAMETOOLONG):
+			throwInvalidPath(env, ptr, "The pathname, or a component of the pathname, is too long.");
+			(*env)->ReleaseStringUTFChars(env, path, ptr);
+			return NULL;
+		case(ENOENT):
+			throwFileNotFoundExc(env, ptr);
+			(*env)->ReleaseStringUTFChars(env, path, ptr);
+			return NULL;
+		case(ENOTDIR):
+			throwNotDirectoryException(env, ptr);
+			(*env)->ReleaseStringUTFChars(env, path, ptr);
+			return NULL;
+		case(ENOMEM):
+			(*env)->ReleaseStringUTFChars(env, path, ptr);
+			throwOOM(env, "Insufficient memory was available.");
+			return NULL;
+		default:
+			(*env)->ReleaseStringUTFChars(env, path, ptr);
+			throwUnknownError(env, err);
+			return NULL;
+	}
 }

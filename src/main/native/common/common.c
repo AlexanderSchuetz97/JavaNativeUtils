@@ -24,6 +24,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <string.h>
+#include <stdlib.h>
 
 //These checks have to be somewhere
 static_assert(sizeof(uintptr_t) <= sizeof(jlong), "pointer doesnt fit in jlong");
@@ -66,6 +68,9 @@ jmethodID ReadOnlyFileSystemExceptionConstructor = NULL;
 jclass FileSystemLoopException = NULL;
 jclass AccessDeniedException = NULL;
 jmethodID AccessDeniedExceptionConstructor = NULL;
+
+jclass NotLinkException;
+jmethodID NotLinkExceptionConstructor;
 
 jclass FileAlreadyExistsException = NULL;
 jmethodID FileAlreadyExistsExceptionConstructor = NULL;
@@ -118,24 +123,25 @@ jmethodID InetSocketAddressConstructor = NULL;
 jmethodID InetSocketAddress_getPort = NULL;
 jmethodID InetSocketAddress_getAddress = NULL;
 
-jclass Integer;
-jfieldID Integer_value;
-jclass Long;
-jfieldID Long_value;
-jclass Short;
-jfieldID Short_value;
-jclass Byte;
-jfieldID Byte_value;
-jclass Boolean;
-jfieldID Boolean_value;
-jclass Double;
-jfieldID Double_value;
-jclass Float;
-jfieldID Float_value;
-jclass Character;
-jfieldID Character_value;
+jclass Integer = NULL;
+jfieldID Integer_value = NULL;
+jclass Long = NULL;
+jfieldID Long_value = NULL;
+jclass Short = NULL;
+jfieldID Short_value = NULL;
+jclass Byte = NULL;
+jfieldID Byte_value = NULL;
+jclass Boolean = NULL;
+jfieldID Boolean_value = NULL;
+jclass Double = NULL;
+jfieldID Double_value = NULL;
+jclass Float = NULL;
+jfieldID Float_value = NULL;
+jclass Character = NULL;
+jfieldID Character_value = NULL;
 
-
+jclass PermissionDeniedException = NULL;
+jmethodID PermissionDeniedExceptionConstructor = NULL;
 
 
 /*
@@ -153,6 +159,10 @@ void delRefs(JNIEnv * env) {
 
 	if (fdClass != NULL) {
 		(*env) -> DeleteGlobalRef(env, fdClass);
+	}
+
+	if (String_Class != NULL) {
+		(*env) -> DeleteGlobalRef(env, String_Class);
 	}
 
 	if (badFDClass != NULL) {
@@ -280,6 +290,16 @@ void delRefs(JNIEnv * env) {
 		free(PollFD_PollEvent_values);
 	}
 
+	if (RegData_types != NULL) {
+		for (int i = 0; i < RegData_types_size; i++) {
+			(*env) -> DeleteGlobalRef(env, RegData_types[i]);
+		}
+
+		free(RegData_types);
+	}
+
+	RegData_types = NULL;
+
 	if (OperationInProgressException != NULL) {
 		(*env)->DeleteGlobalRef(env, OperationInProgressException);
 	}
@@ -355,6 +375,42 @@ void delRefs(JNIEnv * env) {
 	if (Character != NULL) {
 		(*env)->DeleteGlobalRef(env, Character);
 	}
+
+	if (Utsname != NULL) {
+		(*env)->DeleteGlobalRef(env, Utsname);
+	}
+
+	if (NotLinkException != NULL) {
+		(*env)->DeleteGlobalRef(env, NotLinkException);
+	}
+
+	if (PermissionDeniedException != NULL) {
+		(*env)->DeleteGlobalRef(env, PermissionDeniedException);
+	}
+
+	if (RegData != NULL) {
+		(*env)->DeleteGlobalRef(env, RegData);
+	}
+
+	RegData = NULL;
+	RegData_Object = NULL;
+	RegData_Long = NULL;
+	RegData_Int = NULL;
+	String_Class = NULL;
+
+	PermissionDeniedException = NULL;
+	PermissionDeniedExceptionConstructor = NULL;
+
+	NotLinkExceptionConstructor = NULL;
+	NotLinkException = NULL;
+
+	jclass Utsname = NULL;
+	jmethodID Utsname_constructor = NULL;
+	jfieldID Utsname_sysname = NULL;
+	jfieldID Utsname_nodename = NULL;
+	jfieldID Utsname_release = NULL;
+	jfieldID Utsname_version = NULL;
+	jfieldID Utsname_machine = NULL;
 
 	Integer = NULL;
 	Integer_value = NULL;
@@ -606,6 +662,78 @@ bool makeRefs(JNIEnv * env) {
 	if (Exception == NULL) {
 		return false;
 	}
+
+	String_Class = makeGlobalClassRef(env, "java/lang/String");
+	if (String_Class == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, String_Class, "cant find java/lang/String");
+		return false;
+	}
+
+	PermissionDeniedException = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/exceptions/PermissionDeniedException");
+	if (PermissionDeniedException == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/PermissionDeniedException");
+		return false;
+	}
+
+	PermissionDeniedExceptionConstructor = (*env)->GetMethodID(env, PermissionDeniedException, "<init>", "(Ljava/lang/String;Ljava/lang/String;)V");
+	if (PermissionDeniedExceptionConstructor == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/PermissionDeniedException.<init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
+		return false;
+	}
+
+	Utsname = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Utsname");
+	if (Utsname == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Utsname");
+		return false;
+	}
+
+	Utsname_constructor = (*env)->GetMethodID(env, Utsname, "<init>", "()V");
+	if (Utsname_constructor == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Utsname.<init>()V");
+		return false;
+	}
+
+	Utsname_sysname = (*env)->GetFieldID(env, Utsname, "sysname", "Ljava/lang/String;");
+	if (Utsname_sysname == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Utsname.sysname");
+		return false;
+	}
+
+	Utsname_nodename = (*env)->GetFieldID(env, Utsname, "nodename", "Ljava/lang/String;");
+	if (Utsname_nodename == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Utsname.nodename");
+		return false;
+	}
+
+
+	Utsname_release = (*env)->GetFieldID(env, Utsname, "release", "Ljava/lang/String;");
+	if (Utsname_release == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Utsname.release");
+		return false;
+	}
+
+	Utsname_version = (*env)->GetFieldID(env, Utsname, "version", "Ljava/lang/String;");
+	if (Utsname_version == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Utsname.version");
+		return false;
+	}
+
+	Utsname_machine = (*env)->GetFieldID(env, Utsname, "machine", "Ljava/lang/String;");
+	if (Utsname_machine == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Utsname.machine");
+		return false;
+	}
+
 
 	Integer = makeGlobalClassRef(env, "java/lang/Integer");
 	if (Integer == NULL) {
@@ -1092,7 +1220,19 @@ bool makeRefs(JNIEnv * env) {
 		return false;
 	}
 
+	NotLinkException = makeGlobalClassRef(env, "java/nio/file/NotLinkException");
+	if (NotLinkException == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find java/nio/file/NotLinkException");
+		return false;
+	}
 
+	NotLinkExceptionConstructor = (*env)->GetMethodID(env, NotLinkException, "<init>", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
+	if (NotLinkExceptionConstructor == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find java/nio/file/NotLinkException.<init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
+		return false;
+	}
 
 	Collection = makeGlobalClassRef(env, "java/util/Collection");
 	if (Collection == NULL) {
@@ -1633,6 +1773,39 @@ bool makeRefs(JNIEnv * env) {
 		return false;
 	}
 
+	RegData = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/RegData");
+	if (RegData == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData");
+		return false;
+	}
+	RegData_Object = (*env)->GetMethodID(env, RegData, "<init>", "(Ljava/lang/Object;Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;)V");
+	if (RegData_Object == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData.<init>(Ljava/lang/Object;Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;)V");
+		return false;
+	}
+	RegData_Long = (*env)->GetMethodID(env, RegData, "<init>", "(J)V");
+	if (RegData_Long == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData.<init>(J)V");
+		return false;
+	}
+	RegData_Int = (*env)->GetMethodID(env, RegData, "<init>", "(I)V");
+	if (RegData_Int == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData.<init>(I)V");
+		return false;
+	}
+
+	RegData_types = enumerateEnum(env, "io/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType", "()[Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;", &RegData_types_size);
+	if (RegData_types == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant enumerate io/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType");
+		return false;
+	}
+
+
 	return true;
 }
 
@@ -1812,6 +1985,27 @@ void throwQuotaExceededException(JNIEnv * env, const char* file, const char* oth
 	(*env)->DeleteLocalRef(env, inst);
 }
 
+
+void throwNotLinkException(JNIEnv * env, const char* file, const char* other, const char* reason) {
+	jstring fileString = toJString(env, file);
+	jstring otherString = toJString(env, other);
+	jstring reasonString = toJString(env, reason);
+
+	jobject inst = (*env) -> NewObject(env, NotLinkException, NotLinkExceptionConstructor, fileString, otherString, reasonString);
+
+	delRef(env, fileString);
+	delRef(env, otherString);
+	delRef(env, reasonString);
+
+	if (inst == NULL) {
+		//OOM already thrown
+		return;
+	}
+
+	(*env)->Throw( env, inst );
+	(*env)->DeleteLocalRef(env, inst);
+}
+
 void throwFSAccessDenied(JNIEnv * env, const char* file, const char* other, const char* reason) {
 	jstring fileString = toJString(env, file);
 	jstring otherString = toJString(env, other);
@@ -1821,6 +2015,24 @@ void throwFSAccessDenied(JNIEnv * env, const char* file, const char* other, cons
 
 	delRef(env, fileString);
 	delRef(env, otherString);
+	delRef(env, reasonString);
+
+	if (inst == NULL) {
+		//OOM already thrown
+		return;
+	}
+
+	(*env)->Throw( env, inst );
+	(*env)->DeleteLocalRef(env, inst);
+}
+
+void throwPermissionDeniedException(JNIEnv * env, const char* file, const char* reason) {
+	jstring fileString = toJString(env, file);
+	jstring reasonString = toJString(env, reason);
+
+	jobject inst = (*env) -> NewObject(env, PermissionDeniedException, PermissionDeniedExceptionConstructor, fileString, reasonString);
+
+	delRef(env, fileString);
 	delRef(env, reasonString);
 
 	if (inst == NULL) {
@@ -2018,6 +2230,118 @@ void collection_clear(JNIEnv * env, jobject collection) {
 	(*env)->CallVoidMethod(env, collection, Collection_clear);
 }
 
+static_assert(sizeof(jchar) <= sizeof(wchar_t), "jchar does not fit into wchar_t");
+
+wchar_t * toWCharsMalloc(JNIEnv * env, jstring str) {
+	if (str == NULL) {
+		throwNullPointerException(env, "toWCharsMalloc");
+		return false;
+	}
+
+	jsize len = (*env)->GetStringLength(env, str);
+
+
+	wchar_t * res = malloc(sizeof(wchar_t) * (len+1));
+
+	if (res == NULL) {
+		throwOOM(env, "malloc");
+		return NULL;
+	}
+
+	if (!toWChars(env, str, res)) {
+		free((void*) res);
+		return NULL;
+	}
+
+	return res;
+}
+
+bool toWChars(JNIEnv * env, jstring str, wchar_t* wchars) {
+	if (str == NULL || wchars == NULL) {
+		throwNullPointerException(env, "toWChars");
+		return false;
+	}
+
+	jsize len = (*env)->GetStringLength(env, str);
+
+	if (len <= 0) {
+		wchars[0] = 0;
+		return true;
+	}
+
+	const jchar* jchars = (*env)->GetStringChars(env, str, NULL);
+	if (jchars == NULL) {
+		throwOOM(env, "GetStringChars");
+		return false;
+	}
+
+
+	wchars[len] = 0;
+
+	if (sizeof(wchar_t) == sizeof(jchar)) {
+		memcpy((void*) wchars, (void*)jchars, len*sizeof(jchar));
+	} else {
+		for (jsize i = 0; i < len; i++) {
+			wchars[i] = (wchar_t) jchars[i];
+		}
+	}
+
+	(*env)->ReleaseStringChars(env, str, jchars);
+
+	return true;
+}
+
+void fromWCharCopy(jchar* to, wchar_t* from, jsize len) {
+	if (len <= 0) {
+		return;
+	}
+
+	if (sizeof(wchar_t) == sizeof(jchar)) {
+		memcpy((void*) to, (void*) from, len*sizeof(jchar));
+	} else {
+		for (jsize i = 0; i < len; i++) {
+			//TODO
+			//This will scuff 4 byte unicode, i dont care for now...
+			to[i] = (jchar) from[i];
+		}
+	}
+}
+
+jstring fromWChars(JNIEnv * env, wchar_t* wchars) {
+	if (wchars == NULL) {
+		throwNullPointerException(env, "fromWChars");
+		return NULL;
+	}
+
+	jsize len = 0;
+	while(true) {
+		if (wchars[len] == 0) {
+			break;
+		}
+
+		len++;
+	}
+
+
+	if (len > 128) {
+		jchar* ptr = (jchar*) malloc(sizeof(jchar) * len);
+		if (ptr == NULL) {
+			throwOOM(env, "malloc");
+			return NULL;
+		}
+
+		fromWCharCopy(ptr, wchars, len);
+
+		jstring nstring = (*env)->NewString(env, (const jchar*) ptr, len);
+		free((void*) ptr);
+		return nstring;
+	} else {
+		jchar jchars[len];
+		fromWCharCopy(jchars, wchars, len);
+		return (*env)->NewString(env, (const jchar*) jchars, len);
+	}
+}
+
 jobject new_array_list(JNIEnv * env) {
 	return (*env)->NewObject(env, ArrayList, ArrayListConstructor);
 }
@@ -2028,6 +2352,28 @@ int getEnumOrdinal(JNIEnv * env, jobject e) {
 	}
 
 	return (int) (*env) -> CallIntMethod(env, e, enumOrdinal);
+}
+
+bool setStringField(JNIEnv  * env, jobject obj, jfieldID field, const char * str) {
+	if (obj == NULL) {
+		throwNullPointerException(env, "obj");
+		return false;
+	}
+
+	if (str == NULL) {
+		(*env)->SetObjectField(env, obj, field, NULL);
+		return true;
+	}
+
+	jstring jstr = (*env)->NewStringUTF(env, str);
+	if (jstr == NULL) {
+		throwOOM(env, "NewStringUTF");
+		return false;
+	}
+
+	(*env)->SetObjectField(env, obj, field, jstr);
+
+	return true;
 }
 
 

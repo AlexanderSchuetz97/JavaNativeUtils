@@ -102,7 +102,95 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 
 	(*env)->ReleaseStringUTFChars(env, path, str);
 	return (jlong) (uintptr_t) h;
+}
 
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    CreateFileW
+ * Signature: (Ljava/lang/String;IZZZLio/github/alexanderschuetz97/nativeutils/api/WindowsNativeUtil/CreateFileA_createMode;I)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_CreateFileW
+  (JNIEnv * env, jobject inst, jstring path, jint access, jboolean allowDelete, jboolean allowRead, jboolean allowWrite, jobject openMode, jint attributes) {
+
+	if (path == NULL) {
+		throwIllegalArgumentsExc(env, "path is null");
+		return (jlong) (uintptr_t) INVALID_HANDLE_VALUE;
+	}
+
+	DWORD mode = 0;
+	switch(getEnumOrdinal(env, openMode)) {
+		case(0):
+			mode = CREATE_NEW;
+			break;
+		case(1):
+			mode = CREATE_ALWAYS;
+			break;
+		case(2):
+			mode = OPEN_ALWAYS;
+			break;
+		case(3):
+			mode = OPEN_EXISTING;
+			break;
+		case(4):
+			mode = TRUNCATE_EXISTING;
+			break;
+		default:
+			throwIllegalArgumentsExc(env, "invalid openMode");
+			return (jlong) (uintptr_t) INVALID_HANDLE_VALUE;
+	}
+
+	DWORD share = 0;
+
+	if (allowDelete) {
+		share |= FILE_SHARE_DELETE;
+	}
+
+	if (allowRead) {
+		share |= FILE_SHARE_READ;
+	}
+
+	if (allowWrite) {
+		share |= FILE_SHARE_WRITE;
+	}
+
+
+	wchar_t * chars = toWCharsMalloc(env, path);
+
+	if (chars == NULL) {
+		return (jlong) (uintptr_t) INVALID_HANDLE_VALUE;
+	}
+
+
+	HANDLE h = CreateFileW(chars, access, share, NULL, mode, attributes, NULL);
+	free(chars);
+
+
+	if (h == INVALID_HANDLE_VALUE) {
+		DWORD err = GetLastError();
+		const char * p = (*env)->GetStringUTFChars(env, path, NULL);
+
+		if (p == NULL) {
+			throwOOM(env, "GetStringUTFChars");
+			return (jlong) (uintptr_t) INVALID_HANDLE_VALUE;
+		}
+
+		switch(err) {
+		case (ERROR_SHARING_VIOLATION):
+			throwShareingViolationException(env, p, NULL, NULL);
+			break;
+		case (ERROR_FILE_EXISTS):
+			//TODO PATH?
+			throwFileAlreadyExistsExc(env, p, NULL, NULL);
+			break;
+		default:
+			throwUnknownError(env, err);
+			break;
+		}
+
+		(*env)->ReleaseStringUTFChars(env, path, p);
+	}
+
+	return (jlong) (uintptr_t) h;
 }
 
 /*

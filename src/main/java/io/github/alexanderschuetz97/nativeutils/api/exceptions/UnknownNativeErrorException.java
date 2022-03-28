@@ -42,4 +42,8 @@ public class UnknownNativeErrorException extends Exception {
     public long getCode() {
         return code;
     }
+
+    public int intCode() {
+        return (int) getCode();
+    }
 }

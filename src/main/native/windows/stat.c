@@ -126,6 +126,8 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 
 	WINBOOL result = GetFileAttributesExA(pathString, GetFileExInfoStandard, &data);
 
+	(*env)->ReleaseStringUTFChars(env, path, pathString);
+
 	if (result == 0) {
 		DWORD err = GetLastError();
 		throwUnknownError(env, err);
@@ -149,4 +151,59 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	(*env) -> SetLongField(env, myStat, Win32FileAttributeData_ftLastAccessTimeLow, (jlong) data.ftLastAccessTime.dwLowDateTime);
 
 	return myStat;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    GetFileAttributesA
+ * Signature: (Ljava/lang/String;)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_GetFileAttributesA
+  (JNIEnv * env, jobject inst, jstring path) {
+	if (path == NULL) {
+		throwIllegalArgumentsExc(env, "path is null");
+		return 0;
+	}
+
+	LPCSTR pathString = (*env)->GetStringUTFChars(env, path, NULL);
+	if (pathString == NULL) {
+		throwOOM(env, "GetStringUTFChars");
+		return 0;
+	}
+
+	DWORD attr = GetFileAttributesA(pathString);
+	(*env)->ReleaseStringUTFChars(env, path, pathString);
+	if (attr == INVALID_FILE_ATTRIBUTES) {
+		throwUnknownError(env, GetLastError());
+		return 0;
+	}
+
+	return attr;
+
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    SetFileAttributesA
+ * Signature: (Ljava/lang/String;I)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_SetFileAttributesA
+  (JNIEnv * env, jobject inst, jstring path, jint attr) {
+	if (path == NULL) {
+		throwIllegalArgumentsExc(env, "path is null");
+		return;
+	}
+
+	LPCSTR pathString = (*env)->GetStringUTFChars(env, path, NULL);
+	if (pathString == NULL) {
+		throwOOM(env, "GetStringUTFChars");
+		return;
+	}
+
+	WINBOOL succ = SetFileAttributesA(pathString, (DWORD) attr);
+	(*env)->ReleaseStringUTFChars(env, path, pathString);
+
+	if (!succ) {
+		throwUnknownError(env, GetLastError());
+	}
 }

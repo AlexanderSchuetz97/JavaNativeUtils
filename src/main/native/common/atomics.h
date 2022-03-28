@@ -24,6 +24,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+bool supportsCas16();
 
 bool xadd1b(uint8_t* ptr, uint8_t* vPtr);
 

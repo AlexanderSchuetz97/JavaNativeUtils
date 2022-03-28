@@ -25,6 +25,7 @@ import io.github.alexanderschuetz97.nativeutils.api.WinConst;
 import io.github.alexanderschuetz97.nativeutils.api.WindowsNativeUtil;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
 import io.github.alexanderschuetz97.nativeutils.api.structs.GUID;
+import io.github.alexanderschuetz97.nativeutils.api.structs.RegData;
 import io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInfoData;
 import io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInterfaceData;
 
@@ -50,11 +51,37 @@ public class JavaNativeUtilsStandaloneTest {
                 }
                 listDevices(args[1]);
                 return;
+            case("reg"):
+                if (args.length != 3)  {
+                    System.out.println("reg key query");
+                    System.exit(-1);
+                    return;
+                }
+
+                reg(args[1], args[2]);
+                return;
             default:
                 System.out.println("no such test " + args[0]);
                 System.exit(-1);
                 return;
         }
+    }
+
+    public static void reg(String key, String value) {
+        WindowsNativeUtil wni = NativeUtils.getWindowsUtil();
+        try {
+            long hkey = wni.RegOpenKeyExA(WinConst.HKEY_LOCAL_MACHINE, key, 0, WinConst.KEY_QUERY_VALUE);
+            try {
+                RegData rd = wni.RegQueryValueExA(hkey, value);
+                System.out.println(rd);
+            } finally {
+                wni.RegCloseKey(hkey);
+            }
+        } catch (UnknownNativeErrorException e) {
+            System.out.println(wni.FormatMessageA(e.intCode()));
+            System.exit(-1);
+        }
+
     }
 
     public static void listDevices(String guid) throws Throwable {

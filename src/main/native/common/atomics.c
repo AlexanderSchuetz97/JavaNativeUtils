@@ -19,7 +19,54 @@
 //
 
 #include "atomics.h"
+#if (defined(__amd64__) || defined(__i386__))
+#include <cpuid.h>
+#endif
+
 #define FFINLINE  inline __attribute__((always_inline))
+
+
+volatile int cas16 = 0;
+
+bool FFINLINE supportsCas16() {
+#if (defined(__amd64__))
+	if (cas16 == 0) {
+		int eax, ebx, ecx, edx;
+		__cpuid(1, eax, ebx, ecx, edx);
+		if (ecx & bit_CMPXCHG16B == bit_CMPXCHG16B) {
+			cas16 = 1;
+		} else {
+			cas16 = 2;
+		}
+	}
+
+	return cas16 == 1;
+#else
+	return false;
+#endif
+}
+
+volatile int cas8 = 0;
+
+bool FFINLINE supportsCas8() {
+#if (defined(__amd64__))
+	return true;
+#elif (defined(__i386__))
+	if (cas8 == 0) {
+		int eax, ebx, ecx, edx;
+		__cpuid(1, eax, ebx, ecx, edx);
+		if (ecx & bit_CMPXCHG8B == bit_CMPXCHG8B) {
+			cas8 = 1;
+		} else {
+			cas8 = 2;
+		}
+	}
+
+	return cas8 == 1;
+#else
+	return false;
+#endif
+}
 
 bool FFINLINE xadd1b(uint8_t* ptr, uint8_t* vPtr) {
 #if (defined(__amd64__) || defined(__i386__))
@@ -102,6 +149,9 @@ bool FFINLINE cmpxchg8b(uint64_t* ptr, uint64_t expect, uint64_t update, bool* s
 	*success = flag;
 	return true;
 #elif (defined(__i386__))
+	if (!supportsCas8()) {
+		return false;
+	}
 	register uint32_t eax asm ("eax") = ((uint32_t*)&expect)[0];
 	register uint32_t edx asm ("edx") = ((uint32_t*)&expect)[1];
 	register uint32_t ebx asm ("ebx") = ((uint32_t*)&update)[0];
@@ -180,6 +230,9 @@ struct uint128 {
 
 bool FFINLINE cmpxchg16b(void* ptr, uint64_t* value, bool* success) {
 #if (defined(__amd64__))
+	if (!supportsCas16()) {
+		return false;
+	}
 	register uint64_t rax asm ("rax") = value[0];
 	register uint64_t rdx asm ("rdx") = value[1];
 	register uint64_t rbx asm ("rbx") = value[2];
@@ -253,6 +306,9 @@ bool FFINLINE xchg8b(uint64_t* ptr, uint64_t* vPtr) {
 	*vPtr = value;
 	return true;
 #elif (defined(__i386__))
+	if (!supportsCas8()) {
+		return false;
+	}
 	uint64_t value = *vPtr;
 	while(true) {
 		uint64_t tempCur = *ptr;
