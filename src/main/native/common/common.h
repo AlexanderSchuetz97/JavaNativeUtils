@@ -17,16 +17,20 @@
 // in the COPYING & COPYING.LESSER files in top level directory of JavaNativeUtils.
 // If not, see <https://www.gnu.org/licenses/>.
 //
-#include <jni.h>
-#include <stdint.h>
-#include <stdbool.h>
-#include <stddef.h>
-
 #ifdef _WIN32
 #undef _WIN32_WINNT
 //Windows Vista (needed for symlinks)
 #define _WIN32_WINNT 0x0600
+#include <winsock2.h>
+#include <windows.h>
 #endif
+
+#include "jstub.h"
+#include <stdint.h>
+#include <stdbool.h>
+#include <stddef.h>
+
+
 
 #ifndef COMMON_H_
 #define COMMON_H_
@@ -133,6 +137,10 @@ jfieldID Utsname_release;
 jfieldID Utsname_version;
 jfieldID Utsname_machine;
 
+jclass IfNameIndex_Class;
+jmethodID IfNameIndex_Constructor;
+
+
 
 jclass RegData;
 jmethodID RegData_Object;
@@ -143,6 +151,23 @@ int RegData_types_size;
 
 jclass String_Class;
 
+jclass RegQueryInfoKeyResult_Class;
+jmethodID RegQueryInfoKeyResult_Constructor;
+jfieldID RegQueryInfoKeyResult_keyClass;
+jfieldID RegQueryInfoKeyResult_subKeys;
+jfieldID RegQueryInfoKeyResult_maxSubKeyLen;
+jfieldID RegQueryInfoKeyResult_maxClassLen;
+jfieldID RegQueryInfoKeyResult_values;
+jfieldID RegQueryInfoKeyResult_maxValueNameLen;
+jfieldID RegQueryInfoKeyResult_maxValueLen;
+jfieldID RegQueryInfoKeyResult_securityDescriptorSize;
+jfieldID RegQueryInfoKeyResult_lastWriteTime;
+
+jclass RegEnumKeyExResult_Class;
+jmethodID RegEnumKeyExResult_Constructor;
+jfieldID RegEnumKeyExResult_name;
+jfieldID RegEnumKeyExResult_className;
+jfieldID RegEnumKeyExResult_lastWriteTime;
 
 
 jint unboxInt(JNIEnv * env, jobject box);
@@ -188,7 +213,7 @@ jobject new_iterator(JNIEnv * env, jobject collection);
 
 jobject iterator_next(JNIEnv * env, jobject iterator);
 
-void collection_add(JNIEnv * env, jobject collection, jobject value);
+bool collection_add(JNIEnv * env, jobject collection, jobject value);
 
 void collection_clear(JNIEnv * env, jobject collection);
 

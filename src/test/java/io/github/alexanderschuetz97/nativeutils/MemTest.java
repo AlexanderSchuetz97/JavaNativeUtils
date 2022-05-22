@@ -26,6 +26,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -59,15 +60,9 @@ public class MemTest {
 
         @Before
         public void before() throws Throwable {
-            rng.setSeed(System.currentTimeMillis());
-
-
             memory = NativeUtils.getLinuxUtil().malloc(4096);
             rng.setSeed(0);
-
-            for (long i = 0; i < memory.size(); i++) {
-                memory.write(i, (byte) 0);
-            }
+            memory.zero();
         }
 
         @After
@@ -131,6 +126,123 @@ public class MemTest {
                 }
             }
         }
+
+
+        @Test
+        public void testHeapBufferRead() throws Throwable {
+            for (int i = 0; i < memory.size(); i++) {
+                memory.writeByte(i, (byte)i);
+            }
+
+            ByteBuffer direct = ByteBuffer.allocateDirect((int)(memory.size()));
+            ByteBuffer direct2 = ByteBuffer.allocateDirect((int)(memory.size()));
+
+            for (int i = 0; i < memory.size();) {
+                int rem = (int) memory.remaining(i);
+                int nextRead = rem == 1 ? 1 : rng.nextInt(rem-1)+1;
+                memory.read(i, direct, nextRead);
+                i+=nextRead;
+            }
+
+            memory.read(0, direct2, (int) memory.size());
+
+            Assert.assertEquals(memory.size(), direct.position());
+            Assert.assertEquals(memory.size(), direct2.position());
+            direct.position(0);
+            for (int i = 0; i < memory.size(); i++) {
+                Assert.assertEquals((byte)i, direct.get(i));
+                Assert.assertEquals((byte)i, direct2.get(i));
+            }
+        }
+
+        @Test
+        public void testByteBufferRead() throws Throwable {
+            for (int i = 0; i < memory.size(); i++) {
+                memory.writeByte(i, (byte)i);
+            }
+
+            ByteBuffer direct = ByteBuffer.allocate((int)(memory.size()));
+            ByteBuffer direct2 = ByteBuffer.allocate((int)(memory.size()));
+
+            for (int i = 0; i < memory.size();) {
+                int rem = (int) memory.remaining(i);
+                int nextRead = rem == 1 ? 1 : rng.nextInt(rem-1)+1;
+                memory.read(i, direct, nextRead);
+                i+=nextRead;
+            }
+
+            memory.read(0, direct2, (int) memory.size());
+
+            Assert.assertEquals(memory.size(), direct.position());
+            Assert.assertEquals(memory.size(), direct2.position());
+            direct.position(0);
+            for (int i = 0; i < memory.size(); i++) {
+                Assert.assertEquals((byte)i, direct.get(i));
+                Assert.assertEquals((byte)i, direct2.get(i));
+            }
+        }
+
+        @Test
+        public void testHeapBufferWrite() throws Throwable {
+            ByteBuffer direct = ByteBuffer.allocateDirect((int)(memory.size()));
+            ByteBuffer direct2 = ByteBuffer.allocateDirect((int)(memory.size()));
+            memory.zero();
+            for (int i = 0; i < memory.size(); i++) {
+                direct.put(i, (byte)i);
+                direct2.put(i, (byte)i);
+            }
+
+            for (int i = 0; i < memory.size();) {
+                int rem = (int) memory.remaining(i);
+                int nextRead = rem == 1 ? 1 : rng.nextInt(rem-1)+1;
+                memory.write(i, direct, nextRead);
+                i+=nextRead;
+            }
+
+            Assert.assertEquals(memory.size(), direct.position());
+            for (int i = 0; i < memory.size(); i++) {
+                Assert.assertEquals((byte)i, memory.read(i));
+            }
+
+            memory.zero();
+            memory.write(0, direct2, direct2.remaining());
+            Assert.assertEquals(memory.size(), direct2.position());
+            for (int i = 0; i < memory.size(); i++) {
+                Assert.assertEquals((byte)i, memory.read(i));
+            }
+        }
+
+    @Test
+    public void testByteBufferWrite() throws Throwable {
+        ByteBuffer direct = ByteBuffer.allocate((int)(memory.size()));
+        ByteBuffer direct2 = ByteBuffer.allocate((int)(memory.size()));
+        memory.zero();
+        for (int i = 0; i < memory.size(); i++) {
+            direct.put(i, (byte)i);
+            direct2.put(i, (byte)i);
+        }
+
+        for (int i = 0; i < memory.size();) {
+            int rem = (int) memory.remaining(i);
+            int nextRead = rem == 1 ? 1 : rng.nextInt(rem-1)+1;
+            memory.write(i, direct, nextRead);
+            i+=nextRead;
+        }
+
+        Assert.assertEquals(memory.size(), direct.position());
+        for (int i = 0; i < memory.size(); i++) {
+            Assert.assertEquals((byte)i, memory.read(i));
+        }
+
+        memory.zero();
+        memory.write(0, direct2, direct2.remaining());
+        Assert.assertEquals(memory.size(), direct2.position());
+        for (int i = 0; i < memory.size(); i++) {
+            Assert.assertEquals((byte)i, memory.read(i));
+        }
+    }
+
+
 
         @Test
         public void xadd1Byte() throws Throwable {

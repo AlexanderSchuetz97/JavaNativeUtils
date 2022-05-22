@@ -295,6 +295,150 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_RegQueryValueExA
   (JNIEnv *, jobject, jlong, jstring);
 
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    RegQueryInfoKeyA
+ * Signature: (J)Lio/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult;
+ */
+JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_RegQueryInfoKeyA
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    RegEnumKeyExA
+ * Signature: (JIII)Lio/github/alexanderschuetz97/nativeutils/api/structs/RegEnumKeyExResult;
+ */
+JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_RegEnumKeyExA
+  (JNIEnv *, jobject, jlong, jint, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    GetCurrentThread
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_GetCurrentThread
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    GetCurrentProcess
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_GetCurrentProcess
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    DuplicateHandle
+ * Signature: (JJJIZZZ)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_DuplicateHandle
+  (JNIEnv *, jobject, jlong, jlong, jlong, jint, jboolean, jboolean, jboolean);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    CancelIo
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_CancelIo
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    CancelIoEx
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_CancelIoEx
+  (JNIEnv *, jobject, jlong, jlong);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    CancelSynchronousIo
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_CancelSynchronousIo
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    ReadFile
+ * Signature: (J[BII)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_ReadFile__J_3BII
+  (JNIEnv *, jobject, jlong, jbyteArray, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    ReadFile
+ * Signature: (JJI)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_ReadFile__JJI
+  (JNIEnv *, jobject, jlong, jlong, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    ReadFile
+ * Signature: (JJIJ)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_ReadFile__JJIJ
+  (JNIEnv *, jobject, jlong, jlong, jint, jlong);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    WriteFile
+ * Signature: (J[BII)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_WriteFile__J_3BII
+  (JNIEnv *, jobject, jlong, jbyteArray, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    WriteFile
+ * Signature: (JJI)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_WriteFile__JJI
+  (JNIEnv *, jobject, jlong, jlong, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    WriteFile
+ * Signature: (JJIJ)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_WriteFile__JJIJ
+  (JNIEnv *, jobject, jlong, jlong, jint, jlong);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    GetOverlappedResult
+ * Signature: (JJZ)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_GetOverlappedResult
+  (JNIEnv *, jobject, jlong, jlong, jboolean);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    GetFriendlyIfIndex
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_GetFriendlyIfIndex
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    GetAdapterIndex
+ * Signature: (Ljava/lang/String;)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_GetAdapterIndex
+  (JNIEnv *, jobject, jstring);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    GetAdaptersAddresses
+ * Signature: (JJ)Ljava/util/Collection;
+ */
+JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_GetAdaptersAddresses
+  (JNIEnv *, jobject, jlong, jlong);
+
 #ifdef __cplusplus
 }
 #endif

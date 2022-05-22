@@ -100,4 +100,18 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICom
 	free(vptr);
 }
 
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    pointerAdd
+ * Signature: (JJ)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_pointerAdd
+  (JNIEnv * env, jclass clazz, jlong ptr, jlong off) {
+	void * vptr = (void*) (uintptr_t) ptr;
+	vptr+=off;
+
+	return (jlong) (uintptr_t) vptr;
+}
+
+
 

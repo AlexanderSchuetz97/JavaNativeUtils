@@ -74,6 +74,110 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    bind
+ * Signature: (ILio/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr;)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_bind
+  (JNIEnv * env, jobject inst, jint fd, jobject jaddrobj) {
+	if (jaddrobj == NULL) {
+			throwNullPointerException(env, "address is null");
+			return;
+		}
+
+		jbyteArray jaddr = (jbyteArray) (*env)->GetObjectField(env, jaddrobj, Sockaddr_address);
+
+		if (jaddr == NULL) {
+			throwNullPointerException(env, "address.address is null");
+			return;
+		}
+
+
+		socklen_t size = (socklen_t) (*env)->GetArrayLength(env, jaddr);
+
+		struct sockaddr * addr = (struct sockaddr *) (*env)->GetByteArrayElements(env, jaddr, NULL);
+		if (addr == NULL) {
+			throwOOM(env, "GetByteArrayElements");
+			return;
+		}
+
+		while(true) {
+
+			int result = bind((int) fd,  (const struct sockaddr *) addr, size);
+
+			if (result != -1) {
+				(*env)->ReleaseByteArrayElements(env, jaddr, (jbyte*) addr, JNI_ABORT);
+				return;
+			}
+
+			int err = errno;
+
+			if (size >= sizeof(sa_family_t) && addr->sa_family == AF_UNIX) {
+				switch(err) {
+					case(EBADF):
+						throwBadFileDescriptor(env);
+						break;
+					case(ENOTSOCK):
+						throwIllegalArgumentsExc(env, "file descriptor does not refer to a socket");
+						break;
+					case(EACCES):
+						throwFSAccessDenied(env, NULL, NULL, "Search permission is denied on a component of the path prefix.");
+						break;
+					case(EADDRNOTAVAIL):
+						throwBindException(env, "A nonexistent interface was requested or the requested address was not local.");
+						break;
+					case(ELOOP):
+						throwFSLoop(env, "socket address");
+						break;
+					case(ENAMETOOLONG):
+						throwInvalidPath(env, "socket address", "addr is too long");
+						break;
+					case(ENOENT):
+						throwFileNotFoundExc(env, "A component in the directory prefix of the socket pathname does not exist.");
+						break;
+					case(ENOMEM):
+						throwOOM(env, "Insufficient kernel memory was available.");
+						break;
+					case(ENOTDIR):
+						throwNotDirectoryException(env, "A component of the path prefix is not a directory.");
+						break;
+					case(EROFS):
+						throwFSReadOnly(env);
+						break;
+					case(EINTR):
+						continue;
+					default:
+						throwUnknownError(env, err);
+						break;
+				}
+			} else {
+				switch(err) {
+					case(EBADF):
+						throwBadFileDescriptor(env);
+						break;
+					case(ENOTSOCK):
+						throwIllegalArgumentsExc(env, "file descriptor does not refer to a socket");
+						break;
+					case(EACCES):
+						throwFSAccessDenied(env, NULL, NULL, "The address is protected, and the user is not the superuser.");
+						break;
+					case(EADDRINUSE):
+						throwBindException(env, "could not bind local address because it is in use.");
+						break;
+					case(EINTR):
+						continue;
+					default:
+						throwUnknownError(env, err);
+						break;
+				}
+			}
+
+			(*env)->ReleaseByteArrayElements(env, jaddr, (jbyte*) addr, JNI_ABORT);
+			return;
+		}
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
  * Method:    connect
  * Signature: (ILio/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr;)V
  */
@@ -446,14 +550,83 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	}
 }
 
+void handle_getsockname_error(JNIEnv * env, int err) {
+	switch(err) {
+		case(EBADF):
+			throwBadFileDescriptor(env);
+			return;
+		case(ENOTSOCK):
+			throwIllegalArgumentsExc(env, "The file descriptor does not refer to a socket.");
+			return;
+		case(ENOBUFS):
+			throwOOM(env, "Insufficient resources were available in the system to perform the operation.");
+			return;
+	}
+}
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
- * Method:    recvmsg
- * Signature: (ILio/github/alexanderschuetz97/nativeutils/api/structs/Msghdr;I)I
+ * Method:    getsockname
+ * Signature: (ILio/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr;)V
  */
-JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_recvmsg
-  (JNIEnv * env, jobject inst, jint fd, jobject msghdr, jint flags) {
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_getsockname
+  (JNIEnv * env, jobject inst, jint fd, jobject jaddrobj) {
+	if (jaddrobj == NULL) {
+		throwNullPointerException(env, "address");
+		return;
+	}
+
+	jbyteArray jaddr = (jbyteArray) (*env)->GetObjectField(env, jaddrobj, Sockaddr_address);
+
+	if (jaddr == NULL) {
+		throwNullPointerException(env, "address.address is null");
+		return;
+	}
+
+
+	char dummy[1];
+
+	socklen_t len = 0;
+	int res = getsockname(fd, (struct sockaddr*) dummy, &len);
+	if (res == -1) {
+		handle_getsockname_error(env, errno);
+		return;
+	}
+
+	if ((*env)->GetArrayLength(env, jaddr) != len) {
+		(*env)->DeleteLocalRef(env, jaddr);
+		jaddr = (*env)->NewByteArray(env, len);
+		if (jaddr == NULL) {
+			throwOOM(env, "NewByteArray");
+			return;
+		}
+
+		(*env)->SetObjectField(env, jaddrobj, Sockaddr_address, jaddr);
+	}
+
+	struct sockaddr * addr = (struct sockaddr *) (*env)->GetByteArrayElements(env, jaddr, NULL);
+	if (addr == NULL) {
+		throwOOM(env, "GetByteArrayElements");
+		return;
+	}
+
+	socklen_t nlen = len;
+	res = getsockname(fd, addr, &nlen);
+	if (res == -1) {
+		(*env)->ReleaseByteArrayElements(env, jaddr, (jbyte*) addr, JNI_ABORT);
+		handle_getsockname_error(env, errno);
+		return;
+	}
+
+	(*env)->SetIntField(env, jaddrobj, Sockaddr_addressFamily, addr->sa_family);
+	(*env)->ReleaseByteArrayElements(env, jaddr, (jbyte*) addr, JNI_OK);
+}
+
+
+
+
+
+jint handle_msg (JNIEnv * env, jobject inst, jint fd, jobject msghdr, jint flags, bool isRead) {
 
 	if (msghdr == NULL) {
 		throwNullPointerException(env, "msghdr");
@@ -581,6 +754,21 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	memset(&msg, 0, sizeof(msg));
 	msg.msg_name = jaddr == NULL ? NULL : addrBuf;
 	msg.msg_namelen = jaddr == NULL ? 0 : ADDRESS_BUFSIZE;
+	if (!isRead && jaddr != NULL) {
+		jbyteArray addr = (jbyteArray) (*env)->GetObjectField(env, jaddr, Sockaddr_address);
+		if (addr != NULL) {
+			jsize len = (*env)->GetArrayLength(env, addr);
+			if (len > ADDRESS_BUFSIZE) {
+				//WILL EINVAL I dont care yet.
+				len = ADDRESS_BUFSIZE;
+			}
+
+			(*env)->GetByteArrayRegion(env, addr, 0, len, (jbyte*) addrBuf);
+			(*env)->DeleteLocalRef(env, addr);
+			msg.msg_namelen = len;
+		}
+	}
+
 	msg.msg_iov = iov;
 	msg.msg_iovlen = ioveclen;
 
@@ -608,7 +796,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	int ret;
 	int err;
 	while(true) {
-		ret = recvmsg(fd, &msg, flags);
+		ret = isRead ? recvmsg(fd, &msg, flags) : sendmsg(fd, (const struct msghdr *) &msg, flags);
 
 		err = 0;
 
@@ -622,63 +810,67 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 		break;
 	}
 
-	(*env)->SetBooleanField(env, msghdr, Msghdr_complete, (msg.msg_flags & MSG_EOR) == MSG_EOR);
-	(*env)->SetBooleanField(env, msghdr, Msghdr_truncated, (msg.msg_flags & MSG_TRUNC) == MSG_TRUNC);
-	(*env)->SetBooleanField(env, msghdr, Msghdr_controlDataTruncated, (msg.msg_flags & MSG_CTRUNC) == MSG_CTRUNC);
-	(*env)->SetBooleanField(env, msghdr, Msghdr_outOfBand, (msg.msg_flags & MSG_OOB) == MSG_OOB);
-	(*env)->SetBooleanField(env, msghdr, Msghdr_errQueue, (msg.msg_flags & MSG_ERRQUEUE) == MSG_ERRQUEUE);
+	if (isRead) {
+		(*env)->SetBooleanField(env, msghdr, Msghdr_complete, (msg.msg_flags & MSG_EOR) == MSG_EOR);
+		(*env)->SetBooleanField(env, msghdr, Msghdr_truncated, (msg.msg_flags & MSG_TRUNC) == MSG_TRUNC);
+		(*env)->SetBooleanField(env, msghdr, Msghdr_controlDataTruncated, (msg.msg_flags & MSG_CTRUNC) == MSG_CTRUNC);
+		(*env)->SetBooleanField(env, msghdr, Msghdr_outOfBand, (msg.msg_flags & MSG_OOB) == MSG_OOB);
+		(*env)->SetBooleanField(env, msghdr, Msghdr_errQueue, (msg.msg_flags & MSG_ERRQUEUE) == MSG_ERRQUEUE);
+	}
 
 	for (int j = 0; j < ioveclen; j++) {
-		(*env)->ReleaseByteArrayElements(env, iovecObjs[j].jbytes, iovecObjs[j].ptr, JNI_OK);
+		(*env)->ReleaseByteArrayElements(env, iovecObjs[j].jbytes, iovecObjs[j].ptr, isRead ? JNI_OK : JNI_ABORT);
 		(*env)->DeleteLocalRef(env, iovecObjs[j].jbytes);
-		(*env)->SetIntField(env, iovecObjs[j].jiov, Iovec_size, iov[j].iov_len);
+		if (isRead) {
+			(*env)->SetIntField(env, iovecObjs[j].jiov, Iovec_size, iov[j].iov_len);
+		}
 		(*env)->DeleteLocalRef(env, iovecObjs[j].jiov);
 	}
 
 	if (jcontrol != NULL) {
-		(*env)->ReleaseByteArrayElements(env, jcontrol, msg.msg_control, JNI_COMMIT);
+		(*env)->ReleaseByteArrayElements(env, jcontrol, msg.msg_control, isRead ? JNI_OK : JNI_ABORT);
 		(*env)->DeleteLocalRef(env, jcontrol);
 	}
 
-	(*env)->SetIntField(env, msghdr, Msghdr_msg_controllen, (jint) msg.msg_controllen);
+	if (isRead) {
+		(*env)->SetIntField(env, msghdr, Msghdr_msg_controllen, (jint) msg.msg_controllen);
+		if (ret != -1 && jaddr != NULL) {
+			jbyteArray addr = (jbyteArray) (*env)->GetObjectField(env, jaddr, Sockaddr_address);
+			if (addr == NULL || (*env)->GetArrayLength(env, addr) != msg.msg_namelen) {
+				if (addr != NULL) {
+					(*env)->DeleteLocalRef(env, addr);
+				}
 
+				addr = (*env)->NewByteArray(env, msg.msg_namelen);
+				if (addr == NULL) {
+					throwOOM(env, "NewByteArray");
+					(*env)->DeleteLocalRef(env, jaddr);
+					return -1;
+				}
 
-	if (ret != -1 && jaddr != NULL) {
-		jbyteArray addr = (jbyteArray) (*env)->GetObjectField(env, jaddr, Sockaddr_address);
-		if (addr == NULL || (*env)->GetArrayLength(env, addr) != msg.msg_namelen) {
-			if (addr != NULL) {
-				(*env)->DeleteLocalRef(env, addr);
+				 (*env)->SetObjectField(env, jaddr, Sockaddr_address, addr);
 			}
 
-			addr = (*env)->NewByteArray(env, msg.msg_namelen);
-			if (addr == NULL) {
-				throwOOM(env, "NewByteArray");
+			jbyte* ptr = (*env)->GetByteArrayElements(env, addr, NULL);
+			if (ptr == NULL) {
+
 				(*env)->DeleteLocalRef(env, jaddr);
+				(*env)->DeleteLocalRef(env, addr);
+				throwOOM(env, "GetByteArrayElements");
 				return -1;
 			}
 
-			 (*env)->SetObjectField(env, jaddr, Sockaddr_address, addr);
-		}
+			memcpy(ptr, msg.msg_name, msg.msg_namelen);
+			(*env)->ReleaseByteArrayElements(env, addr, ptr, JNI_OK);
+			jint af = -1;
+			if (msg.msg_namelen > 0) {
+				af = ((struct sockaddr *) msg.msg_name)->sa_family;
+			}
 
-		jbyte* ptr = (*env)->GetByteArrayElements(env, addr, NULL);
-		if (ptr == NULL) {
-
-			(*env)->DeleteLocalRef(env, jaddr);
+			(*env)->SetIntField(env, jaddr, Sockaddr_addressFamily, af);
 			(*env)->DeleteLocalRef(env, addr);
-			throwOOM(env, "GetByteArrayElements");
-			return -1;
+			(*env)->DeleteLocalRef(env, jaddr);
 		}
-
-		memcpy(ptr, msg.msg_name, msg.msg_namelen);
-		(*env)->ReleaseByteArrayElements(env, addr, ptr, JNI_OK);
-		jint af = -1;
-		if (msg.msg_namelen > 0) {
-			af = ((struct sockaddr *) msg.msg_name)->sa_family;
-		}
-
-		(*env)->SetIntField(env, jaddr, Sockaddr_addressFamily, af);
-		(*env)->DeleteLocalRef(env, addr);
-		(*env)->DeleteLocalRef(env, jaddr);
 	}
 
 	if (ret == 0) {
@@ -720,6 +912,26 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 			throwUnknownError(env, err);
 			return -1;
 	}
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    sendmsg
+ * Signature: (ILio/github/alexanderschuetz97/nativeutils/api/structs/Msghdr;I)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_sendmsg
+	(JNIEnv * env, jobject inst, jint fd, jobject msghdr, jint flags) {
+	return handle_msg(env, inst, fd, msghdr, flags, false);
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    recvmsg
+ * Signature: (ILio/github/alexanderschuetz97/nativeutils/api/structs/Msghdr;I)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_recvmsg
+  (JNIEnv * env, jobject inst, jint fd, jobject msghdr, jint flags) {
+	return handle_msg(env, inst, fd, msghdr, flags, true);
 }
 
 /*
@@ -816,4 +1028,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 
 	return resultList;
 }
+
+
+
 

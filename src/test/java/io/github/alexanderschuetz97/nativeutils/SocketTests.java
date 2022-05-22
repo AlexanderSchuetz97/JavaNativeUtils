@@ -30,14 +30,18 @@ import io.github.alexanderschuetz97.nativeutils.api.structs.Iovec;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Msghdr;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Sockaddr;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Stat;
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.io.SyncFailedException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
+import java.util.Random;
 
 public class SocketTests {
 
@@ -137,5 +141,32 @@ public class SocketTests {
 
 
         lni.close(i);
+    }
+
+    @Test
+    public void testNetlinkBind() throws Exception {
+        LinuxNativeUtil lni = NativeUtils.getLinuxUtil();
+        int s = lni.socket(LinuxConst.AF_NETLINK, LinuxConst.SOCK_RAW, LinuxConst.NETLINK_ROUTE);
+        Sockaddr sockaddr = new Sockaddr(LinuxConst.AF_NETLINK, new byte[]{
+                LinuxConst.AF_NETLINK,0,
+                0,0,
+                0,0,0,0,
+                0,0,0,0
+        });
+        lni.bind(s, sockaddr);
+        Sockaddr sockaddr2 = new Sockaddr();
+        lni.getsockname(s, sockaddr2);
+        Assert.assertEquals(LinuxConst.AF_NETLINK, sockaddr2.getAddressFamily());
+        lni.close(s);
+    }
+
+    static LinuxNativeUtil UTIL = NativeUtils.getLinuxUtil();
+
+
+
+    @Test
+    public void getNetlinkIndex() throws IOException, UnknownNativeErrorException {
+
+
     }
 }

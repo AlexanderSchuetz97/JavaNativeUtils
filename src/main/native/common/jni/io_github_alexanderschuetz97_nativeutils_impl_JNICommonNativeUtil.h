@@ -167,6 +167,30 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICo
 JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil__1free
   (JNIEnv *, jclass, jlong);
 
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    GetDirectBufferAddress
+ * Signature: (Ljava/nio/ByteBuffer;)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_GetDirectBufferAddress
+  (JNIEnv *, jobject, jobject);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    pointerAdd
+ * Signature: (JJ)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_pointerAdd
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    NewDirectByteBuffer
+ * Signature: (JJ)Ljava/nio/ByteBuffer;
+ */
+JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_NewDirectByteBuffer
+  (JNIEnv *, jobject, jlong, jlong);
+
 #ifdef __cplusplus
 }
 #endif

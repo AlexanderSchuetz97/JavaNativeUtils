@@ -44,7 +44,7 @@ WINDOWS_CFLAGS=-I. -I$(WINDOWS_JDK)/include -I$(WINDOWS_JDK)/include/win32
 
 LINUX_CFLAGS=-I. -I$(LINUX_JDK)/include -I$(LINUX_JDK)/include/linux -fPIC $(LINUX_ADDITIONAL_CC_FLAGS)
 
-WINDOWS_LIBS =-lhid -lsetupapi
+WINDOWS_LIBS =-lhid -lsetupapi -liphlpapi
 
 
 COMMON_SOURCES=$(shell find common -name "*.c")

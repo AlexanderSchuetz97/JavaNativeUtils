@@ -334,6 +334,317 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 }
 
 
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    ReadFile
+ * Signature: (J[BII)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_ReadFile__J_3BII
+  (JNIEnv * env, jobject inst, jlong jhandle, jbyteArray jbuf, jint off, jint len) {
+	HANDLE h = (HANDLE) (uintptr_t) jhandle;
+
+	if (off < 0) {
+		throwIllegalArgumentsExc(env, "off");
+		return -1;
+	}
+
+	if (len < 0) {
+		throwIllegalArgumentsExc(env, "off");
+		return -1;
+	}
+
+	if (h == INVALID_HANDLE_VALUE) {
+		throwBadFileDescriptor(env);
+		return -1;
+	}
+
+	if (jbuf == NULL) {
+		throwNullPointerException(env, "buf");
+		return -1;
+	}
+
+	if ((*env)->GetArrayLength(env, jbuf) < len) {
+		throwIllegalArgumentsExc(env, "buf.len < len");
+		return -1;
+	}
+
+
+	if (len == 0) {
+		return 0;
+	}
+
+	DWORD read = 0;
+
+	jbyte* buf = (*env)->GetByteArrayElements(env, jbuf, NULL);
+	if (buf == NULL) {
+		throwOOM(env, "GetByteArrayElements");
+		return -1;
+	}
+
+	LPVOID vbuf = (LPVOID) buf;
+	vbuf+=off;
+
+	if (!ReadFile(h, vbuf, len, &read, NULL)) {
+		DWORD err = GetLastError();
+		(*env)->ReleaseByteArrayElements(env, jbuf, buf, JNI_ABORT);
+		throwUnknownError(env, err);
+		return -1;
+	}
+
+	(*env)->ReleaseByteArrayElements(env, jbuf, buf, JNI_OK);
+	return read;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    ReadFile
+ * Signature: (JJI)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_ReadFile__JJI
+  (JNIEnv * env, jobject inst, jlong jhandle, jlong ptr, jint len) {
+
+	HANDLE h = (HANDLE) (uintptr_t) jhandle;
+
+	if (h == INVALID_HANDLE_VALUE) {
+		throwBadFileDescriptor(env);
+		return -1;
+	}
+
+
+	DWORD read = 0;
+
+	if (!ReadFile(h, (LPVOID) (uintptr_t) ptr, len, &read, NULL)) {
+		DWORD err = GetLastError();
+		throwUnknownError(env, err);
+		return -1;
+	}
+
+	return read;
+}
+
+
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    ReadFile
+ * Signature: (JJIJ)I
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_ReadFile__JJIJ
+  (JNIEnv * env, jobject inst, jlong jhandle, jlong ptr, jint len, jlong event) {
+
+	HANDLE h = (HANDLE) (uintptr_t) jhandle;
+	if (h == INVALID_HANDLE_VALUE) {
+		throwBadFileDescriptor(env);
+		return 0;
+	}
+
+	HANDLE e = (HANDLE) (uintptr_t) event;
+	if (e == INVALID_HANDLE_VALUE) {
+		throwIllegalArgumentsExc(env, "event");
+		return 0;
+	}
+
+	if (ptr == 0) {
+		throwNullPointerException(env, "ptr");
+		return 0;
+	}
+
+
+	LPOVERLAPPED lp = malloc(sizeof(OVERLAPPED));
+	if (lp == NULL) {
+		throwOOM(env, "malloc");
+		return 0;
+	}
+
+	memset((void*)lp, 0, sizeof(OVERLAPPED));
+
+	DWORD read = 0;
+	if (!ReadFile(h, (LPVOID) (uintptr_t) ptr, len, &read, lp)) {
+		DWORD err = GetLastError();
+		if (err == ERROR_IO_PENDING) {
+			return (jlong) (uintptr_t) lp;
+		}
+
+		free(lp);
+		throwUnknownError(env, err);
+	}
+
+
+	return (jlong) (uintptr_t) lp;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    WriteFile
+ * Signature: (J[BII)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_WriteFile__J_3BII
+(JNIEnv * env, jobject inst, jlong jhandle, jbyteArray jbuf, jint off, jint len) {
+	HANDLE h = (HANDLE) (uintptr_t) jhandle;
+
+	if (off < 0) {
+		throwIllegalArgumentsExc(env, "off");
+		return -1;
+	}
+
+	if (len < 0) {
+		throwIllegalArgumentsExc(env, "len");
+		return -1;
+	}
+
+	if (h == INVALID_HANDLE_VALUE) {
+		throwBadFileDescriptor(env);
+		return -1;
+	}
+
+	if (jbuf == NULL) {
+		throwNullPointerException(env, "buf");
+		return -1;
+	}
+
+	if ((*env)->GetArrayLength(env, jbuf) - off < len) {
+		throwIllegalArgumentsExc(env, "buf.len < len");
+		return -1;
+	}
+
+
+	if (len == 0) {
+		return 0;
+	}
+
+	DWORD read = 0;
+
+	jbyte* buf = (*env)->GetByteArrayElements(env, jbuf, NULL);
+	if (buf == NULL) {
+		throwOOM(env, "GetByteArrayElements");
+		return -1;
+	}
+
+	LPVOID vbuf = (LPVOID) buf;
+	vbuf+=off;
+
+	if (!WriteFile(h, vbuf, len, &read, NULL)) {
+		DWORD err = GetLastError();
+		(*env)->ReleaseByteArrayElements(env, jbuf, buf, JNI_ABORT);
+		throwUnknownError(env, err);
+		return -1;
+	}
+
+	(*env)->ReleaseByteArrayElements(env, jbuf, buf, JNI_ABORT);
+	return read;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    WriteFile
+ * Signature: (JJI)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_WriteFile__JJI
+(JNIEnv * env, jobject inst, jlong jhandle, jlong ptr, jint len) {
+
+	HANDLE h = (HANDLE) (uintptr_t) jhandle;
+
+	if (h == INVALID_HANDLE_VALUE) {
+		throwBadFileDescriptor(env);
+		return -1;
+	}
+
+
+	DWORD read = 0;
+
+	if (!WriteFile(h, (LPVOID) (uintptr_t) ptr, len, &read, NULL)) {
+		DWORD err = GetLastError();
+		throwUnknownError(env, err);
+		return -1;
+	}
+
+	return read;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    WriteFile
+ * Signature: (JJIJ)I
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_WriteFile__JJIJ
+(JNIEnv * env, jobject inst, jlong jhandle, jlong ptr, jint len, jlong event) {
+
+	HANDLE h = (HANDLE) (uintptr_t) jhandle;
+	if (h == INVALID_HANDLE_VALUE) {
+		throwBadFileDescriptor(env);
+		return 0;
+	}
+
+	HANDLE e = (HANDLE) (uintptr_t) event;
+	if (e == INVALID_HANDLE_VALUE) {
+		throwIllegalArgumentsExc(env, "event");
+		return 0;
+	}
+
+	if (ptr == 0) {
+		throwNullPointerException(env, "ptr");
+		return 0;
+	}
+
+
+	LPOVERLAPPED lp = malloc(sizeof(OVERLAPPED));
+	if (lp == NULL) {
+		throwOOM(env, "malloc");
+		return 0;
+	}
+
+	memset((void*)lp, 0, sizeof(OVERLAPPED));
+
+	DWORD read = 0;
+	if (!WriteFile(h, (LPVOID) (uintptr_t) ptr, len, &read, lp)) {
+		DWORD err = GetLastError();
+		if (err == ERROR_IO_PENDING) {
+			return (jlong) (uintptr_t) lp;
+		}
+
+		free(lp);
+		throwUnknownError(env, err);
+	}
+
+
+	return (jlong) (uintptr_t) lp;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    GetOverlappedResult
+ * Signature: (JJZ)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_GetOverlappedResult
+  (JNIEnv * env, jobject inst, jlong handle, jlong overlapped, jboolean wait) {
+	LPOVERLAPPED lpo = (LPOVERLAPPED) (uintptr_t) overlapped;
+	HANDLE hdl = (HANDLE) (uintptr_t) handle;
+
+	if (lpo == NULL) {
+		throwNullPointerException(env, "overlapped");
+		return -1;
+	}
+
+	if (hdl == INVALID_HANDLE_VALUE) {
+		throwBadFileDescriptor(env);
+		return -1;
+	}
+
+	DWORD res = 0;
+	if (GetOverlappedResult(hdl, lpo, &res, wait)) {
+		return res;
+	}
+
+	DWORD err = GetLastError();
+	if (err == ERROR_IO_PENDING) {
+		return -1;
+	}
+
+	throwUnknownError(env, err);
+	return -1;
+
+}
+
 
 
 

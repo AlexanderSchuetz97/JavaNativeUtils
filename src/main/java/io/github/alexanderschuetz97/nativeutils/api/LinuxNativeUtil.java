@@ -25,6 +25,7 @@ import io.github.alexanderschuetz97.nativeutils.api.exceptions.PermissionDeniedE
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.QuotaExceededException;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Cmsghdr;
+import io.github.alexanderschuetz97.nativeutils.api.structs.IfNameIndex;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Msghdr;
 import io.github.alexanderschuetz97.nativeutils.api.structs.PollFD;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Sockaddr;
@@ -34,7 +35,10 @@ import io.github.alexanderschuetz97.nativeutils.api.structs.Utsname;
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.InetSocketAddress;
+import java.net.SocketException;
+import java.nio.ByteBuffer;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.FileSystemLoopException;
@@ -80,6 +84,22 @@ public interface LinuxNativeUtil extends NativeUtil {
      * Example for Intel CPU's would be "GenuineIntel"
      */
     String __get_cpuid_count_model();
+
+
+    /**
+     * returns the interface index or 0 if the interface is not found
+     */
+    int if_nametoindex(String name) throws UnknownNativeErrorException;
+
+    /**
+     * Returns the interface name as a string or null if the index is not found.
+     */
+    String if_indextoname(int index) throws UnknownNativeErrorException;
+
+    /**
+     * returns all network interface indices
+     */
+    Collection<IfNameIndex> if_nameindex() throws UnknownNativeErrorException;
 
     /**
      * returns the fd.
@@ -166,11 +186,37 @@ public interface LinuxNativeUtil extends NativeUtil {
     int read(int fd, byte[] buffer, int off, int len) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException;
 
     /**
+     * Reads from a file descriptor. Returns the number of bytes read into the buffer. Will read up to "len" bytes.
+     * May return 0 for non blocking file descriptors that do not have data available.
+     */
+    int read(int fd, NativeMemory mem, long off, int len) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException;
+
+    /**
+     * Reads from a file descriptor. Returns the number of bytes read into the buffer. Will read up to "len" bytes.
+     * May return 0 for non blocking file descriptors that do not have data available.
+     */
+    int read(int fd, ByteBuffer buf, int len) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException;
+
+    /**
      * Write to a file descriptor
      * returns the number of bytes written from the buffer.
      * may return 0 for non blocking file descriptors that are not ready to write data.
      */
     int write(int fd, byte[] buffer, int off, int len) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException;
+
+    /**
+     * Write to a file descriptor
+     * returns the number of bytes written from the buffer.
+     * may return 0 for non blocking file descriptors that are not ready to write data.
+     */
+    int write(int fd, NativeMemory mem, long off, int len) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException;
+
+    /**
+     * Write to a file descriptor
+     * returns the number of bytes written from the buffer.
+     * may return 0 for non blocking file descriptors that are not ready to write data.
+     */
+    int write(int fd, ByteBuffer buf, int len) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException;
 
     /**
      * The Output parameter sockaddr may be null if you are not interested in this information.
@@ -191,7 +237,13 @@ public interface LinuxNativeUtil extends NativeUtil {
      * @param fd the file descriptor
      * @return the amount of bytes read into the iovecs
      */
-    int recvmsg(int fd, Msghdr msghdr, int flags);
+    int recvmsg(int fd, Msghdr msghdr, int flags) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, ConnectException, UnknownNativeErrorException;
+
+    /**
+     * send a message on a socket.
+     */
+    int sendmsg(int fd, Msghdr msghdr, int flags) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, ConnectException, UnknownNativeErrorException;
+
 
     /**
      * Returns the page size of the operating system in bytes.
@@ -263,6 +315,34 @@ public interface LinuxNativeUtil extends NativeUtil {
      * @param sockaddr socket address to connect to.
      */
     void connect(int fd, Sockaddr sockaddr) throws InvalidFileDescriptorException, IllegalArgumentException, UnsupportedOperationException, OperationInProgressException;
+
+
+    /**
+     * Binds a socket to a address.
+     * @param fd socket fd
+     * @param sockaddr the address to bind to
+     * @throws InvalidFileDescriptorException if fd is not valid or not a socket
+     * @throws IllegalArgumentException if sockaddr is not valid
+     * @throws SocketException if the address is already in use
+     * @throws AccessDeniedException if the address cannot be accessed
+     * @throws FileSystemLoopException (AF_UNIX) if too many symbolic links were encountered when resolving the path
+     * @throws NotDirectoryException (AF_UNIX) if a component of the path is not a directory
+     * @throws ReadOnlyFileSystemException (AF_UNIX) the file system where the socket should be bound to is read only
+     * @throws IOException if the requested address cannot be assigned for various other reasons
+     * @throws UnknownNativeErrorException if anything else goes wrong
+     */
+    void bind(int fd, Sockaddr sockaddr) throws InvalidFileDescriptorException, IllegalArgumentException, SocketException, AccessDeniedException, FileSystemLoopException, NotDirectoryException, ReadOnlyFileSystemException, IOException, UnknownNativeErrorException;
+
+    /**
+     * Writes the socket address the socket is bound to into the given Sockaddr object.
+     *
+     * @param fd socket fd
+     * @param sockaddr output porameter.
+     * @throws InvalidFileDescriptorException if the fd is not valid
+     * @throws IllegalArgumentException if the fd does not refer to a socket
+     * @throws UnknownNativeErrorException if anything else goes wrong
+     */
+    void getsockname(int fd, Sockaddr sockaddr) throws InvalidFileDescriptorException, IllegalArgumentException, UnknownNativeErrorException;
 
     /**
      * returns a "int" socket option.
@@ -468,6 +548,16 @@ public interface LinuxNativeUtil extends NativeUtil {
     Utsname uname();
 
     /**
+     * returns the effective uid of the user running the process.
+     */
+    long geteuid();
+
+    /**
+     * returns the real uid of the user running the process.
+     */
+    long getuid();
+
+    /**
      * returns the resolved path of the symlink
      *
      * @param path the path of the sym link to resolve
@@ -515,4 +605,54 @@ public interface LinuxNativeUtil extends NativeUtil {
      * @throws NotDirectoryException if a component of the path is not a directory
      */
     void chmod(String path, int mode) throws AccessDeniedException, PermissionDeniedException, IOException, FileSystemLoopException, InvalidPathException, FileNotFoundException, NotDirectoryException;
+
+    /**
+     * trigger an ioctl with a device.
+     *
+     * @param fd the file descriptor to the device
+     * @param code the device specific request code
+     */
+    int ioctl(int fd, int code) throws InvalidFileDescriptorException, UnknownNativeErrorException;
+
+    /**
+     * trigger an ioctl with a device.
+     *
+     * @param fd the file descriptor to the device
+     * @param code the device specific request code
+     * @param buf the buffer
+     * @param off offset in the buffer.
+     *            Warning: ioctl may overflow the buffer and corrupt heap!
+     *            Using too small a buffer may cause the memory corruption and result in undefined behavior of the VM.
+     */
+    int ioctl(int fd, int code, byte[] buf, int off) throws InvalidFileDescriptorException, UnknownNativeErrorException;
+
+    /**
+     * trigger an ioctl with a device.
+     *
+     * @param fd the file descriptor to the device
+     * @param code the device specific request code
+     * @param param the param to ioctl. Will be cast to void* but does not have to be a pointer.
+     */
+    int ioctl(int fd, int code, long param) throws InvalidFileDescriptorException, UnknownNativeErrorException;
+
+    /**
+     * trigger an ioctl with a device.
+     *
+     * @param fd filedescriptor
+     * @param code ioctl request code
+     * @param mem memory to pass to ioctl
+     * @param off offset in the memory
+     */
+    int ioctl(int fd, int code, NativeMemory mem, long off) throws InvalidFileDescriptorException, UnknownNativeErrorException;
+
+    int fcntl(int fd, int code) throws InvalidFileDescriptorException, UnknownNativeErrorException;
+
+    int fcntl(int fd, int code, int param) throws InvalidFileDescriptorException, UnknownNativeErrorException;
+
+    int fcntl(int fd, int code, long param) throws InvalidFileDescriptorException, UnknownNativeErrorException;
+
+    int fcntl(int fd, int code, byte[] param, int off) throws InvalidFileDescriptorException, UnknownNativeErrorException;
+
+    int fcntl(int fd, int code, NativeMemory param, long off) throws InvalidFileDescriptorException, UnknownNativeErrorException;
+
 }

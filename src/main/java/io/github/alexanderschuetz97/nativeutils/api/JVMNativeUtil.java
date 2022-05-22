@@ -22,6 +22,7 @@ package io.github.alexanderschuetz97.nativeutils.api;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.nio.ByteBuffer;
 
 public interface JVMNativeUtil extends NativeUtil {
 
@@ -46,6 +47,25 @@ public interface JVMNativeUtil extends NativeUtil {
      * Exit from a monitor entered by MonitorEnter. This MUST NOT be used to leave a monitor acquired by a synchronized block/method.
      */
     void MonitorExit(Object obj);
+
+    /**
+     * returns the native address of a direct byte buffer.
+     */
+    long GetDirectBufferAddress(ByteBuffer buffer);
+
+    /**
+     * returns a direct byte buffer using the given pointer and capacity.
+     */
+    ByteBuffer NewDirectByteBuffer(long ptr, long capacity);
+
+    /**
+     * Returns a NativeMemory object that uses the direct byte buffer object as backing.
+     * This method ensures that the buffer object is not garbage collected until the close() method of the NativeMemory
+     * object is called. The resulting NativeMemory Object does not modify the buffer position.
+     * The resulting NativeMemory Object is bound by off and size.
+     * Off is relative to the start of the buffer not the current position of the buffer.
+     */
+    NativeMemory GetDirectBufferAddress(ByteBuffer buffer, int off, int size);
 
     /**
      * creates a instance of a object without calling a constructor.

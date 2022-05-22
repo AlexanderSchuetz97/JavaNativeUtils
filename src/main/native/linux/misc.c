@@ -508,4 +508,24 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	return utsname;
 }
 
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    geteuid
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_geteuid
+  (JNIEnv * env, jobject inst) {
+	return geteuid();
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    getuid
+ * Signature: ()L
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_getuid
+  (JNIEnv * env, jobject inst) {
+	return getuid();
+}
+
 

@@ -26,6 +26,7 @@ import io.github.alexanderschuetz97.nativeutils.api.WindowsNativeUtil;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
 import io.github.alexanderschuetz97.nativeutils.api.structs.GUID;
 import io.github.alexanderschuetz97.nativeutils.api.structs.RegData;
+import io.github.alexanderschuetz97.nativeutils.api.structs.RegEnumKeyExResult;
 import io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInfoData;
 import io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInterfaceData;
 
@@ -60,11 +61,39 @@ public class JavaNativeUtilsStandaloneTest {
 
                 reg(args[1], args[2]);
                 return;
+            case("lsreg"):
+                if (args.length != 2)  {
+                    System.out.println("lsreg key");
+                    System.exit(-1);
+                    return;
+                }
+
+                lsreg(args[1]);
+                return;
             default:
                 System.out.println("no such test " + args[0]);
                 System.exit(-1);
                 return;
         }
+    }
+
+    public static void lsreg(String key) {
+        WindowsNativeUtil wni = NativeUtils.getWindowsUtil();
+        try {
+            long hkey = wni.RegOpenKeyExA(WinConst.HKEY_LOCAL_MACHINE, key, 0, WinConst.KEY_ALL_ACCESS);
+            try {
+                for (RegEnumKeyExResult res : wni.iterateRegistrySubKeys(hkey)) {
+                    System.out.println(res);
+                }
+            } finally {
+                wni.RegCloseKey(hkey);
+            }
+        } catch (UnknownNativeErrorException e) {
+            System.out.println(wni.FormatMessageA(e.intCode()));
+            e.printStackTrace();
+            System.exit(-1);
+        }
+
     }
 
     public static void reg(String key, String value) {

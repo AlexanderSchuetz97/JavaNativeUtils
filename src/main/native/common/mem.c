@@ -1396,3 +1396,114 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
 		}
 	}
 }
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    memmove
+ * Signature: (JJJJ)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_memmove
+  (JNIEnv * env, jclass clazz, jlong ptr, jlong off, jlong trg, jlong size) {
+	void * vptr = (void *) (uintptr_t) ptr;
+
+	if (vptr == NULL) {
+		throwNullPointerException(env, "ptr");
+		return;
+	}
+
+	void * vtrg = (void *) (uintptr_t) trg;
+
+	if (vtrg == NULL) {
+		throwNullPointerException(env, "target");
+		return;
+	}
+
+	if (size <= 0) {
+		if (size < 0) {
+			throwIllegalArgumentsExc(env, "size");
+		}
+		return;
+	}
+
+	vptr += off;
+
+	memmove(vtrg, vptr, size);
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    readBuffer
+ * Signature: (JJLjava/nio/ByteBuffer;II)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_readBuffer
+  (JNIEnv * env, jclass clazz, jlong ptr, jlong off, jobject buf, jint boff, jint blen) {
+	void * vptr = (void *) (uintptr_t) ptr;
+
+	if (vptr == NULL) {
+		throwNullPointerException(env, "ptr");
+		return;
+	}
+
+	vptr += off;
+
+	void* nbuf = (*env)->GetDirectBufferAddress(env, buf);
+	if (nbuf == NULL) {
+		throwIllegalArgumentsExc(env, "GetDirectBufferAddress returned NULL");
+		return;
+	}
+
+	if (boff < 0) {
+		throwIllegalArgumentsExc(env, "bufferOffset < 0");
+		return;
+	}
+
+
+	jlong capa = (*env)->GetDirectBufferCapacity(env, buf);
+	if (boff+blen > capa) {
+		throwIllegalArgumentsExc(env, "offset+length > GetDirectBufferCapacity");
+		return;
+	}
+
+	nbuf+=boff;
+
+	memmove(nbuf, vptr, blen);
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    writeBuffer
+ * Signature: (JJLjava/nio/ByteBuffer;II)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_writeBuffer
+(JNIEnv * env, jclass clazz, jlong ptr, jlong off, jobject buf, jint boff, jint blen) {
+	void * vptr = (void *) (uintptr_t) ptr;
+
+	if (vptr == NULL) {
+		throwNullPointerException(env, "ptr");
+		return;
+	}
+
+	vptr += off;
+
+	void* nbuf = (*env)->GetDirectBufferAddress(env, buf);
+	if (nbuf == NULL) {
+		throwIllegalArgumentsExc(env, "GetDirectBufferAddress returned NULL");
+		return;
+	}
+
+	if (boff < 0) {
+		throwIllegalArgumentsExc(env, "bufferOffset < 0");
+		return;
+	}
+
+
+	jlong capa = (*env)->GetDirectBufferCapacity(env, buf);
+	if (boff+blen > capa) {
+		throwIllegalArgumentsExc(env, "offset+length > GetDirectBufferCapacity");
+		return;
+	}
+
+	nbuf+=boff;
+
+	memmove(vptr, nbuf, blen);
+}

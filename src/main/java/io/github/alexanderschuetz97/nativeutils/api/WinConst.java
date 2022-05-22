@@ -23,6 +23,11 @@ package io.github.alexanderschuetz97.nativeutils.api;
  * This file contains some constants from the windows header files.
  */
 public interface WinConst {
+
+    //winsock2.h
+    int AF_INET = 2;
+    int AF_INET6 = 23; //NOT THE SAME AS LINUX!
+
     ////
     // CreateFileA attributes
     ////
@@ -99,6 +104,21 @@ public interface WinConst {
     int KEY_WOW64_64KEY = 0x0100;
     int KEY_WOW64_32KEY = 0x0200;
     int KEY_WOW64_RES = 0x0300;
+    int KEY_ALL_ACCESS = 0xF003F;
+    int KEY_EXECUTE = 0x20019;
+    int KEY_READ = 0x20019;
+    int KEY_WRITE = 0x20006;
+
+    //Access flags
+    int STANDARD_RIGHTS_ALL = 0x001F0000;
+    int READ_CONTROL = 0x00020000;
+    int STANDARD_RIGHTS_READ = READ_CONTROL;
+    int STANDARD_RIGHTS_WRITE = READ_CONTROL;
+    int STANDARD_RIGHTS_EXECUTE = READ_CONTROL;
+    int SPECIFIC_RIGHTS_ALL = 0x0000FFFF;
+    int STANDARD_RIGHTS_REQUIRED = 0x000F0000;
+
+
 
 }
 

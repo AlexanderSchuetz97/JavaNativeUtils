@@ -391,6 +391,30 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_spin__JJBJ
   (JNIEnv *, jobject, jlong, jlong, jbyte, jlong);
 
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    memmove
+ * Signature: (JJJJ)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_memmove
+  (JNIEnv *, jclass, jlong, jlong, jlong, jlong);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    readBuffer
+ * Signature: (JJLjava/nio/ByteBuffer;II)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_readBuffer
+  (JNIEnv *, jclass, jlong, jlong, jobject, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    writeBuffer
+ * Signature: (JJLjava/nio/ByteBuffer;II)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_writeBuffer
+  (JNIEnv *, jclass, jlong, jlong, jobject, jint, jint);
+
 #ifdef __cplusplus
 }
 #endif

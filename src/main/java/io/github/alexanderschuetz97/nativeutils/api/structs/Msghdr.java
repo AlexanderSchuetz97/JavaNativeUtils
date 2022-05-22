@@ -56,6 +56,10 @@ public class Msghdr {
      */
     private int msg_controllen;
 
+    public Msghdr(byte[] buf, int off, int len) {
+        this(new Iovec(buf, off, len));
+    }
+
     public Msghdr(Iovec msg_iov) {
         this(new Iovec[]{msg_iov});
     }
@@ -70,6 +74,10 @@ public class Msghdr {
 
     public Msghdr(Iovec[] msg_iov, byte[] msg_control) {
         this(msg_iov, null, msg_control);
+    }
+
+    public Msghdr(Iovec msg_iov,Sockaddr sockaddr, byte[] msg_control) {
+        this(new Iovec[]{msg_iov}, sockaddr, msg_control);
     }
 
     public Msghdr(Iovec[] msg_iov, Sockaddr sockaddr, byte[] msg_control) {

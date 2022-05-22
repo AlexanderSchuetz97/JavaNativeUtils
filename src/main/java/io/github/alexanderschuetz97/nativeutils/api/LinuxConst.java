@@ -28,6 +28,11 @@ public interface LinuxConst {
     ///////////////////////////////////////////////
 
     /**
+     * domain not specified.
+     */
+    int AF_UNSPEC = 0;
+
+    /**
      * domain for unix sockets
      */
     int AF_UNIX = 1;
@@ -43,6 +48,11 @@ public interface LinuxConst {
     int AF_INET6 = 10;
 
     /**
+     * domain for configuring network interfaces in the kernel.
+     */
+    int AF_NETLINK = 16;
+
+    /**
      * type for stream based sockets with reliable transport
      */
     int SOCK_STREAM = 1;
@@ -51,6 +61,18 @@ public interface LinuxConst {
      * type for datagram based sockets with unreliable transport
      */
     int SOCK_DGRAM = 2;
+
+    /**
+     * type for raw socket.
+     */
+    int SOCK_RAW = 3;
+
+    /**
+     *  Option for AF_NETLINK.
+     *  Receives routing and link updates and may be used to
+     *  modify the routing tables.
+     */
+    int NETLINK_ROUTE = 0;
 
     ///////////////////////////////////////////////
     //Socketopt constants
@@ -172,5 +194,52 @@ public interface LinuxConst {
     int S_IRWXU = S_IRUSR | S_IWUSR | S_IXUSR;
     int S_IRWXG = S_IRWXU >> 3;
     int S_IRWXO = S_IRWXG >> 3;
+
+    int IFNAMSIZ = 16;
+
+    //ioctls.h
+    int SIOCGIFFLAGS = 0x8913;
+    int SIOCSIFFLAGS = 0x8914;
+    int SIOCGIFMTU = 0x8921;
+
+    //netlink.h
+    short NLM_F_REQUEST = 0x1;
+    short NLM_F_DUMP = 768;
+    short NLM_F_MULTI = 0x2;
+    short NLM_F_CREATE= 0x400;
+    short NLM_F_EXCL = 0x200;
+    short NLM_F_ACK = 4;
+
+    short NLMSG_NOOP = 0x1;
+    short NLMSG_ERROR =	0x2;
+    short NLMSG_DONE = 0x3;
+    short NLMSG_OVERRUN = 0x4;
+
+    //rtnetlink.h
+    short RTM_GETLINK = 18;
+    short RTM_DELADDR = 21;
+    short RTM_GETADDR = 22;
+    short RTM_NEWADDR = 20;
+    byte RT_SCOPE_UNIVERSE = 0;
+    short ARPHRD_NETROM = 0;
+    short IFLA_IFNAME = 3;
+    short IFA_UNSPEC = 0;
+    short IFA_ADDRESS = 1;
+    short IFA_LOCAL = 2;
+    short IFA_LABEL = 3;
+    short IFA_BROADCAST = 4;
+    short IFA_ANYCAST = 5;
+    short IFA_CACHEINFO = 6;
+    int IFA_F_PERMANENT = 0x80;
+    int IFA_F_SECONDARY = 0x1;
+
+    int IFF_UP = 1;
+
+    //if_tun.h
+    int TUNSETIFF = 1074025674;
+    int TUNSETPERSIST = 1074025675;
+    int TUNGETSNDBUF = (int) 2147767507L;
+
+
 }
 

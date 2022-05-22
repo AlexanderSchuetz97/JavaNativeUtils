@@ -58,7 +58,7 @@ public class Sockaddr {
      * @param addressFamily constant address family value. This is the first field within address.
      * @param address binary value of the respective struct sockaddr. This must include the addressFamily.
      *                If you construct this value manually then the size must match the native structs size or syscalls using this address may fail because of it.
-     *                The size for certain addresses may be dependant on the CPU architecture.
+     *                The size for certain addresses may be dependent on the CPU architecture.
      *
      */
     public Sockaddr(int addressFamily, byte[] address) {

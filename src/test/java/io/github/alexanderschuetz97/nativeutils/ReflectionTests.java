@@ -31,6 +31,7 @@ import sun.misc.BASE64Decoder;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.Callable;
 

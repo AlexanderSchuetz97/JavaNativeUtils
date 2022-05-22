@@ -51,6 +51,7 @@ $JAVAH_COMMAND -cp src/main/java -d src/main/native/common/jni io.github.alexand
 $JAVAH_COMMAND -cp src/main/java -d src/main/native/common/jni io.github.alexanderschuetz97.nativeutils.impl.JNINativeMemory
 $JAVAH_COMMAND -cp src/main/java -d src/main/native/common/jni io.github.alexanderschuetz97.nativeutils.impl.JNINativeMethod
 
+chmod -R 777 src/main/native/common/jni
 
 cd src/main/native
 make clean

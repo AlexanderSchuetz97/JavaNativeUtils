@@ -24,6 +24,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <assert.h>
+#include <sys/ioctl.h>
 
 #ifndef __USE_GNU
 #define __USE_GNU
@@ -525,12 +526,75 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	return result;
 }
 
+jint handle_read_error(JNIEnv * env, int err) {
+	switch(err) {
+		#if EAGAIN != EWOULDBLOCK
+		case(EWOULDBLOCK):
+		#endif
+		case(EAGAIN):
+			return 0;
+		case(EBADF):
+			throwBadFileDescriptor(env);
+			return -1;
+		case EINVAL:
+			throwIllegalArgumentsExc(env, "file descriptor is unsuitable for reading or buffer size does not match the required buffer size");
+			return -1;
+		case EIO:
+			throwIOExc(env, "I/O error");
+			return -1;
+		case EISDIR:
+			throwIllegalArgumentsExc(env, "file descriptor refers to a directory");
+			return -1;
+		default:
+			throwUnknownError(env, err);
+			return -1;
+	}
+}
+
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    read
+ * Signature: (IJI)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_read__IJI
+  (JNIEnv * env, jobject inst, jint fd, jlong ptr, jint len) {
+	void * buf = (void *) (uintptr_t) ptr;
+	if (buf == NULL) {
+		throwNullPointerException(env, "buffer");
+		return -1;
+	}
+
+	if (len < 0) {
+		throwIllegalArgumentsExc(env, "length");
+		return -1;
+	}
+
+	while(true) {
+		size_t r = read(fd, buf, len);
+		if (r == 0) {
+			return -1;
+		}
+
+		if (r != 0) {
+			return r;
+		}
+
+		int err = errno;
+		if (err == EINTR) {
+			continue;
+		}
+
+		return handle_read_error(env, err);
+	}
+}
+
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
  * Method:    read
  * Signature: (I[BII)I
  */
-JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_read
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_read__I_3BII
   (JNIEnv * env, jobject inst, jint fd, jbyteArray jbuf, jint off, jint len) {
 	if (jbuf == NULL) {
 		throwNullPointerException(env, "buffer");
@@ -571,38 +635,96 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 
 		(*env)->ReleaseByteArrayElements(env, jbuf, data, JNI_ABORT);
 
-		switch(err) {
-			#if EAGAIN != EWOULDBLOCK
-			case(EWOULDBLOCK):
-			#endif
-			case(EAGAIN):
-				return 0;
-			case(EBADF):
-				throwBadFileDescriptor(env);
-				return -1;
-			case EINVAL:
-				throwIllegalArgumentsExc(env, "file descriptor is unsuitable for reading or buffer size does not match the required buffer size");
-				return -1;
-			case EIO:
-				throwIOExc(env, "I/O error");
-				return -1;
-			case EISDIR:
-				throwIllegalArgumentsExc(env, "file descriptor refers to a directory");
-				return -1;
-			default:
-				throwUnknownError(env, err);
-				return -1;
-		}
+		return handle_read_error(env, err);
 	}
 
 }
+
+jint handle_write_error(JNIEnv * env, int err) {
+	switch(err) {
+		#if EAGAIN != EWOULDBLOCK
+		case(EWOULDBLOCK):
+		#endif
+		case(EAGAIN):
+			return 0;
+		case(EBADF):
+			throwBadFileDescriptor(env);
+			return -1;
+		case(EDESTADDRREQ):
+			throwIllegalStateException(env, "file descriptor refers to a datagram socket for which a peer address has not been set using connect.");
+			return -1;
+		case(EDQUOT):
+			throwQuotaExceededException(env, NULL, NULL, "The user's quota of disk blocks on the filesystem containing the file referred to by the file descriptor has been exhausted.");
+			return -1;
+		case(EFBIG):
+			throwIOExc(env, "An attempt was made to write a file that exceeds the implementation-defined maximum file size or the process's file size limit, or to write at a position past the maximum allowed offset.");
+			return -1;
+		case EINVAL:
+			throwIllegalArgumentsExc(env, "file descriptor is unsuitable for writing or the file/buffer position/length is not properly aligned.");
+			return -1;
+		case EIO:
+			throwIOExc(env, "I/O error");
+			return -1;
+		case EPERM:
+			throwFSAccessDenied(env, NULL, NULL, "Operation was prevented by a file seal");
+			return -1;
+		case EPIPE:
+			throwIOExc(env, "Broken pipe");
+			return -1;
+		case ENOSPC:
+			throwIOExc(env, "The device containing the file referred to by fd has no room for the data.");
+			return -1;
+		case EISDIR:
+			throwIllegalArgumentsExc(env, "file descriptor refers to a directory");
+			return -1;
+		default:
+			throwUnknownError(env, err);
+			return -1;
+	}
+}
+
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    write
+ * Signature: (IJI)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_write__IJI
+  (JNIEnv * env, jobject inst, jint fd, jlong jptr, jint len) {
+	void *buf = (void*) (uintptr_t) jptr;
+	if (buf == NULL) {
+		throwNullPointerException(env, "buffer");
+		return -1;
+	}
+
+	if (len < 0) {
+		throwIllegalArgumentsExc(env, "len");
+		return -1;
+	}
+
+	while(true) {
+		size_t r = write(fd, buf, len);
+		if (r != -1) {
+			return r;
+		}
+
+		int err = errno;
+		if (err == EINTR) {
+			continue;
+		}
+
+		return handle_write_error(env, err);
+	}
+}
+
+
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
  * Method:    write
  * Signature: (I[BII)I
  */
-JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_write
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_write__I_3BII
   (JNIEnv * env, jobject inst, jint fd, jbyteArray jbuf, jint off, jint len) {
 	if (jbuf == NULL) {
 		throwNullPointerException(env, "buffer");
@@ -629,48 +751,12 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 		int err = errno;
 		(*env)->ReleaseByteArrayElements(env, jbuf, data, JNI_ABORT);
 
-		switch(err) {
-			case(EINTR):
-				continue;
-			#if EAGAIN != EWOULDBLOCK
-			case(EWOULDBLOCK):
-			#endif
-			case(EAGAIN):
-				return 0;
-			case(EBADF):
-				throwBadFileDescriptor(env);
-				return -1;
-			case(EDESTADDRREQ):
-				throwIllegalStateException(env, "file descriptor refers to a datagram socket for which a peer address has not been set using connect.");
-				return -1;
-			case(EDQUOT):
-				throwQuotaExceededException(env, NULL, NULL, "The user's quota of disk blocks on the filesystem containing the file referred to by the file descriptor has been exhausted.");
-				return -1;
-			case(EFBIG):
-				throwIOExc(env, "An attempt was made to write a file that exceeds the implementation-defined maximum file size or the process's file size limit, or to write at a position past the maximum allowed offset.");
-				return -1;
-			case EINVAL:
-				throwIllegalArgumentsExc(env, "file descriptor is unsuitable for writing or the file/buffer position/length is not properly aligned.");
-				return -1;
-			case EIO:
-				throwIOExc(env, "I/O error");
-				return -1;
-			case EPERM:
-				throwFSAccessDenied(env, NULL, NULL, "Operation was prevented by a file seal");
-				return -1;
-			case EPIPE:
-				throwIOExc(env, "Broken pipe");
-				return -1;
-			case ENOSPC:
-				throwIOExc(env, "The device containing the file referred to by fd has no room for the data.");
-				return -1;
-			case EISDIR:
-				throwIllegalArgumentsExc(env, "file descriptor refers to a directory");
-				return -1;
-			default:
-				throwUnknownError(env, err);
-				return -1;
+		if (err == EINTR) {
+			continue;
 		}
+
+		return handle_write_error(env, err);
+
 	}
 }
 
@@ -805,3 +891,199 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 		return;
 	}
 }
+
+void handle_ioctl_err(JNIEnv* env, int err) {
+	switch(err) {
+	case(EBADF):
+		throwBadFileDescriptor(env);
+		return;
+	case(EFAULT):
+		throwIllegalArgumentsExc(env, "argument references an inaccessible memory area");
+		return;
+	case(EINVAL):
+		throwIllegalArgumentsExc(env, "request code or parameter is invalid");
+		return;
+	case(ENOTTY):
+		throwUnsupportedExc(env, "The specified request does not apply to the kind of object that the file descriptor references");
+		return;
+	default:
+		throwUnknownError(env, err);
+		return;
+	}
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    ioctl
+ * Signature: (II)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_ioctl__II
+  (JNIEnv * env, jobject inst, jint fd, jint code) {
+
+	int res = ioctl(fd, code);
+
+	if (res == -1) {
+		handle_ioctl_err(env, errno);
+		return -1;
+	}
+
+	return res;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    ioctl
+ * Signature: (II[BI)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_ioctl__II_3BI
+  (JNIEnv * env, jobject inst, jint fd, jint code, jbyteArray buf, jint off) {
+	if (buf == NULL) {
+		throwNullPointerException(env, "buf");
+		return -1;
+	}
+
+	if (off < 0 || off >= (*env)->GetArrayLength(env, buf)) {
+		throwIllegalArgumentsExc(env, "off out of bounds");
+		return -1;
+	}
+
+	jbyte* nbuf = (*env)->GetByteArrayElements(env, buf, NULL);
+	if (nbuf == NULL) {
+		throwOOM(env, "GetByteArrayElements");
+		return -1;
+	}
+
+	jbyte* param = nbuf;
+	param+=off;
+
+	int res = ioctl(fd, code, (void*) param);
+
+	if (res == -1) {
+		int err = errno;
+		(*env)->ReleaseByteArrayElements(env, buf, nbuf, JNI_OK);
+		handle_ioctl_err(env, errno);
+		return -1;
+	}
+
+
+	(*env)->ReleaseByteArrayElements(env, buf, nbuf, JNI_OK);
+	return res;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    ioctl
+ * Signature: (IIJ)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_ioctl__IIJ
+  (JNIEnv * env, jobject inst, jint fd, jint code, jlong jvalue) {
+	void* value = (void*) (uintptr_t) jvalue;
+	int res = ioctl(fd, code, value);
+	if (res == -1) {
+		handle_ioctl_err(env, errno);
+		return -1;
+	}
+
+	return res;
+}
+
+void handle_fcntl_error(JNIEnv * env, int err, int code) {
+	//TODO smarter??
+	switch(err) {
+	case(EBADF):
+		throwBadFileDescriptor(env);
+		return;
+	default:
+		throwUnknownError(env, err);
+		return;
+	}
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    fcntl
+ * Signature: (II)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_fcntl__II
+  (JNIEnv * env, jobject inst, jint fd, jint code) {
+	int res = fcntl(fd, code);
+	if (res == -1) {
+		handle_fcntl_error(env, errno, code);
+		return -1;
+	}
+
+	return res;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    fcntl
+ * Signature: (III)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_fcntl__III
+  (JNIEnv * env, jobject inst, jint fd, jint code, jint value) {
+	int res = fcntl(fd, code, (int) value);
+	if (res == -1) {
+		handle_fcntl_error(env, errno, code);
+		return -1;
+	}
+
+	return res;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    fcntl
+ * Signature: (IIJ)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_fcntl__IIJ
+  (JNIEnv * env, jobject inst, jint fd, jint code, jlong value) {
+	int res = fcntl(fd, code, (void*) (uintptr_t) value);
+	if (res == -1) {
+		handle_fcntl_error(env, errno, code);
+		return -1;
+	}
+
+	return res;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    fcntl
+ * Signature: (II[BI)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_fcntl__II_3BI
+  (JNIEnv * env, jobject inst, jint fd, jint code, jbyteArray buf, jint off) {
+	if (buf == NULL) {
+		throwNullPointerException(env, "buf");
+		return -1;
+	}
+
+	if (off < 0 || off >= (*env)->GetArrayLength(env, buf)) {
+		throwIllegalArgumentsExc(env, "off out of bounds");
+		return -1;
+	}
+
+	jbyte* nbuf = (*env)->GetByteArrayElements(env, buf, NULL);
+	if (nbuf == NULL) {
+		throwOOM(env, "GetByteArrayElements");
+		return -1;
+	}
+
+	jbyte* param = nbuf;
+	param+=off;
+
+	int res = fcntl(fd, code, (void*) param);
+
+	if (res == -1) {
+		int err = errno;
+		(*env)->ReleaseByteArrayElements(env, buf, nbuf, JNI_OK);
+		handle_fcntl_error(env, errno, code);
+		return -1;
+	}
+
+
+	(*env)->ReleaseByteArrayElements(env, buf, nbuf, JNI_OK);
+	return res;
+}
+

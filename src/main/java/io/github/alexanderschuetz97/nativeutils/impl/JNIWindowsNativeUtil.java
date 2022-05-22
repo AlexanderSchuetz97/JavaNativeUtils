@@ -25,14 +25,19 @@ import io.github.alexanderschuetz97.nativeutils.api.exceptions.InvalidFileDescri
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.SharingViolationException;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
 import io.github.alexanderschuetz97.nativeutils.api.structs.GUID;
+import io.github.alexanderschuetz97.nativeutils.api.structs.IpAdapterAddresses;
 import io.github.alexanderschuetz97.nativeutils.api.structs.RegData;
+import io.github.alexanderschuetz97.nativeutils.api.structs.RegEnumKeyExResult;
+import io.github.alexanderschuetz97.nativeutils.api.structs.RegQueryInfoKeyResult;
 import io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInfoData;
 import io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInterfaceData;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Stat;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Win32FileAttributeData;
 
 import java.io.FileDescriptor;
+import java.nio.ByteBuffer;
 import java.nio.file.FileAlreadyExistsException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -220,6 +225,240 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
 
     @Override
     public native RegData RegQueryValueExA(long hkey, String valueName) throws UnknownNativeErrorException;
+
+    @Override
+    public native RegQueryInfoKeyResult RegQueryInfoKeyA(long hkey) throws UnknownNativeErrorException;
+
+    @Override
+    public native RegEnumKeyExResult RegEnumKeyExA(long hkey, int index, int nameSize, int classSize) throws UnknownNativeErrorException;
+
+    @Override
+    public Iterable<RegEnumKeyExResult> iterateRegistrySubKeys(long hkey) throws UnknownNativeErrorException {
+
+        RegQueryInfoKeyResult info = RegQueryInfoKeyA(hkey);
+        Collection<RegEnumKeyExResult> resultCol = new ArrayList<>(info.getSubKeys());
+        int i = 0;
+        while(true) {
+            RegEnumKeyExResult res = RegEnumKeyExA(hkey, i++, info.getMaxSubKeyLen(), info.getMaxClassLen());
+            if (res == null) {
+                break;
+            }
+
+            resultCol.add(res);
+        }
+
+        return resultCol;
+    }
+
+    @Override
+    public native long GetCurrentThread();
+
+    @Override
+    public native long GetCurrentProcess();
+
+    @Override
+    public native long DuplicateHandle(long srcProcess, long handle, long targetProcess, int access, boolean inheritHandle, boolean closeSource, boolean sameAccess);
+
+    @Override
+    public native void CancelIo(long handle) throws UnknownNativeErrorException;
+
+    @Override
+    public native void CancelIoEx(long handle, long overlapped) throws UnknownNativeErrorException;
+
+    @Override
+    public native void CancelSynchronousIo(long threadHandle) throws UnknownNativeErrorException;
+
+    @Override
+    public native int ReadFile(long handle, byte[] buffer, int off, int len) throws InvalidFileDescriptorException, UnknownNativeErrorException;
+
+    @Override
+    public int ReadFile(long handle, ByteBuffer buffer, int len) throws InvalidFileDescriptorException, UnknownNativeErrorException {
+        if (buffer.isReadOnly()) {
+            throw new IllegalArgumentException("buffer is read only");
+        }
+
+        if (len < 0) {
+            throw new IllegalArgumentException("len < 0");
+        }
+        if (len == 0) {
+            return 0;
+        }
+
+        if (buffer.remaining() < len) {
+            throw new IllegalArgumentException("buffer.remaining() < len");
+        }
+
+        if (!buffer.isDirect()) {
+            if (!buffer.hasArray()) {
+                byte[] bbuf = new byte[len];
+                int x = ReadFile(handle, bbuf, 0, len);
+
+                if (x > 0) {
+                    buffer.put(bbuf, 0, x);
+                }
+
+                return x;
+            }
+
+            byte[] bbuf = buffer.array();
+            int x = ReadFile(handle, bbuf, buffer.position(), len);
+            if (x > 0) {
+                buffer.position(buffer.position() + x);
+            }
+            return x;
+
+        }
+
+        long addr = GetDirectBufferAddress(buffer);
+        if (addr == 0) {
+            throw new IllegalStateException("Not a direct buffer even tho buffer.isDirect() returned true");
+        }
+
+        int pos = buffer.position();
+        if (pos > 0) {
+            addr = pointerAdd(addr, pos);
+        }
+        int r = ReadFile(handle, addr, len);
+        if (r > 0) {
+            buffer.position(buffer.position() + r);
+        }
+        return r;
+    }
+
+    native int ReadFile(long handle, long ptr, int len) throws InvalidFileDescriptorException, UnknownNativeErrorException;
+
+    @Override
+    public int ReadFile(long handle, NativeMemory buffer, long off, int len) throws InvalidFileDescriptorException, UnknownNativeErrorException {
+        ReentrantReadWriteLock.ReadLock readLock = buffer.readLock();
+        readLock.lock();
+        try {
+            if (!buffer.isValid(off, len) || !buffer.isReadable()) {
+                throw new IllegalArgumentException("buffer off/len out of bounds");
+            }
+
+            return ReadFile(handle, buffer.getNativePointer(off), len);
+        } finally {
+            readLock.unlock();
+        }
+    }
+
+    native long ReadFile(long handle, long ptr, int len, long event) throws UnknownNativeErrorException;
+
+    @Override
+    public long ReadFile(long handle, NativeMemory buffer, long off, int len, long event) throws UnknownNativeErrorException {
+        ReentrantReadWriteLock.ReadLock readLock = buffer.readLock();
+        readLock.lock();
+        try {
+            if (!buffer.isValid(off, len) || !buffer.isReadable()) {
+                throw new IllegalArgumentException("buffer off/len out of bounds");
+            }
+
+            return ReadFile(handle, buffer.getNativePointer(off), len, event);
+        } finally {
+            readLock.unlock();
+        }
+    }
+
+    @Override
+    public native int WriteFile(long handle, byte[] buffer, int off, int len) throws UnknownNativeErrorException;
+
+    @Override
+    public int WriteFile(long handle, ByteBuffer buffer, int len) throws InvalidFileDescriptorException, UnknownNativeErrorException {
+        if (len < 0) {
+            throw new IllegalArgumentException("len < 0");
+        }
+        if (len == 0) {
+            return 0;
+        }
+
+        if (buffer.remaining() < len) {
+            throw new IllegalArgumentException("buffer.remaining() < len");
+        }
+
+        if (!buffer.isDirect()) {
+            if (!buffer.hasArray()) {
+                byte[] bbuf = new byte[len];
+                int pos = buffer.position();
+                buffer.get(bbuf);
+                buffer.position(pos);
+                int x = WriteFile(handle, bbuf, 0, len);
+                if (x > 0) {
+                    buffer.position(pos+x);
+                }
+
+                return x;
+            }
+
+            byte[] bbuf = buffer.array();
+            int x = WriteFile(handle, bbuf, buffer.position(), len);
+            if (x > 0) {
+                buffer.position(buffer.position() + x);
+            }
+            return x;
+
+        }
+
+        long addr = GetDirectBufferAddress(buffer);
+        if (addr == 0) {
+            throw new IllegalStateException("Not a direct buffer even tho buffer.isDirect() returned true");
+        }
+
+        int pos = buffer.position();
+        if (pos > 0) {
+            addr = pointerAdd(addr, pos);
+        }
+        int r = WriteFile(handle, addr, len);
+        if (r > 0) {
+            buffer.position(buffer.position() + r);
+        }
+        return r;
+    }
+
+    native int WriteFile(long handle, long ptr, int len) throws InvalidFileDescriptorException, UnknownNativeErrorException;
+
+    @Override
+    public int WriteFile(long handle, NativeMemory buffer, long off, int len) throws InvalidFileDescriptorException, UnknownNativeErrorException {
+        ReentrantReadWriteLock.ReadLock readLock = buffer.readLock();
+        readLock.lock();
+        try {
+            if (!buffer.isValid(off, len) || !buffer.isWriteable()) {
+                throw new IllegalArgumentException("buffer off/len invalid/out of bounds");
+            }
+
+            return WriteFile(handle, buffer.getNativePointer(off), len);
+        } finally {
+            readLock.unlock();
+        }
+    }
+
+    native long WriteFile(long handle, long ptr, int len, long event) throws UnknownNativeErrorException;
+
+    @Override
+    public long WriteFile(long handle, NativeMemory buffer, long off, int len, long event) throws UnknownNativeErrorException {
+        ReentrantReadWriteLock.ReadLock readLock = buffer.readLock();
+        readLock.lock();
+        try {
+            if (!buffer.isValid(off, len) || !buffer.isWriteable()) {
+                throw new IllegalArgumentException("buffer off/len invalid/out of bounds");
+            }
+
+            return WriteFile(handle, buffer.getNativePointer(off), len, event);
+        } finally {
+            readLock.unlock();
+        }
+    }
+
+    @Override
+    public native int GetOverlappedResult(long handle, long overlapped, boolean wait) throws UnknownNativeErrorException;
+
+    @Override
+    public native int GetFriendlyIfIndex(long index);
+
+    @Override
+    public native long GetAdapterIndex(String adapterName) throws UnknownNativeErrorException;
+
+    @Override
+    public native Collection<IpAdapterAddresses> GetAdaptersAddresses(long family, long flags) throws UnknownNativeErrorException;
 
     @Override
     public boolean isWindows() {

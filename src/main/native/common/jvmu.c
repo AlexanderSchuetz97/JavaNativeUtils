@@ -174,3 +174,37 @@ JNIEXPORT jclass JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIC
 	return cl;
 }
 
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    GetDirectBufferAddress
+ * Signature: (Ljava/nio/ByteBuffer;)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_GetDirectBufferAddress
+  (JNIEnv * env, jobject inst, jobject buf) {
+	if (buf == NULL) {
+		throwNullPointerException(env, "buf");
+		return 0;
+	}
+	return (jlong) (uintptr_t) (*env)->GetDirectBufferAddress(env, buf);
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil
+ * Method:    NewDirectByteBuffer
+ * Signature: (JJ)Ljava/nio/ByteBuffer;
+ */
+JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_NewDirectByteBuffer
+  (JNIEnv * env, jobject inst, jlong ptr, jlong size) {
+	if (size < 0) {
+		throwIllegalArgumentsExc(env, "size<0");
+		return NULL;
+	}
+
+	if (ptr == 0) {
+		throwNullPointerException(env, "ptr");
+		return NULL;
+	}
+
+	return (*env)->NewDirectByteBuffer(env, (void*) (uintptr_t) ptr, size);
+}
+

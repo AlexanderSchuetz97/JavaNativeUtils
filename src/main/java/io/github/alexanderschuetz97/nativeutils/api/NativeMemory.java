@@ -20,6 +20,8 @@
 package io.github.alexanderschuetz97.nativeutils.api;
 
 import java.io.SyncFailedException;
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -34,6 +36,8 @@ public interface NativeMemory extends AutoCloseable {
      * on the memory.
      */
     void close();
+
+
 
     /**
      * Returns true if the close() method of this memory has not yet been called.
@@ -64,6 +68,12 @@ public interface NativeMemory extends AutoCloseable {
      * returns the size of this memory.
      */
     long size();
+
+    /**
+     * returns the amount of bytes remaining to be read/written to until the end of the memory is reached. This is always greater or equal to 0.
+     * @param off must be greater or equal to zero
+     */
+    long remaining(long off);
 
     /**
      * returns the native pointer assosicated with this memory.
@@ -115,6 +125,17 @@ public interface NativeMemory extends AutoCloseable {
     void set(long offset, byte value, long len);
 
     /**
+     *  Writes len bytes with the given value to the offset.
+     *  Note: value is treated as if cast to a byte. This means the range of "value" is Byte.MIN_VALUE up to 0xff.
+     */
+    void set(long offset, int value, long len);
+
+    /**
+     * Sets the entire memory to 0.
+     */
+    void zero();
+
+    /**
      * writes len bytes starting from the index bufferOffset from the buffer to the offset address in the shared memory.
      */
     void write(long offset, byte[] buffer, int bufferOffset, int len);
@@ -125,9 +146,20 @@ public interface NativeMemory extends AutoCloseable {
     void write(long offset, byte[] buffer);
 
     /**
+     * writes len bytes to the offset address from the buffer.
+     * The buffers position is incremented by len as a result of this operation.
+     */
+    void write(long offset, ByteBuffer buffer, int len);
+
+    /**
      * writes a single byte to the offset address.
      */
     void write(long offset, byte aByte);
+
+    /**
+     * writes a single byte to the offset address.
+     */
+    void writeByte(long offset, byte aByte);
 
     /**
      * writes a pointer value to the given offset.
@@ -142,9 +174,19 @@ public interface NativeMemory extends AutoCloseable {
     void write(long offset, int aInt);
 
     /**
+     * writes 4 bytes to the offset address.
+     */
+    void writeInt(long offset, int aInt);
+
+    /**
      * writes 8 bytes to the offset address.
      */
     void write(long offset, long aLong);
+
+    /**
+     * writes 8 bytes to the offset address.
+     */
+    void writeLong(long offset, long aLong);
 
     /**
      * writes 4 bytes to the offset address.
@@ -152,9 +194,19 @@ public interface NativeMemory extends AutoCloseable {
     void write(long offset, float aFloat);
 
     /**
+     * writes 4 bytes to the offset address.
+     */
+    void writeFloat(long offset, float aFloat);
+
+    /**
      * writes 8 bytes to the offset address.
      */
     void write(long offset, double aDouble);
+
+    /**
+     * writes 8 bytes to the offset address.
+     */
+    void writeDouble(long offset, double aDouble);
 
     /**
      * writes 2 bytes to the offset address.
@@ -162,9 +214,38 @@ public interface NativeMemory extends AutoCloseable {
     void write(long offset, short aShort);
 
     /**
+     * writes 2 bytes to the offset address.
+     */
+    void writeShort(long offset, short aShort);
+
+    /**
+     * writes 2 bytes to the offset address.
+     * exists for convenience sake, will literally cast the int to short.
+     */
+    void writeShort(long offset, int aShort);
+
+    /**
      * reads len bytes from the offset address and stores them into the buffer starting at bufferOffset.
      */
     void read(long offset, byte[] buffer, int bufferOffset, int len);
+
+    /**
+     * reads buffer.length bytes from the offset address and stores them into the buffer starting at offset 0.
+     */
+    void read(long offset, byte[] buffer);
+
+    /**
+     * reads len bytes from offset address and stores them into dst.
+     * dst may be equal to this memory. This method handles overlap
+     * as if the bytes were first copied to temporary buffer before being copied to dst.
+     */
+    void read(long off, NativeMemory dst, long dstOff, long len);
+
+    /**
+     * reads len bytes from the offset address and stores them into the buffer.
+     * The buffers position is incremented by len as a result of this operation.
+     */
+    void read(long offset, ByteBuffer buffer, int len);
 
     /**
      * read 4 bytes from the offset address.

@@ -26,6 +26,7 @@
 #include <assert.h>
 #include <string.h>
 #include <stdlib.h>
+#include "jstub.h"
 
 //These checks have to be somewhere
 static_assert(sizeof(uintptr_t) <= sizeof(jlong), "pointer doesnt fit in jlong");
@@ -392,6 +393,40 @@ void delRefs(JNIEnv * env) {
 		(*env)->DeleteGlobalRef(env, RegData);
 	}
 
+	if (RegQueryInfoKeyResult_Class != NULL) {
+		(*env)->DeleteGlobalRef(env, RegQueryInfoKeyResult_Class);
+	}
+
+	if (RegEnumKeyExResult_Class != NULL) {
+		(*env)->DeleteGlobalRef(env, RegEnumKeyExResult_Class);
+	}
+
+	if (IfNameIndex_Class != NULL) {
+		(*env)->DeleteGlobalRef(env, IfNameIndex_Class);
+	}
+
+	IfNameIndex_Class = NULL;
+	IfNameIndex_Constructor = NULL;
+
+	RegEnumKeyExResult_Class = NULL;
+	RegEnumKeyExResult_Constructor = NULL;
+	RegEnumKeyExResult_name = NULL;
+	RegEnumKeyExResult_className = NULL;
+	RegEnumKeyExResult_lastWriteTime = NULL;
+
+	RegQueryInfoKeyResult_Class = NULL;
+	RegQueryInfoKeyResult_Constructor = NULL;
+	RegQueryInfoKeyResult_keyClass = NULL;
+	RegQueryInfoKeyResult_subKeys = NULL;
+	RegQueryInfoKeyResult_maxSubKeyLen = NULL;
+	RegQueryInfoKeyResult_maxClassLen = NULL;
+	RegQueryInfoKeyResult_values = NULL;
+	RegQueryInfoKeyResult_maxValueNameLen = NULL;
+	RegQueryInfoKeyResult_maxValueLen = NULL;
+	RegQueryInfoKeyResult_securityDescriptorSize = NULL;
+	RegQueryInfoKeyResult_lastWriteTime = NULL;
+
+
 	RegData = NULL;
 	RegData_Object = NULL;
 	RegData_Long = NULL;
@@ -669,6 +704,138 @@ bool makeRefs(JNIEnv * env) {
 		(*env) -> ThrowNew(env, String_Class, "cant find java/lang/String");
 		return false;
 	}
+
+	IfNameIndex_Class = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/IfNameIndex");
+	if (IfNameIndex_Class == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, String_Class, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/IfNameIndex");
+		return false;
+	}
+
+
+	IfNameIndex_Constructor = (*env) ->GetMethodID(env, IfNameIndex_Class, "<init>", "(ILjava/lang/String;)V");
+	if (IfNameIndex_Constructor == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/IfNameIndex.<init>(ILjava/lang/String;)V");
+		return false;
+	}
+
+
+	RegEnumKeyExResult_Class = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/RegEnumKeyExResult");
+	if (RegEnumKeyExResult_Class == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, String_Class, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegEnumKeyExResult");
+		return false;
+	}
+
+	RegEnumKeyExResult_Constructor = (*env)->GetMethodID(env, RegEnumKeyExResult_Class, "<init>", "()V");
+	if (RegEnumKeyExResult_Constructor == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegEnumKeyExResult.<init>()V");
+		return false;
+	}
+
+	RegEnumKeyExResult_name = (*env)->GetFieldID(env, RegEnumKeyExResult_Class, "name", "Ljava/lang/String;");
+	if (RegEnumKeyExResult_name == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.name");
+		return false;
+	}
+
+	RegEnumKeyExResult_className = (*env)->GetFieldID(env, RegEnumKeyExResult_Class, "className", "Ljava/lang/String;");
+	if (RegEnumKeyExResult_className == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.className");
+		return false;
+	}
+
+	RegEnumKeyExResult_lastWriteTime = (*env)->GetFieldID(env, RegEnumKeyExResult_Class, "lastWriteTime", "J");
+	if (RegEnumKeyExResult_lastWriteTime == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.lastWriteTime");
+		return false;
+	}
+
+	RegQueryInfoKeyResult_Class = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult");
+	if (RegQueryInfoKeyResult_Class == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, String_Class, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult");
+		return false;
+	}
+
+	RegQueryInfoKeyResult_Constructor = (*env)->GetMethodID(env, RegQueryInfoKeyResult_Class, "<init>", "()V");
+	if (RegQueryInfoKeyResult_Constructor == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.<init>()V");
+		return false;
+	}
+
+
+	RegQueryInfoKeyResult_keyClass = (*env)->GetFieldID(env, RegQueryInfoKeyResult_Class, "keyClass", "Ljava/lang/String;");
+	if (RegQueryInfoKeyResult_keyClass == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.keyClass");
+		return false;
+	}
+
+
+	RegQueryInfoKeyResult_subKeys = (*env)->GetFieldID(env, RegQueryInfoKeyResult_Class, "subKeys", "I");
+	if (RegQueryInfoKeyResult_subKeys == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.subKeys");
+		return false;
+	}
+
+	RegQueryInfoKeyResult_maxSubKeyLen = (*env)->GetFieldID(env, RegQueryInfoKeyResult_Class, "maxSubKeyLen", "I");
+	if (RegQueryInfoKeyResult_maxSubKeyLen == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.maxSubKeyLen");
+		return false;
+	}
+
+	RegQueryInfoKeyResult_maxClassLen = (*env)->GetFieldID(env, RegQueryInfoKeyResult_Class, "maxClassLen", "I");
+	if (RegQueryInfoKeyResult_maxClassLen == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.maxClassLen");
+		return false;
+	}
+
+	RegQueryInfoKeyResult_values = (*env)->GetFieldID(env, RegQueryInfoKeyResult_Class, "values", "I");
+	if (RegQueryInfoKeyResult_values == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.values");
+		return false;
+	}
+
+	RegQueryInfoKeyResult_maxValueNameLen = (*env)->GetFieldID(env, RegQueryInfoKeyResult_Class, "maxValueNameLen", "I");
+	if (RegQueryInfoKeyResult_maxValueNameLen == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.maxValueNameLen");
+		return false;
+	}
+
+	RegQueryInfoKeyResult_maxValueLen = (*env)->GetFieldID(env, RegQueryInfoKeyResult_Class, "maxValueLen", "I");
+	if (RegQueryInfoKeyResult_maxValueLen == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.maxValueLen");
+		return false;
+	}
+
+	RegQueryInfoKeyResult_securityDescriptorSize = (*env)->GetFieldID(env, RegQueryInfoKeyResult_Class, "securityDescriptorSize", "I");
+	if (RegQueryInfoKeyResult_securityDescriptorSize == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.securityDescriptorSize");
+		return false;
+	}
+
+	RegQueryInfoKeyResult_lastWriteTime = (*env)->GetFieldID(env, RegQueryInfoKeyResult_Class, "lastWriteTime", "J");
+	if (RegQueryInfoKeyResult_lastWriteTime == NULL) {
+		(*env) -> ExceptionClear(env);
+		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.lastWriteTime");
+		return false;
+	}
+
+
 
 	PermissionDeniedException = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/exceptions/PermissionDeniedException");
 	if (PermissionDeniedException == NULL) {
@@ -2213,12 +2380,17 @@ jobject iterator_next(JNIEnv * env, jobject iterator) {
 }
 
 
-void collection_add(JNIEnv * env, jobject collection, jobject value) {
+bool collection_add(JNIEnv * env, jobject collection, jobject value) {
 	if (collection == NULL) {
-		return;
+		return true;
 	}
 
 	(*env)->CallBooleanMethod(env, collection, Collection_add, value);
+	if ((*env)->ExceptionCheck(env)) {
+		return false;
+	}
+
+	return true;
 }
 
 
@@ -2384,6 +2556,11 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
 		return JNI_ABORT;
 	}
 
+	if (!jstub_init(env)) {
+		jstub_destroy(env);
+		return JNI_ABORT;
+	}
+
 	if (!makeRefs(env)) {
 		delRefs(env);
 		return JNI_ABORT;
@@ -2399,6 +2576,7 @@ JNIEXPORT void JNICALL JNI_OnUnload(JavaVM *vm, void *reserved) {
 		return;
 	}
 
+	jstub_destroy(env);
 	delRefs(env);
 }
 

@@ -25,10 +25,12 @@ import io.github.alexanderschuetz97.nativeutils.api.JVMNativeUtil;
 import io.github.alexanderschuetz97.nativeutils.api.NativeMethod;
 import io.github.alexanderschuetz97.nativeutils.api.PointerHandler;
 
+import java.io.SyncFailedException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
@@ -81,6 +83,47 @@ public abstract class JNICommonNativeUtil implements JVMNativeUtil {
                 (byte) (model[2] >> 16),
                 (byte) (model[2] >> 24),
         }, StandardCharsets.UTF_8);
+    }
+
+    @Override
+    public NativeMemory GetDirectBufferAddress(ByteBuffer buffer, int off, int size) {
+        if (!buffer.isDirect()) {
+            throw new IllegalArgumentException("Not a direct buffer");
+        }
+
+        if (buffer.capacity() <= off+size) {
+            throw new IllegalArgumentException("Offsets out of bounds");
+        }
+
+        long addr = GetDirectBufferAddress(buffer);
+        if (addr == 0) {
+            throw new IllegalArgumentException("Not a direct buffer");
+        }
+
+        if (off != 0) {
+            addr = pointerAdd(addr, off);
+        }
+
+        return new JNINativeMemory(addr, size, true, !buffer.isReadOnly(), new BufferPointerHandler(buffer));
+    }
+
+    protected static class BufferPointerHandler implements PointerHandler {
+
+        protected ByteBuffer buffer;
+
+        public BufferPointerHandler(ByteBuffer buffer) {
+            this.buffer = buffer;
+        }
+
+        @Override
+        public void handleClose(long ptr, long size, boolean read, boolean write) {
+            buffer = null;
+        }
+
+        @Override
+        public void handleSync(long ptr, long size, boolean read, boolean write, long offset, long length, boolean invalidate) throws SyncFailedException {
+            //NOOP
+        }
     }
 
     native long _FromReflectedField(Field field);
@@ -244,6 +287,28 @@ public abstract class JNICommonNativeUtil implements JVMNativeUtil {
         long nPtr = _malloc(size);
         return new JNINativeMemory(nPtr, size, true, true, FREE_HANDLER);
     }
+
+
+    public void free(long ptr) {
+        //A for effort
+        if (ptr == 0) {
+            throw new NullPointerException();
+        }
+
+        _free(ptr);
+    }
+
+    /**
+     * returns the native address of a direct byte buffer.
+     */
+    public native long GetDirectBufferAddress(ByteBuffer buffer);
+
+    static native long pointerAdd(long ptr, long increment);
+    /**
+     * returns a direct byte buffer using the given pointer and capacity.
+     */
+    public native ByteBuffer NewDirectByteBuffer(long ptr, long capacity);
+
 
 
 }

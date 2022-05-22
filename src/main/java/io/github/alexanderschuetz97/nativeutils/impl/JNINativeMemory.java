@@ -23,6 +23,7 @@ import io.github.alexanderschuetz97.nativeutils.api.NativeMemory;
 import io.github.alexanderschuetz97.nativeutils.api.PointerHandler;
 
 import java.io.SyncFailedException;
+import java.nio.ByteBuffer;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -68,6 +69,69 @@ class JNINativeMemory implements NativeMemory {
         }
     }
 
+    @Override
+    public void read(long off, NativeMemory dst, long dstOff, long len) {
+        if (!dst.isWriteable()) {
+            throw new IllegalArgumentException("dst not writeable");
+        }
+
+        if (len == 0) {
+            return;
+        }
+
+        ReentrantReadWriteLock.ReadLock dLock = dst.readLock();
+        dLock.lock();
+        try {
+            lockForRead(off, len);
+            try {
+                if (!dst.isValid(dstOff, len)) {
+                    throw new IllegalArgumentException("dst out of bounds");
+                }
+
+                memmove(ptr, off, dst.getNativePointer(dstOff), len);
+            } finally {
+                rLock.unlock();
+            }
+        } finally {
+            dLock.unlock();
+        }
+    }
+
+    @Override
+    public void read(long offset, ByteBuffer buffer, int len) {
+        if (buffer.isReadOnly()) {
+            throw new IllegalArgumentException("Buffer is read only");
+        }
+
+        if (len == 0) {
+            return;
+        }
+
+        lockForRead(offset, len);
+        try {
+            if (!buffer.isDirect()) {
+                if (!buffer.hasArray()) {
+                    byte[] tmp = new byte[len];
+                    read(offset, tmp, 0, len);
+                    buffer.put(tmp);
+                    return;
+                }
+
+                int pos = buffer.position();
+                byte[] buf = buffer.array();
+                read(offset, buf, pos, len);
+                buffer.position(pos+len);
+                return;
+            }
+
+            int pos = buffer.position();
+            readBuffer(ptr, offset, buffer, pos, len);
+            buffer.position(pos+len);
+        } finally {
+            rLock.unlock();
+        }
+    }
+
     public void sync(long offset, long length, boolean invalidate) throws SyncFailedException {
         lockForWrite(offset, length);
         try {
@@ -87,6 +151,11 @@ class JNINativeMemory implements NativeMemory {
     public long getNativePointer(long off) {
         if (off < 0 || off >= size) {
             throw new IllegalArgumentException("out of bounds");
+        }
+
+        long p = ptr;
+        if (p == 0) {
+            return 0;
         }
 
         return off(ptr, off);
@@ -136,6 +205,11 @@ class JNINativeMemory implements NativeMemory {
     @Override
     public long size() {
         return this.size;
+    }
+
+    @Override
+    public long remaining(long off) {
+        return Math.max(size-off, 0);
     }
 
 
@@ -205,6 +279,21 @@ class JNINativeMemory implements NativeMemory {
     }
 
     @Override
+    public void set(long offset, int value, long len) {
+        lockForWrite(offset, len);
+        try {
+            set(ptr, offset, (byte) value, len);
+        } finally {
+            rLock.unlock();
+        }
+    }
+
+    @Override
+    public void zero() {
+        set(0, (byte) 0, size);
+    }
+
+    @Override
     public void write(long offset, byte[] buffer, int bufferOffset, int len) {
         if (buffer == null) {
             throw new NullPointerException("buffer");
@@ -232,6 +321,44 @@ class JNINativeMemory implements NativeMemory {
     }
 
     @Override
+    public void write(long offset, ByteBuffer buffer, int len) {
+        if (len == 0) {
+            return;
+        }
+
+        lockForRead(offset, len);
+        try {
+            if (!buffer.isDirect()) {
+                if (!buffer.hasArray()) {
+                    byte[] tmp = new byte[len];
+                    buffer.get(tmp);
+                    write(offset, tmp);
+                    return;
+                }
+
+                if (len == 0) {
+                    return;
+                }
+
+                int pos = buffer.position();
+                byte[] buf = buffer.array();
+                write(offset, buf, pos, len);
+                buffer.position(pos+len);
+                return;
+            }
+
+
+
+
+            int pos = buffer.position();
+            writeBuffer(ptr, offset, buffer, pos, len);
+            buffer.position(pos+len);
+        } finally {
+            rLock.unlock();
+        }
+    }
+
+    @Override
     public void write(long offset, byte aByte) {
         lockForWrite(offset, 1);
         try {
@@ -239,6 +366,11 @@ class JNINativeMemory implements NativeMemory {
         } finally {
             rLock.unlock();
         }
+    }
+
+    @Override
+    public void writeByte(long offset, byte aByte) {
+        write(offset, aByte);
     }
 
     @Override
@@ -262,6 +394,11 @@ class JNINativeMemory implements NativeMemory {
     }
 
     @Override
+    public void writeInt(long offset, int aInt) {
+        write(offset, aInt);
+    }
+
+    @Override
     public void write(long offset, long aLong) {
         lockForWrite(offset, 8);
         try {
@@ -269,6 +406,11 @@ class JNINativeMemory implements NativeMemory {
         } finally {
             rLock.unlock();
         }
+    }
+
+    @Override
+    public void writeLong(long offset, long aLong) {
+        write(offset, aLong);
     }
 
     @Override
@@ -282,6 +424,11 @@ class JNINativeMemory implements NativeMemory {
     }
 
     @Override
+    public void writeFloat(long offset, float aFloat) {
+        write(offset, aFloat);
+    }
+
+    @Override
     public void write(long offset, double aDouble) {
         lockForWrite(offset, 8);
         try {
@@ -292,6 +439,11 @@ class JNINativeMemory implements NativeMemory {
     }
 
     @Override
+    public void writeDouble(long offset, double aDouble) {
+        write(offset, aDouble);
+    }
+
+    @Override
     public void write(long offset, short aShort) {
         lockForWrite(offset, 2);
         try {
@@ -299,6 +451,16 @@ class JNINativeMemory implements NativeMemory {
         } finally {
             rLock.unlock();
         }
+    }
+
+    @Override
+    public void writeShort(long offset, short aShort) {
+        write(offset, aShort);
+    }
+
+    @Override
+    public void writeShort(long offset, int aShort) {
+        write(offset, (short) aShort);
     }
 
     @Override
@@ -321,6 +483,11 @@ class JNINativeMemory implements NativeMemory {
         } finally {
             rLock.unlock();
         }
+    }
+
+    @Override
+    public void read(long offset, byte[] buffer) {
+        read(offset, buffer, 0, buffer.length);
     }
 
     @Override
@@ -806,6 +973,11 @@ class JNINativeMemory implements NativeMemory {
     native void spinAndSet(long ptr, long offset, byte expect, byte update, long aSpinTime);
     native boolean spin(long ptr, long offset, byte expect, long aSpinTime, long aTimeout);
     native void spin(long ptr, long offset, byte expect, long aSpinTime);
+
+    static native void memmove(long ptr, long offset, long target, long len);
+    static native void readBuffer(long ptr, long offset, ByteBuffer buffer, int off, int len);
+    static native void writeBuffer(long ptr, long offset, ByteBuffer buffer, int off, int len);
+
 
     @Override
     public String toString() {

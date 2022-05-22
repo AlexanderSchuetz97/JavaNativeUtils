@@ -14,7 +14,7 @@ Maven:
 <dependency>
     <groupId>io.github.alexanderschuetz97</groupId>
     <artifactId>JavaNativeUtils</artifactId>
-    <version>1.6</version>
+    <version>1.7</version>
 </dependency>
 ````
 
@@ -35,9 +35,9 @@ if (NativeUtils.isWindows()) {
 
 ## List of supported Syscalls
 #### Linux
-* fnctl F_GETLK
-* fnctl F_SETLK
-* fnctl F_SETLKW
+* open
+* fcntl
+* ioctl
 * symlink
 * link
 * stat
@@ -54,11 +54,15 @@ if (NativeUtils.isWindows()) {
 * close
 * recvfrom
 * recvmsg (includes CMSG HDR parsing)
+* sendmsg
 * mmap
 * msync
 * munmap
 * getpagesize
 * __get_cpuid_count (from cpuid.h)
+* if_nametoindex
+* if_indextoname
+
 
 #### Windows
 * _locking
@@ -70,6 +74,13 @@ if (NativeUtils.isWindows()) {
 * CreateHardLinkA
 * CreateFileA
 * CloseHandle
+* GetFileAttributesA
+* SetFileAttributesA
+* ExpandEnvironmentStringsA
+* SetEnvironmentVariableA
+* GetEnvironmentVariableA
+* GetModuleFileNameA
+* GetVolumePathNameW
 * strerror_s
 * FormatMessageA
 * SetupDiGetClassDevsA
@@ -81,6 +92,16 @@ if (NativeUtils.isWindows()) {
 * ResetEvent
 * WaitForSingleObject
 * WaitForMultipleObjects
+* GetOverlappedResult
+* GetFriendlyIfIndex
+* GetAdapterIndex
+* GetAdaptersAddresses
+* GetCurrentThread
+* GetCurrentProcess
+* DuplicateHandle
+* CancelIo
+* CancelIoEx
+* CancelSynchronousIo
 * __get_cpuid_count (from cpuid.h)
 * RegOpenKeyExA
 * RegCloseKey

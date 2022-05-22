@@ -24,7 +24,10 @@ import io.github.alexanderschuetz97.nativeutils.api.exceptions.MutexAbandonedExc
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.SharingViolationException;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
 import io.github.alexanderschuetz97.nativeutils.api.structs.GUID;
+import io.github.alexanderschuetz97.nativeutils.api.structs.IpAdapterAddresses;
 import io.github.alexanderschuetz97.nativeutils.api.structs.RegData;
+import io.github.alexanderschuetz97.nativeutils.api.structs.RegEnumKeyExResult;
+import io.github.alexanderschuetz97.nativeutils.api.structs.RegQueryInfoKeyResult;
 import io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInfoData;
 import io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInterfaceData;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Stat;
@@ -32,7 +35,11 @@ import io.github.alexanderschuetz97.nativeutils.api.structs.Win32FileAttributeDa
 
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
+import java.net.NetworkInterface;
+import java.nio.ByteBuffer;
 import java.nio.file.FileAlreadyExistsException;
+import java.util.Collection;
+import java.util.List;
 
 public interface WindowsNativeUtil extends NativeUtil {
 
@@ -112,6 +119,12 @@ public interface WindowsNativeUtil extends NativeUtil {
      * @throws IllegalArgumentException if size is <= 0
      */
     NativeMemory malloc(long size) throws OutOfMemoryError, IllegalArgumentException;
+
+    /**
+     * Calls free on a pointer.
+     * @param ptr the pointer.
+     */
+    void free(long ptr);
 
     /**
      * Any calls to the resulting NativeMemory may cause the JVM to die due to a SEGFAULT is size is not specified correctly.
@@ -356,4 +369,176 @@ public interface WindowsNativeUtil extends NativeUtil {
      * @throws UnknownNativeErrorException
      */
     RegData RegQueryValueExA(long hkey, String valueName) throws UnknownNativeErrorException;
+
+    /**
+     * Get information about a registry key.
+     */
+    RegQueryInfoKeyResult RegQueryInfoKeyA(long hkey) throws UnknownNativeErrorException;
+
+    /**
+     * Enumerate subkeys of a registry key.
+     *
+     * @param index the index of the key in the enumeration
+     *              microsofts documentation states that this starts at 0
+     *              and should ALWAYS be enumerated until the end
+     *              (i.e. always increment this until this function returns null)
+     * @param maxSubKeyLen obtained from RegQueryInfoKeyA field maxSubKeyLen
+     *             If set to <= 0 then a call to RegQueryInfoKeyResult
+     *             will be made internally to determine the size.
+     * @param maxClassLen obtained from RegQueryInfoKeyA field maxClassLen
+     *             If set to <= 0 then a call to RegQueryInfoKeyResult
+     *             will be made internally to determine the size.
+     * @return info about the next subkey or null if there are no more subkeys.
+     */
+    RegEnumKeyExResult RegEnumKeyExA(long hkey, int index, int maxSubKeyLen, int maxClassLen) throws UnknownNativeErrorException;
+
+    /**
+     * Convenience method that returns an iterable over all subkeys of a hkey.
+     */
+    Iterable<RegEnumKeyExResult> iterateRegistrySubKeys(long hkey) throws UnknownNativeErrorException;
+
+    /**
+     * Returns a pseudo Thread handle that always means current thread. This handle cannot identify the current thread to another thread.
+     * call duplicate handle with the result of this call to get an actual thread handle!
+     */
+    long GetCurrentThread();
+
+    /**
+     * Returns a pseudo handle to the current process.
+     */
+    long GetCurrentProcess();
+
+    /**
+     *
+     * @param srcProcess source process, most likely return value of {@link #GetCurrentProcess()}
+     * @param handle the source handle to duplicate
+     * @param targetProcess target process, most likely return value of {@link #GetCurrentProcess()}
+     * @param access desired access flags, completely ignored if sameAccess is true
+     * @param inheritHandle should child process inherit the duplicated handle?
+     * @param closeSource close the source handle when "duplicating" the handle?
+     * @param sameAccess use the same access flags as the source handle? true means access parameter is completely ignored.
+     * @return the duplicated handle
+     */
+    long DuplicateHandle(long srcProcess, long handle, long targetProcess, int access, boolean inheritHandle, boolean closeSource, boolean sameAccess);
+
+    void CancelIo(long handle) throws UnknownNativeErrorException;
+
+    void CancelIoEx(long handle, long overlapped) throws UnknownNativeErrorException;
+
+    void CancelSynchronousIo(long threadHandle) throws UnknownNativeErrorException;
+
+    /**
+     * Reads bytes from a handle into a buffer.
+     *
+     * @param handle file handle
+     * @param buffer data goes here
+     * @param off offset in the buffer
+     * @param len maximum bytes to read
+     *
+     * @return number of bytes read
+     */
+    int ReadFile(long handle, byte[] buffer, int off, int len) throws InvalidFileDescriptorException, UnknownNativeErrorException;
+
+    /**
+     * Reads bytes from a handle into a buffer.
+     *
+     * @param handle file handle
+     * @param buffer data goes here
+     * @param len maximum bytes to read
+     *
+     * @return number of bytes read
+     */
+    int ReadFile(long handle, ByteBuffer buffer, int len) throws InvalidFileDescriptorException, UnknownNativeErrorException;
+
+    /**
+     * Reads bytes from a handle into a buffer.
+     *
+     * @param handle file handle
+     * @param buffer data goes here
+     * @param off offset in the buffer
+     * @param len maximum bytes to read
+     *
+     * @return number of bytes read
+     */
+    int ReadFile(long handle, NativeMemory buffer, long off, int len) throws InvalidFileDescriptorException, UnknownNativeErrorException;
+
+    /**
+     * reads using overlapped mechanism. returns an overlapped pointer that must be feed by calling {@link #free(long)} after it has been confirmed that the async READ is done by calling GetOverlappedResult.
+     *
+     * @param event created by CreateEventA
+     */
+    long ReadFile(long handle, NativeMemory buffer, long off, int len, long event) throws InvalidFileDescriptorException, UnknownNativeErrorException;
+
+    /**
+     * Writes bytes from a Buffer into a handle.
+     *
+     * @param handle file handle
+     * @param buffer data from here
+     * @param off offset of data
+     * @param len maximum bytes to read
+     *
+     * @return number of bytes read
+     */
+    int WriteFile(long handle, byte[] buffer, int off, int len) throws InvalidFileDescriptorException, UnknownNativeErrorException;
+
+    /**
+     * Writes bytes from a Buffer into a handle.
+     *
+     * @param handle file handle
+     * @param buffer data from here
+     * @param len maximum bytes to read
+     *
+     * @return number of bytes read
+     */
+    int WriteFile(long handle, ByteBuffer buffer, int len) throws InvalidFileDescriptorException, UnknownNativeErrorException;
+
+    /**
+     * Writes bytes from a Buffer into a handle.
+     *
+     * @param handle file handle
+     * @param buffer data from here
+     * @param off offset of data
+     * @param len maximum bytes to read
+     *
+     * @return number of bytes read
+     */
+    int WriteFile(long handle, NativeMemory buffer, long off, int len) throws InvalidFileDescriptorException, UnknownNativeErrorException;
+
+    /**
+     * writes using overlapped mechanism. returns an overlapped pointer that must be feed by calling {@link #free(long)} after it has been confirmed that the async WRITE is done by calling GetOverlappedResult.
+     *
+     * @param event created by CreateEventA
+     */
+    long WriteFile(long handle, NativeMemory buffer, long off, int len, long event) throws InvalidFileDescriptorException, UnknownNativeErrorException;
+
+    /**
+     * Gets the result from an async io operation on a handle.
+     *
+     * @param handle handle on which the async operation is performed.
+     * @param overlapped overlapped pointer returned by the call that started the async operation.
+     * @param wait wait until the async operation is completed before return. false means return immediately.
+     * @return  -1 if the async operation is not yet completed. (only if wait=false) otherwise number of bytes transfered is returned.
+     */
+    int GetOverlappedResult(long handle, long overlapped, boolean wait) throws InvalidFileDescriptorException, UnknownNativeErrorException;
+
+    /**
+     * Returns a friendly adapter index.
+     * Sidenote: javas {@link java.net.NetworkInterface} class uses the friendly index for its byIndex method.
+     * @param index the "unfriendly" adapter index
+     */
+    int GetFriendlyIfIndex(long index);
+
+    /**
+     * returns a unfriendly adapter index based on adapter name (GUID).
+     * @param adapterName this is a GUID. YOU DO NOT SEE THIS NAME ANYWHERE OUTSIDE THE WINDOWS REGISTRY!
+     *                    for example: Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e972-e325-11ce-bfc1-08002be10318}\0000->NetCfgInstanceId
+     *                    would hold this GUID. Ex value would be "{4E27A816-B07C-48E3-9453-6145B1BFFB51}"
+     * @throws UnknownNativeErrorException
+     */
+    long GetAdapterIndex(String adapterName) throws UnknownNativeErrorException;
+
+    /**
+     * Returns adapter addresses.
+     */
+    Collection<IpAdapterAddresses> GetAdaptersAddresses(long family, long flags) throws UnknownNativeErrorException;
 }

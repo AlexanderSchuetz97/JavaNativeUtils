@@ -109,6 +109,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		goto clean;
 	}
 
+
 	parseData:
 
 	switch(type) {
@@ -154,7 +155,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 			throwOOM(env, "NewStringUTF");
 			goto clean;
 		}
-		ret = (*env)->NewObject(env, RegData, RegData_Long, str, RegData_types[4]);
+		ret = (*env)->NewObject(env, RegData, RegData_Object, str, RegData_types[2]);
 		goto clean;
 	case REG_LINK:
 		str = (*env)->NewStringUTF(env, (const char*) data);
@@ -162,7 +163,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 			throwOOM(env, "NewStringUTF");
 			goto clean;
 		}
-		ret = (*env)->NewObject(env, RegData, RegData_Long, str, RegData_types[4]);
+		ret = (*env)->NewObject(env, RegData, RegData_Object, str, RegData_types[3]);
 		goto clean;
 	case REG_SZ:
 		str = (*env)->NewStringUTF(env, (const char*) data);
@@ -170,7 +171,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 			throwOOM(env, "NewStringUTF");
 			goto clean;
 		}
-		ret = (*env)->NewObject(env, RegData, RegData_Long, str, RegData_types[8]);
+		ret = (*env)->NewObject(env, RegData, RegData_Object, str, RegData_types[7]);
 		goto clean;
 	case REG_QWORD:
 		if (len < 8) {
@@ -218,4 +219,228 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		free(vdata);
 	}
 	return ret;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    RegQueryInfoKeyA
+ * Signature: (J)Lio/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult;
+ */
+JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_RegQueryInfoKeyA
+  (JNIEnv * env, jobject inst, jlong hkey) {
+	DWORD lpcchClass = 0;
+	DWORD lpcSubKeys;
+	DWORD lpcbMaxSubKeyLen;
+	DWORD lpcbMaxClassLen;
+	DWORD lpcValues;
+	DWORD lpcbMaxValueNameLen;
+	DWORD lpcbMaxValueLen;
+	DWORD lpcbSecurityDescriptor;
+	FILETIME lpftLastWriteTime;
+	char * lpClass = NULL;
+	jobject result = NULL;
+
+	LSTATUS ret = RegQueryInfoKeyA((HKEY)(uintptr_t) hkey,
+			NULL,
+			&lpcchClass,
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			NULL);
+
+	if (ret != ERROR_SUCCESS) {
+		throwUnknownError(env, ret);
+		goto cleanup;
+	}
+
+	if (lpcchClass < 0) {
+		lpcchClass = 0;
+	}
+
+
+	lpcchClass++;
+	lpClass = malloc(lpcchClass + 1);
+	if (lpClass == NULL) {
+		throwOOM(env, "malloc");
+		goto cleanup;
+	}
+
+	memset((void*) lpClass, 0, lpcchClass + 1);
+
+	ret = RegQueryInfoKeyA((HKEY)(uintptr_t) hkey,
+			lpClass,
+			&lpcchClass,
+			NULL,
+			&lpcSubKeys,
+			&lpcbMaxSubKeyLen,
+			&lpcbMaxClassLen,
+			&lpcValues,
+			&lpcbMaxValueNameLen,
+			&lpcbMaxValueLen,
+			&lpcbSecurityDescriptor,
+			&lpftLastWriteTime);
+
+	if (ret != ERROR_SUCCESS) {
+		throwUnknownError(env, ret);
+		goto cleanup;
+	}
+
+	jstring jlpClass = (*env)->NewStringUTF(env, lpClass);
+
+	if (jlpClass == NULL) {
+		throwOOM(env, "NewStringUTF");
+		goto cleanup;
+	}
+
+
+	result = (*env)->NewObject(env, RegQueryInfoKeyResult_Class, RegQueryInfoKeyResult_Constructor);
+	if (result == NULL) {
+		throwOOM(env, "NewObject");
+		goto cleanup;
+	}
+
+
+	(*env)->SetObjectField(env, result, RegQueryInfoKeyResult_keyClass, jlpClass);
+	(*env)->SetIntField(env, result, RegQueryInfoKeyResult_subKeys, lpcSubKeys);
+	(*env)->SetIntField(env, result, RegQueryInfoKeyResult_maxSubKeyLen, lpcbMaxSubKeyLen);
+	(*env)->SetIntField(env, result, RegQueryInfoKeyResult_maxClassLen, lpcbMaxClassLen);
+	(*env)->SetIntField(env, result, RegQueryInfoKeyResult_values, lpcValues);
+	(*env)->SetIntField(env, result, RegQueryInfoKeyResult_maxValueNameLen, lpcbMaxValueNameLen);
+	(*env)->SetIntField(env, result, RegQueryInfoKeyResult_maxValueLen, lpcbMaxValueLen);
+	(*env)->SetIntField(env, result, RegQueryInfoKeyResult_securityDescriptorSize, lpcbSecurityDescriptor);
+
+	uint64_t temp = lpftLastWriteTime.dwHighDateTime;
+	temp <<= 32;
+	temp += lpftLastWriteTime.dwLowDateTime;
+
+	(*env)->SetLongField(env, result, RegQueryInfoKeyResult_lastWriteTime, temp);
+
+
+
+
+	cleanup:
+	if (lpClass != NULL) {
+		free((void*)lpClass);
+	}
+
+	return result;
+
+
+
+
+
+
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    RegEnumKeyA
+ * Signature: (JII)Ljava/lang/String;
+ */
+JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_RegEnumKeyExA
+  (JNIEnv * env, jobject inst, jlong hkey, jint index, jint nameSize, jint classSize) {
+	if (nameSize <= 0 || classSize <= 0) {
+		DWORD nsize = 0;
+		DWORD csize = 0;
+		LSTATUS ret = RegQueryInfoKeyA((HKEY)(uintptr_t) hkey,
+			NULL,
+			NULL,
+			NULL, //RES
+			NULL,
+			&nsize,
+			&csize,
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			NULL);
+
+		if (ret != ERROR_SUCCESS) {
+			throwUnknownError(env, ret);
+			return NULL;
+		}
+
+		nameSize = nsize;
+		classSize = csize;
+	}
+
+
+
+	nameSize++;
+	classSize++;
+	char * cmem = NULL;
+	char * nmem = NULL;
+	jobject obj = NULL;
+
+
+	cmem = (char*) malloc(classSize+1);
+	if (cmem == NULL) {
+		throwOOM(env, "malloc");
+		return NULL;
+	}
+
+	nmem = (char*) malloc(nameSize+1);
+	if (nmem == NULL) {
+		throwOOM(env, "malloc");
+		goto cleanup;
+	}
+
+	memset((void*) cmem, 0, classSize+1);
+	memset((void*) nmem, 0, nameSize+1);
+
+	DWORD nsize = nameSize;
+	DWORD csize = classSize;
+	FILETIME ftime;
+
+	LSTATUS ret = RegEnumKeyExA((HKEY)(uintptr_t) hkey, (DWORD) index, nmem, &nsize, NULL, cmem, &csize, &ftime);
+
+	if (ret == ERROR_NO_MORE_ITEMS) {
+		goto cleanup;
+	}
+
+	if (ret != ERROR_SUCCESS) {
+		throwUnknownError(env, ret);
+		goto cleanup;
+	}
+
+	jstring jname = (*env)->NewStringUTF(env, (const char *) nmem);
+	if (jname == NULL) {
+		throwOOM(env, "NewStringUTF");
+		goto cleanup;
+	}
+
+	jstring jclass = (*env)->NewStringUTF(env, (const char *) cmem);
+	if (jclass == NULL) {
+		throwOOM(env, "NewStringUTF");
+		goto cleanup;
+	}
+
+	uint64_t jtime = ftime.dwHighDateTime;
+	jtime <<= 32;
+	jtime += ftime.dwLowDateTime;
+
+	obj = (*env)->NewObject(env, RegEnumKeyExResult_Class, RegEnumKeyExResult_Constructor);
+	if (obj == NULL) {
+		throwOOM(env, "NewObject");
+		goto cleanup;
+	}
+	(*env)->SetObjectField(env, obj, RegEnumKeyExResult_name, jname);
+	(*env)->SetObjectField(env, obj, RegEnumKeyExResult_className, jclass);
+	(*env)->SetLongField(env, obj, RegEnumKeyExResult_lastWriteTime, jtime);
+
+	cleanup:
+	if (cmem != NULL) {
+		free((void*) cmem);
+	}
+
+	if (nmem != NULL) {
+		free((void *) nmem);
+	}
+
+	return obj;
 }
