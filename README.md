@@ -135,6 +135,8 @@ Accessing sun.misc.Unsafe is also non-trivial in newer Java Versions depending o
 * NewGlobalRef
 * DeleteGlobalRef
 * NewLocalRef
+* NewDirectByteBuffer
+* GetDirectBufferAddress
 
 
 ## Dependencies
