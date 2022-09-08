@@ -33,7 +33,7 @@
 JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_GetVolumePathNameW
   (JNIEnv * env, jobject inst, jstring path) {
 	if (path == NULL) {
-		throwNullPointerException(env, "path");
+		jthrowCC_NullPointerException_1(env, "path");
 		return NULL;
 	}
 
@@ -50,7 +50,7 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	wchar_t* out = (wchar_t*) malloc(memsize);
 	if (out == NULL) {
 		free(in);
-		throwOOM(env, "malloc");
+		jthrowCC_OutOfMemoryError_1(env, "malloc");
 		return NULL;
 	}
 
@@ -61,7 +61,7 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	free(in);
 	if (!succ) {
 		free(out);
-		throwUnknownError(env, GetLastError());
+		jthrow_UnknownNativeErrorException_1(env, GetLastError());
 		return NULL;
 	}
 
@@ -79,14 +79,14 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
   (JNIEnv * env, jobject inst, jlong handle, jboolean normalize, jobject volume) {
 	HANDLE h = (HANDLE) (uintptr_t) handle;
 	if (h == INVALID_HANDLE_VALUE) {
-		throwBadFileDescriptor(env);
+		jthrow_InvalidFileDescriptorException(env);
 		return NULL;
 	}
 
-	DWORD ord = (DWORD) getEnumOrdinal(env, volume);
+	DWORD ord = (DWORD) jenum_ordinal(env, volume);
 	//0=DOS, 1=GUID, 2=NONE, 3=NT
 	if (ord < 0 || ord > 4) {
-		throwIllegalArgumentsExc(env, "volumeName");
+		jthrowCC_IllegalArgumentException_1(env, "volumeName");
 		return NULL;
 	}
 
@@ -100,16 +100,16 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	if (res == 0) {
 		DWORD err = GetLastError();
 		if (err == ERROR_INVALID_HANDLE) {
-			throwBadFileDescriptor(env);
+			jthrow_InvalidFileDescriptorException(env);
 			return NULL;
 		}
-		throwUnknownError(env, err);
+		jthrow_UnknownNativeErrorException_1(env, err);
 		return NULL;
 	}
 
 	path = malloc(res+2);
 	if (path == NULL) {
-		throwOOM(env, "malloc");
+		jthrowCC_OutOfMemoryError_1(env, "malloc");
 		return NULL;
 	}
 
@@ -122,16 +122,16 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		free(path);
 		DWORD err = GetLastError();
 		if (err == ERROR_INVALID_HANDLE) {
-			throwBadFileDescriptor(env);
+			jthrow_InvalidFileDescriptorException(env);
 			return NULL;
 		}
-		throwUnknownError(env, err);
+		jthrow_UnknownNativeErrorException_1(env, err);
 		return NULL;
 	}
 
 	if (res2 > res) {
 		free(path);
-		throwUnknownError(env, ERROR_INSUFFICIENT_BUFFER);
+		jthrow_UnknownNativeErrorException_1(env, ERROR_INSUFFICIENT_BUFFER);
 		return NULL;
 	}
 
@@ -149,14 +149,14 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	(JNIEnv * env, jobject inst, jlong handle, jboolean normalize, jobject volume) {
 	HANDLE h = (HANDLE) (uintptr_t) handle;
 		if (h == INVALID_HANDLE_VALUE) {
-			throwBadFileDescriptor(env);
+			jthrow_InvalidFileDescriptorException(env);
 			return NULL;
 		}
 
-		DWORD ord = (DWORD) getEnumOrdinal(env, volume);
+		DWORD ord = (DWORD) jenum_ordinal(env, volume);
 		//0=DOS, 1=GUID, 2=NONE, 3=NT
 		if (ord < 0 || ord > 4) {
-			throwIllegalArgumentsExc(env, "volumeName");
+			jthrowCC_IllegalArgumentException_1(env, "volumeName");
 			return NULL;
 		}
 
@@ -170,17 +170,17 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		if (res == 0) {
 			DWORD err = GetLastError();
 			if (err == ERROR_INVALID_HANDLE) {
-				throwBadFileDescriptor(env);
+				jthrow_InvalidFileDescriptorException(env);
 				return NULL;
 			}
-			throwUnknownError(env, err);
+			jthrow_UnknownNativeErrorException_1(env, err);
 			return NULL;
 		}
 
 		size_t sizeInBytes = (res+2) * sizeof(wchar_t);
 		path = malloc(sizeInBytes);
 		if (path == NULL) {
-			throwOOM(env, "malloc");
+			jthrowCC_OutOfMemoryError_1(env, "malloc");
 			return NULL;
 		}
 
@@ -193,16 +193,16 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 			free(path);
 			DWORD err = GetLastError();
 			if (err == ERROR_INVALID_HANDLE) {
-				throwBadFileDescriptor(env);
+				jthrow_InvalidFileDescriptorException(env);
 				return NULL;
 			}
-			throwUnknownError(env, err);
+			jthrow_UnknownNativeErrorException_1(env, err);
 			return NULL;
 		}
 
 		if (res2 > res) {
 			free(path);
-			throwUnknownError(env, ERROR_INSUFFICIENT_BUFFER);
+			jthrow_UnknownNativeErrorException_1(env, ERROR_INSUFFICIENT_BUFFER);
 			return NULL;
 		}
 

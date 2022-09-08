@@ -33,7 +33,7 @@
 JNIEXPORT jobjectArray JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_wordexp
   (JNIEnv * env, jobject inst, jstring expression, jboolean allowCommands, jboolean useStdErr, jboolean allowUndef) {
 	if (expression == NULL) {
-		throwNullPointerException(env, "expression");
+		jthrowCC_NullPointerException_1(env, "expression");
 		return NULL;
 	}
 
@@ -64,7 +64,7 @@ JNIEXPORT jobjectArray JNICALL Java_io_github_alexanderschuetz97_nativeutils_imp
 		jobjectArray joa = (*env)->NewObjectArray(env, vec.we_wordc, (*env)->GetObjectClass(env, expression), NULL);
 		if (joa == NULL) {
 			wordfree(&vec);
-			throwOOM(env, "NewObjectArray");
+			jthrowCC_OutOfMemoryError_1(env, "NewObjectArray");
 			return NULL;
 		}
 
@@ -73,7 +73,7 @@ JNIEXPORT jobjectArray JNICALL Java_io_github_alexanderschuetz97_nativeutils_imp
 			if (str == NULL) {
 				(*env)->DeleteLocalRef(env, joa);
 				wordfree(&vec);
-				throwOOM(env, "NewStringUTF");
+				jthrowCC_OutOfMemoryError_1(env, "NewStringUTF");
 				return NULL;
 			}
 			(*env)->SetObjectArrayElement(env, joa, i, str);
@@ -84,27 +84,27 @@ JNIEXPORT jobjectArray JNICALL Java_io_github_alexanderschuetz97_nativeutils_imp
 		return joa;
 	}
 	case(WRDE_BADCHAR): {
-		throwIllegalArgumentsExc(env, "Illegal occurrence of newline or one of |, &, ;, <, >, (, ), {, }.");
+		jthrowCC_IllegalArgumentException_1(env, "Illegal occurrence of newline or one of |, &, ;, <, >, (, ), {, }.");
 		return NULL;
 	}
 	case(WRDE_BADVAL): {
-		throwIllegalArgumentsExc(env, "An undefined shell variable was referenced");
+		jthrowCC_IllegalArgumentException_1(env, "An undefined shell variable was referenced");
 		return NULL;
 	}
 	case(WRDE_CMDSUB): {
-		throwIllegalArgumentsExc(env, "Command substitution occurred");
+		jthrowCC_IllegalArgumentException_1(env, "Command substitution occurred");
 		return NULL;
 	}
 	case(WRDE_NOSPACE): {
-		throwOOM(env, "wordexp");
+		jthrowCC_OutOfMemoryError_1(env, "wordexp");
 		return NULL;
 	}
 	case(WRDE_SYNTAX): {
-		throwIllegalArgumentsExc(env, "Shell syntax error, such as unbalanced parentheses or unmatched quotes.");
+		jthrowCC_IllegalArgumentException_1(env, "Shell syntax error, such as unbalanced parentheses or unmatched quotes.");
 		return NULL;
 	}
 	default:
-		throwIllegalArgumentsExc(env, "unknown native error return value for wordexp syscall");
+		jthrowCC_IllegalArgumentException_1(env, "unknown native error return value for wordexp syscall");
 		return NULL;
 	}
 }
@@ -118,25 +118,25 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
   (JNIEnv *env, jobject inst, jstring key, jstring value, jboolean overwrite) {
 
 	if (key == NULL) {
-		throwNullPointerException(env, "key");
+		jthrowCC_NullPointerException_1(env, "key");
 		return;
 	}
 
 	if (value == NULL) {
-		throwNullPointerException(env, "value");
+		jthrowCC_NullPointerException_1(env, "value");
 		return;
 	}
 
 	const char* keyP = (*env)->GetStringUTFChars(env, key, NULL);
 	if (keyP == NULL) {
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return;
 	}
 
 	const char* valueP = (*env)->GetStringUTFChars(env, value, NULL);
 	if (valueP == NULL) {
 		(*env)->ReleaseStringUTFChars(env, key, keyP);
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return;
 	}
 
@@ -152,15 +152,15 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	int err = errno;
 	switch(err) {
 		case(EINVAL): {
-			throwIllegalArgumentsExc(env, "key contains = or is empty string");
+			jthrowCC_IllegalArgumentException_1(env, "key contains = or is empty string");
 			return;
 		}
 		case(ENOMEM): {
-			throwOOM(env, "Insufficient memory to add a new variable to the environment.");
+			jthrowCC_OutOfMemoryError_1(env, "Insufficient memory to add a new variable to the environment.");
 			return;
 		}
 		default: {
-			throwUnknownError(env, err);
+			jthrow_UnknownNativeErrorException_1(env, err);
 			return;
 		}
 	}
@@ -174,13 +174,13 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_getenv
   (JNIEnv *env, jobject inst, jstring key) {
 	if (key == NULL) {
-		throwNullPointerException(env, "key");
+		jthrowCC_NullPointerException_1(env, "key");
 		return NULL;
 	}
 
 	const char* keyP = (*env)->GetStringUTFChars(env, key, NULL);
 	if (keyP == NULL) {
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return NULL;
 	}
 
@@ -194,7 +194,7 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		const char * copy = (const char*) strdup(res);
 		(*env)->ReleaseStringUTFChars(env, key, keyP);
 		if (copy == NULL) {
-			throwOOM(env, "strdup");
+			jthrowCC_OutOfMemoryError_1(env, "strdup");
 			return NULL;
 		}
 
@@ -216,13 +216,13 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_unsetenv
   (JNIEnv *env, jobject inst, jstring key) {
 	if (key == NULL) {
-		throwNullPointerException(env, "key");
+		jthrowCC_NullPointerException_1(env, "key");
 		return;
 	}
 
 	const char* keyP = (*env)->GetStringUTFChars(env, key, NULL);
 	if (keyP == NULL) {
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return;
 	}
 
@@ -238,11 +238,11 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 
 	switch(err) {
 		case(EINVAL): {
-			throwIllegalArgumentsExc(env, "key contains = or is empty string");
+			jthrowCC_IllegalArgumentException_1(env, "key contains = or is empty string");
 			return;
 		}
 		default: {
-			throwUnknownError(env, err);
+			jthrow_UnknownNativeErrorException_1(env, err);
 			return;
 		}
 	}

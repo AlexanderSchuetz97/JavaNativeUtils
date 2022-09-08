@@ -6,7 +6,7 @@
 
     <groupId>io.github.alexanderschuetz97</groupId>
     <artifactId>JavaNativeUtils</artifactId>
-    <version>1.7</version>
+    <version>2.0</version>
     <packaging>bundle</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -70,33 +70,215 @@
                     </instructions>
                 </configuration>
             </plugin>
-            <!--
             <plugin>
                 <groupId>io.github.alexanderschuetz97</groupId>
-                <artifactId>jni-stub-generator-maven-plugin</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <artifactId>jnigenerator</artifactId>
+                <version>1.0</version>
                 <executions>
                     <execution>
                         <id>stub</id>
                         <phase>process-classes</phase>
                         <configuration>
                             <structs>
-                                <struct>io.github.alexanderschuetz97.nativeutils.api.structs.IpAdapterAddresses</struct>
-                                <struct>io.github.alexanderschuetz97.nativeutils.api.structs.IpAdapterAddresses$IpAdapterUnicastAddress</struct>
-                                <struct>io.github.alexanderschuetz97.nativeutils.api.structs.GUID</struct>
-                                <struct>io.github.alexanderschuetz97.nativeutils.api.structs.Sockaddr</struct>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.IpAdapterAddresses</classname>
+                                </struct>
+                                <struct>
+                                    <classname>java.net.InetSocketAddress</classname>
+                                    <onlyPublic>true</onlyPublic>
+                                </struct>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.Msghdr</classname>
+                                </struct>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.Cmsghdr</classname>
+                                </struct>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.Iovec</classname>
+                                </struct>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.IpAdapterAddresses$IpAdapterUnicastAddress</classname>
+                                </struct>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.GUID</classname>
+                                </struct>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.Sockaddr</classname>
+                                </struct>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.PollFD</classname>
+                                </struct>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.PollFD$PollEvent</classname>
+                                </struct>
+                                <struct>
+                                    <classname>java.net.InetAddress</classname>
+                                    <onlyPublic>true</onlyPublic>
+                                </struct>
+                                <struct>
+                                    <classname>java.util.Iterator</classname>
+                                    <filters>
+                                        <filter>forEachRemaining(Ljava/util/function/Consumer;)V</filter>
+                                    </filters>
+                                </struct>
+                                <struct>
+                                    <classname>java.util.Collection</classname>
+                                    <filters>
+                                        <filter>forEach(Ljava/util/function/Consumer;)V</filter>
+                                        <filter>spliterator()Ljava/util/Spliterator;</filter>
+                                        <filter>stream()Ljava/util/stream/Stream;</filter>
+                                        <filter>parallelStream()Ljava/util/stream/Stream;</filter>
+                                        <filter>removeIf(Ljava/util/function/Predicate;)Z</filter>
+                                        <filter>replaceAll(Ljava/util/function/UnaryOperator;)V</filter>
+                                        <filter>sort(Ljava/util/Comparator;)V</filter>
+                                    </filters>
+                                </struct>
+                                <struct>
+                                    <classname>java.lang.Iterable</classname>
+                                    <filters>
+                                        <filter>forEach(Ljava/util/function/Consumer;)V</filter>
+                                        <filter>spliterator()Ljava/util/Spliterator;</filter>
+                                    </filters>
+                                </struct>
+                                <struct>
+                                    <classname>java.util.ArrayList</classname>
+                                    <filters>
+                                        <filter>forEach(Ljava/util/function/Consumer;)V</filter>
+                                        <filter>removeIf(Ljava/util/function/Predicate;)Z</filter>
+                                        <filter>replaceAll(Ljava/util/function/UnaryOperator;)V</filter>
+                                        <filter>sort(Ljava/util/Comparator;)V</filter>
+                                        <filter>spliterator()Ljava/util/Spliterator;</filter>
+                                    </filters>
+                                    <onlyPublic>true</onlyPublic>
+                                </struct>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.Utsname</classname>
+                                </struct>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.Stat</classname>
+                                </struct>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.GUID</classname>
+                                </struct>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.Win32FileAttributeData</classname>
+                                </struct>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.Sockaddr</classname>
+                                </struct>
                             </structs>
-                            <headerOutput>src/main/native/common/jstub.h</headerOutput>
-                            <implOutput>src/main/native/common/jstub.c</implOutput>
-                            <headerInclude>#include &quot;jstub.h&quot;</headerInclude>
+                            <exceptions>
+                                <exception>
+                                    <classname>java.io.IOException</classname>
+                                    <onlyPublic>true</onlyPublic>
+                                </exception>
+                                <exception>
+                                    <classname>java.lang.Exception</classname>
+                                    <onlyPublic>true</onlyPublic>
+                                </exception>
+                                <exception>
+                                    <classname>java.lang.IllegalArgumentException</classname>
+                                    <onlyPublic>true</onlyPublic>
+                                </exception>
+                                <exception>
+                                    <classname>java.lang.NullPointerException</classname>
+                                    <onlyPublic>true</onlyPublic>
+                                </exception>
+                                <exception>
+                                    <classname>java.lang.OutOfMemoryError</classname>
+                                    <onlyPublic>true</onlyPublic>
+                                </exception>
+                                <exception>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException</classname>
+                                </exception>
+                                <exception>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.exceptions.ShellExecuteException</classname>
+                                </exception>
+                                <exception>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.exceptions.InvalidFileDescriptorException</classname>
+                                </exception>
+                                <exception>
+                                    <classname>java.nio.file.AccessDeniedException</classname>
+                                    <onlyPublic>true</onlyPublic>
+                                </exception>
+                                <exception>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.exceptions.QuotaExceededException</classname>
+                                </exception>
+                                <exception>
+                                    <classname>java.nio.file.FileAlreadyExistsException</classname>
+                                    <onlyPublic>true</onlyPublic>
+                                </exception>
+                                <exception>
+                                    <classname>java.nio.file.FileSystemLoopException</classname>
+                                    <onlyPublic>true</onlyPublic>
+                                </exception>
+                                <exception>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.exceptions.PermissionDeniedException</classname>
+                                </exception>
+                                <exception>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.exceptions.SharingViolationException</classname>
+                                </exception>
+                                <exception>
+                                    <classname>java.nio.file.NotLinkException</classname>
+                                    <onlyPublic>true</onlyPublic>
+                                </exception>
+                                <exception>
+                                    <classname>java.nio.file.ReadOnlyFileSystemException</classname>
+                                    <onlyPublic>true</onlyPublic>
+                                </exception>
+                                <exception>
+                                    <classname>java.net.BindException</classname>
+                                    <onlyPublic>true</onlyPublic>
+                                </exception>
+                                <exception>
+                                    <classname>java.net.ConnectException</classname>
+                                    <onlyPublic>true</onlyPublic>
+                                </exception>
+                                <exception>
+                                    <classname>java.nio.file.InvalidPathException</classname>
+                                    <onlyPublic>true</onlyPublic>
+                                </exception>
+                                <exception>
+                                    <classname>java.nio.file.NotDirectoryException</classname>
+                                    <onlyPublic>true</onlyPublic>
+                                </exception>
+                                <exception>
+                                    <classname>java.nio.file.AccessDeniedException</classname>
+                                    <onlyPublic>true</onlyPublic>
+                                </exception>
+                                <exception>
+                                    <classname>java.io.FileNotFoundException</classname>
+                                    <onlyPublic>true</onlyPublic>
+                                </exception>
+                                <exception>
+                                    <classname>java.lang.IllegalStateException</classname>
+                                    <onlyPublic>true</onlyPublic>
+                                </exception>
+                                <exception>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.exceptions.MutexAbandonedException</classname>
+                                </exception>
+                                <exception>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.exceptions.OperationInProgressException</classname>
+                                </exception>
+                                <exception>
+                                    <classname>java.lang.UnsupportedOperationException</classname>
+                                </exception>
+                            </exceptions>
+                            <headerOutput>src/main/native/common/jnigenerator.h</headerOutput>
+                            <implOutput>src/main/native/common/jnigenerator.c</implOutput>
+                            <headerInclude>#include &quot;jnigenerator.h&quot;</headerInclude>
+                            <builders>
+                                <builder>/usr/bin/env</builder>
+                                <builder>bash</builder>
+                                <builder>compile_docker_start.sh</builder>
+                            </builders>
                         </configuration>
                         <goals>
-                            <goal>stub</goal>
+                            <goal>jnigenerator</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
-            -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
@@ -142,6 +324,9 @@
                         <goals>
                             <goal>jar</goal>
                         </goals>
+                        <configuration>
+                            <additionalparam>-Xdoclint:none</additionalparam>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -185,28 +370,6 @@
                     <target>7</target>
                 </configuration>
             </plugin>
-
-            <!-- Compile native c code -->
-            <plugin>
-                <artifactId>exec-maven-plugin</artifactId>
-                <groupId>org.codehaus.mojo</groupId>
-                <executions>
-                    <execution>
-                        <id>Compile Natives</id>
-                        <phase>generate-sources</phase>
-                       <goals>
-                           <goal>exec</goal>
-                       </goals>
-                       <configuration>
-                           <executable>/usr/bin/env</executable>
-                           <arguments>
-                               <argument>bash</argument>
-                               <argument>${basedir}/compile_docker_start.sh</argument>
-                           </arguments>
-                       </configuration>
-                   </execution>
-               </executions>
-           </plugin>
        </plugins>
    </build>
 </project>

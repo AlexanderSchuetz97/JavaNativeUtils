@@ -62,7 +62,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_lseek
   (JNIEnv * env, jobject inst, jint fd, jlong off, jobject jwhence) {
 	int whence;
-	int ordinal = getEnumOrdinal(env, jwhence);
+	int ordinal = jenum_ordinal(env, jwhence);
 	switch(ordinal) {
 	case(0):
 			whence = SEEK_SET;
@@ -74,7 +74,7 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILi
 			whence = SEEK_END;
 			break;
 	default:
-		throwIllegalArgumentsExc(env, "whence");
+		jthrowCC_IllegalArgumentException_1(env, "whence");
 		return -1;
 	}
 
@@ -84,16 +84,16 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILi
 		switch(err) {
 		case(ESPIPE):
 		case(EBADF):
-			throwBadFileDescriptor(env);
+			jthrow_InvalidFileDescriptorException(env);
 			return -1;
 		case(EINVAL):
-			throwIOExc(env, "the resulting file offset would be negative, or beyond the end of a seekable device.");
+			jthrowCC_IOException_1(env, "the resulting file offset would be negative, or beyond the end of a seekable device.");
 			return -1;
 		case(EOVERFLOW):
-			throwIOExc(env, "The resulting file offset cannot be represented in a 64 bit number");
+			jthrowCC_IOException_1(env, "The resulting file offset cannot be represented in a 64 bit number");
 			return -1;
 		default:
-			throwUnknownError(env, err);
+			jthrow_UnknownNativeErrorException_1(env, err);
 			return -1;
 		}
 	}
@@ -110,7 +110,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	(JNIEnv * env, jobject inst, jstring path, jint flags) {
 	const char * ptr = (*env)->GetStringUTFChars(env, path, NULL);
 	if (ptr == NULL) {
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return -1;
 	}
 
@@ -121,73 +121,73 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 			int err = errno;
 			switch(err) {
 				case(EACCES):
-					throwFSAccessDenied(env, ptr, NULL, NULL);
+					jthrowCC_AccessDeniedException_1(env, ptr, NULL, NULL);
 				break;
 				case(EBUSY):
-					throwFSAccessDenied(env, ptr, NULL, "exclusive access not possible");
+					jthrowCC_AccessDeniedException_1(env, ptr, NULL, "exclusive access not possible");
 				break;
 				case(EDQUOT):
-					throwQuotaExceededException(env, ptr, NULL, NULL);
+					jthrowCC_QuotaExceededException_1(env, ptr, NULL, NULL);
 				break;
 				case(EEXIST):
-					throwFileAlreadyExistsExc(env, ptr, NULL, NULL);
+					jthrowCC_FileAlreadyExistsException_1(env, ptr, NULL, NULL);
 				break;
 				case(EINTR):
 					continue;
 				case(EINVAL):
-					throwIllegalArgumentsExc(env, "open");
+					jthrowCC_IllegalArgumentException_1(env, "open");
 				break;
 				case(EISDIR):
 					//TODO
-					throwIOExc(env, "path refers to a directory");
+					jthrowCC_IOException_1(env, "path refers to a directory");
 				break;
 				case(ELOOP):
-					throwFSLoop(env, ptr);
+					jthrowCC_FileSystemLoopException(env, ptr);
 				break;
 				case(EMFILE):
-					throwQuotaExceededException(env, ptr, NULL, "per process limit of open files exceeded");
+					jthrowCC_QuotaExceededException_1(env, ptr, NULL, "per process limit of open files exceeded");
 				break;
 				case(ENAMETOOLONG):
-					throwInvalidPath(env, ptr, "path too long");
+					jthrowCC_InvalidPathException(env, ptr, "path too long");
 				break;
 				case(ENFILE):
-					throwQuotaExceededException(env, ptr, NULL, "The system-wide limit on the total number of open files has been reached.");
+					jthrowCC_QuotaExceededException_1(env, ptr, NULL, "The system-wide limit on the total number of open files has been reached.");
 				break;
 				case(ENOENT):
-					throwFileNotFoundExc(env, ptr);
+					jthrowCC_FileNotFoundException_1(env, ptr);
 				break;
 				case(ENOMEM):
-					throwOOM(env, "pipe or kernel");
+					jthrowCC_OutOfMemoryError_1(env, "pipe or kernel");
 				break;
 				case(ENOSPC):
-					throwIOExc(env, "file was to be created but the device is full");
+					jthrowCC_IOException_1(env, "file was to be created but the device is full");
 				break;
 				case(ENOTDIR):
-					throwNotDirectoryException(env, ptr);
+					jthrowCC_NotDirectoryException(env, ptr);
 				break;
 				case(ENXIO):
-					throwIOExc(env, "ENXIO");
+					jthrowCC_IOException_1(env, "ENXIO");
 				break;
 				case(EOPNOTSUPP):
-					throwIOExc(env, "The filesystem containing pathname does not support O_TMPFILE.");
+					jthrowCC_IOException_1(env, "The filesystem containing pathname does not support O_TMPFILE.");
 				break;
 				case(EOVERFLOW):
-					throwIOExc(env, "The file is too large to be opened");
+					jthrowCC_IOException_1(env, "The file is too large to be opened");
 				break;
 				case(EPERM):
-					throwFSAccessDenied(env, ptr, NULL, "The operation was prevented by a file seal");
+					jthrowCC_AccessDeniedException_1(env, ptr, NULL, "The operation was prevented by a file seal");
 				break;
 				case(EROFS):
-					throwFSReadOnly(env);
+					jthrow_ReadOnlyFileSystemException(env);
 				break;
 				case(ETXTBSY):
-					throwFSAccessDenied(env, ptr, NULL, "write access to a executable, swap or kernel firmware file was requested");
+					jthrowCC_AccessDeniedException_1(env, ptr, NULL, "write access to a executable, swap or kernel firmware file was requested");
 				break;
 				case(EWOULDBLOCK):
 					(*env)->ReleaseStringUTFChars(env, path, ptr);
 					return -1;
 				default:
-					throwUnknownError(env, err);
+					jthrow_UnknownNativeErrorException_1(env, err);
 				break;
 			}
 			(*env)->ReleaseStringUTFChars(env, path, ptr);
@@ -209,7 +209,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
   (JNIEnv * env, jobject inst, jstring path, jint flags, jint mode) {
 	const char * ptr = (*env)->GetStringUTFChars(env, path, NULL);
 	if (ptr == NULL) {
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return -1;
 	}
 
@@ -220,73 +220,73 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 			int err = errno;
 			switch(err) {
 				case(EACCES):
-					throwFSAccessDenied(env, ptr, NULL, NULL);
+					jthrowCC_AccessDeniedException_1(env, ptr, NULL, NULL);
 				break;
 				case(EBUSY):
-					throwFSAccessDenied(env, ptr, NULL, "exclusive access not possible");
+					jthrowCC_AccessDeniedException_1(env, ptr, NULL, "exclusive access not possible");
 				break;
 				case(EDQUOT):
-					throwQuotaExceededException(env, ptr, NULL, NULL);
+					jthrowCC_QuotaExceededException_1(env, ptr, NULL, NULL);
 				break;
 				case(EEXIST):
-					throwFileAlreadyExistsExc(env, ptr, NULL, NULL);
+					jthrowCC_FileAlreadyExistsException_1(env, ptr, NULL, NULL);
 				break;
 				case(EINTR):
 					continue;
 				case(EINVAL):
-					throwIllegalArgumentsExc(env, "open");
+					jthrowCC_IllegalArgumentException_1(env, "open");
 				break;
 				case(EISDIR):
 					//TODO
-					throwIOExc(env, "path refers to a directory");
+					jthrowC_IOException_1(env, "path refers to a directory");
 				break;
 				case(ELOOP):
-					throwFSLoop(env, ptr);
+					jthrowCC_FileSystemLoopException(env, ptr);
 				break;
 				case(EMFILE):
-					throwQuotaExceededException(env, ptr, NULL, "per process limit of open files exceeded");
+					jthrowCC_QuotaExceededException_1(env, ptr, NULL, "per process limit of open files exceeded");
 				break;
 				case(ENAMETOOLONG):
-					throwInvalidPath(env, ptr, "path too long");
+					jthrowCC_InvalidPathException(env, ptr, "path too long");
 				break;
 				case(ENFILE):
-					throwQuotaExceededException(env, ptr, NULL, "The system-wide limit on the total number of open files has been reached.");
+					jthrowCC_QuotaExceededException_1(env, ptr, NULL, "The system-wide limit on the total number of open files has been reached.");
 				break;
 				case(ENOENT):
-					throwFileNotFoundExc(env, ptr);
+					jthrowCC_FileNotFoundException_1(env, ptr);
 				break;
 				case(ENOMEM):
-					throwOOM(env, "pipe or kernel");
+					jthrowCC_OutOfMemoryError_1(env, "pipe or kernel");
 				break;
 				case(ENOSPC):
-					throwIOExc(env, "file was to be created but the device is full");
+					jthrowC_IOException_1(env, "file was to be created but the device is full");
 				break;
 				case(ENOTDIR):
-					throwNotDirectoryException(env, ptr);
+					jthrowCC_NotDirectoryException(env, ptr);
 				break;
 				case(ENXIO):
-					throwIOExc(env, "ENXIO");
+					jthrowC_IOException_1(env, "ENXIO");
 				break;
 				case(EOPNOTSUPP):
-					throwIOExc(env, "The filesystem containing pathname does not support O_TMPFILE.");
+					jthrowC_IOException_1(env, "The filesystem containing pathname does not support O_TMPFILE.");
 				break;
 				case(EOVERFLOW):
-					throwIOExc(env, "The file is too large to be opened");
+					jthrowC_IOException_1(env, "The file is too large to be opened");
 				break;
 				case(EPERM):
-					throwFSAccessDenied(env, ptr, NULL, "The operation was prevented by a file seal");
+					jthrowCC_AccessDeniedException_1(env, ptr, NULL, "The operation was prevented by a file seal");
 				break;
 				case(EROFS):
-					throwFSReadOnly(env);
+					jthrow_ReadOnlyFileSystemException(env);
 				break;
 				case(ETXTBSY):
-					throwFSAccessDenied(env, ptr, NULL, "write access to a executable, swap or kernel firmware file was requested");
+					jthrowCC_AccessDeniedException_1(env, ptr, NULL, "write access to a executable, swap or kernel firmware file was requested");
 				break;
 				case(EWOULDBLOCK):
 					(*env)->ReleaseStringUTFChars(env, path, ptr);
 					return -1;
 				default:
-					throwUnknownError(env, err);
+					jthrow_UnknownNativeErrorException_1(env, err);
 				break;
 			}
 			(*env)->ReleaseStringUTFChars(env, path, ptr);
@@ -317,78 +317,88 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 		int err = errno;
 		switch(err) {
 		case(EBADF):
-			throwBadFileDescriptor(env);
+			jthrow_InvalidFileDescriptorException(env);
 			return;
 		case(EINTR):
 			continue;
 		case(EIO):
-			throwIOExc(env, "Failed to close file descriptor");
+			jthrowC_IOException_1(env, "Failed to close file descriptor");
 			return;
 		}
 	}
 }
 
 void fromPollEvent(JNIEnv * env, jobject set, int revent) {
-	if (((revent & POLLIN) == POLLIN) && PollFD_PollEvent_values_size >= 0) {
-		collection_add(env, set, PollFD_PollEvent_values[0]);
+	jsize count = jenum_PollFD$PollEvent_count();
+
+	if (((revent & POLLIN) == POLLIN) && count >= 0) {
+		jcall_Collection_add(env, set, jenum_PollFD$PollEvent_values()[0]);
 	}
 
-	if (((revent & POLLPRI) == POLLPRI) && PollFD_PollEvent_values_size >= 1) {
-		collection_add(env, set, PollFD_PollEvent_values[1]);
+	if (((revent & POLLPRI) == POLLPRI) && count >= 1) {
+		jcall_Collection_add(env, set, jenum_PollFD$PollEvent_values()[1]);
 	}
 
-	if (((revent & POLLOUT) == POLLOUT) && PollFD_PollEvent_values_size >= 2) {
-
-		collection_add(env, set, PollFD_PollEvent_values[2]);
+	if (((revent & POLLOUT) == POLLOUT) && count >= 2) {
+		jcall_Collection_add(env, set, jenum_PollFD$PollEvent_values()[2]);
 	}
 
-	if (((revent & POLLRDNORM) == POLLRDNORM) && PollFD_PollEvent_values_size >= 3) {
-		collection_add(env, set, PollFD_PollEvent_values[3]);
+	if (((revent & POLLRDNORM) == POLLRDNORM) && count >= 3) {
+		jcall_Collection_add(env, set, jenum_PollFD$PollEvent_values()[3]);
 	}
 
-	if (((revent & POLLRDBAND) == POLLRDBAND) && PollFD_PollEvent_values_size >= 4) {
-		collection_add(env, set, PollFD_PollEvent_values[4]);
+	if (((revent & POLLRDBAND) == POLLRDBAND) && count >= 4) {
+		jcall_Collection_add(env, set, jenum_PollFD$PollEvent_values()[4]);
 	}
 
-	if (((revent & POLLWRNORM) == POLLWRNORM) && PollFD_PollEvent_values_size >= 5) {
-		collection_add(env, set, PollFD_PollEvent_values[5]);
+	if (((revent & POLLWRNORM) == POLLWRNORM) && count >= 5) {
+		jcall_Collection_add(env, set, jenum_PollFD$PollEvent_values()[5]);
 	}
 
-	if (((revent & POLLWRBAND) == POLLWRBAND) && PollFD_PollEvent_values_size >= 6) {
-		collection_add(env, set, PollFD_PollEvent_values[6]);
+	if (((revent & POLLWRBAND) == POLLWRBAND) && count >= 6) {
+		jcall_Collection_add(env, set, jenum_PollFD$PollEvent_values()[6]);
 	}
 
-	if (((revent & POLLMSG) == POLLMSG) && PollFD_PollEvent_values_size >= 7) {
-		collection_add(env, set, PollFD_PollEvent_values[7]);
+	if (((revent & POLLMSG) == POLLMSG) && count >= 7) {
+		jcall_Collection_add(env, set, jenum_PollFD$PollEvent_values()[7]);
 	}
 
-	if (((revent & POLLREMOVE) == POLLREMOVE) && PollFD_PollEvent_values_size >= 8) {
-		collection_add(env, set, PollFD_PollEvent_values[8]);
+	if (((revent & POLLREMOVE) == POLLREMOVE) && count >= 8) {
+		jcall_Collection_add(env, set, jenum_PollFD$PollEvent_values()[8]);
 	}
 
-	if (((revent & POLLRDHUP) == POLLRDHUP) && PollFD_PollEvent_values_size >= 9) {
-		collection_add(env, set, PollFD_PollEvent_values[9]);
+	if (((revent & POLLRDHUP) == POLLRDHUP) && count >= 9) {
+		jcall_Collection_add(env, set, jenum_PollFD$PollEvent_values()[9]);
 	}
 
-	if (((revent & POLLERR) == POLLERR) && PollFD_PollEvent_values_size >= 10) {
-		collection_add(env, set, PollFD_PollEvent_values[10]);
+	if (((revent & POLLERR) == POLLERR) && count >= 10) {
+		jcall_Collection_add(env, set, jenum_PollFD$PollEvent_values()[10]);
 	}
 
-	if (((revent & POLLHUP) == POLLHUP) && PollFD_PollEvent_values_size >= 11) {
-		collection_add(env, set, PollFD_PollEvent_values[11]);
+	if (((revent & POLLHUP) == POLLHUP) && count >= 11) {
+		jcall_Collection_add(env, set, jenum_PollFD$PollEvent_values()[11]);
 	}
 
-	if (((revent & POLLNVAL) == POLLNVAL) && PollFD_PollEvent_values_size >= 12) {
-		collection_add(env, set, PollFD_PollEvent_values[12]);
+	if (((revent & POLLNVAL) == POLLNVAL) && count >= 12) {
+		jcall_Collection_add(env, set, jenum_PollFD$PollEvent_values()[12]);
 	}
 }
 
 int toPollEvent(JNIEnv * env, jobject eventSet) {
 	int event = 0;
 
-	jobject iter = new_iterator(env, eventSet);
-	for (jobject ele = iterator_next(env, iter); ele != NULL; ele = iterator_next(env, iter)) {
-		switch(getEnumOrdinal(env, ele)) {
+	jobject iter = jcall_Iterable_iterator(env, eventSet);
+	if (iter == NULL) {
+		return 0;
+	}
+
+	while(jcall_Iterator_hasNext(env, iter)) {
+		jobject ele = jcall_Iterator_next(env, iter);
+		if (ele == NULL) {
+			return event;
+		}
+
+		switch(jenum_ordinal(env, ele)) {
 		case(0):
 			event |= POLLIN;
 			break;
@@ -433,6 +443,8 @@ int toPollEvent(JNIEnv * env, jobject eventSet) {
 		}
 	}
 
+
+
 	return event;
 }
 
@@ -444,7 +456,7 @@ int toPollEvent(JNIEnv * env, jobject eventSet) {
 JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_poll
   (JNIEnv * env, jobject inst, jobjectArray fds, jint timeout) {
 	if (fds == NULL) {
-		throwIllegalArgumentsExc(env, "PollFD[] is null");
+		jthrowCC_IllegalArgumentException_1(env, "PollFD[] is null");
 		return -1;
 	}
 
@@ -455,18 +467,19 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	for (jsize i = 0; i < len; i++) {
 		jobject ele = (*env) ->GetObjectArrayElement(env, fds, i);
 		if (ele == NULL) {
-			throwIllegalArgumentsExc(env, "PollFD[] contains null elements");
+			jthrowCC_IllegalArgumentException_1(env, "PollFD[] contains null elements");
 			return -1;
 		}
 
-		jobject enumSet = (*env)->GetObjectField(env, ele, PollFD_events);
+
+		jobject enumSet = jget_PollFD_events(env, inst);
 		if (enumSet == NULL) {
 			(*env)->DeleteLocalRef(env, ele);
-			throwIllegalArgumentsExc(env, "PollFD[] contains an element with null eventSet in 'events' field");
+			jthrowCC_IllegalArgumentException_1(env, "PollFD[] contains an element with null eventSet in 'events' field");
 			return -1;
 		}
 
-		pollfds[i].fd = (*env)->GetIntField(env, ele, PollFD_fd);
+		pollfds[i].fd = jget_PollFD_fd(env, ele);
 		pollfds[i].events = toPollEvent(env, enumSet);
 		pollfds[i].revents = 0;
 		(*env)->DeleteLocalRef(env, ele);
@@ -490,13 +503,13 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 			case(EINTR):
 				continue;
 			case(EINVAL):
-				throwIllegalArgumentsExc(env, "too many file descriptors for poll");
+				jthrowCC_IllegalArgumentException_1(env, "too many file descriptors for poll");
 				return -1;
 			case(ENOMEM):
-				throwOOM(env, "Kernel Memory");
+				jthrowCC_OutOfMemoryError_1(env, "Kernel Memory");
 				return -1;
 			default:
-				throwUnknownError(env, err);
+				jthrow_UnknownNativeErrorException_1(env, err);
 				return -1;
 		}
 	}
@@ -504,18 +517,18 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	for (jsize i = 0; i < len; i++) {
 		jobject ele = (*env) ->GetObjectArrayElement(env, fds, i);
 		if (ele == NULL) {
-			throwIllegalArgumentsExc(env, "PollFD[] contains null elements");
+			jthrowCC_IllegalArgumentException_1(env, "PollFD[] contains null elements");
 			return -1;
 		}
 
-		jobject enumSet = (*env)->GetObjectField(env, ele, PollFD_revents);
+		jobject enumSet = jget_PollFD_revents(env, ele);
 		if (enumSet == NULL) {
 			(*env)->DeleteLocalRef(env, ele);
-			throwIllegalArgumentsExc(env, "PollFD[] contains an element with null eventSet in 'revents' field");
+			jthrowCC_IllegalArgumentException_1(env, "PollFD[] contains an element with null eventSet in 'revents' field");
 			return -1;
 		}
 
-		collection_clear(env, enumSet);
+		jcall_Collection_clear(env, enumSet);
 		fromPollEvent(env, enumSet, pollfds[i].revents);
 
 		(*env)->DeleteLocalRef(env, ele);
@@ -534,19 +547,19 @@ jint handle_read_error(JNIEnv * env, int err) {
 		case(EAGAIN):
 			return 0;
 		case(EBADF):
-			throwBadFileDescriptor(env);
+			jthrow_InvalidFileDescriptorException(env);
 			return -1;
 		case EINVAL:
-			throwIllegalArgumentsExc(env, "file descriptor is unsuitable for reading or buffer size does not match the required buffer size");
+			jthrowCC_IllegalArgumentException_1(env, "file descriptor is unsuitable for reading or buffer size does not match the required buffer size");
 			return -1;
 		case EIO:
-			throwIOExc(env, "I/O error");
+			jthrowC_IOException_1(env, "I/O error");
 			return -1;
 		case EISDIR:
-			throwIllegalArgumentsExc(env, "file descriptor refers to a directory");
+			jthrowCC_IllegalArgumentException_1(env, "file descriptor refers to a directory");
 			return -1;
 		default:
-			throwUnknownError(env, err);
+			jthrow_UnknownNativeErrorException_1(env, err);
 			return -1;
 	}
 }
@@ -561,12 +574,12 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
   (JNIEnv * env, jobject inst, jint fd, jlong ptr, jint len) {
 	void * buf = (void *) (uintptr_t) ptr;
 	if (buf == NULL) {
-		throwNullPointerException(env, "buffer");
+		jthrowCC_NullPointerException_1(env, "buffer");
 		return -1;
 	}
 
 	if (len < 0) {
-		throwIllegalArgumentsExc(env, "length");
+		jthrowCC_IllegalArgumentException_1(env, "length");
 		return -1;
 	}
 
@@ -597,20 +610,20 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_read__I_3BII
   (JNIEnv * env, jobject inst, jint fd, jbyteArray jbuf, jint off, jint len) {
 	if (jbuf == NULL) {
-		throwNullPointerException(env, "buffer");
+		jthrowCC_NullPointerException_1(env, "buffer");
 		return -1;
 	}
 
 	jsize alen = (*env)->GetArrayLength(env, jbuf);
 
 	if (off < 0 || len < 0 || len+off > alen) {
-		throwIllegalArgumentsExc(env, "offset+lengths");
+		jthrowCC_IllegalArgumentException_1(env, "offset+lengths");
 		return -1;
 	}
 
 	void* data = (*env)->GetByteArrayElements(env, jbuf, NULL);
 	if (data == NULL) {
-		throwOOM(env, "GetByteArrayElements");
+		jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 		return -1;
 	}
 
@@ -648,37 +661,37 @@ jint handle_write_error(JNIEnv * env, int err) {
 		case(EAGAIN):
 			return 0;
 		case(EBADF):
-			throwBadFileDescriptor(env);
+			jthrow_InvalidFileDescriptorException(env);
 			return -1;
 		case(EDESTADDRREQ):
-			throwIllegalStateException(env, "file descriptor refers to a datagram socket for which a peer address has not been set using connect.");
+			jthrowCC_IllegalStateException_1(env, "file descriptor refers to a datagram socket for which a peer address has not been set using connect.");
 			return -1;
 		case(EDQUOT):
-			throwQuotaExceededException(env, NULL, NULL, "The user's quota of disk blocks on the filesystem containing the file referred to by the file descriptor has been exhausted.");
+			jthrowCC_QuotaExceededException_1(env, NULL, NULL, "The user's quota of disk blocks on the filesystem containing the file referred to by the file descriptor has been exhausted.");
 			return -1;
 		case(EFBIG):
-			throwIOExc(env, "An attempt was made to write a file that exceeds the implementation-defined maximum file size or the process's file size limit, or to write at a position past the maximum allowed offset.");
+			jthrowC_IOException_1(env, "An attempt was made to write a file that exceeds the implementation-defined maximum file size or the process's file size limit, or to write at a position past the maximum allowed offset.");
 			return -1;
 		case EINVAL:
-			throwIllegalArgumentsExc(env, "file descriptor is unsuitable for writing or the file/buffer position/length is not properly aligned.");
+			jthrowCC_IllegalArgumentException_1(env, "file descriptor is unsuitable for writing or the file/buffer position/length is not properly aligned.");
 			return -1;
 		case EIO:
-			throwIOExc(env, "I/O error");
+			jthrowC_IOException_1(env, "I/O error");
 			return -1;
 		case EPERM:
-			throwFSAccessDenied(env, NULL, NULL, "Operation was prevented by a file seal");
+			jthrowCC_AccessDeniedException_1(env, NULL, NULL, "Operation was prevented by a file seal");
 			return -1;
 		case EPIPE:
-			throwIOExc(env, "Broken pipe");
+			jthrowC_IOException_1(env, "Broken pipe");
 			return -1;
 		case ENOSPC:
-			throwIOExc(env, "The device containing the file referred to by fd has no room for the data.");
+			jthrowC_IOException_1(env, "The device containing the file referred to by fd has no room for the data.");
 			return -1;
 		case EISDIR:
-			throwIllegalArgumentsExc(env, "file descriptor refers to a directory");
+			jthrowCC_IllegalArgumentException_1(env, "file descriptor refers to a directory");
 			return -1;
 		default:
-			throwUnknownError(env, err);
+			jthrow_UnknownNativeErrorException_1(env, err);
 			return -1;
 	}
 }
@@ -693,12 +706,12 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
   (JNIEnv * env, jobject inst, jint fd, jlong jptr, jint len) {
 	void *buf = (void*) (uintptr_t) jptr;
 	if (buf == NULL) {
-		throwNullPointerException(env, "buffer");
+		jthrowCC_NullPointerException_1(env, "buffer");
 		return -1;
 	}
 
 	if (len < 0) {
-		throwIllegalArgumentsExc(env, "len");
+		jthrowCC_IllegalArgumentException_1(env, "len");
 		return -1;
 	}
 
@@ -727,14 +740,14 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_write__I_3BII
   (JNIEnv * env, jobject inst, jint fd, jbyteArray jbuf, jint off, jint len) {
 	if (jbuf == NULL) {
-		throwNullPointerException(env, "buffer");
+		jthrowCC_NullPointerException_1(env, "buffer");
 		return -1;
 	}
 
 	jsize alen = (*env)->GetArrayLength(env, jbuf);
 
 	if (off < 0 || len < 0 || len+off > alen) {
-		throwIllegalArgumentsExc(env, "offset+lengths");
+		jthrowCC_IllegalArgumentException_1(env, "offset+lengths");
 		return -1;
 	}
 
@@ -769,7 +782,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
   (JNIEnv * env, jclass clazz, jlong ptr, jlong size) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
 
@@ -781,11 +794,11 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 
 	int err = errno;
 	if (err == EINVAL) {
-		throwIllegalArgumentsExc(env, "alignment of size/ptr is wrong");
+		jthrowCC_IllegalArgumentException_1(env, "alignment of size/ptr is wrong");
 		return;
 	}
 
-	throwUnknownError(env, err);
+	jthrow_UnknownNativeErrorException_1(env, err);
 }
 
 /*
@@ -815,37 +828,37 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILi
 	int err = errno;
 	switch(err) {
 	case(EACCES):
-		throwIllegalStateException(env, "FD is incompatible with the requested flags.");
+		jthrowCC_IllegalStateException_1(env, "FD is incompatible with the requested flags.");
 		return -1;
 	case(EAGAIN):
-		throwIllegalArgumentsExc(env, "The file has been locked, or too much memory has been locked");
+		jthrowCC_IllegalArgumentException_1(env, "The file has been locked, or too much memory has been locked");
 		return -1;
 	case(EBADF):
-		throwBadFileDescriptor(env);
+		jthrow_InvalidFileDescriptorException(env);
 		return -1;
 	case(EINVAL):
-		throwIllegalArgumentsExc(env, "alignment of arguments is invalid");
+		jthrowCC_IllegalArgumentException_1(env, "alignment of arguments is invalid");
 		return -1;
 	case(ENFILE):
-		throwQuotaExceededException(env, NULL, NULL, "The system-wide limit on the total number of open files has been reached.");
+		jthrowCC_QuotaExceededException_1(env, NULL, NULL, "The system-wide limit on the total number of open files has been reached.");
 		return -1;
 	case(ENODEV):
-		throwUnsupportedExc(env, "The underlying filesystem of the specified file does not support memory mapping.");
+		jthrowCC_UnsupportedOperationException_1(env, "The underlying filesystem of the specified file does not support memory mapping.");
 		return -1;
 	case(ENOMEM):
-		throwOOM(env, "not enough memory to create mapping or the maximum number of memory mappings has been reached");
+		jthrowCC_OutOfMemoryError_1(env, "not enough memory to create mapping or the maximum number of memory mappings has been reached");
 		return -1;
 	case(EOVERFLOW):
-		throwOOM(env, "mapping is too large for 32bit architecture");
+		jthrowCC_OutOfMemoryError_1(env, "mapping is too large for 32bit architecture");
 		return -1;
 	case(EPERM):
-		throwFSAccessDenied(env, NULL, NULL, "The operation was prevented by a file seal or the MAP_HUGETLB was present and the process is not privileged.");
+		jthrowCC_AccessDeniedException_1(env, NULL, NULL, "The operation was prevented by a file seal or the MAP_HUGETLB was present and the process is not privileged.");
 		return -1;
 	case(ETXTBSY):
-		throwIllegalStateException(env, "MAP_DENYWRITE was set but the object specified by fd is open for writing.");
+		jthrowCC_IllegalStateException_1(env, "MAP_DENYWRITE was set but the object specified by fd is open for writing.");
 		return -1;
 	default:
-		throwUnknownError(env, err);
+		jthrow_UnknownNativeErrorException_1(env, err);
 		return -1;
 	}
 }
@@ -859,7 +872,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
   (JNIEnv * env, jclass clazz, jlong ptr, jlong off, jlong len, jboolean invalidate) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
 
@@ -878,16 +891,16 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 
 	switch(err) {
 	case(EBUSY):
-		throwFSAccessDenied(env, NULL, NULL, "cant invalidate region due to memory lock");
+		jthrowCC_AccessDeniedException_1(env, NULL, NULL, "cant invalidate region due to memory lock");
 		return;
 	case(EINVAL):
-		throwIllegalArgumentsExc(env, "ptr+off is not a multiple of PAGESIZE");
+		jthrowCC_IllegalArgumentException_1(env, "ptr+off is not a multiple of PAGESIZE");
 		return;
 	case(ENOMEM):
-		throwIllegalStateException(env, "The indicated memory (or part of it) was not mapped.");
+		jthrowCC_IllegalStateException_1(env, "The indicated memory (or part of it) was not mapped.");
 		return;
 	default:
-		throwUnknownError(env, err);
+		jthrow_UnknownNativeErrorException_1(env, err);
 		return;
 	}
 }
@@ -895,19 +908,19 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 void handle_ioctl_err(JNIEnv* env, int err) {
 	switch(err) {
 	case(EBADF):
-		throwBadFileDescriptor(env);
+		jthrow_InvalidFileDescriptorException(env);
 		return;
 	case(EFAULT):
-		throwIllegalArgumentsExc(env, "argument references an inaccessible memory area");
+		jthrowCC_IllegalArgumentException_1(env, "argument references an inaccessible memory area");
 		return;
 	case(EINVAL):
-		throwIllegalArgumentsExc(env, "request code or parameter is invalid");
+		jthrowCC_IllegalArgumentException_1(env, "request code or parameter is invalid");
 		return;
 	case(ENOTTY):
-		throwUnsupportedExc(env, "The specified request does not apply to the kind of object that the file descriptor references");
+		jthrowCC_UnsupportedOperationException_1(env, "The specified request does not apply to the kind of object that the file descriptor references");
 		return;
 	default:
-		throwUnknownError(env, err);
+		jthrow_UnknownNativeErrorException_1(env, err);
 		return;
 	}
 }
@@ -938,18 +951,18 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_ioctl__II_3BI
   (JNIEnv * env, jobject inst, jint fd, jint code, jbyteArray buf, jint off) {
 	if (buf == NULL) {
-		throwNullPointerException(env, "buf");
+		jthrowCC_NullPointerException_1(env, "buf");
 		return -1;
 	}
 
 	if (off < 0 || off >= (*env)->GetArrayLength(env, buf)) {
-		throwIllegalArgumentsExc(env, "off out of bounds");
+		jthrowCC_IllegalArgumentException_1(env, "off out of bounds");
 		return -1;
 	}
 
 	jbyte* nbuf = (*env)->GetByteArrayElements(env, buf, NULL);
 	if (nbuf == NULL) {
-		throwOOM(env, "GetByteArrayElements");
+		jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 		return -1;
 	}
 
@@ -961,7 +974,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	if (res == -1) {
 		int err = errno;
 		(*env)->ReleaseByteArrayElements(env, buf, nbuf, JNI_OK);
-		handle_ioctl_err(env, errno);
+		handle_ioctl_err(env, err);
 		return -1;
 	}
 
@@ -991,10 +1004,10 @@ void handle_fcntl_error(JNIEnv * env, int err, int code) {
 	//TODO smarter??
 	switch(err) {
 	case(EBADF):
-		throwBadFileDescriptor(env);
+		jthrow_InvalidFileDescriptorException(env);
 		return;
 	default:
-		throwUnknownError(env, err);
+		jthrow_UnknownNativeErrorException_1(env, err);
 		return;
 	}
 }
@@ -1055,18 +1068,18 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_fcntl__II_3BI
   (JNIEnv * env, jobject inst, jint fd, jint code, jbyteArray buf, jint off) {
 	if (buf == NULL) {
-		throwNullPointerException(env, "buf");
+		jthrowCC_NullPointerException_1(env, "buf");
 		return -1;
 	}
 
 	if (off < 0 || off >= (*env)->GetArrayLength(env, buf)) {
-		throwIllegalArgumentsExc(env, "off out of bounds");
+		jthrowCC_IllegalArgumentException_1(env, "off out of bounds");
 		return -1;
 	}
 
 	jbyte* nbuf = (*env)->GetByteArrayElements(env, buf, NULL);
 	if (nbuf == NULL) {
-		throwOOM(env, "GetByteArrayElements");
+		jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 		return -1;
 	}
 
@@ -1078,7 +1091,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	if (res == -1) {
 		int err = errno;
 		(*env)->ReleaseByteArrayElements(env, buf, nbuf, JNI_OK);
-		handle_fcntl_error(env, errno, code);
+		handle_fcntl_error(env, err, code);
 		return -1;
 	}
 

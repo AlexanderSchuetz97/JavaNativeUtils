@@ -43,25 +43,7 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 	return getHandle(env, fdo);
 }
 
-/*
- * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
- * Method:    GetCurrentThread
- * Signature: ()J
- */
-JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_GetCurrentThread
-  (JNIEnv * env, jobject inst) {
-	return (jlong) (uintptr_t) GetCurrentThread();
-}
 
-/*
- * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
- * Method:    GetCurrentProcess
- * Signature: ()J
- */
-JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_GetCurrentProcess
-  (JNIEnv * env, jobject inst) {
-	return (jlong) (uintptr_t) GetCurrentProcess();
-}
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
@@ -85,7 +67,7 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 		return (jlong) (uintptr_t) res;
 	}
 
-	throwUnknownError(env, GetLastError());
+	jthrow_UnknownNativeErrorException_1(env, GetLastError());
 	return (jlong) (uintptr_t) INVALID_HANDLE_VALUE;
 }
 
@@ -97,7 +79,7 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_CancelIo
   (JNIEnv * env, jobject inst, jlong handle) {
 	if (CancelIo(THDL handle) == 0) {
-		throwUnknownError(env, GetLastError());
+		jthrow_UnknownNativeErrorException_1(env, GetLastError());
 	}
 }
 
@@ -109,7 +91,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_CancelIoEx
 (JNIEnv * env, jobject inst, jlong handle, jlong overlapped) {
 	if (CancelIoEx(THDL handle, (LPOVERLAPPED) (uintptr_t) overlapped) == 0) {
-		throwUnknownError(env, GetLastError());
+		jthrow_UnknownNativeErrorException_1(env, GetLastError());
 	}
 }
 
@@ -121,6 +103,6 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_CancelSynchronousIo
   (JNIEnv * env, jobject inst, jlong handle) {
 	if (CancelSynchronousIo(THDL handle) == 0) {
-		throwUnknownError(env, GetLastError());
+		jthrow_UnknownNativeErrorException_1(env, GetLastError());
 	}
 }

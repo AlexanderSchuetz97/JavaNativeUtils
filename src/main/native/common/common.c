@@ -26,7 +26,6 @@
 #include <assert.h>
 #include <string.h>
 #include <stdlib.h>
-#include "jstub.h"
 
 //These checks have to be somewhere
 static_assert(sizeof(uintptr_t) <= sizeof(jlong), "pointer doesnt fit in jlong");
@@ -56,36 +55,18 @@ jmethodID MutexAbandonedExceptionConstructor = NULL;
 jclass IllegalArgumentException = NULL;
 jclass IllegalStateException = NULL;
 jclass oomClass = NULL;
-jclass ioExcClass = NULL;
 
 jclass UnsupportedOperationException = NULL;
 
 jclass Exception = NULL;
 
-jclass ReadOnlyFileSystemException = NULL;
-jmethodID ReadOnlyFileSystemExceptionConstructor = NULL;
-
-
-jclass FileSystemLoopException = NULL;
-jclass AccessDeniedException = NULL;
-jmethodID AccessDeniedExceptionConstructor = NULL;
-
-jclass NotLinkException;
-jmethodID NotLinkExceptionConstructor;
-
-jclass FileAlreadyExistsException = NULL;
-jmethodID FileAlreadyExistsExceptionConstructor = NULL;
 
 
 jclass InvalidPathException = NULL;
 jmethodID InvalidPathExceptionConstructor = NULL;
 
-jclass FileNotFoundException = NULL;
 
 jclass NotDirectoryException = NULL;
-
-jclass QuotaExceededException = NULL;
-jmethodID QuotaExceededExceptionConstructor = NULL;
 
 jclass Field = NULL;
 jmethodID Field_getModifier = NULL;
@@ -96,28 +77,13 @@ jclass NullPointerException = NULL;
 jclass SharingViolationException = NULL;
 jmethodID SharingViolationExceptionConstructor = NULL;
 
-jclass BindException = NULL;
-jclass ConnectException = NULL;
-jclass SocketTimeoutException = NULL;
-
 jclass InetAddress = NULL;
 jmethodID InetAddress_getAddress = NULL;
 jmethodID InetAddress_getByAddress = NULL;
 
-jclass Collection = NULL;
-jmethodID Collection_add = NULL;
-jmethodID Collection_clear = NULL;
-jmethodID Collection_size = NULL;
-jmethodID Collection_iterator = NULL;
-
-jclass ArrayList = NULL;
-jmethodID ArrayListConstructor = NULL;
-
 jclass Iterator = NULL;
 jmethodID Iterator_next = NULL;
 jmethodID Iterator_hasNext = NULL;
-
-jclass OperationInProgressException = NULL;
 
 jclass InetSocketAddress = NULL;
 jmethodID InetSocketAddressConstructor = NULL;
@@ -140,9 +106,6 @@ jclass Float = NULL;
 jfieldID Float_value = NULL;
 jclass Character = NULL;
 jfieldID Character_value = NULL;
-
-jclass PermissionDeniedException = NULL;
-jmethodID PermissionDeniedExceptionConstructor = NULL;
 
 
 /*
@@ -194,18 +157,6 @@ void delRefs(JNIEnv * env) {
 		(*env) -> DeleteGlobalRef(env, oomClass);
 	}
 
-	if (ioExcClass != NULL) {
-		(*env) -> DeleteGlobalRef(env, ioExcClass);
-	}
-
-	if (FileSystemLoopException != NULL) {
-		(*env) -> DeleteGlobalRef(env, FileSystemLoopException);
-	}
-
-	if (AccessDeniedException != NULL) {
-		(*env) -> DeleteGlobalRef(env, AccessDeniedException);
-	}
-
 	if (InvalidPathException != NULL) {
 		(*env) -> DeleteGlobalRef(env, InvalidPathException);
 	}
@@ -214,33 +165,12 @@ void delRefs(JNIEnv * env) {
 		(*env) -> DeleteGlobalRef(env, UnsupportedOperationException);
 	}
 
-
-	if (ReadOnlyFileSystemException != NULL) {
-		(*env) -> DeleteGlobalRef(env, ReadOnlyFileSystemException);
-	}
-
 	if (Exception != NULL) {
 		(*env) -> DeleteGlobalRef(env, Exception);
 	}
 
-	if (StatClass != NULL) {
-		(*env) -> DeleteGlobalRef(env, StatClass);
-	}
-
-	if (FileNotFoundException != NULL) {
-		(*env) -> DeleteGlobalRef(env, FileNotFoundException);
-	}
-
-	if (Win32FileAttributeData != NULL) {
-		(*env) -> DeleteGlobalRef(env, Win32FileAttributeData);
-	}
-
 	if (NotDirectoryException != NULL) {
 		(*env) -> DeleteGlobalRef(env, NotDirectoryException);
-	}
-
-	if (QuotaExceededException != NULL) {
-		(*env) -> DeleteGlobalRef(env, QuotaExceededException);
 	}
 
 	if (Field != NULL) {
@@ -255,40 +185,12 @@ void delRefs(JNIEnv * env) {
 		(*env) -> DeleteGlobalRef(env, SharingViolationException);
 	}
 
-	if (BindException != NULL) {
-		(*env) -> DeleteGlobalRef(env, BindException);
-	}
-
-	if (ConnectException != NULL) {
-		(*env) -> DeleteGlobalRef(env, ConnectException);
-	}
-
-	if (SocketTimeoutException != NULL) {
-		(*env) -> DeleteGlobalRef(env, SocketTimeoutException);
-	}
-
 	if (InetAddress != NULL) {
 		(*env) -> DeleteGlobalRef(env, InetAddress);
 	}
 
-	if (Collection != NULL) {
-		(*env) -> DeleteGlobalRef(env, Collection);
-	}
-
 	if (Iterator != NULL) {
 		(*env) -> DeleteGlobalRef(env, Iterator);
-	}
-
-	if (PollFD != NULL) {
-		(*env) -> DeleteGlobalRef(env, PollFD);
-	}
-
-	if (PollFD_PollEvent_values != NULL) {
-		for (int i = 0; i < PollFD_PollEvent_values_size; i++) {
-			(*env) -> DeleteGlobalRef(env, PollFD_PollEvent_values[i]);
-		}
-
-		free(PollFD_PollEvent_values);
 	}
 
 	if (RegData_types != NULL) {
@@ -301,36 +203,12 @@ void delRefs(JNIEnv * env) {
 
 	RegData_types = NULL;
 
-	if (OperationInProgressException != NULL) {
-		(*env)->DeleteGlobalRef(env, OperationInProgressException);
-	}
-
 	if (InetSocketAddress != NULL) {
 		(*env)->DeleteGlobalRef(env, InetSocketAddress);
 	}
 
-	if (Sockaddr != NULL) {
-		(*env)->DeleteGlobalRef(env, Sockaddr);
-	}
-
-	if (Msghdr != NULL) {
-		(*env)->DeleteGlobalRef(env, Msghdr);
-	}
-
-	if (Iovec != NULL) {
-		(*env)->DeleteGlobalRef(env, Iovec);
-	}
-
-	if (ArrayList != NULL) {
-		(*env)->DeleteGlobalRef(env, ArrayList);
-	}
-
 	if (Cmsghdr != NULL) {
 		(*env)->DeleteGlobalRef(env, Cmsghdr);
-	}
-
-	if (GUID_Class != NULL) {
-		(*env)->DeleteGlobalRef(env, GUID_Class);
 	}
 
 	if (SpDeviceInfoData != NULL) {
@@ -377,18 +255,6 @@ void delRefs(JNIEnv * env) {
 		(*env)->DeleteGlobalRef(env, Character);
 	}
 
-	if (Utsname != NULL) {
-		(*env)->DeleteGlobalRef(env, Utsname);
-	}
-
-	if (NotLinkException != NULL) {
-		(*env)->DeleteGlobalRef(env, NotLinkException);
-	}
-
-	if (PermissionDeniedException != NULL) {
-		(*env)->DeleteGlobalRef(env, PermissionDeniedException);
-	}
-
 	if (RegData != NULL) {
 		(*env)->DeleteGlobalRef(env, RegData);
 	}
@@ -433,20 +299,6 @@ void delRefs(JNIEnv * env) {
 	RegData_Int = NULL;
 	String_Class = NULL;
 
-	PermissionDeniedException = NULL;
-	PermissionDeniedExceptionConstructor = NULL;
-
-	NotLinkExceptionConstructor = NULL;
-	NotLinkException = NULL;
-
-	jclass Utsname = NULL;
-	jmethodID Utsname_constructor = NULL;
-	jfieldID Utsname_sysname = NULL;
-	jfieldID Utsname_nodename = NULL;
-	jfieldID Utsname_release = NULL;
-	jfieldID Utsname_version = NULL;
-	jfieldID Utsname_machine = NULL;
-
 	Integer = NULL;
 	Integer_value = NULL;
 	Long = NULL;
@@ -463,14 +315,6 @@ void delRefs(JNIEnv * env) {
 	Float_value = NULL;
 	Character = NULL;
 	Character_value = NULL;
-
-
-	GUID_Class = NULL;
-	GUID_constructor = NULL;
-	GUID_data1 = NULL;
-	GUID_data2 = NULL;
-	GUID_data3 = NULL;
-	GUID_data4 = NULL;
 
 	SpDeviceInfoData = NULL;
 	SpDeviceInfoData_cbSize = NULL;
@@ -497,61 +341,18 @@ void delRefs(JNIEnv * env) {
 	Cmsghdr_cmsg_type = NULL;
 	Cmsghdr_cmsg_level = NULL;
 
-	ArrayList = NULL;
-	ArrayListConstructor = NULL;
-
-	Iovec = NULL;
-	Iovec_len = NULL;
-	Iovec_off = NULL;
-	Iovec_payload = NULL;
-	Iovec_size = NULL;
-
-	Msghdr = NULL;
-	Msghdr_complete = NULL;
-	Msghdr_controlDataTruncated = NULL;
-	Msghdr_errQueue = NULL;
-	Msghdr_msg_control = NULL;
-	Msghdr_msg_controllen = NULL;
-	Msghdr_msg_iov = NULL;
-	Msghdr_msg_name = NULL;
-	Msghdr_outOfBand = NULL;
-	Msghdr_truncated = NULL;
-
-	Sockaddr = NULL;
-	Sockaddr_address = NULL;
-	Sockaddr_addressFamily = NULL;
-	SockaddrConstructor = NULL;
-
 	InetSocketAddress = NULL;
 	InetSocketAddress_getPort = NULL;
 	InetSocketAddress_getAddress = NULL;
 	InetSocketAddressConstructor = NULL;
 
-	OperationInProgressException = NULL;
-
-	PollFD_PollEvent_values = NULL;
-	PollFD_PollEvent_values_size = 0;
-	PollFD = NULL;
-	PollFD_fd = NULL;
-	PollFD_events = NULL;
-	PollFD_revents = NULL;
-
 	Iterator = NULL;
 	Iterator_hasNext = NULL;
 	Iterator_next = NULL;
-	Collection = NULL;
-	Collection_add = NULL;
-	Collection_clear = NULL;
-	Collection_size = NULL;
-	Collection_iterator = NULL;
 
 	InetAddress = NULL;
 	InetAddress_getAddress = NULL;
 	InetAddress_getByAddress = NULL;
-
-	SocketTimeoutException = NULL;
-	ConnectException = NULL;
-	BindException = NULL;
 
 	SharingViolationException = NULL;
 	SharingViolationExceptionConstructor = NULL;
@@ -561,40 +362,7 @@ void delRefs(JNIEnv * env) {
 	Field_getModifier = NULL;
 	Field_getDeclaringClass = NULL;
 
-
-	QuotaExceededException = NULL;
-	QuotaExceededExceptionConstructor = NULL;
-
 	NotDirectoryException = NULL;
-	Win32FileAttributeData = NULL;
-	Win32FileAttributeDataConstructor = NULL;
-	Win32FileAttributeData_dwFileAttributes = NULL;
-	Win32FileAttributeData_nFileSizeLow = NULL;
-	Win32FileAttributeData_nFileSizeHigh = NULL;
-	Win32FileAttributeData_ftLastAccessTimeLow = NULL;
-	Win32FileAttributeData_ftLastAccessTimeHigh = NULL;
-	Win32FileAttributeData_ftLastWriteTimeHigh = NULL;
-	Win32FileAttributeData_ftLastWriteTimeLow = NULL;
-	Win32FileAttributeData_ftCreationTimeHigh = NULL;
-	Win32FileAttributeData_ftCreationTimeLow = NULL;
-
-	FileNotFoundException = NULL;
-
-	StatClass = NULL;
-	StatClass_dev = NULL;
-	StatClass_ino = NULL;
-	StatClass_mode = NULL;
-	StatClass_nlink = NULL;
-	StatClass_uid = NULL;
-	StatClass_gid = NULL;
-	StatClass_rdev = NULL;
-	StatClass_size = NULL;
-	StatClass_size = NULL;
-	StatClass_blksize = NULL;
-	StatClass_blocks = NULL;
-	StatClass_atime = NULL;
-	StatClass_mtime = NULL;
-	StatClass_ctime = NULL;
 
 	fdClass = NULL;
 	badFDClass = NULL;
@@ -603,21 +371,15 @@ void delRefs(JNIEnv * env) {
 	IllegalStateException = NULL;
 	enumClass = NULL;
 	oomClass = NULL;
-	ioExcClass = NULL;
-	FileSystemLoopException = NULL;
-	AccessDeniedException = NULL;
 	InvalidPathException = NULL;
 	UnsupportedOperationException = NULL;
-	ReadOnlyFileSystemException = NULL;
 	Exception = NULL;
-	ReadOnlyFileSystemExceptionConstructor = NULL;
 
 	enumOrdinal = NULL;
 	badFDConstructor = NULL;
 	unknownErrorConstructor = NULL;
 	fdIntField = NULL;
 	fdHandleField = NULL;
-	AccessDeniedExceptionConstructor = NULL;
 	InvalidPathExceptionConstructor = NULL;
 
 	JNINativeMemory_ptr = NULL;
@@ -835,73 +597,6 @@ bool makeRefs(JNIEnv * env) {
 		return false;
 	}
 
-
-
-	PermissionDeniedException = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/exceptions/PermissionDeniedException");
-	if (PermissionDeniedException == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/PermissionDeniedException");
-		return false;
-	}
-
-	PermissionDeniedExceptionConstructor = (*env)->GetMethodID(env, PermissionDeniedException, "<init>", "(Ljava/lang/String;Ljava/lang/String;)V");
-	if (PermissionDeniedExceptionConstructor == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/PermissionDeniedException.<init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
-		return false;
-	}
-
-	Utsname = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Utsname");
-	if (Utsname == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Utsname");
-		return false;
-	}
-
-	Utsname_constructor = (*env)->GetMethodID(env, Utsname, "<init>", "()V");
-	if (Utsname_constructor == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Utsname.<init>()V");
-		return false;
-	}
-
-	Utsname_sysname = (*env)->GetFieldID(env, Utsname, "sysname", "Ljava/lang/String;");
-	if (Utsname_sysname == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Utsname.sysname");
-		return false;
-	}
-
-	Utsname_nodename = (*env)->GetFieldID(env, Utsname, "nodename", "Ljava/lang/String;");
-	if (Utsname_nodename == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Utsname.nodename");
-		return false;
-	}
-
-
-	Utsname_release = (*env)->GetFieldID(env, Utsname, "release", "Ljava/lang/String;");
-	if (Utsname_release == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Utsname.release");
-		return false;
-	}
-
-	Utsname_version = (*env)->GetFieldID(env, Utsname, "version", "Ljava/lang/String;");
-	if (Utsname_version == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Utsname.version");
-		return false;
-	}
-
-	Utsname_machine = (*env)->GetFieldID(env, Utsname, "machine", "Ljava/lang/String;");
-	if (Utsname_machine == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Utsname.machine");
-		return false;
-	}
-
-
 	Integer = makeGlobalClassRef(env, "java/lang/Integer");
 	if (Integer == NULL) {
 		(*env) -> ExceptionClear(env);
@@ -1028,47 +723,6 @@ bool makeRefs(JNIEnv * env) {
 		return false;
 	}
 
-	GUID_Class = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/GUID");
-	if (GUID_Class == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/GUID");
-		return false;
-	}
-
-	GUID_constructor = (*env)->GetMethodID(env, GUID_Class, "<init>", "()V");
-	if (GUID_constructor == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/GUID.<init>()V");
-		return false;
-	}
-
-	GUID_data1 = (*env)->GetFieldID(env, GUID_Class, "data1", "I");
-	if (GUID_data1 == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/GUID.data1");
-		return false;
-	}
-
-	GUID_data2 = (*env)->GetFieldID(env, GUID_Class, "data2", "S");
-	if (GUID_data2 == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/GUID.data2");
-		return false;
-	}
-
-	GUID_data3 = (*env)->GetFieldID(env, GUID_Class, "data3", "S");
-	if (GUID_data3 == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/GUID.data3");
-		return false;
-	}
-	GUID_data4 = (*env)->GetFieldID(env, GUID_Class, "data4", "[B");
-	if (GUID_data4 == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/GUID.data4");
-		return false;
-	}
-
 	SpDeviceInfoData = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData");
 	if (SpDeviceInfoData == NULL) {
 		(*env) -> ExceptionClear(env);
@@ -1147,43 +801,6 @@ bool makeRefs(JNIEnv * env) {
 		return false;
 	}
 
-
-	Sockaddr = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr");
-	if (Sockaddr == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr");
-		return false;
-	}
-
-	SockaddrConstructor = (*env)->GetMethodID(env, Sockaddr, "<init>", "(I[B)V");
-	if (SockaddrConstructor == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr.<init>(I[B))V");
-		return false;
-	}
-
-	Sockaddr_address = (*env)->GetFieldID(env, Sockaddr, "address", "[B");
-	if (Sockaddr_address == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr.address");
-		return false;
-	}
-
-	Sockaddr_addressFamily = (*env)->GetFieldID(env, Sockaddr, "addressFamily", "I");
-	if (Sockaddr_addressFamily == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr.addressFamily");
-		return false;
-	}
-
-	OperationInProgressException = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/exceptions/OperationInProgressException");
-	if (OperationInProgressException == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/OperationInProgressException");
-		return false;
-	}
-
-
 	Cmsghdr = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Cmsghdr");
 	if (Cmsghdr == NULL) {
 		(*env) -> ExceptionClear(env);
@@ -1245,213 +862,6 @@ bool makeRefs(JNIEnv * env) {
 		(*env) -> ThrowNew(env, Exception, "cant find java/net/InetSocketAddress.getPort()I");
 		return false;
 	}
-
-	PollFD = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/PollFD");
-	if (PollFD == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/PollFD");
-		return false;
-	}
-
-	PollFD_PollEvent_values = enumerateEnum(env, "io/github/alexanderschuetz97/nativeutils/api/structs/PollFD$PollEvent", "()[Lio/github/alexanderschuetz97/nativeutils/api/structs/PollFD$PollEvent;", &PollFD_PollEvent_values_size);
-	if (PollFD_PollEvent_values == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "failed to enumerate enum values of io/github/alexanderschuetz97/nativeutils/api/structs/PollFD$PollEvent");
-		return false;
-	}
-
-	PollFD_fd = (*env)->GetFieldID(env, PollFD, "fd", "I");
-	if (PollFD_fd == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/PollFD.fd");
-		return false;
-	}
-
-	PollFD_events = (*env)->GetFieldID(env, PollFD, "events", "Ljava/util/EnumSet;");
-	if (PollFD_events == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/PollFD.events Ljava/util/EnumSet;");
-		return false;
-	}
-
-	PollFD_revents = (*env)->GetFieldID(env, PollFD, "revents", "Ljava/util/EnumSet;");
-	if (PollFD_revents == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/PollFD.revents Ljava/util/EnumSet;");
-		return false;
-	}
-
-
-	Msghdr = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Msghdr");
-	if (Msghdr == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Msghdr");
-		return false;
-	}
-
-	Msghdr_msg_iov = (*env)->GetFieldID(env, Msghdr, "msg_iov", "[Lio/github/alexanderschuetz97/nativeutils/api/structs/Iovec;");
-	if (Msghdr_msg_iov == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Msghdr.msg_iov");
-		return false;
-	}
-
-	Msghdr_msg_control = (*env)->GetFieldID(env, Msghdr, "msg_control", "[B");
-	if (Msghdr_msg_control == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Msghdr.msg_control");
-		return false;
-	}
-
-	Msghdr_msg_controllen = (*env)->GetFieldID(env, Msghdr, "msg_controllen", "I");
-	if (Msghdr_msg_control == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Msghdr.msg_controllen");
-		return false;
-	}
-
-	Msghdr_msg_name = (*env)->GetFieldID(env, Msghdr, "msg_name", "Lio/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr;");
-	if (Msghdr_msg_name == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Msghdr.msg_name");
-		return false;
-	}
-
-	Msghdr_complete = (*env)->GetFieldID(env, Msghdr, "complete", "Z");
-	if (Msghdr_complete == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Msghdr.complete");
-		return false;
-	}
-
-	Msghdr_truncated = (*env)->GetFieldID(env, Msghdr, "truncated", "Z");
-	if (Msghdr_truncated == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Msghdr.truncated");
-		return false;
-	}
-
-	Msghdr_controlDataTruncated = (*env)->GetFieldID(env, Msghdr, "controlDataTruncated", "Z");
-	if (Msghdr_controlDataTruncated == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Msghdr.controlDataTruncated");
-		return false;
-	}
-
-	Msghdr_outOfBand = (*env)->GetFieldID(env, Msghdr, "outOfBand", "Z");
-	if (Msghdr_outOfBand == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Msghdr.outOfBand");
-		return false;
-	}
-
-	Msghdr_errQueue = (*env)->GetFieldID(env, Msghdr, "errQueue", "Z");
-	if (Msghdr_errQueue == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Msghdr.errQueue");
-		return false;
-	}
-
-	Iovec = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Iovec");
-	if (Iovec == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Iovec");
-		return false;
-	}
-
-	Iovec_off = (*env)->GetFieldID(env, Iovec, "off", "I");
-	if (Iovec_off == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Iovec.off");
-		return false;
-	}
-
-	Iovec_len = (*env)->GetFieldID(env, Iovec, "len", "I");
-	if (Iovec_len == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Iovec.len");
-		return false;
-	}
-
-	Iovec_size = (*env)->GetFieldID(env, Iovec, "size", "I");
-	if (Iovec_size == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Iovec.size");
-		return false;
-	}
-
-	Iovec_payload = (*env)->GetFieldID(env, Iovec, "payload", "[B");
-	if (Iovec_payload == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "io/github/alexanderschuetz97/nativeutils/api/structs/Iovec.payload");
-		return false;
-	}
-
-	NotLinkException = makeGlobalClassRef(env, "java/nio/file/NotLinkException");
-	if (NotLinkException == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find java/nio/file/NotLinkException");
-		return false;
-	}
-
-	NotLinkExceptionConstructor = (*env)->GetMethodID(env, NotLinkException, "<init>", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
-	if (NotLinkExceptionConstructor == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find java/nio/file/NotLinkException.<init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
-		return false;
-	}
-
-	Collection = makeGlobalClassRef(env, "java/util/Collection");
-	if (Collection == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find java/util/Collection");
-		return false;
-	}
-
-	Collection_add = (*env) ->GetMethodID(env, Collection, "add", "(Ljava/lang/Object;)Z");
-	if (Collection_add == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find java/util/Collection.add(Ljava/lang/Object;)Z");
-		return false;
-	}
-
-	Collection_clear = (*env) ->GetMethodID(env, Collection, "clear", "()V");
-	if (Collection_clear == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find java/util/Collection.clear()V");
-		return false;
-	}
-
-
-	Collection_size = (*env) ->GetMethodID(env, Collection, "size", "()I");
-	if (Collection_size == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find java/util/Collection.size()I");
-		return false;
-	}
-
-	Collection_iterator = (*env) ->GetMethodID(env, Collection, "iterator", "()Ljava/util/Iterator;");
-	if (Collection_iterator == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find java/util/Collection.iterator()Ljava/util/Iterator;");
-		return false;
-	}
-
-	ArrayList = makeGlobalClassRef(env, "java/util/ArrayList");
-	if (ArrayList == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find java/util/ArrayList");
-		return false;
-	}
-
-	ArrayListConstructor = (*env)->GetMethodID(env, ArrayList, "<init>", "()V");
-	if (ArrayList == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find java/util/ArrayList.<init>()V");
-		return false;
-	}
-
-
 
 	Iterator = makeGlobalClassRef(env, "java/util/Iterator");
 	if (Iterator == NULL) {
@@ -1517,27 +927,6 @@ bool makeRefs(JNIEnv * env) {
 		return false;
 	}
 
-	SocketTimeoutException = makeGlobalClassRef(env, "java/net/SocketTimeoutException");
-	if (SocketTimeoutException == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find java/net/SocketTimeoutException");
-		return false;
-	}
-
-	BindException = makeGlobalClassRef(env, "java/net/BindException");
-	if (BindException == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find java/net/BindException");
-		return false;
-	}
-
-	ConnectException = makeGlobalClassRef(env, "java/net/ConnectException");
-	if (ConnectException == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find java/net/ConnectException");
-		return false;
-	}
-
 	Field = makeGlobalClassRef(env, "java/lang/reflect/Field");
 	if (Field == NULL) {
 		(*env) -> ExceptionClear(env);
@@ -1566,20 +955,6 @@ bool makeRefs(JNIEnv * env) {
 		return false;
 	}
 
-	QuotaExceededException = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/exceptions/QuotaExceededException");
-	if (QuotaExceededException == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/QuotaExceededException");
-		return false;
-	}
-
-	QuotaExceededExceptionConstructor = (*env) ->GetMethodID(env, QuotaExceededException, "<init>", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");;
-	if (QuotaExceededExceptionConstructor == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/QuotaExceededException.<init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
-		return false;
-	}
-
 	SharingViolationException = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/exceptions/SharingViolationException");
 	if (SharingViolationException == NULL) {
 		(*env) -> ExceptionClear(env);
@@ -1591,191 +966,6 @@ bool makeRefs(JNIEnv * env) {
 	if (SharingViolationExceptionConstructor == NULL) {
 		(*env) -> ExceptionClear(env);
 		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/SharingViolationException.<init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
-		return false;
-	}
-
-
-
-	Win32FileAttributeData = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Win32FileAttributeData");
-	if (Win32FileAttributeData == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Win32FileAttributeData");
-		return false;
-	}
-
-	Win32FileAttributeDataConstructor = (*env) ->GetMethodID(env, Win32FileAttributeData, "<init>", "()V");;
-	if (Win32FileAttributeDataConstructor == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Win32FileAttributeData.<init>()V");
-		return false;
-	}
-
-	Win32FileAttributeData_dwFileAttributes = (*env) ->GetFieldID(env, Win32FileAttributeData, "dwFileAttributes", "J");
-	if (Win32FileAttributeData_dwFileAttributes == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Win32FileAttributeData_dwFileAttributes J");
-		return false;
-	}
-
-	Win32FileAttributeData_nFileSizeLow = (*env) ->GetFieldID(env, Win32FileAttributeData, "nFileSizeLow", "J");
-	if (Win32FileAttributeData_nFileSizeLow == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Win32FileAttributeData_nFileSizeLow J");
-		return false;
-	}
-
-	Win32FileAttributeData_nFileSizeHigh = (*env) ->GetFieldID(env, Win32FileAttributeData, "nFileSizeHigh", "J");
-	if (Win32FileAttributeData_nFileSizeHigh == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Win32FileAttributeData_nFileSizeHigh J");
-		return false;
-	}
-
-	Win32FileAttributeData_ftLastAccessTimeLow = (*env) ->GetFieldID(env, Win32FileAttributeData, "ftLastAccessTimeLow", "J");
-	if (Win32FileAttributeData_ftLastAccessTimeLow == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Win32FileAttributeData_ftLastAccessTimeLow J");
-		return false;
-	}
-
-	Win32FileAttributeData_ftLastAccessTimeHigh = (*env) ->GetFieldID(env, Win32FileAttributeData, "ftLastAccessTimeHigh", "J");
-	if (Win32FileAttributeData_ftLastAccessTimeHigh == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Win32FileAttributeData_ftLastAccessTimeHigh J");
-		return false;
-	}
-
-	Win32FileAttributeData_ftLastWriteTimeLow = (*env) ->GetFieldID(env, Win32FileAttributeData, "ftLastWriteTimeLow", "J");
-	if (Win32FileAttributeData_ftLastWriteTimeLow == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Win32FileAttributeData_ftLastWriteTimeLow J");
-		return false;
-	}
-
-	Win32FileAttributeData_ftCreationTimeHigh = (*env) ->GetFieldID(env, Win32FileAttributeData, "ftCreationTimeHigh", "J");
-	if (Win32FileAttributeData_ftCreationTimeHigh == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Win32FileAttributeData_ftCreationTimeHigh J");
-		return false;
-	}
-
-	Win32FileAttributeData_ftCreationTimeLow = (*env) ->GetFieldID(env, Win32FileAttributeData, "ftCreationTimeLow", "J");
-	if (Win32FileAttributeData_ftCreationTimeLow == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Win32FileAttributeData_ftCreationTimeLow J");
-		return false;
-	}
-
-	FileNotFoundException = makeGlobalClassRef(env, "java/io/FileNotFoundException");
-	if (FileNotFoundException == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find java/io/FileNotFoundException");
-		return false;
-	}
-
-	StatClass = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Stat");
-	if (StatClass == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Stat");
-		return false;
-	}
-
-	StatClassConstructor = (*env) ->GetMethodID(env, StatClass, "<init>", "()V");
-	if (StatClassConstructor == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Stat.<init>()V");
-		return false;
-	}
-
-
-	StatClass_dev = (*env) ->GetFieldID(env, StatClass, "dev", "J");
-	if (StatClass_dev == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Stat.dev J");
-		return false;
-	}
-
-	StatClass_ino = (*env) ->GetFieldID(env, StatClass, "ino", "J");
-	if (StatClass_ino == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Stat.ino J");
-		return false;
-	}
-
-	StatClass_mode = (*env) ->GetFieldID(env, StatClass, "mode", "J");
-	if (StatClass_mode == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Stat.mode J");
-		return false;
-	}
-
-	StatClass_nlink = (*env) ->GetFieldID(env, StatClass, "nlink", "J");
-	if (StatClass_nlink == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Stat.nlink J");
-		return false;
-	}
-
-	StatClass_uid = (*env) ->GetFieldID(env, StatClass, "uid", "J");
-	if (StatClass_uid == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Stat.uid J");
-		return false;
-	}
-
-	StatClass_gid = (*env) ->GetFieldID(env, StatClass, "gid", "J");
-	if (StatClass_gid == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Stat.gid J");
-		return false;
-	}
-
-	StatClass_rdev = (*env) ->GetFieldID(env, StatClass, "rdev", "J");
-	if (StatClass_rdev == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Stat.rdev J");
-		return false;
-	}
-
-	StatClass_size = (*env) ->GetFieldID(env, StatClass, "size", "J");
-	if (StatClass_size == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Stat.size J");
-		return false;
-	}
-
-	StatClass_blksize = (*env) ->GetFieldID(env, StatClass, "blksize", "J");
-	if (StatClass_blksize == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Stat.blksize J");
-		return false;
-	}
-
-	StatClass_blocks = (*env) ->GetFieldID(env, StatClass, "blocks", "J");
-	if (StatClass_blocks == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Stat.blocks J");
-		return false;
-	}
-
-	StatClass_atime = (*env) ->GetFieldID(env, StatClass, "atime", "J");
-	if (StatClass_atime == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Stat.atime J");
-		return false;
-	}
-
-	StatClass_mtime = (*env) ->GetFieldID(env, StatClass, "mtime", "J");
-	if (StatClass_mtime == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Stat.mtime J");
-		return false;
-	}
-
-	StatClass_ctime = (*env) ->GetFieldID(env, StatClass, "ctime", "J");
-	if (StatClass_ctime == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Stat.ctime J");
 		return false;
 	}
 
@@ -1849,20 +1039,6 @@ bool makeRefs(JNIEnv * env) {
 		return false;
 	}
 
-	ReadOnlyFileSystemException = makeGlobalClassRef(env, "java/nio/file/ReadOnlyFileSystemException");
-	if (ReadOnlyFileSystemException == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find java/nio/file/ReadOnlyFileSystemException");
-		return false;
-	}
-
-	ReadOnlyFileSystemExceptionConstructor = (*env) ->GetMethodID(env, ReadOnlyFileSystemException, "<init>", "()V");
-	if (ReadOnlyFileSystemExceptionConstructor == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find java/nio/file/ReadOnlyFileSystemException.<init>()V");
-		return false;
-	}
-
 	UnsupportedOperationException = makeGlobalClassRef(env, "java/lang/UnsupportedOperationException");
 	if (UnsupportedOperationException == NULL) {
 		(*env) -> ExceptionClear(env);
@@ -1877,41 +1053,6 @@ bool makeRefs(JNIEnv * env) {
 		return false;
 	}
 
-	AccessDeniedException = makeGlobalClassRef(env, "java/nio/file/AccessDeniedException");
-	if (AccessDeniedException == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find java/nio/file/AccessDeniedException");
-		return false;
-	}
-
-	AccessDeniedExceptionConstructor = (*env) ->GetMethodID(env, AccessDeniedException, "<init>", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
-	if (AccessDeniedExceptionConstructor == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find java/nio/file/AccessDeniedException.<init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
-		return false;
-	}
-
-	FileAlreadyExistsException = makeGlobalClassRef(env, "java/nio/file/FileAlreadyExistsException");
-	if (FileAlreadyExistsException == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find java/nio/file/FileAlreadyExistsException");
-		return false;
-	}
-
-	FileAlreadyExistsExceptionConstructor = (*env) ->GetMethodID(env, FileAlreadyExistsException, "<init>", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
-	if (FileAlreadyExistsExceptionConstructor == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find java/nio/file/FileAlreadyExistsException.<init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
-		return false;
-	}
-
-	FileSystemLoopException = makeGlobalClassRef(env, "java/nio/file/FileSystemLoopException");
-	if (FileSystemLoopException == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find java/nio/file/FileSystemLoopException");
-		return false;
-	}
-
 	oomClass = makeGlobalClassRef(env, "java/lang/OutOfMemoryError");
 	if (oomClass == NULL) {
 		(*env) -> ExceptionClear(env);
@@ -1919,12 +1060,6 @@ bool makeRefs(JNIEnv * env) {
 		return false;
 	}
 
-	ioExcClass = makeGlobalClassRef(env, "java/io/IOException");
-	if (ioExcClass == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find java/io/IOException");
-		return false;
-	}
 
 	enumClass = makeGlobalClassRef(env, "java/lang/Enum");
 	if (enumClass == NULL) {
@@ -2052,233 +1187,6 @@ jstring toJString(JNIEnv * env, const char* data) {
 	return str;
 }
 
-void throwUnknownError(JNIEnv * env, jlong code) {
-	jobject inst = (*env) -> NewObject(env, unknownErrorClass, unknownErrorConstructor, code);
-	if (inst == NULL) {
-		//OOM already thrown
-		return;
-	}
-	(*env)->Throw( env, inst );
-	(*env)->DeleteLocalRef(env, inst);
-}
-
-void throwMutexAbandonedException(JNIEnv * env, jlong handle) {
-	jobject inst = (*env) -> NewObject(env, MutexAbandonedException, MutexAbandonedExceptionConstructor, handle);
-	if (inst == NULL) {
-		//OOM already thrown
-		return;
-	}
-	(*env)->Throw( env, inst );
-	(*env)->DeleteLocalRef(env, inst);
-}
-
-void throwBadFileDescriptor(JNIEnv * env) {
-	jobject inst = (*env) -> NewObject(env, badFDClass, badFDConstructor);
-	(*env)->Throw( env, inst );
-	(*env)->DeleteLocalRef(env, inst );
-}
-
-void throwFSLoop(JNIEnv * env, const char* file) {
-	(*env)->ThrowNew( env, FileSystemLoopException, file);
-}
-
-void throwUnsupportedExc(JNIEnv * env, const char* message) {
-	(*env)->ThrowNew( env, UnsupportedOperationException, message);
-}
-
-void throwFSReadOnly(JNIEnv * env) {
-	jobject inst = (*env) -> NewObject(env, ReadOnlyFileSystemException, ReadOnlyFileSystemExceptionConstructor);
-	if (inst == NULL) {
-		//OOM already thrown
-		return;
-	}
-
-	(*env)->Throw( env, inst);
-	(*env)->DeleteLocalRef(env, inst);
-}
-
-void throwNotDirectoryException(JNIEnv * env, const char* path) {
-	(*env)->ThrowNew(env, NotDirectoryException, path);
-}
-
-void throwBindException(JNIEnv * env, const char* message) {
-	(*env)->ThrowNew(env, BindException, message);
-}
-
-void throwConnectException(JNIEnv * env, const char* message) {
-	(*env)->ThrowNew(env, ConnectException, message);
-}
-
-void throwSocketTimeoutException(JNIEnv * env, const char* message) {
-	(*env)->ThrowNew(env, SocketTimeoutException, message);
-}
-
-
-void throwInvalidPath(JNIEnv * env, const char* path, const char* reason) {
-	jstring fileString = toJString(env, path);
-	jstring reasonString = toJString(env, reason);
-
-	jobject inst = (*env) -> NewObject(env, InvalidPathException, InvalidPathExceptionConstructor, fileString, reasonString);
-
-	delRef(env, fileString);
-	delRef(env, reasonString);
-
-	if (inst == NULL) {
-		//OOM already thrown
-		return;
-	}
-
-	(*env)->Throw(env, inst);
-	(*env)->DeleteLocalRef(env, inst);
-}
-
-void throwQuotaExceededException(JNIEnv * env, const char* file, const char* other, const char* reason) {
-	jstring fileString = toJString(env, file);
-	jstring otherString = toJString(env, other);
-	jstring reasonString = toJString(env, reason);
-
-	jobject inst = (*env) -> NewObject(env, QuotaExceededException, QuotaExceededExceptionConstructor, fileString, otherString, reasonString);
-
-	delRef(env, fileString);
-	delRef(env, otherString);
-	delRef(env, reasonString);
-
-	if (inst == NULL) {
-		//OOM already thrown
-		return;
-	}
-
-	(*env)->Throw( env, inst );
-	(*env)->DeleteLocalRef(env, inst);
-}
-
-
-void throwNotLinkException(JNIEnv * env, const char* file, const char* other, const char* reason) {
-	jstring fileString = toJString(env, file);
-	jstring otherString = toJString(env, other);
-	jstring reasonString = toJString(env, reason);
-
-	jobject inst = (*env) -> NewObject(env, NotLinkException, NotLinkExceptionConstructor, fileString, otherString, reasonString);
-
-	delRef(env, fileString);
-	delRef(env, otherString);
-	delRef(env, reasonString);
-
-	if (inst == NULL) {
-		//OOM already thrown
-		return;
-	}
-
-	(*env)->Throw( env, inst );
-	(*env)->DeleteLocalRef(env, inst);
-}
-
-void throwFSAccessDenied(JNIEnv * env, const char* file, const char* other, const char* reason) {
-	jstring fileString = toJString(env, file);
-	jstring otherString = toJString(env, other);
-	jstring reasonString = toJString(env, reason);
-
-	jobject inst = (*env) -> NewObject(env, AccessDeniedException, AccessDeniedExceptionConstructor, fileString, otherString, reasonString);
-
-	delRef(env, fileString);
-	delRef(env, otherString);
-	delRef(env, reasonString);
-
-	if (inst == NULL) {
-		//OOM already thrown
-		return;
-	}
-
-	(*env)->Throw( env, inst );
-	(*env)->DeleteLocalRef(env, inst);
-}
-
-void throwPermissionDeniedException(JNIEnv * env, const char* file, const char* reason) {
-	jstring fileString = toJString(env, file);
-	jstring reasonString = toJString(env, reason);
-
-	jobject inst = (*env) -> NewObject(env, PermissionDeniedException, PermissionDeniedExceptionConstructor, fileString, reasonString);
-
-	delRef(env, fileString);
-	delRef(env, reasonString);
-
-	if (inst == NULL) {
-		//OOM already thrown
-		return;
-	}
-
-	(*env)->Throw( env, inst );
-	(*env)->DeleteLocalRef(env, inst);
-}
-
-void throwShareingViolationException(JNIEnv * env, const char* file, const char* other, const char* reason) {
-	jstring fileString = toJString(env, file);
-	jstring otherString = toJString(env, other);
-	jstring reasonString = toJString(env, reason);
-
-	jobject inst = (*env) -> NewObject(env, SharingViolationException, SharingViolationExceptionConstructor, fileString, otherString, reasonString);
-
-	delRef(env, fileString);
-	delRef(env, otherString);
-	delRef(env, reasonString);
-
-	if (inst == NULL) {
-		//OOM already thrown
-		return;
-	}
-
-	(*env)->Throw( env, inst );
-	(*env)->DeleteLocalRef(env, inst);
-}
-
-void throwFileAlreadyExistsExc(JNIEnv * env, const char* file, const char* other, const char* reason) {
-	jstring fileString = toJString(env, file);
-	jstring otherString = toJString(env, other);
-	jstring reasonString = toJString(env, reason);
-
-	jobject inst = (*env) -> NewObject(env, FileAlreadyExistsException, FileAlreadyExistsExceptionConstructor, fileString, otherString, reasonString);
-
-	delRef(env, fileString);
-	delRef(env, otherString);
-	delRef(env, reasonString);
-
-	if (inst == NULL) {
-		//OOM already thrown
-		return;
-	}
-
-	(*env)->Throw( env, inst );
-	(*env)->DeleteLocalRef(env, inst);
-}
-
-void throwOOM(JNIEnv * env, const char* message) {
-	(*env)->ThrowNew( env, oomClass, message );
-}
-
-void throwIOExc(JNIEnv * env, const char* message) {
-	(*env)->ThrowNew( env, ioExcClass, message );
-}
-
-void throwOperationInProgressException(JNIEnv * env, const char* message) {
-	(*env)->ThrowNew( env, OperationInProgressException, message);
-}
-
-void throwNullPointerException(JNIEnv * env, const char* message) {
-	(*env)->ThrowNew( env, NullPointerException, message );
-}
-
-void throwIllegalArgumentsExc(JNIEnv * env, const char* message) {
-	(*env)->ThrowNew( env, IllegalArgumentException, message);
-}
-
-void throwIllegalStateException(JNIEnv * env, const char* message) {
-	(*env)->ThrowNew( env, IllegalStateException, message);
-}
-
-void throwFileNotFoundExc(JNIEnv * env, const char* message) {
-	(*env)->ThrowNew( env, FileNotFoundException, message);
-}
-
 int getFD(JNIEnv * env, jobject fd) {
 	if (fd == NULL) {
 		return -1;
@@ -2303,110 +1211,20 @@ intptr_t getHandle(JNIEnv * env, jobject fd) {
 	return (intptr_t) (*env) -> GetLongField(env, fd, fdHandleField);
 }
 
-jbyteArray getAddressFromInetAddress(JNIEnv * env, jobject address) {
-	if (address == NULL) {
-		return NULL;
-	}
-	return (jbyteArray) (*env)->CallObjectMethod(env, address, InetAddress_getAddress);
-}
-
-jobject getInetSocketAddress(JNIEnv * env, jobject inetaddress, jint port) {
-	if (inetaddress == NULL || port < 0 || port > 0xffff) {
-		return NULL;
-	}
-
-	return (*env)->NewObject(env, InetSocketAddress, InetSocketAddressConstructor, inetaddress, port);
-}
-
-jobject getInetAddressFromByteArray(JNIEnv * env, jbyteArray array) {
-	if (array == NULL) {
-		return NULL;
-	}
-
-	jobject inet = (*env)->CallStaticObjectMethod(env, InetAddress, InetAddress_getByAddress, array);
-
-	if ((*env)->ExceptionCheck(env)) {
-		(*env)->ExceptionClear(env);
-	}
-
-	return inet;
-}
-
-jobject getAddressFromInetSocketAddress(JNIEnv * env, jobject address) {
-	if (address == NULL) {
-		return NULL;
-	}
-
-	return (*env)->CallObjectMethod(env, address, InetSocketAddress_getAddress);
-}
-
-jint getPortFromInetSocketAddress(JNIEnv * env, jobject address) {
-	if (address == NULL) {
-		return -1;
-	}
-
-	return (*env)->CallIntMethod(env, address, InetSocketAddress_getPort);
-}
-
 
 bool isStatic(JNIEnv *env, jobject field) {
-	return (*env)->CallIntMethod(env, field, Field_getModifier) & 0x00000008 == 0x00000008;
+	return ((*env)->CallIntMethod(env, field, Field_getModifier) & 0x00000008) == 0x00000008;
 }
 
 jclass getDeclareingClass(JNIEnv *env, jobject field) {
 	return (jclass) (*env)->CallObjectMethod(env, field, Field_getDeclaringClass);
 }
 
-jobject new_iterator(JNIEnv * env, jobject collection) {
-	if (collection == NULL) {
-		return NULL;
-	}
-
-	return (*env)->CallObjectMethod(env, collection, Collection_iterator);
-}
-
-jobject iterator_next(JNIEnv * env, jobject iterator) {
-	if (iterator == NULL) {
-		return NULL;
-	}
-
-	jboolean hasNext = (*env)->CallBooleanMethod(env, iterator, Iterator_hasNext);
-
-	if (!hasNext) {
-		return NULL;
-	}
-
-	return (*env)->CallObjectMethod(env, iterator, Iterator_next);
-}
-
-
-bool collection_add(JNIEnv * env, jobject collection, jobject value) {
-	if (collection == NULL) {
-		return true;
-	}
-
-	(*env)->CallBooleanMethod(env, collection, Collection_add, value);
-	if ((*env)->ExceptionCheck(env)) {
-		return false;
-	}
-
-	return true;
-}
-
-
-void collection_clear(JNIEnv * env, jobject collection) {
-	if (collection == NULL) {
-		return;
-	}
-
-	(*env)->CallVoidMethod(env, collection, Collection_clear);
-}
-
 static_assert(sizeof(jchar) <= sizeof(wchar_t), "jchar does not fit into wchar_t");
 
 wchar_t * toWCharsMalloc(JNIEnv * env, jstring str) {
 	if (str == NULL) {
-		throwNullPointerException(env, "toWCharsMalloc");
+		jthrowCC_NullPointerException_1(env, "toWCharsMalloc");
 		return false;
 	}
 
@@ -2416,7 +1234,7 @@ wchar_t * toWCharsMalloc(JNIEnv * env, jstring str) {
 	wchar_t * res = malloc(sizeof(wchar_t) * (len+1));
 
 	if (res == NULL) {
-		throwOOM(env, "malloc");
+		jthrowCC_OutOfMemoryError_1(env, "malloc");
 		return NULL;
 	}
 
@@ -2430,7 +1248,7 @@ wchar_t * toWCharsMalloc(JNIEnv * env, jstring str) {
 
 bool toWChars(JNIEnv * env, jstring str, wchar_t* wchars) {
 	if (str == NULL || wchars == NULL) {
-		throwNullPointerException(env, "toWChars");
+		jthrowCC_NullPointerException_1(env, "toWChars");
 		return false;
 	}
 
@@ -2443,7 +1261,7 @@ bool toWChars(JNIEnv * env, jstring str, wchar_t* wchars) {
 
 	const jchar* jchars = (*env)->GetStringChars(env, str, NULL);
 	if (jchars == NULL) {
-		throwOOM(env, "GetStringChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringChars");
 		return false;
 	}
 
@@ -2481,7 +1299,7 @@ void fromWCharCopy(jchar* to, wchar_t* from, jsize len) {
 
 jstring fromWChars(JNIEnv * env, wchar_t* wchars) {
 	if (wchars == NULL) {
-		throwNullPointerException(env, "fromWChars");
+		jthrowCC_NullPointerException_1(env, "fromWChars");
 		return NULL;
 	}
 
@@ -2498,7 +1316,7 @@ jstring fromWChars(JNIEnv * env, wchar_t* wchars) {
 	if (len > 128) {
 		jchar* ptr = (jchar*) malloc(sizeof(jchar) * len);
 		if (ptr == NULL) {
-			throwOOM(env, "malloc");
+			jthrowCC_OutOfMemoryError_1(env, "malloc");
 			return NULL;
 		}
 
@@ -2514,21 +1332,9 @@ jstring fromWChars(JNIEnv * env, wchar_t* wchars) {
 	}
 }
 
-jobject new_array_list(JNIEnv * env) {
-	return (*env)->NewObject(env, ArrayList, ArrayListConstructor);
-}
-
-int getEnumOrdinal(JNIEnv * env, jobject e) {
-	if (e == NULL) {
-		return -1;
-	}
-
-	return (int) (*env) -> CallIntMethod(env, e, enumOrdinal);
-}
-
 bool setStringField(JNIEnv  * env, jobject obj, jfieldID field, const char * str) {
 	if (obj == NULL) {
-		throwNullPointerException(env, "obj");
+		jthrowCC_NullPointerException_1(env, "obj");
 		return false;
 	}
 
@@ -2539,7 +1345,7 @@ bool setStringField(JNIEnv  * env, jobject obj, jfieldID field, const char * str
 
 	jstring jstr = (*env)->NewStringUTF(env, str);
 	if (jstr == NULL) {
-		throwOOM(env, "NewStringUTF");
+		jthrowCC_OutOfMemoryError_1(env, "NewStringUTF");
 		return false;
 	}
 
@@ -2556,8 +1362,8 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
 		return JNI_ABORT;
 	}
 
-	if (!jstub_init(env)) {
-		jstub_destroy(env);
+	if (!jnigenerator_init(env)) {
+		jnigenerator_destroy(env);
 		return JNI_ABORT;
 	}
 
@@ -2576,7 +1382,7 @@ JNIEXPORT void JNICALL JNI_OnUnload(JavaVM *vm, void *reserved) {
 		return;
 	}
 
-	jstub_destroy(env);
+	jnigenerator_destroy(env);
 	delRefs(env);
 }
 

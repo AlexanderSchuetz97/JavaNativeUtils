@@ -439,6 +439,30 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_GetAdaptersAddresses
   (JNIEnv *, jobject, jlong, jlong);
 
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    OpenProcessToken
+ * Signature: (JI)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_OpenProcessToken
+  (JNIEnv *, jobject, jlong, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    GetTokenInformation
+ * Signature: (JI)[B
+ */
+JNIEXPORT jbyteArray JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_GetTokenInformation
+  (JNIEnv *, jobject, jlong, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    ShellExecuteA
+ * Signature: (JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_ShellExecuteA
+  (JNIEnv *, jobject, jlong, jstring, jstring, jstring, jstring, jint);
+
 #ifdef __cplusplus
 }
 #endif

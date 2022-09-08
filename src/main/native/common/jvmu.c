@@ -29,7 +29,7 @@
 JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_MonitorEnter
   (JNIEnv * env, jobject inst, jobject moni) {
 	if (moni == NULL) {
-		throwNullPointerException(env, "monitor");
+		jthrowCC_NullPointerException_1(env, "monitor");
 		return;
 	}
 
@@ -44,7 +44,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICom
 JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_MonitorExit
   (JNIEnv * env, jobject inst, jobject moni) {
 	if (moni == NULL) {
-		throwNullPointerException(env, "monitor");
+		jthrowCC_NullPointerException_1(env, "monitor");
 		return;
 	}
 
@@ -59,7 +59,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICom
 JNIEXPORT jthrowable JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_Throw
   (JNIEnv * env, jobject obj, jthrowable thr) {
 	if (thr == NULL) {
-		throwNullPointerException(env, "throwable");
+		jthrowCC_NullPointerException_1(env, "throwable");
 		return thr;
 	}
 	(*env)->Throw(env, thr);
@@ -84,7 +84,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_NewGlobalRef
   (JNIEnv * env, jobject inst, jobject obj) {
 	if (obj == NULL) {
-		throwNullPointerException(env, "obj");
+		jthrowCC_NullPointerException_1(env, "obj");
 		return 0;
 	}
 
@@ -99,7 +99,7 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICo
 JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_DeleteGlobalRef
   (JNIEnv * env, jobject inst, jlong ref) {
 	if (ref == 0) {
-		throwNullPointerException(env, "ref");
+		jthrowCC_NullPointerException_1(env, "ref");
 		return;
 	}
 
@@ -114,7 +114,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICom
 JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_NewLocalRef
   (JNIEnv * env, jobject inst, jlong ref) {
 	if (ref == 0) {
-		throwNullPointerException(env, "ref");
+		jthrowCC_NullPointerException_1(env, "ref");
 		return NULL;
 	}
 
@@ -130,23 +130,23 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 JNIEXPORT jclass JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_DefineClass
   (JNIEnv * env, jobject inst, jstring name, jobject loader, jbyteArray buf, jint off, jint len) {
 	if (name == NULL) {
-		throwNullPointerException(env, "name");
+		jthrowCC_NullPointerException_1(env, "name");
 		return NULL;
 	}
 
 	if (loader == NULL) {
-		throwNullPointerException(env, "loader");
+		jthrowCC_NullPointerException_1(env, "loader");
 		return NULL;
 	}
 
 	if (buf == NULL) {
-		throwNullPointerException(env, "buf");
+		jthrowCC_NullPointerException_1(env, "buf");
 		return NULL;
 	}
 
 	jsize jlen = (*env)->GetArrayLength(env, buf);
 	if (off < 0 || len < 0 || jlen < off+len) {
-		throwIllegalArgumentsExc(env, "array bounds");
+		jthrowCC_IllegalArgumentException_1(env, "array bounds");
 		return NULL;
 	}
 
@@ -154,7 +154,7 @@ JNIEXPORT jclass JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIC
 
 	const char * namePtr = (*env)->GetStringUTFChars(env, name, NULL);
 	if (namePtr == NULL) {
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return NULL;
 	}
 
@@ -162,7 +162,7 @@ JNIEXPORT jclass JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIC
 
 	if (cBuf == NULL) {
 		(*env)->ReleaseStringUTFChars(env, name, namePtr);
-		throwOOM(env, "GetByteArrayElements");
+		jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 		return NULL;
 	}
 
@@ -182,7 +182,7 @@ JNIEXPORT jclass JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIC
 JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_GetDirectBufferAddress
   (JNIEnv * env, jobject inst, jobject buf) {
 	if (buf == NULL) {
-		throwNullPointerException(env, "buf");
+		jthrowCC_NullPointerException_1(env, "buf");
 		return 0;
 	}
 	return (jlong) (uintptr_t) (*env)->GetDirectBufferAddress(env, buf);
@@ -196,12 +196,12 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICo
 JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_NewDirectByteBuffer
   (JNIEnv * env, jobject inst, jlong ptr, jlong size) {
 	if (size < 0) {
-		throwIllegalArgumentsExc(env, "size<0");
+		jthrowCC_IllegalArgumentException_1(env, "size<0");
 		return NULL;
 	}
 
 	if (ptr == 0) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return NULL;
 	}
 

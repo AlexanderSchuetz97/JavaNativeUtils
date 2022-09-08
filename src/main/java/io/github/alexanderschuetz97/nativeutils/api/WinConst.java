@@ -119,6 +119,65 @@ public interface WinConst {
     int STANDARD_RIGHTS_REQUIRED = 0x000F0000;
 
 
+    int TOKEN_ASSIGN_PRIMARY = 0x0001;
+    int TOKEN_DUPLICATE = 0x0002;
+    int TOKEN_IMPERSONATE = 0x0004;
+    int TOKEN_QUERY = 0x0008;
+    int TOKEN_QUERY_SOURCE = 0x0010;
+    int TOKEN_ADJUST_PRIVILEGES = 0x0020;
+    int TOKEN_ADJUST_GROUPS = 0x0040;
+    int TOKEN_ADJUST_DEFAULT = 0x0080;
+    int TOKEN_ADJUST_SESSIONID = 0x0100;
 
+    //TOKEN_INFORMATION_CLASS
+    int TokenUser = 1;
+    int TokenGroups = 2;
+    int TokenPrivileges = 3;
+    int TokenOwner = 4;
+    int TokenPrimaryGroup = 5;
+    int TokenDefaultDacl = 6;
+    int TokenSource = 7;
+    int TokenType = 8;
+    int TokenImpersonationLevel = 9;
+    int TokenStatistics = 10;
+    int TokenRestrictedSids = 11;
+    int TokenSessionId = 12;
+    int TokenGroupsAndPrivileges = 13;
+    int TokenSessionReference = 14;
+    int TokenSandBoxInert = 15;
+    int TokenAuditPolicy = 16;
+    int TokenOrigin = 17;
+    int TokenElevationType = 18;
+    int TokenLinkedToken = 19;
+    int TokenElevation = 20;
+    int TokenHasRestrictions = 21;
+    int TokenAccessInformation = 22;
+    int TokenVirtualizationAllowed = 23;
+    int TokenVirtualizationEnabled = 24;
+    int TokenIntegrityLevel = 25;
+    int TokenUIAccess = 26;
+    int TokenMandatoryPolicy = 27;
+    int TokenLogonSid = 28;
+    int TokenIsAppContainer = 29;
+    int TokenCapabilities = 30;
+    int TokenAppContainerSid = 31;
+    int TokenAppContainerNumber = 32;
+    int TokenUserClaimAttributes = 33;
+    int TokenDeviceClaimAttributes = 34;
+    int TokenRestrictedUserClaimAttributes = 35;
+    int TokenRestrictedDeviceClaimAttributes = 36;
+    int TokenDeviceGroups = 37;
+    int TokenRestrictedDeviceGroups = 38;
+    int TokenSecurityAttributes = 39;
+    int TokenIsRestricted = 40;
+    int TokenProcessTrustLevel = 41;
+    int TokenPrivateNameSpace = 42;
+    int TokenSingletonAttributes = 43;
+    int TokenBnoIsolation = 44;
+    int TokenChildProcessFlags = 45;
+    int TokenIsLessPrivilegedAppContainer = 46;
+    int TokenIsSandboxed = 47;
+    int TokenIsAppSilo = 48;
+    int MaxTokenInfoClass = 49;
 }
 

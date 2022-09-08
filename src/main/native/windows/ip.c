@@ -46,7 +46,7 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 	ULONG idx = 0;
 
 	if (name == NULL) {
-		throwNullPointerException(env, "name");
+		jthrowCC_NullPointerException_1(env, "name");
 		return 0;
 
 	}
@@ -63,7 +63,7 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 		return idx;
 	}
 
-	throwUnknownError(env, ret);
+	jthrow_UnknownNativeErrorException_1(env, ret);
 	return 0;
 }
 
@@ -76,12 +76,12 @@ bool mapSockAddress(JNIEnv * env, void * ptr, jobject jcollection) {
 				return false;
 			}
 
-			jobject jCurrent = jnew_Sockaddr(env, current->Address.lpSockaddr->sa_family, array);
+			jobject jCurrent = jnew_Sockaddr_1(env, current->Address.lpSockaddr->sa_family, array);
 			if (jerr(env)) {
 				return false;
 			}
 
-			if (!collection_add(env, jcollection, jCurrent)) {
+			if (!jcall_Collection_add(env, jcollection, jCurrent)) {
 				return false;
 			}
 		}
@@ -101,7 +101,7 @@ bool mapUniSockAddress(JNIEnv * env, PIP_ADAPTER_UNICAST_ADDRESS_LH current, job
 				return false;
 			}
 
-			jobject jSockAddr = jnew_Sockaddr(env, current->Address.lpSockaddr->sa_family, array);
+			jobject jSockAddr = jnew_Sockaddr_1(env, current->Address.lpSockaddr->sa_family, array);
 			if (jerr(env)) {
 				return false;
 			}
@@ -116,7 +116,7 @@ bool mapUniSockAddress(JNIEnv * env, PIP_ADAPTER_UNICAST_ADDRESS_LH current, job
 			jset_IpAdapterAddresses$IpAdapterUnicastAddress_LeaseLifetime(env, jip, current->LeaseLifetime);
 			jset_IpAdapterAddresses$IpAdapterUnicastAddress_OnLinkPrefixLength(env, jip, current->OnLinkPrefixLength);
 
-			if (!collection_add(env, jcollection, jip)) {
+			if (!jcall_Collection_add(env, jcollection, jip)) {
 				return false;
 			}
 		}
@@ -140,7 +140,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	PIP_ADAPTER_ADDRESSES_LH pip = NULL;
 	while(true) {
 		if (i-- <= 0) {
-			throwUnknownError(env, ERROR_BUFFER_OVERFLOW);
+			jthrow_UnknownNativeErrorException_1(env, ERROR_BUFFER_OVERFLOW);
 			return NULL;
 		}
 
@@ -154,7 +154,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 
 		if (retval != NO_ERROR) {
 			free(pip);
-			throwUnknownError(env, retval);
+			jthrow_UnknownNativeErrorException_1(env, retval);
 			return NULL;
 		}
 
@@ -162,14 +162,18 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	}
 
 
-	jobject jret = new_array_list(env);
+	jobject jret = jnew_ArrayList(env);
+	if (jret == NULL) {
+		goto errorCleanup;
+	}
+
 	while(pip != NULL) {
 		jobject jstruct = jnew_IpAdapterAddresses(env);
 		if (jstruct == NULL) {
 			goto errorCleanup;
 		}
 
-		collection_add(env, jret, jstruct);
+		jcall_Collection_add(env, jret, jstruct);
 
 		jsetC_IpAdapterAddresses_AdapterName(env, jstruct, pip->AdapterName);
 		if (jerr(env)) {
@@ -237,7 +241,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 
 		jsetA_IpAdapterAddresses_Dhcpv6ClientDuid(env, jstruct, pip->Dhcpv6ClientDuid, MAX_DHCPV6_DUID_LENGTH);
 		if (jerr(env)) {
-			throwOOM(env, "jsetA_IpAdapterAddresses_Dhcpv6ClientDuid");
+			jthrowCC_OutOfMemoryError_1(env, "jsetA_IpAdapterAddresses_Dhcpv6ClientDuid");
 			goto errorCleanup;
 		}
 
@@ -264,7 +268,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 				goto errorCleanup;
 			}
 
-			jobject Dhcpv4Server = jnew_Sockaddr(env, pip->Dhcpv4Server.lpSockaddr->sa_family, array);
+			jobject Dhcpv4Server = jnew_Sockaddr_1(env, pip->Dhcpv4Server.lpSockaddr->sa_family, array);
 			if (jerr(env)) {
 				goto errorCleanup;
 			}
@@ -304,7 +308,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 
 	errorCleanup:
 	if (!jerr(env)) {
-		throwIllegalStateException(env, "no error in errorCleanup");
+		jthrowCC_IllegalStateException_1(env, "no error in errorCleanup");
 	}
 	jret = NULL;
 

@@ -19,10 +19,7 @@
 //
 package io.github.alexanderschuetz97.nativeutils.api;
 
-import io.github.alexanderschuetz97.nativeutils.api.exceptions.InvalidFileDescriptorException;
-import io.github.alexanderschuetz97.nativeutils.api.exceptions.MutexAbandonedException;
-import io.github.alexanderschuetz97.nativeutils.api.exceptions.SharingViolationException;
-import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
+import io.github.alexanderschuetz97.nativeutils.api.exceptions.*;
 import io.github.alexanderschuetz97.nativeutils.api.structs.GUID;
 import io.github.alexanderschuetz97.nativeutils.api.structs.IpAdapterAddresses;
 import io.github.alexanderschuetz97.nativeutils.api.structs.RegData;
@@ -37,7 +34,9 @@ import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.net.NetworkInterface;
 import java.nio.ByteBuffer;
+import java.nio.file.AccessDeniedException;
 import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.InvalidPathException;
 import java.util.Collection;
 import java.util.List;
 
@@ -541,4 +540,31 @@ public interface WindowsNativeUtil extends NativeUtil {
      * Returns adapter addresses.
      */
     Collection<IpAdapterAddresses> GetAdaptersAddresses(long family, long flags) throws UnknownNativeErrorException;
+
+    /**
+     * Opens a process token handle.
+     *
+     * @return the token handle that must be closed with CloseHandle
+     */
+    long OpenProcessToken(long ProcessHandle, int DesiredAccess) throws UnknownNativeErrorException;
+
+    /**
+     * Gets information about a token
+     * @param TokenHandle obtained from {@link #OpenProcessToken(long, int)}
+     * @param TokenInformationClass int constants from {@link WinConst}, all valid values start with "Token"
+     * @return binary struct that has to be parsed. Length/Meaning depends on TokenInformationClass
+     */
+    byte[] GetTokenInformation(long TokenHandle, int TokenInformationClass) throws UnknownNativeErrorException;
+
+
+    /**
+     * Performs an operation on a specified file.
+     * @param hwnd handle to parent window. 0 is a possible value.
+     * @param lpOperation operation to perform. This is a string enum. noteable values are "runas" "open" "print" and "explore"
+     * @param lpFile the file to perform the operation on
+     * @param lpParameters dependant on verb. on "runas" for example this would be parameters to the program pointed to by lpFile
+     * @param lpDirectory defines the working directory for the action
+     * @param nShowCmd defines how to action is displayed to the user value from 0 to 11 are valid
+     */
+    long ShellExecuteA(long hwnd, String lpOperation, String lpFile, String lpParameters, String lpDirectory, int nShowCmd) throws ShellExecuteException;
 }

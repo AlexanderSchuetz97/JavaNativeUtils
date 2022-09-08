@@ -23,12 +23,16 @@ import io.github.alexanderschuetz97.nativeutils.api.NativeMemory;
 import io.github.alexanderschuetz97.nativeutils.api.NativeUtils;
 import io.github.alexanderschuetz97.nativeutils.api.WinConst;
 import io.github.alexanderschuetz97.nativeutils.api.WindowsNativeUtil;
+import io.github.alexanderschuetz97.nativeutils.api.exceptions.InvalidFileDescriptorException;
+import io.github.alexanderschuetz97.nativeutils.api.exceptions.ShellExecuteException;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
 import io.github.alexanderschuetz97.nativeutils.api.structs.GUID;
 import io.github.alexanderschuetz97.nativeutils.api.structs.RegData;
 import io.github.alexanderschuetz97.nativeutils.api.structs.RegEnumKeyExResult;
 import io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInfoData;
 import io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInterfaceData;
+
+import java.util.Arrays;
 
 public class JavaNativeUtilsStandaloneTest {
 
@@ -70,11 +74,52 @@ public class JavaNativeUtilsStandaloneTest {
 
                 lsreg(args[1]);
                 return;
+            case("isadmin"):
+                isAdmin();
+                return;
+            case("admincmd"):
+                admincmd(args);
+                return;
             default:
                 System.out.println("no such test " + args[0]);
                 System.exit(-1);
                 return;
         }
+    }
+
+    public static void admincmd(String[] args) {
+        WindowsNativeUtil util = NativeUtils.getWindowsUtil();
+        try {
+            util.ShellExecuteA(Integer.parseInt(args[1]), "runas", args[2], null, null, Integer.parseInt(args[3]));
+        } catch (ShellExecuteException e) {
+            System.out.println(e.getHinstance());
+            System.out.println(util.FormatMessageA(e.intCode()));
+            e.printStackTrace();
+        }
+    }
+
+    public static void isAdmin() {
+        WindowsNativeUtil util = NativeUtils.getWindowsUtil();
+        long procID = util.GetCurrentProcess();
+        try {
+            long token = util.OpenProcessToken(procID, WinConst.TOKEN_QUERY);
+            try {
+                byte[] tk = util.GetTokenInformation(token, WinConst.TokenElevation);
+                System.out.println(Arrays.toString(tk));
+            } finally {
+                util.CloseHandle(token);
+            }
+
+        } catch (InvalidFileDescriptorException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        } catch (UnknownNativeErrorException e) {
+            System.out.println(util.FormatMessageA(e.intCode()));
+            e.printStackTrace();
+            System.exit(-1);
+        }
+
+
     }
 
     public static void lsreg(String key) {

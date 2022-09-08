@@ -35,8 +35,10 @@ import io.github.alexanderschuetz97.nativeutils.api.structs.Stat;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Win32FileAttributeData;
 
 import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
 import java.nio.ByteBuffer;
 import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.InvalidPathException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -459,6 +461,15 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
 
     @Override
     public native Collection<IpAdapterAddresses> GetAdaptersAddresses(long family, long flags) throws UnknownNativeErrorException;
+
+    @Override
+    public native long OpenProcessToken(long ProcessHandle, int DesiredAccess) throws UnknownNativeErrorException;
+
+    @Override
+    public native byte[] GetTokenInformation(long TokenHandle, int TokenInformationClass) throws UnknownNativeErrorException;
+
+    @Override
+    public native long ShellExecuteA(long hwnd, String lpOperation, String lpFile, String lpParameters, String lpDirectory, int nShowCmd);
 
     @Override
     public boolean isWindows() {

@@ -35,25 +35,25 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	(JNIEnv * env, jobject inst, jstring target, jstring linkpath) {
 
 	if (linkpath == NULL) {
-		throwIllegalArgumentsExc(env, "linkpath is null");
+		jthrowCC_IllegalArgumentException_1(env, "linkpath is null");
 		return;
 	}
 
 	if (target == NULL) {
-		throwIllegalArgumentsExc(env, "target is null");
+		jthrowCC_IllegalArgumentException_1(env, "target is null");
 		return;
 	}
 
 	const char* linkPathString = (*env)->GetStringUTFChars( env, linkpath, NULL);
 	if (linkPathString == NULL) {
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return;
 	}
 
 	const char* targetString = (*env)->GetStringUTFChars( env, target, NULL);
 	if (targetString == NULL) {
 		(*env)->ReleaseStringUTFChars( env, linkpath, linkPathString);
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return;
 
 	}
@@ -70,48 +70,48 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	int err = errno;
 	switch(err) {
 		case (EACCES):
-			throwFSAccessDenied(env, linkPathString, NULL, "Write access to the directory containing linkpath is denied, or one of the directories in the path prefix of linkpath did not allow search permission.");
+			jthrowCC_AccessDeniedException_1(env, linkPathString, NULL, "Write access to the directory containing linkpath is denied, or one of the directories in the path prefix of linkpath did not allow search permission.");
 			break;
 		case (EDQUOT):
-			throwQuotaExceededException(env, linkPathString, targetString, "The user's quota of resources on the filesystem has been exhausted. The resources could be inodes or disk blocks, depending on the filesystem implementation.");
+			jthrowCC_QuotaExceededException_1(env, linkPathString, targetString, "The user's quota of resources on the filesystem has been exhausted. The resources could be inodes or disk blocks, depending on the filesystem implementation.");
 			break;
 		case (EEXIST):
-			throwFileAlreadyExistsExc(env, linkPathString, NULL, "linkpath already exists.");
+			jthrowCC_FileAlreadyExistsException_1(env, linkPathString, NULL, "linkpath already exists.");
 			break;
 		//EFAULT shouldnt happen since both args point to the stack...
 		case (EIO):
-			throwIOExc(env, "An I/O error occurred.");
+			jthrowC_IOException_1(env, "An I/O error occurred.");
 			break;
 		case (ELOOP):
-			throwFSLoop(env, linkPathString);
+			jthrowCC_FileSystemLoopException(env, linkPathString);
 			break;
 		case (ENAMETOOLONG):
 			if (strlen(linkPathString) >= strlen(targetString)) {
-				throwInvalidPath(env, linkPathString, "target or linkpath was too long.");
+				jthrowCC_InvalidPathException(env, linkPathString, "target or linkpath was too long.");
 			} else {
-				throwInvalidPath(env, targetString, "target or linkpath was too long.");
+				jthrowCC_InvalidPathException(env, targetString, "target or linkpath was too long.");
 			}
 			break;
 		case (ENOENT):
-			throwInvalidPath(env, linkPathString, "A directory component in linkpath does not exist or is a dangling symbolic link, or target or linkpath is an empty string.");
+			jthrowCC_InvalidPathException(env, linkPathString, "A directory component in linkpath does not exist or is a dangling symbolic link, or target or linkpath is an empty string.");
 			break;
 		case (ENOMEM):
-			throwOOM(env, "Insufficient kernel memory was available.");
+			jthrowCC_OutOfMemoryError_1(env, "Insufficient kernel memory was available.");
 			break;
 		case (ENOSPC):
-			throwIOExc(env, "The device containing the file has no room for the new directory entry.");
+			jthrowC_IOException_1(env, "The device containing the file has no room for the new directory entry.");
 			break;
 		case (ENOTDIR):
-			throwInvalidPath(env, linkPathString, "A component used as a directory in linkpath is not, in fact, a directory.");
+			jthrowCC_InvalidPathException(env, linkPathString, "A component used as a directory in linkpath is not, in fact, a directory.");
 			break;
 		case (EPERM):
-			throwUnsupportedExc(env, "The filesystem containing linkpath does not support the creation of symbolic links.");
+			jthrowCC_UnsupportedOperationException_1(env, "The filesystem containing linkpath does not support the creation of symbolic links.");
 			break;
 		case (EROFS):
-			throwFSReadOnly(env);
+			jthrow_ReadOnlyFileSystemException(env);
 			break;
 		default:
-			throwUnknownError(env, err);
+			jthrow_UnknownNativeErrorException_1(env, err);
 			break;
 	}
 
@@ -131,25 +131,25 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
   (JNIEnv * env, jobject inst, jstring target, jstring linkpath) {
 
 	if (linkpath == NULL) {
-		throwIllegalArgumentsExc(env, "linkpath is null");
+		jthrowCC_IllegalArgumentException_1(env, "linkpath is null");
 		return;
 	}
 
 	if (target == NULL) {
-		throwIllegalArgumentsExc(env, "target is null");
+		jthrowCC_IllegalArgumentException_1(env, "target is null");
 		return;
 	}
 
 	const char* linkPathString = (*env)->GetStringUTFChars( env, linkpath, NULL);
 	if (linkPathString == NULL) {
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return;
 	}
 
 	const char* targetString = (*env)->GetStringUTFChars( env, target, NULL);
 	if (targetString == NULL) {
 		(*env)->ReleaseStringUTFChars( env, linkpath, linkPathString);
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return;
 
 	}
@@ -166,48 +166,48 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	int err = errno;
 	switch(err) {
 		case (EACCES):
-			throwFSAccessDenied(env, linkPathString, NULL, "Write access to the directory containing linkpath is denied, or one of the directories in the path prefix of linkpath did not allow search permission.");
+			jthrowCC_AccessDeniedException_1(env, linkPathString, NULL, "Write access to the directory containing linkpath is denied, or one of the directories in the path prefix of linkpath did not allow search permission.");
 			break;
 		case (EDQUOT):
-			throwQuotaExceededException(env, linkPathString, targetString, "The user's quota of resources on the filesystem has been exhausted. The resources could be inodes or disk blocks, depending on the filesystem implementation.");
+			jthrowCC_QuotaExceededException_1(env, linkPathString, targetString, "The user's quota of resources on the filesystem has been exhausted. The resources could be inodes or disk blocks, depending on the filesystem implementation.");
 			break;
 		case (EEXIST):
-			throwFileAlreadyExistsExc(env, linkPathString, NULL, "linkpath already exists.");
+			jthrowCC_FileAlreadyExistsException_1(env, linkPathString, NULL, "linkpath already exists.");
 			break;
 		//EFAULT shouldnt happen since both args point to the stack...
 		case (EIO):
-			throwIOExc(env, "An I/O error occurred.");
+			jthrowC_IOException_1(env, "An I/O error occurred.");
 			break;
 		case (ELOOP):
-			throwFSLoop(env, linkPathString);
+			jthrowCC_FileSystemLoopException(env, linkPathString);
 			break;
 		case (ENAMETOOLONG):
 			if (strlen(linkPathString) >= strlen(targetString)) {
-				throwInvalidPath(env, linkPathString, "target or linkpath was too long.");
+				jthrowCC_InvalidPathException(env, linkPathString, "target or linkpath was too long.");
 			} else {
-				throwInvalidPath(env, targetString, "target or linkpath was too long.");
+				jthrowCC_InvalidPathException(env, targetString, "target or linkpath was too long.");
 			}
 			break;
 		case (ENOENT):
-			throwInvalidPath(env, linkPathString, "A directory component in linkpath does not exist or is a dangling symbolic link, or target or linkpath is an empty string.");
+			jthrowCC_InvalidPathException(env, linkPathString, "A directory component in linkpath does not exist or is a dangling symbolic link, or target or linkpath is an empty string.");
 			break;
 		case (ENOMEM):
-			throwOOM(env, "Insufficient kernel memory was available.");
+			jthrowCC_OutOfMemoryError_1(env, "Insufficient kernel memory was available.");
 			break;
 		case (ENOSPC):
-			throwIOExc(env, "The device containing the file has no room for the new directory entry.");
+			jthrowC_IOException_1(env, "The device containing the file has no room for the new directory entry.");
 			break;
 		case (ENOTDIR):
-			throwInvalidPath(env, linkPathString, "A component used as a directory in linkpath is not, in fact, a directory.");
+			jthrowCC_InvalidPathException(env, linkPathString, "A component used as a directory in linkpath is not, in fact, a directory.");
 			break;
 		case (EPERM):
-			throwUnsupportedExc(env, "The filesystem containing linkpath does not support the creation of symbolic links.");
+			jthrowCC_UnsupportedOperationException_1(env, "The filesystem containing linkpath does not support the creation of symbolic links.");
 			break;
 		case (EROFS):
-			throwFSReadOnly(env);
+			jthrow_ReadOnlyFileSystemException(env);
 			break;
 		default:
-			throwUnknownError(env, err);
+			jthrow_UnknownNativeErrorException_1(env, err);
 			break;
 	}
 
@@ -226,18 +226,18 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
   (JNIEnv * env, jobject inst, jstring path) {
 
 	if (path == NULL) {
-		throwNullPointerException(env, "path");
+		jthrowCC_NullPointerException_1(env, "path");
 		return NULL;
 	}
 
 	const char* ptr = (*env)->GetStringUTFChars(env, path, NULL);
 	if (ptr == NULL) {
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return NULL;
 	}
 
 	if (ptr[0] == 0) {
-		throwInvalidPath(env, ptr, "path is empty");
+		jthrowCC_InvalidPathException(env, ptr, "path is empty");
 		(*env)->ReleaseStringUTFChars(env, path, ptr);
 		return NULL;
 	}
@@ -247,7 +247,7 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		char * buf = (char *)malloc(size+1);
 		if (buf == NULL) {
 			(*env)->ReleaseStringUTFChars(env, path, ptr);
-			throwOOM(env, "malloc");
+			jthrowCC_OutOfMemoryError_1(env, "malloc");
 			return NULL;
 		}
 
@@ -259,40 +259,40 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 			int err = errno;
 			switch(err) {
 				case(EACCES):
-					throwFSAccessDenied(env, ptr, NULL, NULL);
+					jthrowCC_AccessDeniedException_1(env, ptr, NULL, NULL);
 					(*env)->ReleaseStringUTFChars(env, path, ptr);
 					return NULL;
 				case(EINVAL):
-					throwNotLinkException(env, ptr, NULL, NULL);
+					jthrowCC_NotLinkException_1(env, ptr, NULL, NULL);
 					(*env)->ReleaseStringUTFChars(env, path, ptr);
 					return NULL;
 				case(EIO):
 					(*env)->ReleaseStringUTFChars(env, path, ptr);
-					throwIOExc(env, "I/O error");
+					jthrowC_IOException_1(env, "I/O error");
 					return NULL;
 				case(ELOOP):
-					throwFSLoop(env, ptr);
+					jthrowCC_FileSystemLoopException(env, ptr);
 					(*env)->ReleaseStringUTFChars(env, path, ptr);
 					return NULL;
 				case(ENAMETOOLONG):
-					throwInvalidPath(env, ptr, "The pathname, or a component of the pathname, is too long.");
+					jthrowCC_InvalidPathException(env, ptr, "The pathname, or a component of the pathname, is too long.");
 					(*env)->ReleaseStringUTFChars(env, path, ptr);
 					return NULL;
 				case(ENOENT):
-					throwFileNotFoundExc(env, ptr);
+					jthrowCC_FileNotFoundException_1(env, ptr);
 					(*env)->ReleaseStringUTFChars(env, path, ptr);
 					return NULL;
 				case(ENOTDIR):
-					throwNotDirectoryException(env, ptr);
+					jthrowCC_NotDirectoryException(env, ptr);
 					(*env)->ReleaseStringUTFChars(env, path, ptr);
 					return NULL;
 				case(ENOMEM):
 					(*env)->ReleaseStringUTFChars(env, path, ptr);
-					throwOOM(env, "Insufficient kernel memory was available.");
+					jthrowCC_OutOfMemoryError_1(env, "Insufficient kernel memory was available.");
 					return NULL;
 				default:
 					(*env)->ReleaseStringUTFChars(env, path, ptr);
-					throwUnknownError(env, err);
+					jthrow_UnknownNativeErrorException_1(env, err);
 					return NULL;
 			}
 		}
@@ -305,7 +305,7 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 			jstring str = (*env)->NewStringUTF(env, (const char*) buf);
 			free((void*) buf);
 			if (str == NULL) {
-				throwOOM(env, "NewStringUTF");
+				jthrowCC_OutOfMemoryError_1(env, "NewStringUTF");
 			}
 			return str;
 		}
@@ -314,7 +314,7 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		size*=2;
 		if (size > 0xffff) {
 			(*env)->ReleaseStringUTFChars(env, path, ptr);
-			throwIOExc(env, "symbolic link points to a path longer than 65565 bytes!");
+			jthrowC_IOException_1(env, "symbolic link points to a path longer than 65565 bytes!");
 			return NULL;
 		}
 	}
@@ -330,18 +330,18 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_realpath
 (JNIEnv * env, jobject inst, jstring path) {
 	if (path == NULL) {
-		throwNullPointerException(env, "path");
+		jthrowCC_NullPointerException_1(env, "path");
 		return NULL;
 	}
 
 	const char* ptr = (*env)->GetStringUTFChars(env, path, NULL);
 	if (ptr == NULL) {
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return NULL;
 	}
 
 	if (ptr[0] == 0) {
-		throwInvalidPath(env, ptr, "path is empty");
+		jthrowCC_InvalidPathException(env, ptr, "path is empty");
 		(*env)->ReleaseStringUTFChars(env, path, ptr);
 		return NULL;
 	}
@@ -353,7 +353,7 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		jstring new = (*env)->NewStringUTF(env, res);
 		free((void*)res);
 		if (new == NULL) {
-			throwOOM(env, "NewStringUTF");
+			jthrowCC_OutOfMemoryError_1(env, "NewStringUTF");
 		}
 		return new;
 	}
@@ -361,40 +361,40 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	int err = errno;
 	switch(err) {
 		case(EACCES):
-			throwFSAccessDenied(env, ptr, NULL, NULL);
+			jthrowCC_AccessDeniedException_1(env, ptr, NULL, NULL);
 			(*env)->ReleaseStringUTFChars(env, path, ptr);
 			return NULL;
 		case(EINVAL):
-			throwNotLinkException(env, ptr, NULL, NULL);
+			jthrowCC_NotLinkException_1(env, ptr, NULL, NULL);
 			(*env)->ReleaseStringUTFChars(env, path, ptr);
 			return NULL;
 		case(EIO):
 			(*env)->ReleaseStringUTFChars(env, path, ptr);
-			throwIOExc(env, "I/O error");
+			jthrowC_IOException_1(env, "I/O error");
 			return NULL;
 		case(ELOOP):
-			throwFSLoop(env, ptr);
+			jthrowCC_FileSystemLoopException(env, ptr);
 			(*env)->ReleaseStringUTFChars(env, path, ptr);
 			return NULL;
 		case(ENAMETOOLONG):
-			throwInvalidPath(env, ptr, "The pathname, or a component of the pathname, is too long.");
+			jthrowCC_InvalidPathException(env, ptr, "The pathname, or a component of the pathname, is too long.");
 			(*env)->ReleaseStringUTFChars(env, path, ptr);
 			return NULL;
 		case(ENOENT):
-			throwFileNotFoundExc(env, ptr);
+			jthrowCC_FileNotFoundException_1(env, ptr);
 			(*env)->ReleaseStringUTFChars(env, path, ptr);
 			return NULL;
 		case(ENOTDIR):
-			throwNotDirectoryException(env, ptr);
+			jthrowCC_NotDirectoryException(env, ptr);
 			(*env)->ReleaseStringUTFChars(env, path, ptr);
 			return NULL;
 		case(ENOMEM):
 			(*env)->ReleaseStringUTFChars(env, path, ptr);
-			throwOOM(env, "Insufficient memory was available.");
+			jthrowCC_OutOfMemoryError_1(env, "Insufficient memory was available.");
 			return NULL;
 		default:
 			(*env)->ReleaseStringUTFChars(env, path, ptr);
-			throwUnknownError(env, err);
+			jthrow_UnknownNativeErrorException_1(env, err);
 			return NULL;
 	}
 }

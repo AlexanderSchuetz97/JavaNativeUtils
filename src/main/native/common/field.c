@@ -51,14 +51,14 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICo
 	const char * nameBuf = (*env)->GetStringUTFChars(env, name, NULL);
 
 	if (nameBuf == NULL) {
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return 0;
 	}
 
 	const char * sigBuf = (*env)->GetStringUTFChars(env, sig, NULL);
 	if (sigBuf == NULL) {
 		(*env)->ReleaseStringUTFChars(env, name, nameBuf);
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return 0;
 	}
 
@@ -81,14 +81,14 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICo
 	const char * nameBuf = (*env)->GetStringUTFChars(env, name, NULL);
 
 	if (nameBuf == NULL) {
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return 0;
 	}
 
 	const char * sigBuf = (*env)->GetStringUTFChars(env, sig, NULL);
 	if (sigBuf == NULL) {
 		(*env)->ReleaseStringUTFChars(env, name, nameBuf);
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return 0;
 	}
 

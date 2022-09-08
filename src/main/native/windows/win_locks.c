@@ -39,12 +39,12 @@
 JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil__1locking
   (JNIEnv * env, jobject inst, jint fd, jobject mode, jlong len) {
 	if (fd == -1) {
-		throwBadFileDescriptor(env);
+		jthrow_InvalidFileDescriptorException(env);
 		return false;
 	}
 
 	int mMode = 0;
-	switch(getEnumOrdinal(env, mode)) {
+	switch(jenum_ordinal(env, mode)) {
 	case 0:
 		mMode = _LK_LOCK;
 		break;
@@ -55,7 +55,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 		mMode = _LK_UNLCK;
 		break;
 	default:
-		throwIllegalArgumentsExc(env, "mode is invalid");
+		jthrowCC_IllegalArgumentException_1(env, "mode is invalid");
 		return false;
 	}
 
@@ -66,15 +66,15 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 		case EACCES:
 			return false;
 		case EBADF:
-			throwBadFileDescriptor(env);
+			jthrow_InvalidFileDescriptorException(env);
 			return false;
 		case EDEADLOCK:
 			return false;
 		case EINVAL:
-			throwIllegalArgumentsExc(env, "_locking");
+			jthrowCC_IllegalArgumentException_1(env, "_locking");
 			return false;
 		default:
-			throwUnknownError(env, err);
+			jthrow_UnknownNativeErrorException_1(env, err);
 			return false;
 		}
 	}
@@ -92,7 +92,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 
 	HANDLE h = (HANDLE) (uintptr_t) fd;
 	if (h == INVALID_HANDLE_VALUE) {
-		throwBadFileDescriptor(env);
+		jthrow_InvalidFileDescriptorException(env);
 		return false;
 	}
 
@@ -121,7 +121,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 			case(ERROR_IO_PENDING):
 				return false;
 			default:
-				throwUnknownError(env, error);
+				jthrow_UnknownNativeErrorException_1(env, error);
 				return false;
 		}
 	}
@@ -139,7 +139,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 
 	HANDLE h = (HANDLE) (uintptr_t) fd;
 	if (h == INVALID_HANDLE_VALUE) {
-		throwBadFileDescriptor(env);
+		jthrow_InvalidFileDescriptorException(env);
 		return false;
 	}
 
@@ -158,7 +158,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 			case (ERROR_NOT_LOCKED):
 				return false;
 			default:
-				throwUnknownError(env, error);
+				jthrow_UnknownNativeErrorException_1(env, error);
 				return false;
 		}
 	}

@@ -32,12 +32,12 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
   (JNIEnv * env, jobject inst, jstring path, jint access, jboolean allowDelete, jboolean allowRead, jboolean allowWrite, jobject openMode, jint attributes) {
 
 	if (path == NULL) {
-		throwIllegalArgumentsExc(env, "path is null");
+		jthrowCC_IllegalArgumentException_1(env, "path is null");
 		return (jlong) (uintptr_t) INVALID_HANDLE_VALUE;
 	}
 
 	DWORD mode = 0;
-	switch(getEnumOrdinal(env, openMode)) {
+	switch(jenum_ordinal(env, openMode)) {
 		case(0):
 			mode = CREATE_NEW;
 			break;
@@ -54,7 +54,7 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 			mode = TRUNCATE_EXISTING;
 			break;
 		default:
-			throwIllegalArgumentsExc(env, "invalid openMode");
+			jthrowCC_IllegalArgumentException_1(env, "invalid openMode");
 			return (jlong) (uintptr_t) INVALID_HANDLE_VALUE;
 	}
 
@@ -73,11 +73,10 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 	}
 
 
-	//WINBASEAPI HANDLE WINAPI CreateFileA (LPCSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile);
 
 	LPCSTR str = (*env)->GetStringUTFChars(env, path, NULL);
 	if (str == NULL) {
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return (jlong) (uintptr_t) INVALID_HANDLE_VALUE;
 	}
 
@@ -88,13 +87,13 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 		DWORD err = GetLastError();
 		switch(err) {
 		case (ERROR_SHARING_VIOLATION):
-			throwShareingViolationException(env, str, NULL, NULL);
+			jthrowCC_SharingViolationException_1(env, str, NULL, NULL);
 			break;
 		case (ERROR_FILE_EXISTS):
-			throwFileAlreadyExistsExc(env, str, NULL, NULL);
+			jthrowCC_FileAlreadyExistsException_1(env, str, NULL, NULL);
 			break;
 		default:
-			throwUnknownError(env, err);
+			jthrow_UnknownNativeErrorException_1(env, err);
 			break;
 		}
 
@@ -113,12 +112,12 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
   (JNIEnv * env, jobject inst, jstring path, jint access, jboolean allowDelete, jboolean allowRead, jboolean allowWrite, jobject openMode, jint attributes) {
 
 	if (path == NULL) {
-		throwIllegalArgumentsExc(env, "path is null");
+		jthrowCC_IllegalArgumentException_1(env, "path is null");
 		return (jlong) (uintptr_t) INVALID_HANDLE_VALUE;
 	}
 
 	DWORD mode = 0;
-	switch(getEnumOrdinal(env, openMode)) {
+	switch(jenum_ordinal(env, openMode)) {
 		case(0):
 			mode = CREATE_NEW;
 			break;
@@ -135,7 +134,7 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 			mode = TRUNCATE_EXISTING;
 			break;
 		default:
-			throwIllegalArgumentsExc(env, "invalid openMode");
+			jthrowCC_IllegalArgumentException_1(env, "invalid openMode");
 			return (jlong) (uintptr_t) INVALID_HANDLE_VALUE;
 	}
 
@@ -170,20 +169,20 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 		const char * p = (*env)->GetStringUTFChars(env, path, NULL);
 
 		if (p == NULL) {
-			throwOOM(env, "GetStringUTFChars");
+			jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 			return (jlong) (uintptr_t) INVALID_HANDLE_VALUE;
 		}
 
 		switch(err) {
 		case (ERROR_SHARING_VIOLATION):
-			throwShareingViolationException(env, p, NULL, NULL);
+			jthrowCC_SharingViolationException_1(env, p, NULL, NULL);
 			break;
 		case (ERROR_FILE_EXISTS):
 			//TODO PATH?
-			throwFileAlreadyExistsExc(env, p, NULL, NULL);
+			jthrowCC_FileAlreadyExistsException_1(env, p, NULL, NULL);
 			break;
 		default:
-			throwUnknownError(env, err);
+			jthrow_UnknownNativeErrorException_1(env, err);
 			break;
 		}
 
@@ -204,12 +203,12 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 	HANDLE h = (HANDLE) (uintptr_t) handle;
 
 	if (h == INVALID_HANDLE_VALUE) {
-		throwBadFileDescriptor(env);
+		jthrow_InvalidFileDescriptorException(env);
 		return;
 	}
 
 	if (!CloseHandle(h)) {
-		throwUnknownError(env, GetLastError());
+		jthrow_UnknownNativeErrorException_1(env, GetLastError());
 	}
 }
 
@@ -231,14 +230,14 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 	HANDLE h = (HANDLE) (uintptr_t) jhandle;
 
 	if (h == INVALID_HANDLE_VALUE) {
-		throwBadFileDescriptor(env);
+		jthrow_InvalidFileDescriptorException(env);
 		return 0;
 	}
 
 	if (inBuffer != NULL) {
 		inSize = (*env)->GetArrayLength(env, inBuffer);
 		if (inOff < 0 || inLen < 0 || inSize < inOff+inLen) {
-			throwIllegalArgumentsExc(env, "inBuffer offset/length");
+			jthrowCC_IllegalArgumentException_1(env, "inBuffer offset/length");
 			return 0;
 		}
 	}
@@ -246,7 +245,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 	if (outBuffer != NULL) {
 		outSize = (*env)->GetArrayLength(env, outBuffer);
 		if (outOff < 0 || outLen < 0 || outSize < outOff+outLen) {
-			throwIllegalArgumentsExc(env, "outBuffer offset/length");
+			jthrowCC_IllegalArgumentException_1(env, "outBuffer offset/length");
 			return 0;
 		}
 	}
@@ -254,7 +253,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 	if (inBuffer != NULL) {
 		in = (LPVOID) (*env)->GetByteArrayElements(env, inBuffer, NULL);
 		if (in == NULL) {
-			throwOOM(env, "GetByteArrayElements");
+			jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 			return 0;
 		}
 
@@ -267,7 +266,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 			if (inBuffer != NULL) {
 				(*env)->ReleaseByteArrayElements(env, inBuffer, in, JNI_OK);
 			}
-			throwOOM(env, "GetByteArrayElements");
+			jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 			return 0;
 		}
 
@@ -292,7 +291,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 		(*env)->ReleaseByteArrayElements(env, outBuffer, (jbyte*) out, JNI_ABORT);
 	}
 
-	throwUnknownError(env, GetLastError());
+	jthrow_UnknownNativeErrorException_1(env, GetLastError());
 	return 0;
 }
 
@@ -306,7 +305,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 	HANDLE h = (HANDLE) (uintptr_t) jhandle;
 
 	if (h == INVALID_HANDLE_VALUE) {
-		throwBadFileDescriptor(env);
+		jthrow_InvalidFileDescriptorException(env);
 		return 0;
 	}
 
@@ -328,7 +327,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 		return resLen;
 	}
 
-	throwUnknownError(env, GetLastError());
+	jthrow_UnknownNativeErrorException_1(env, GetLastError());
 	return 0;
 
 }
@@ -344,27 +343,27 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 	HANDLE h = (HANDLE) (uintptr_t) jhandle;
 
 	if (off < 0) {
-		throwIllegalArgumentsExc(env, "off");
+		jthrowCC_IllegalArgumentException_1(env, "off");
 		return -1;
 	}
 
 	if (len < 0) {
-		throwIllegalArgumentsExc(env, "off");
+		jthrowCC_IllegalArgumentException_1(env, "off");
 		return -1;
 	}
 
 	if (h == INVALID_HANDLE_VALUE) {
-		throwBadFileDescriptor(env);
+		jthrow_InvalidFileDescriptorException(env);
 		return -1;
 	}
 
 	if (jbuf == NULL) {
-		throwNullPointerException(env, "buf");
+		jthrowCC_NullPointerException_1(env, "buf");
 		return -1;
 	}
 
 	if ((*env)->GetArrayLength(env, jbuf) < len) {
-		throwIllegalArgumentsExc(env, "buf.len < len");
+		jthrowCC_IllegalArgumentException_1(env, "buf.len < len");
 		return -1;
 	}
 
@@ -377,7 +376,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 
 	jbyte* buf = (*env)->GetByteArrayElements(env, jbuf, NULL);
 	if (buf == NULL) {
-		throwOOM(env, "GetByteArrayElements");
+		jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 		return -1;
 	}
 
@@ -387,7 +386,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 	if (!ReadFile(h, vbuf, len, &read, NULL)) {
 		DWORD err = GetLastError();
 		(*env)->ReleaseByteArrayElements(env, jbuf, buf, JNI_ABORT);
-		throwUnknownError(env, err);
+		jthrow_UnknownNativeErrorException_1(env, err);
 		return -1;
 	}
 
@@ -406,7 +405,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 	HANDLE h = (HANDLE) (uintptr_t) jhandle;
 
 	if (h == INVALID_HANDLE_VALUE) {
-		throwBadFileDescriptor(env);
+		jthrow_InvalidFileDescriptorException(env);
 		return -1;
 	}
 
@@ -415,7 +414,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 
 	if (!ReadFile(h, (LPVOID) (uintptr_t) ptr, len, &read, NULL)) {
 		DWORD err = GetLastError();
-		throwUnknownError(env, err);
+		jthrow_UnknownNativeErrorException_1(env, err);
 		return -1;
 	}
 
@@ -434,25 +433,25 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 
 	HANDLE h = (HANDLE) (uintptr_t) jhandle;
 	if (h == INVALID_HANDLE_VALUE) {
-		throwBadFileDescriptor(env);
+		jthrow_InvalidFileDescriptorException(env);
 		return 0;
 	}
 
 	HANDLE e = (HANDLE) (uintptr_t) event;
 	if (e == INVALID_HANDLE_VALUE) {
-		throwIllegalArgumentsExc(env, "event");
+		jthrowCC_IllegalArgumentException_1(env, "event");
 		return 0;
 	}
 
 	if (ptr == 0) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 
 
 	LPOVERLAPPED lp = malloc(sizeof(OVERLAPPED));
 	if (lp == NULL) {
-		throwOOM(env, "malloc");
+		jthrowCC_OutOfMemoryError_1(env, "malloc");
 		return 0;
 	}
 
@@ -466,7 +465,7 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 		}
 
 		free(lp);
-		throwUnknownError(env, err);
+		jthrow_UnknownNativeErrorException_1(env, err);
 	}
 
 
@@ -483,27 +482,27 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 	HANDLE h = (HANDLE) (uintptr_t) jhandle;
 
 	if (off < 0) {
-		throwIllegalArgumentsExc(env, "off");
+		jthrowCC_IllegalArgumentException_1(env, "off");
 		return -1;
 	}
 
 	if (len < 0) {
-		throwIllegalArgumentsExc(env, "len");
+		jthrowCC_IllegalArgumentException_1(env, "len");
 		return -1;
 	}
 
 	if (h == INVALID_HANDLE_VALUE) {
-		throwBadFileDescriptor(env);
+		jthrow_InvalidFileDescriptorException(env);
 		return -1;
 	}
 
 	if (jbuf == NULL) {
-		throwNullPointerException(env, "buf");
+		jthrowCC_NullPointerException_1(env, "buf");
 		return -1;
 	}
 
 	if ((*env)->GetArrayLength(env, jbuf) - off < len) {
-		throwIllegalArgumentsExc(env, "buf.len < len");
+		jthrowCC_IllegalArgumentException_1(env, "buf.len < len");
 		return -1;
 	}
 
@@ -516,7 +515,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 
 	jbyte* buf = (*env)->GetByteArrayElements(env, jbuf, NULL);
 	if (buf == NULL) {
-		throwOOM(env, "GetByteArrayElements");
+		jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 		return -1;
 	}
 
@@ -526,7 +525,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 	if (!WriteFile(h, vbuf, len, &read, NULL)) {
 		DWORD err = GetLastError();
 		(*env)->ReleaseByteArrayElements(env, jbuf, buf, JNI_ABORT);
-		throwUnknownError(env, err);
+		jthrow_UnknownNativeErrorException_1(env, err);
 		return -1;
 	}
 
@@ -545,7 +544,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 	HANDLE h = (HANDLE) (uintptr_t) jhandle;
 
 	if (h == INVALID_HANDLE_VALUE) {
-		throwBadFileDescriptor(env);
+		jthrow_InvalidFileDescriptorException(env);
 		return -1;
 	}
 
@@ -554,7 +553,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 
 	if (!WriteFile(h, (LPVOID) (uintptr_t) ptr, len, &read, NULL)) {
 		DWORD err = GetLastError();
-		throwUnknownError(env, err);
+		jthrow_UnknownNativeErrorException_1(env, err);
 		return -1;
 	}
 
@@ -571,25 +570,25 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 
 	HANDLE h = (HANDLE) (uintptr_t) jhandle;
 	if (h == INVALID_HANDLE_VALUE) {
-		throwBadFileDescriptor(env);
+		jthrow_InvalidFileDescriptorException(env);
 		return 0;
 	}
 
 	HANDLE e = (HANDLE) (uintptr_t) event;
 	if (e == INVALID_HANDLE_VALUE) {
-		throwIllegalArgumentsExc(env, "event");
+		jthrowCC_IllegalArgumentException_1(env, "event");
 		return 0;
 	}
 
 	if (ptr == 0) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 
 
 	LPOVERLAPPED lp = malloc(sizeof(OVERLAPPED));
 	if (lp == NULL) {
-		throwOOM(env, "malloc");
+		jthrowCC_OutOfMemoryError_1(env, "malloc");
 		return 0;
 	}
 
@@ -603,7 +602,7 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 		}
 
 		free(lp);
-		throwUnknownError(env, err);
+		jthrow_UnknownNativeErrorException_1(env, err);
 	}
 
 
@@ -621,12 +620,12 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 	HANDLE hdl = (HANDLE) (uintptr_t) handle;
 
 	if (lpo == NULL) {
-		throwNullPointerException(env, "overlapped");
+		jthrowCC_NullPointerException_1(env, "overlapped");
 		return -1;
 	}
 
 	if (hdl == INVALID_HANDLE_VALUE) {
-		throwBadFileDescriptor(env);
+		jthrow_InvalidFileDescriptorException(env);
 		return -1;
 	}
 
@@ -640,7 +639,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 		return -1;
 	}
 
-	throwUnknownError(env, err);
+	jthrow_UnknownNativeErrorException_1(env, err);
 	return -1;
 
 }

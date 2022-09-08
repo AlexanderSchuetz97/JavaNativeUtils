@@ -28,50 +28,60 @@ static_assert(sizeof(ULONG_PTR) <= sizeof(jlong), "ULONG_PTR doesnt fit in jlong
 jobject GUID_to_java(JNIEnv* env, GUID * guid, jobject mapped) {
 
 	if (mapped == NULL) {
-		mapped = (*env)->NewObject(env, GUID_Class, GUID_constructor);
+		mapped = jnew_GUID(env);
 		if (mapped == NULL) {
-			throwOOM(env, "NewObject");
 			return NULL;
 		}
 	}
 
+	jset_GUID_data1(env, mapped, guid->Data1);
+	jset_GUID_data2(env, mapped, guid->Data2);
+	jset_GUID_data3(env, mapped, guid->Data3);
 
-	(*env)->SetIntField(env, mapped, GUID_data1, guid->Data1);
-	(*env)->SetShortField(env, mapped, GUID_data2, guid->Data2);
-	(*env)->SetShortField(env, mapped, GUID_data3, guid->Data3);
-
-	jbyteArray array = (jbyteArray) (*env)->GetObjectField(env, mapped, GUID_data4);
+	jbyteArray array = jget_GUID_data4(env, mapped);
 	if (array == NULL) {
-		throwNullPointerException(env, "GUID.data4");
+		jthrowCC_NullPointerException_1(env, "GUID.data4");
+		return NULL;
+	}
+
+	if ((*env)->GetArrayLength(env, array) != 8) {
+		jthrowCC_IllegalArgumentException_1(env, "GUID.data4.length != 8");
 		return NULL;
 	}
 
 	(*env)->SetByteArrayRegion(env, array, 0, 8, (jbyte*)guid->Data4);
+	(*env)->DeleteLocalRef(env, array);
 
 	return mapped;
 }
 
-void GUID_to_c(JNIEnv* env, GUID * guid, jobject mapped) {
+jboolean GUID_to_c(JNIEnv* env, GUID * guid, jobject mapped) {
 	if (mapped == NULL) {
 		memset(guid, 0, sizeof(GUID));
-		return;
+		return true;
 	}
 
-	guid->Data1 = (*env)->GetIntField(env, mapped, GUID_data1);
-	guid->Data2 = (*env)->GetShortField(env, mapped, GUID_data2);
-	guid->Data3 = (*env)->GetShortField(env, mapped, GUID_data3);
+	guid->Data1 = jget_GUID_data1(env, mapped);
+	guid->Data2 = jget_GUID_data2(env, mapped);
+	guid->Data3 = jget_GUID_data3(env, mapped);
 
 	memset(guid->Data4, 0, 8);
 
 	//If the array is null someone sudoed it with reflection.
-	jbyteArray array = (jbyteArray) (*env)->GetObjectField(env, mapped, GUID_data4);
+	jbyteArray array = jget_GUID_data4(env, mapped);
 	if (array == NULL) {
-		throwNullPointerException(env, "GUID.data4");
-		return;
+		jthrowCC_NullPointerException_1(env, "GUID.data4");
+		return false;
+	}
+
+	if ((*env)->GetArrayLength(env, array) != 8) {
+		jthrowCC_IllegalArgumentException_1(env, "GUID.data4.length != 8");
+		return false;
 	}
 
 
 	(*env)->GetByteArrayRegion(env, array, 0, 8, (jbyte*)guid->Data4);
+	return true;
 }
 
 /*
@@ -86,14 +96,16 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 	GUID cguid;
 	if (jguid != NULL) {
 		cguidPtr = &cguid;
-		GUID_to_c(env, cguidPtr, jguid);
+		if (!GUID_to_c(env, cguidPtr, jguid)) {
+			return 0;
+		}
 	}
 
 	const char* cPtr = NULL;
 	if (enumerator != NULL) {
 		cPtr = (*env)->GetStringUTFChars(env, enumerator, NULL);
 		if (cPtr == NULL) {
-			throwOOM(env, "GetStringUTFChars");
+			jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 			return 0;
 		}
 	}
@@ -104,8 +116,7 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 			(*env)->ReleaseStringUTFChars(env, enumerator, cPtr);
 		}
 
-		throwUnknownError(env, GetLastError());
-
+		jthrow_UnknownNativeErrorException_1(env, GetLastError());
 		return 0;
 	}
 
@@ -125,7 +136,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
   (JNIEnv * env, jobject inst, jlong jptr, jobject jdevInfo, jobject jguid, jint index) {
 
 	if (jguid == NULL) {
-		throwNullPointerException(env, "guid");
+		jthrowCC_NullPointerException_1(env, "guid");
 		return NULL;
 	}
 
@@ -133,7 +144,10 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	GUID* cguidPtr = &cguid;
 
 	cguidPtr = &cguid;
-	GUID_to_c(env, cguidPtr, jguid);
+	if (!GUID_to_c(env, cguidPtr, jguid)) {
+		return NULL;
+	}
+
 
 	PSP_DEVINFO_DATA cInfoPtr = NULL;
 	SP_DEVINFO_DATA cInfo;
@@ -142,7 +156,9 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		cInfo.cbSize = (*env)->GetIntField(env, jdevInfo, SpDeviceInfoData_cbSize);
 		cInfo.DevInst = (*env)->GetIntField(env, jdevInfo, SpDeviceInfoData_DevInst);
 		cInfo.Reserved = (*env)->GetLongField(env, jdevInfo, SpDeviceInfoData_ptr);
-		GUID_to_c(env, &cInfo.ClassGuid, (*env)->GetObjectField(env, jdevInfo, SpDeviceInfoData_InterfaceClassGuid));
+		if (!GUID_to_c(env, &cInfo.ClassGuid, (*env)->GetObjectField(env, jdevInfo, SpDeviceInfoData_InterfaceClassGuid))) {
+			return NULL;
+		}
 	}
 
 	SP_DEVICE_INTERFACE_DATA DeviceInterfaceData;
@@ -157,13 +173,13 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 			return NULL;
 		}
 
-		throwUnknownError(env, err);
+		jthrow_UnknownNativeErrorException_1(env, err);
 		return NULL;
 	}
 
 	jobject did = (*env)->NewObject(env, SpDeviceInterfaceData , SpDeviceInterfaceData_constructor);
 	if (did == NULL) {
-		throwOOM(env, "NewObject");
+		jthrowCC_OutOfMemoryError_1(env, "NewObject");
 		return NULL;
 	}
 
@@ -171,7 +187,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	jobject nguid = (*env)->GetObjectField(env, did, SpDeviceInterfaceData_InterfaceClassGuid);
 	if (nguid == NULL) {
 		//Shouldnt be possible
-		throwNullPointerException(env, "SpDeviceInfoData.InterfaceClassGuid");
+		jthrowCC_NullPointerException_1(env, "SpDeviceInfoData.InterfaceClassGuid");
 		return NULL;
 	}
 
@@ -198,7 +214,9 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	DeviceInterfaceData.cbSize = (*env)->GetIntField(env, jdifd, SpDeviceInterfaceData_cbSize);
 	DeviceInterfaceData.Flags = (*env)->GetIntField(env, jdifd, SpDeviceInterfaceData_flags);
 	DeviceInterfaceData.Reserved = (*env)->GetLongField(env, jdifd, SpDeviceInterfaceData_ptr);
-	GUID_to_c(env, &DeviceInterfaceData.InterfaceClassGuid, (*env)->GetObjectField(env, jdifd, SpDeviceInterfaceData_InterfaceClassGuid));
+	if (!GUID_to_c(env, &DeviceInterfaceData.InterfaceClassGuid, (*env)->GetObjectField(env, jdifd, SpDeviceInterfaceData_InterfaceClassGuid))) {
+		return NULL;
+	}
 
 	PSP_DEVINFO_DATA devinfoPtr = NULL;
 	SP_DEVINFO_DATA devInfo;
@@ -225,20 +243,20 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	DWORD err = GetLastError();
 
 	if (err != ERROR_INSUFFICIENT_BUFFER) {
-		throwUnknownError(env, err);
+		jthrow_UnknownNativeErrorException_1(env, err);
 		return NULL;
 	}
 
 	if (RequiredSize < sizeof(DWORD)) {
 		//should never happen. This buffer would be smaller than the length prefix.
-		throwUnknownError(env, -1);
+		jthrow_UnknownNativeErrorException_1(env, -1);
 		return NULL;
 	}
 
 	PSP_DEVICE_INTERFACE_DETAIL_DATA_A dptr = malloc(RequiredSize+1);
 
 	if (dptr == NULL) {
-		throwOOM(env, "malloc");
+		jthrowCC_OutOfMemoryError_1(env, "malloc");
 		return NULL;
 	}
 
@@ -248,7 +266,7 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 
 	if (!SetupDiGetDeviceInterfaceDetailA((HDEVINFO)(uintptr_t) jptr, &DeviceInterfaceData, dptr,  RequiredSize, NULL, devinfoPtr)) {
 		free(dptr);
-		throwUnknownError(env, GetLastError());
+		jthrow_UnknownNativeErrorException_1(env, GetLastError());
 		return NULL;
 	}
 
@@ -262,7 +280,7 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	mapResultAndReturn:
 
 	if (res == NULL) {
-		throwOOM(env, "NewStringUTF");
+		jthrowCC_OutOfMemoryError_1(env, "NewStringUTF");
 		return NULL;
 	}
 
@@ -284,6 +302,6 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_SetupDiDestroyDeviceInfoList
   (JNIEnv * env, jobject inst, jlong jptr) {
 	if (!SetupDiDestroyDeviceInfoList((HDEVINFO)(uintptr_t) jptr)) {
-		throwUnknownError(env, GetLastError());
+		jthrow_UnknownNativeErrorException_1(env, GetLastError());
 	}
 }

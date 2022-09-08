@@ -29,12 +29,12 @@
  * Method:    cpuID
  * Signature: (II)[I
  */
-JNIEXPORT jintArray JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil_cpuID
+JNIEXPORT jintArray JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICommonNativeUtil__1_1get_1cpuid_1count
   (JNIEnv * env, jobject inst, jint code, jint subcode) {
 #if (defined(__amd64__) || defined(__i386__))
-	int leaf = (int) code;
-	int subleaf = (int) subcode;
-	int ints[4];
+	unsigned int leaf = (unsigned int) code;
+	unsigned int subleaf = (unsigned int) subcode;
+	unsigned int ints[4];
 
 	int res = __get_cpuid_count(leaf, subleaf, &ints[0], &ints[1], &ints[2], &ints[3]);
 
@@ -44,7 +44,7 @@ JNIEXPORT jintArray JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_J
 
 	jintArray ir = (*env)->NewIntArray(env, 4);
 	if (ir == NULL) {
-		throwOOM(env, "NewIntArray");
+		jthrowCC_OutOfMemoryError_1(env, "NewIntArray");
 		return NULL;
 	}
 
@@ -79,7 +79,7 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICo
 	(JNIEnv * env, jclass clazz, jlong size) {
 	void * ptr = malloc((size_t) size);
 	if (ptr == NULL) {
-		throwOOM(env, "malloc");
+		jthrowCC_OutOfMemoryError_1(env, "malloc");
 	}
 	return (jlong) (uintptr_t) ptr;
 }
@@ -93,7 +93,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNICom
 	(JNIEnv * env, jclass clazz, jlong ptr) {
 	void * vptr = (void*) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
 

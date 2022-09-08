@@ -40,9 +40,9 @@ LINUX_BUILD_DIR_AARCH64_COMMON=$(LINUX_BUILD_DIR_AARCH64)/common
 
 TARGET_DIR=../resources
 
-WINDOWS_CFLAGS=-I. -I$(WINDOWS_JDK)/include -I$(WINDOWS_JDK)/include/win32
+WINDOWS_CFLAGS=-I. -I$(WINDOWS_JDK)/include -I$(WINDOWS_JDK)/include/win32 -fvisibility=hidden
 
-LINUX_CFLAGS=-I. -I$(LINUX_JDK)/include -I$(LINUX_JDK)/include/linux -fPIC $(LINUX_ADDITIONAL_CC_FLAGS)
+LINUX_CFLAGS=-I. -I$(LINUX_JDK)/include -I$(LINUX_JDK)/include/linux -fPIC $(LINUX_ADDITIONAL_CC_FLAGS) -fvisibility=hidden
 
 WINDOWS_LIBS =-lhid -lsetupapi -liphlpapi
 

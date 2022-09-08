@@ -26,6 +26,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,9 +57,6 @@ public class MemTest {
                 randomShorts[i] = (short) rng.nextInt();
             }
         }
-
-
-
 
         @Before
         public void before() throws Throwable {

@@ -33,7 +33,7 @@ bool FFINLINE supportsCas16() {
 	if (cas16 == 0) {
 		int eax, ebx, ecx, edx;
 		__cpuid(1, eax, ebx, ecx, edx);
-		if (ecx & bit_CMPXCHG16B == bit_CMPXCHG16B) {
+		if ((ecx & bit_CMPXCHG16B) == bit_CMPXCHG16B) {
 			cas16 = 1;
 		} else {
 			cas16 = 2;
@@ -55,7 +55,7 @@ bool FFINLINE supportsCas8() {
 	if (cas8 == 0) {
 		int eax, ebx, ecx, edx;
 		__cpuid(1, eax, ebx, ecx, edx);
-		if (ecx & bit_CMPXCHG8B == bit_CMPXCHG8B) {
+		if ((ecx & bit_CMPXCHG8B) == bit_CMPXCHG8B) {
 			cas8 = 1;
 		} else {
 			cas8 = 2;

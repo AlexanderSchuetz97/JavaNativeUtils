@@ -34,13 +34,13 @@ void handleError(JNIEnv * env, int err, const char* path) {
 	//Truely a splendid documentation on this part microsoft
 	switch(err) {
 		case(ENOENT):
-			throwFileNotFoundExc(env, path);
+			jthrowCC_FileNotFoundException_1(env, path);
 			break;
 		case (EINVAL):
-			throwIllegalArgumentsExc(env, "path is invalid");
+			jthrowCC_IllegalArgumentException_1(env, "path is invalid");
 			break;
 		default:
-			throwUnknownError(env, err);
+			jthrow_UnknownNativeErrorException_1(env, err);
 			break;
 	}
 }
@@ -55,13 +55,13 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
   (JNIEnv * env, jobject inst, jstring path) {
 
 	if (path == NULL) {
-		throwIllegalArgumentsExc(env, "path is null");
+		jthrowCC_IllegalArgumentException_1(env, "path is null");
 		return NULL;
 	}
 
 	const char* pathString = (*env)->GetStringUTFChars(env, path, NULL);
 	if (pathString == NULL) {
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return NULL;
 	}
 
@@ -78,25 +78,24 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	}
 	(*env)->ReleaseStringUTFChars(env, path, pathString);
 
-	jobject myStat = (*env) -> NewObject(env, StatClass, StatClassConstructor);
+	jobject myStat = jnew_Stat(env);
 	if (myStat == NULL) {
-		//OOM already thrown
 		return NULL;
 	}
 
-	(*env) -> SetLongField(env, myStat, StatClass_dev, (jlong) theStat.st_dev);
-	(*env) -> SetLongField(env, myStat, StatClass_ino, (jlong) theStat.st_ino);
-	(*env) -> SetLongField(env, myStat, StatClass_mode, (jlong) theStat.st_mode);
-	(*env) -> SetLongField(env, myStat, StatClass_nlink, (jlong) theStat.st_nlink);
-	(*env) -> SetLongField(env, myStat, StatClass_uid, (jlong) theStat.st_uid);
-	(*env) -> SetLongField(env, myStat, StatClass_gid, (jlong) theStat.st_gid);
-	(*env) -> SetLongField(env, myStat, StatClass_rdev, (jlong) theStat.st_rdev);
-	(*env) -> SetLongField(env, myStat, StatClass_size, (jlong) theStat.st_size);
-	(*env) -> SetLongField(env, myStat, StatClass_blksize, (jlong) 0);
-	(*env) -> SetLongField(env, myStat, StatClass_blocks, (jlong) 0);
-	(*env) -> SetLongField(env, myStat, StatClass_atime, (jlong) theStat.st_atime);
-	(*env) -> SetLongField(env, myStat, StatClass_mtime, (jlong) theStat.st_mtime);
-	(*env) -> SetLongField(env, myStat, StatClass_ctime, (jlong) theStat.st_ctime);
+	jset_Stat_dev(env, myStat, (jlong) theStat.st_dev);
+	jset_Stat_ino(env, myStat, (jlong) theStat.st_ino);
+	jset_Stat_mode(env, myStat, (jlong) theStat.st_mode);
+	jset_Stat_nlink(env, myStat, (jlong) theStat.st_nlink);
+	jset_Stat_uid(env, myStat, (jlong) theStat.st_uid);
+	jset_Stat_gid(env, myStat, (jlong) theStat.st_gid);
+	jset_Stat_rdev(env, myStat, (jlong) theStat.st_rdev);
+	jset_Stat_size(env, myStat, (jlong) theStat.st_size);
+	jset_Stat_blksize(env, myStat, (jlong) 0);
+	jset_Stat_blocks(env, myStat, (jlong) 0);
+	jset_Stat_atime(env, myStat, (jlong) theStat.st_atime);
+	jset_Stat_mtime(env, myStat, (jlong) theStat.st_mtime);
+	jset_Stat_ctime(env, myStat, (jlong) theStat.st_ctime);
 
 	return myStat;
 
@@ -111,13 +110,13 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
   (JNIEnv * env, jobject inst, jstring path) {
 
 	if (path == NULL) {
-		throwIllegalArgumentsExc(env, "path is null");
+		jthrowCC_IllegalArgumentException_1(env, "path is null");
 		return NULL;
 	}
 
 	LPCSTR pathString = (*env)->GetStringUTFChars(env, path, NULL);
 	if (pathString == NULL) {
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return NULL;
 	}
 
@@ -130,25 +129,24 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 
 	if (result == 0) {
 		DWORD err = GetLastError();
-		throwUnknownError(env, err);
+		jthrow_UnknownNativeErrorException_1(env, err);
 		return NULL;
 	}
 
-	jobject myStat = (*env) -> NewObject(env, Win32FileAttributeData, Win32FileAttributeDataConstructor);
+	jobject myStat = jnew_Win32FileAttributeData(env);
 	if (myStat == NULL) {
-		//OOM already thrown
 		return NULL;
 	}
 
-	(*env) -> SetLongField(env, myStat, Win32FileAttributeData_dwFileAttributes, (jlong) data.dwFileAttributes);
-	(*env) -> SetLongField(env, myStat, Win32FileAttributeData_nFileSizeLow, (jlong) data.nFileSizeLow);
-	(*env) -> SetLongField(env, myStat, Win32FileAttributeData_nFileSizeHigh, (jlong) data.nFileSizeHigh);
-	(*env) -> SetLongField(env, myStat, Win32FileAttributeData_ftCreationTimeHigh, (jlong) data.ftCreationTime.dwHighDateTime);
-	(*env) -> SetLongField(env, myStat, Win32FileAttributeData_ftCreationTimeLow, (jlong) data.ftCreationTime.dwLowDateTime);
-	(*env) -> SetLongField(env, myStat, Win32FileAttributeData_ftLastWriteTimeHigh, (jlong) data.ftLastWriteTime.dwHighDateTime);
-	(*env) -> SetLongField(env, myStat, Win32FileAttributeData_ftLastWriteTimeLow, (jlong) data.ftLastWriteTime.dwLowDateTime);
-	(*env) -> SetLongField(env, myStat, Win32FileAttributeData_ftLastAccessTimeHigh, (jlong) data.ftLastAccessTime.dwHighDateTime);
-	(*env) -> SetLongField(env, myStat, Win32FileAttributeData_ftLastAccessTimeLow, (jlong) data.ftLastAccessTime.dwLowDateTime);
+	jset_Win32FileAttributeData_dwFileAttributes(env, myStat, (jlong) data.dwFileAttributes);
+	jset_Win32FileAttributeData_nFileSizeLow(env, myStat, (jlong) data.nFileSizeLow);
+	jset_Win32FileAttributeData_nFileSizeHigh(env, myStat, (jlong) data.nFileSizeHigh);
+	jset_Win32FileAttributeData_ftCreationTimeHigh(env, myStat, (jlong) data.ftCreationTime.dwHighDateTime);
+	jset_Win32FileAttributeData_ftCreationTimeLow(env, myStat, (jlong) data.ftCreationTime.dwLowDateTime);
+	jset_Win32FileAttributeData_ftLastWriteTimeHigh(env, myStat, (jlong) data.ftLastWriteTime.dwHighDateTime);
+	jset_Win32FileAttributeData_ftLastWriteTimeLow(env, myStat, (jlong) data.ftLastWriteTime.dwLowDateTime);
+	jset_Win32FileAttributeData_ftLastAccessTimeHigh(env, myStat, (jlong) data.ftLastAccessTime.dwHighDateTime);
+	jset_Win32FileAttributeData_ftLastAccessTimeLow(env, myStat, (jlong) data.ftLastAccessTime.dwLowDateTime);
 
 	return myStat;
 }
@@ -161,20 +159,20 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_GetFileAttributesA
   (JNIEnv * env, jobject inst, jstring path) {
 	if (path == NULL) {
-		throwIllegalArgumentsExc(env, "path is null");
+		jthrowCC_IllegalArgumentException_1(env, "path is null");
 		return 0;
 	}
 
 	LPCSTR pathString = (*env)->GetStringUTFChars(env, path, NULL);
 	if (pathString == NULL) {
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return 0;
 	}
 
 	DWORD attr = GetFileAttributesA(pathString);
 	(*env)->ReleaseStringUTFChars(env, path, pathString);
 	if (attr == INVALID_FILE_ATTRIBUTES) {
-		throwUnknownError(env, GetLastError());
+		jthrow_UnknownNativeErrorException_1(env, GetLastError());
 		return 0;
 	}
 
@@ -190,13 +188,13 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_SetFileAttributesA
   (JNIEnv * env, jobject inst, jstring path, jint attr) {
 	if (path == NULL) {
-		throwIllegalArgumentsExc(env, "path is null");
+		jthrowCC_IllegalArgumentException_1(env, "path is null");
 		return;
 	}
 
 	LPCSTR pathString = (*env)->GetStringUTFChars(env, path, NULL);
 	if (pathString == NULL) {
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return;
 	}
 
@@ -204,6 +202,6 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 	(*env)->ReleaseStringUTFChars(env, path, pathString);
 
 	if (!succ) {
-		throwUnknownError(env, GetLastError());
+		jthrow_UnknownNativeErrorException_1(env, GetLastError());
 	}
 }

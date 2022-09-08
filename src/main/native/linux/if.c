@@ -31,13 +31,13 @@
 JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_if_1nametoindex
   (JNIEnv * env, jobject inst, jstring name) {
 	if (name == NULL) {
-		throwNullPointerException(env, "name");
+		jthrowCC_NullPointerException_1(env, "name");
 		return 0;
 	}
 
 	const char * cname = (*env)->GetStringUTFChars(env, name, NULL);
 	if (cname == NULL) {
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return 0;
 	}
 
@@ -55,7 +55,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 		return 0;
 	}
 
-	throwUnknownError(env, err);
+	jthrow_UnknownNativeErrorException_1(env, err);
 	return 0;
 }
 
@@ -77,7 +77,7 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	if (if_indextoname(idx, buf) != NULL) {
 		jstring str =  (*env)->NewStringUTF(env, (const char*) buf);
 		if (str == NULL) {
-			throwOOM(env, "NewStringUTF");
+			jthrowCC_OutOfMemoryError_1(env, "NewStringUTF");
 		}
 		return str;
 	}
@@ -87,7 +87,7 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		return NULL;
 	}
 
-	throwUnknownError(env, idx);
+	jthrow_UnknownNativeErrorException_1(env, idx);
 	return 0;
 }
 
@@ -103,15 +103,15 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		int err = errno;
 		switch(err) {
 		case(ENOBUFS):
-			throwOOM(env, "");
+			jthrowCC_OutOfMemoryError_1(env, "if_nameindex");
 			return NULL;
 		default:
-			throwUnknownError(env, err);
+			jthrow_UnknownNativeErrorException_1(env, err);
 			return NULL;
 		}
 	}
 
-	jobject list = new_array_list(env);
+	jobject list = jnew_ArrayList(env);
 	if (list == NULL) {
 		if_freenameindex(ptr);
 		return NULL;
@@ -126,7 +126,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		jstring str = (*env)->NewStringUTF(env, ptr[i].if_name);
 		if (str == NULL) {
 			if_freenameindex(ptr);
-			throwOOM(env, "NewStringUTF");
+			jthrowCC_OutOfMemoryError_1(env, "NewStringUTF");
 			return NULL;
 		}
 
@@ -136,7 +136,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 			return NULL;
 		}
 
-		if (!collection_add(env, list, jval)) {
+		if (!jcall_Collection_add(env, list, jval)) {
 			if_freenameindex(ptr);
 			return NULL;
 		}

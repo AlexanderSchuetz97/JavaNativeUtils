@@ -14,7 +14,7 @@ Maven:
 <dependency>
     <groupId>io.github.alexanderschuetz97</groupId>
     <artifactId>JavaNativeUtils</artifactId>
-    <version>1.7</version>
+    <version>2.0</version>
 </dependency>
 ````
 
@@ -106,6 +106,9 @@ if (NativeUtils.isWindows()) {
 * RegOpenKeyExA
 * RegCloseKey
 * RegQueryValueExA
+* GetTokenInformation
+* OpenProcessToken
+* ShellExecuteA
 
 ### List of exposed JNI Functions (All OS)
 ### Reflection
@@ -163,6 +166,9 @@ Requirements:
 * bash
 * docker
 * docker-compose
+* jdk 8
+  * Note: for various reasons you must use a JDK 8 to compile... 
+  * The compiled library will work when used by any java version between including java 7 and including java 18.
 
 Building for the first time will build the docker image to compile the native libraries. 
 This will take a few minutes depending on your internet connection speed. You will only have to do this once

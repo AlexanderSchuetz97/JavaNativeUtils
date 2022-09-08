@@ -37,7 +37,7 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 
 		void * buf = malloc(size);
 		if (buf == NULL) {
-			throwOOM(env, "malloc");
+			jthrowCC_OutOfMemoryError_1(env, "malloc");
 			return NULL;
 		}
 
@@ -56,7 +56,7 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		free(buf);
 
 		if (lerr != ERROR_INSUFFICIENT_BUFFER) {
-			throwUnknownError(env, lerr);
+			jthrow_UnknownNativeErrorException_1(env, lerr);
 			return NULL;
 		}
 
@@ -64,7 +64,7 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	}
 
 
-	throwUnknownError(env, ERROR_INSUFFICIENT_BUFFER);
+	jthrow_UnknownNativeErrorException_1(env, ERROR_INSUFFICIENT_BUFFER);
 	return NULL;
 }
 
@@ -77,13 +77,13 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
   (JNIEnv * env, jobject inst, jstring name, jstring value) {
 
 	if (name == NULL) {
-		throwNullPointerException(env, "name");
+		jthrowCC_NullPointerException_1(env, "name");
 		return;
 	}
 
 	const char * namePtr = (*env)->GetStringUTFChars(env, name, NULL);
 	if (namePtr == NULL) {
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return;
 	}
 
@@ -93,7 +93,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 		(*env)->ReleaseStringUTFChars(env, name, namePtr);
 
 		if (!b) {
-			throwUnknownError(env, GetLastError());
+			jthrow_UnknownNativeErrorException_1(env, GetLastError());
 		}
 
 
@@ -103,7 +103,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 	const char * valuePtr = (*env)->GetStringUTFChars(env, value, NULL);
 	if (valuePtr == NULL) {
 		(*env)->ReleaseStringUTFChars(env, name, namePtr);
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return;
 	}
 
@@ -114,7 +114,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 	(*env)->ReleaseStringUTFChars(env, value, valuePtr);
 
 	if (!b) {
-		throwUnknownError(env, GetLastError());
+		jthrow_UnknownNativeErrorException_1(env, GetLastError());
 	}
 }
 
@@ -126,13 +126,13 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_ExpandEnvironmentStringsA
   (JNIEnv * env, jobject inst, jstring str) {
 	if (str == NULL) {
-		throwNullPointerException(env, "name");
+		jthrowCC_NullPointerException_1(env, "name");
 		return NULL;
 	}
 
 	const char * strPtr = (*env)->GetStringUTFChars(env, str, NULL);
 	if (strPtr == NULL) {
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return NULL;
 	}
 
@@ -141,7 +141,7 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	DWORD size = ExpandEnvironmentStringsA(strPtr, small, 256);
 	if (size == 0) {
 		(*env)->ReleaseStringUTFChars(env, str, strPtr);
-		throwUnknownError(env, GetLastError());
+		jthrow_UnknownNativeErrorException_1(env, GetLastError());
 		return NULL;
 	}
 
@@ -157,7 +157,7 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	(*env)->ReleaseStringUTFChars(env, str, strPtr);
 	if (size == 0) {
 		free((void*)large);
-		throwUnknownError(env, GetLastError());
+		jthrow_UnknownNativeErrorException_1(env, GetLastError());
 		return NULL;
 	}
 
@@ -169,7 +169,7 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 
 
 	free((void*)large);
-	throwUnknownError(env, ERROR_INSUFFICIENT_BUFFER);
+	jthrow_UnknownNativeErrorException_1(env, ERROR_INSUFFICIENT_BUFFER);
 	return NULL;
 }
 
@@ -181,13 +181,13 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_GetEnvironmentVariableA
   (JNIEnv * env, jobject inst, jstring name) {
 	if (name == NULL) {
-		throwNullPointerException(env, "name");
+		jthrowCC_NullPointerException_1(env, "name");
 		return NULL;
 	}
 
 	const char * namePtr = (*env)->GetStringUTFChars(env, name, NULL);
 	if (namePtr == NULL) {
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return NULL;
 	}
 
@@ -202,7 +202,7 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		}
 
 		(*env)->ReleaseStringUTFChars(env, name, namePtr);
-		throwUnknownError(env, lerr);
+		jthrow_UnknownNativeErrorException_1(env, lerr);
 		return NULL;
 	}
 
@@ -215,7 +215,7 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		void * buf = malloc(res+2);
 		if (buf == NULL) {
 			(*env)->ReleaseStringUTFChars(env, name, namePtr);
-			throwOOM(env, "malloc");
+			jthrowCC_OutOfMemoryError_1(env, "malloc");
 			return NULL;
 		}
 
@@ -232,7 +232,7 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 			}
 
 			(*env)->ReleaseStringUTFChars(env, name, namePtr);
-			throwUnknownError(env, lerr);
+			jthrow_UnknownNativeErrorException_1(env, lerr);
 			return NULL;
 		}
 
@@ -250,7 +250,7 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	}
 
 
-	throwUnknownError(env, ERROR_BUSY);
+	jthrow_UnknownNativeErrorException_1(env, ERROR_BUSY);
 	return NULL;
 
 }

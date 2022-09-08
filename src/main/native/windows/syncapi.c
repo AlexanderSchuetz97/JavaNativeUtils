@@ -33,14 +33,14 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 	if (name != NULL) {
 		cname = (*env)->GetStringUTFChars(env, name, NULL);
 		if (cname == NULL) {
-			throwOOM(env, "GetStringUTFChars");
+			jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 			return -1;
 		}
 	}
 
 	HANDLE h = CreateEventA((LPSECURITY_ATTRIBUTES) (uintptr_t) attrPtr, manual, inital, cname);
 	if (h == INVALID_HANDLE_VALUE) {
-		throwUnknownError(env, GetLastError());
+		jthrow_UnknownNativeErrorException_1(env, GetLastError());
 	}
 
 	if (name != NULL) {
@@ -59,12 +59,12 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
   (JNIEnv * env, jobject inst, jlong handle) {
 	HANDLE h = (HANDLE) (uintptr_t) handle;
 	if (h == INVALID_HANDLE_VALUE) {
-		throwBadFileDescriptor(env);
+		jthrow_InvalidFileDescriptorException(env);
 		return;
 	}
 
 	if (!ResetEvent(h)) {
-		throwUnknownError(env, GetLastError());
+		jthrow_UnknownNativeErrorException_1(env, GetLastError());
 	}
 }
 
@@ -78,7 +78,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 
 	HANDLE h = (HANDLE) (uintptr_t) handle;
 	if (h == INVALID_HANDLE_VALUE) {
-		throwBadFileDescriptor(env);
+		jthrow_InvalidFileDescriptorException(env);
 		return false;
 	}
 
@@ -86,7 +86,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 
 	switch(result) {
 	case (WAIT_ABANDONED):
-		throwMutexAbandonedException(env, handle);
+		jthrow_MutexAbandonedException(env, handle);
 		return false;
 	case(WAIT_TIMEOUT):
 			return false;
@@ -95,10 +95,10 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 	default: {
 			DWORD err = GetLastError();
 			if (err == ERROR_INVALID_HANDLE) {
-				throwBadFileDescriptor(env);
+				jthrow_InvalidFileDescriptorException(env);
 				return false;
 			}
-			throwUnknownError(env, err);
+			jthrow_UnknownNativeErrorException_1(env, err);
 			return false;
 		}
 	}
@@ -113,21 +113,20 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
   (JNIEnv * env, jobject inst, jlongArray handles, jint timeout, jboolean waitAll) {
 
 	if (handles == NULL) {
-		throwNullPointerException(env, "handles");
+		jthrowCC_NullPointerException_1(env, "handles");
 		return -1;
 	}
 
-	jint result = -1;
 	HANDLE* h;
 	DWORD len = (DWORD) (*env)->GetArrayLength(env, handles);
 
 	if (len == 0) {
-		throwIllegalArgumentsExc(env, "handles.lenght == 0");
+		jthrowCC_IllegalArgumentException_1(env, "handles.lenght == 0");
 		return -1;
 	}
 
 	if (len > MAXIMUM_WAIT_OBJECTS) {
-		throwIllegalArgumentsExc(env, "too many handles");
+		jthrowCC_IllegalArgumentException_1(env, "too many handles");
 		return -1;
 	}
 
@@ -135,21 +134,21 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 	if (sizeof(HANDLE) == sizeof(jlong)) {
 		h = (HANDLE*) (*env)->GetLongArrayElements(env, handles, NULL);
 		if (h == NULL) {
-			throwOOM(env, "GetLongArrayElements");
+			jthrowCC_OutOfMemoryError_1(env, "GetLongArrayElements");
 			return -1;
 		}
 	//32 bit
 	} else {
 		jlong * tmp = (*env)->GetLongArrayElements(env, handles, NULL);
 		if (tmp == NULL) {
-			throwOOM(env, "GetLongArrayElements");
+			jthrowCC_OutOfMemoryError_1(env, "GetLongArrayElements");
 			return -1;
 		}
 
 		h = malloc(sizeof(HANDLE)*len);
 		if (h == NULL) {
 			(*env)->ReleaseLongArrayElements(env, handles, (jlong*) h, JNI_ABORT);
-			throwOOM(env, "malloc");
+			jthrowCC_OutOfMemoryError_1(env, "malloc");
 			return -1;
 		}
 
@@ -175,23 +174,23 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 		case (WAIT_FAILED): {
 			DWORD err = GetLastError();
 			if (err == ERROR_INVALID_HANDLE) {
-				throwBadFileDescriptor(env);
+				jthrow_InvalidFileDescriptorException(env);
 				return -1;
 			}
-			throwUnknownError(env, err);
+			jthrow_UnknownNativeErrorException_1(env, err);
 			return -1;
 		}
 		default: {
 			if (WAIT_ABANDONED_0 <= res && res < WAIT_ABANDONED_0 + len ) {
 				if (waitAll) {
-					throwMutexAbandonedException(env, -1);
+					jthrow_MutexAbandonedException(env, -1);
 					return -1;
 				}
 
 				jlong theLong = -1;
 				(*env)->GetLongArrayRegion(env, handles, res-WAIT_ABANDONED_0, 1, &theLong);
 
-				throwMutexAbandonedException(env, theLong);
+				jthrow_MutexAbandonedException(env, theLong);
 				return -1;
 			}
 
@@ -199,7 +198,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 
 			if (off >= len) {
 				//SHOULDNT HAPPEN
-				throwUnknownError(env, GetLastError());
+				jthrow_UnknownNativeErrorException_1(env, GetLastError());
 				return -1;
 			}
 

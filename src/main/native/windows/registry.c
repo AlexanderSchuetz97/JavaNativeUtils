@@ -38,7 +38,7 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 	if (subKey != NULL) {
 		subKeyS = (*env)->GetStringUTFChars(env, subKey, NULL);
 		if (subKeyS == NULL) {
-			throwOOM(env, "GetStringUTFChars");
+			jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 			return 0;
 		}
 	}
@@ -54,7 +54,7 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 		return (jlong) (uintptr_t) out;
 	}
 
-	throwUnknownError(env, err);
+	jthrow_UnknownNativeErrorException_1(env, err);
 	return 0;
 }
 
@@ -70,7 +70,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 		return;
 	}
 
-	throwUnknownError(env, err);
+	jthrow_UnknownNativeErrorException_1(env, err);
 }
 
 /*
@@ -91,7 +91,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	if (valueName != NULL) {
 		valueNameS = (*env)->GetStringUTFChars(env, valueName, NULL);
 		if (valueNameS == NULL) {
-			throwOOM(env, "GetStringUTFChars");
+			jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 			goto clean;
 		}
 	}
@@ -107,7 +107,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 
 
 	if (err != ERROR_MORE_DATA) {
-		throwUnknownError(env, err);
+		jthrow_UnknownNativeErrorException_1(env, err);
 		goto clean;
 	}
 
@@ -115,7 +115,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	data = malloc(len+1);
 	vdata = data;
 	if (data == NULL) {
-		throwOOM(env, "malloc");
+		jthrowCC_OutOfMemoryError_1(env, "malloc");
 		goto clean;
 	}
 
@@ -124,7 +124,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	type = 0;
 	err = RegQueryValueExA((HKEY) (uintptr_t) hkey, valueNameS, 0, &type, (LPBYTE) data, &len);
 	if (err != ERROR_SUCCESS) {
-		throwUnknownError(env, err);
+		jthrow_UnknownNativeErrorException_1(env, err);
 		goto clean;
 	}
 
@@ -145,7 +145,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 
 		jobjectArray stringArray = (*env)->NewObjectArray(env, count, String_Class, NULL);
 		if (stringArray == NULL) {
-			throwOOM(env, "NewObjectArray");
+			jthrowCC_OutOfMemoryError_1(env, "NewObjectArray");
 			goto clean;
 		}
 
@@ -153,7 +153,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		for (int i = 0; i < count; i++) {
 			jstring nstring = (*env)->NewStringUTF(env, &charBuf[off]);
 			if (nstring == NULL) {
-				throwOOM(env, "NewStringUTF");
+				jthrowCC_OutOfMemoryError_1(env, "NewStringUTF");
 				goto clean;
 			}
 			off = strlen(&charBuf[off]+1);
@@ -171,7 +171,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	case REG_EXPAND_SZ:
 		str = (*env)->NewStringUTF(env, (const char*) data);
 		if (str == NULL) {
-			throwOOM(env, "NewStringUTF");
+			jthrowCC_OutOfMemoryError_1(env, "NewStringUTF");
 			goto clean;
 		}
 		ret = (*env)->NewObject(env, RegData, RegData_Object, str, RegData_types[2]);
@@ -179,7 +179,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	case REG_LINK:
 		str = (*env)->NewStringUTF(env, (const char*) data);
 		if (str == NULL) {
-			throwOOM(env, "NewStringUTF");
+			jthrowCC_OutOfMemoryError_1(env, "NewStringUTF");
 			goto clean;
 		}
 		ret = (*env)->NewObject(env, RegData, RegData_Object, str, RegData_types[3]);
@@ -187,14 +187,14 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	case REG_SZ:
 		str = (*env)->NewStringUTF(env, (const char*) data);
 		if (str == NULL) {
-			throwOOM(env, "NewStringUTF");
+			jthrowCC_OutOfMemoryError_1(env, "NewStringUTF");
 			goto clean;
 		}
 		ret = (*env)->NewObject(env, RegData, RegData_Object, str, RegData_types[7]);
 		goto clean;
 	case REG_QWORD:
 		if (len < 8) {
-			throwUnknownError(env, ERROR_INVALID_USER_BUFFER);
+			jthrow_UnknownNativeErrorException_1(env, ERROR_INVALID_USER_BUFFER);
 			goto clean;
 		}
 		jlong* lptr = (jlong*) data;
@@ -202,7 +202,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		goto clean;
 	case REG_DWORD:
 		if (len < 4) {
-			throwUnknownError(env, ERROR_INVALID_USER_BUFFER);
+			jthrow_UnknownNativeErrorException_1(env, ERROR_INVALID_USER_BUFFER);
 			goto clean;
 		}
 		jint* iptr = (jint*) data;
@@ -211,7 +211,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	case REG_BINARY:
 		bytes = (*env)->NewByteArray(env, len);
 		if (bytes == NULL) {
-			throwOOM(env, "NewByteArray");
+			jthrowCC_OutOfMemoryError_1(env, "NewByteArray");
 			goto clean;
 		}
 
@@ -221,7 +221,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	default:
 		bytes = (*env)->NewByteArray(env, len);
 		if (bytes == NULL) {
-			throwOOM(env, "NewByteArray");
+			jthrowCC_OutOfMemoryError_1(env, "NewByteArray");
 			goto clean;
 		}
 
@@ -273,7 +273,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 			NULL);
 
 	if (ret != ERROR_SUCCESS) {
-		throwUnknownError(env, ret);
+		jthrow_UnknownNativeErrorException_1(env, ret);
 		goto cleanup;
 	}
 
@@ -285,7 +285,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	lpcchClass++;
 	lpClass = malloc(lpcchClass + 1);
 	if (lpClass == NULL) {
-		throwOOM(env, "malloc");
+		jthrowCC_OutOfMemoryError_1(env, "malloc");
 		goto cleanup;
 	}
 
@@ -305,21 +305,21 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 			&lpftLastWriteTime);
 
 	if (ret != ERROR_SUCCESS) {
-		throwUnknownError(env, ret);
+		jthrow_UnknownNativeErrorException_1(env, ret);
 		goto cleanup;
 	}
 
 	jstring jlpClass = (*env)->NewStringUTF(env, lpClass);
 
 	if (jlpClass == NULL) {
-		throwOOM(env, "NewStringUTF");
+		jthrowCC_OutOfMemoryError_1(env, "NewStringUTF");
 		goto cleanup;
 	}
 
 
 	result = (*env)->NewObject(env, RegQueryInfoKeyResult_Class, RegQueryInfoKeyResult_Constructor);
 	if (result == NULL) {
-		throwOOM(env, "NewObject");
+		jthrowCC_OutOfMemoryError_1(env, "NewObject");
 		goto cleanup;
 	}
 
@@ -380,7 +380,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 			NULL);
 
 		if (ret != ERROR_SUCCESS) {
-			throwUnknownError(env, ret);
+			jthrow_UnknownNativeErrorException_1(env, ret);
 			return NULL;
 		}
 
@@ -399,13 +399,13 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 
 	cmem = (char*) malloc(classSize+1);
 	if (cmem == NULL) {
-		throwOOM(env, "malloc");
+		jthrowCC_OutOfMemoryError_1(env, "malloc");
 		return NULL;
 	}
 
 	nmem = (char*) malloc(nameSize+1);
 	if (nmem == NULL) {
-		throwOOM(env, "malloc");
+		jthrowCC_OutOfMemoryError_1(env, "malloc");
 		goto cleanup;
 	}
 
@@ -423,19 +423,19 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	}
 
 	if (ret != ERROR_SUCCESS) {
-		throwUnknownError(env, ret);
+		jthrow_UnknownNativeErrorException_1(env, ret);
 		goto cleanup;
 	}
 
 	jstring jname = (*env)->NewStringUTF(env, (const char *) nmem);
 	if (jname == NULL) {
-		throwOOM(env, "NewStringUTF");
+		jthrowCC_OutOfMemoryError_1(env, "NewStringUTF");
 		goto cleanup;
 	}
 
 	jstring jclass = (*env)->NewStringUTF(env, (const char *) cmem);
 	if (jclass == NULL) {
-		throwOOM(env, "NewStringUTF");
+		jthrowCC_OutOfMemoryError_1(env, "NewStringUTF");
 		goto cleanup;
 	}
 
@@ -445,7 +445,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 
 	obj = (*env)->NewObject(env, RegEnumKeyExResult_Class, RegEnumKeyExResult_Constructor);
 	if (obj == NULL) {
-		throwOOM(env, "NewObject");
+		jthrowCC_OutOfMemoryError_1(env, "NewObject");
 		goto cleanup;
 	}
 	(*env)->SetObjectField(env, obj, RegEnumKeyExResult_name, jname);

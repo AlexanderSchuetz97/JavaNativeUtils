@@ -63,7 +63,7 @@ JNIEXPORT jbyteArray JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_
 JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_from_1struct_1timeval
   (JNIEnv * env, jobject inst, jbyteArray jtv) {
 	if (jtv == NULL) {
-		throwNullPointerException(env, "timeval is null");
+		jthrowCC_NullPointerException_1(env, "timeval is null");
 		return 0;
 	}
 
@@ -88,32 +88,37 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILi
 JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_to_1sockaddr_1in
   (JNIEnv * env, jobject inst, jobject jaddr) {
 	if (jaddr == NULL) {
-		throwNullPointerException(env, "address");
+		jthrowCC_NullPointerException_1(env, "address");
 		return NULL;
 	}
 
-	jobject jInetAddr = getAddressFromInetSocketAddress(env, jaddr);
+	jobject jInetAddr = jcall_InetSocketAddress_getAddress(env, jaddr);
 	if (jInetAddr == NULL) {
-		throwNullPointerException(env, "address.getAddress() returned null");
+		jthrowCC_NullPointerException_1(env, "address.getAddress() returned null");
 		return NULL;
 	}
 
-	jbyteArray jInetAddrBytes = getAddressFromInetAddress(env, jInetAddr);
+	jbyteArray jInetAddrBytes = jcall_InetAddress_getAddress(env, jInetAddr);
 	(*env)->DeleteLocalRef(env, jInetAddr);
 	if (jInetAddrBytes == NULL) {
-		throwNullPointerException(env, "address.getAddress().getAddress() returned null");
+		jthrowCC_NullPointerException_1(env, "address.getAddress().getAddress() returned null");
 		return NULL;
 	}
 
 	jsize len = (*env)->GetArrayLength(env, jInetAddrBytes);
 	if (len != 4 && len != 16) {
-		throwIllegalArgumentsExc(env, "address.getAddress().getAddress() returned an array not of length 4 (Ipv4) or 16 (Ipv6)");
+		jthrowCC_IllegalArgumentException_1(env, "address.getAddress().getAddress() returned an array not of length 4 (Ipv4) or 16 (Ipv6)");
 		return NULL;
 	}
 
-	jint port = getPortFromInetSocketAddress(env, jaddr);
+	jint port = jcall_InetSocketAddress_getPort(env, jaddr);
+
+	if (jerr(env)) {
+		return NULL;
+	}
+
 	if (port < 0 || port > 0xffff) {
-		throwIllegalArgumentsExc(env, "address.getPort() returned an invalid port number");
+		jthrowCC_IllegalArgumentException_1(env, "address.getPort() returned an invalid port number");
 		return NULL;
 	}
 
@@ -125,7 +130,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		af = AF_INET;
 		jbyte* bytes = (*env)->GetByteArrayElements(env, jInetAddrBytes, NULL);
 		if (bytes == NULL) {
-			throwOOM(env, "GetByteArrayElements");
+			jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 			return NULL;
 		}
 
@@ -141,7 +146,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		struct sockaddr_in * ptr = (struct sockaddr_in *) (*env)->GetByteArrayElements(env, structArray, NULL);
 		if (ptr == NULL) {
 			(*env)->DeleteLocalRef(env, structArray);
-			throwOOM(env, "GetByteArrayElements");
+			jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 			return NULL;
 		}
 
@@ -162,7 +167,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		struct sockaddr_in6 * ptr = (struct sockaddr_in6 *) (*env)->GetByteArrayElements(env, structArray, NULL);
 		if (ptr == NULL) {
 			(*env)->DeleteLocalRef(env, structArray);
-			throwOOM(env, "GetByteArrayElements");
+			jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 			return NULL;
 		}
 
@@ -180,7 +185,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		if (bytes == NULL) {
 			(*env)->ReleaseByteArrayElements(env, structArray, (jbyte*) ptr, JNI_ABORT);
 			(*env)->DeleteLocalRef(env, structArray);
-			throwOOM(env, "GetByteArrayElements");
+			jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 			return NULL;
 		}
 
@@ -193,7 +198,8 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		(*env)->ReleaseByteArrayElements(env, structArray, (jbyte*) ptr, JNI_OK);
 	}
 
-	jobject result = (*env)->NewObject(env, Sockaddr, SockaddrConstructor, af, structArray);
+
+	jobject result = jnew_Sockaddr_1(env, af, structArray);
 	(*env)->DeleteLocalRef(env, structArray);
 
 	if (result != NULL) {
@@ -204,7 +210,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		return NULL;
 	}
 
-	throwOOM(env, "NewObject");
+	jthrowCC_OutOfMemoryError_1(env, "NewObject");
 	return NULL;
 
 }
@@ -217,23 +223,21 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_from_1sockaddr_1in
   (JNIEnv * env, jobject inst, jobject sockaddr) {
 	if (sockaddr == NULL) {
-		throwNullPointerException(env, "address");
+		jthrowCC_NullPointerException_1(env, "address");
 		return NULL;
 	}
 
-	jint af = (*env)->GetIntField(env, sockaddr, Sockaddr_addressFamily);
+	jint af = jget_Sockaddr_addressFamily(env, sockaddr);
 	if (af != AF_INET && af != AF_INET6) {
-		throwIllegalArgumentsExc(env, "Address Family is not AF_INET or AF_INET6");
+		jthrowCC_IllegalArgumentException_1(env, "Address Family is not AF_INET or AF_INET6");
 		return NULL;
 	}
 
-	jbyteArray jstruct = (*env)->GetObjectField(env, sockaddr, Sockaddr_address);
+	jbyteArray jstruct = jget_Sockaddr_address(env, sockaddr);
 	if (jstruct == NULL) {
-		throwNullPointerException(env, "address.address");
+		jthrowCC_NullPointerException_1(env, "address.address");
 		return NULL;
 	}
-
-
 
 
 	jsize len = (*env)->GetArrayLength(env, jstruct);
@@ -244,14 +248,14 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	if (af == AF_INET) {
 		if (len != sizeof(struct sockaddr_in)) {
 			(*env)->DeleteLocalRef(env, jstruct);
-			throwIllegalArgumentsExc(env, "address.address has wrong size for AF_INET");
+			jthrowCC_IllegalArgumentException_1(env, "address.address has wrong size for AF_INET");
 			return NULL;
 		}
 
 		struct sockaddr_in* inetPtr = (struct sockaddr_in* ) (*env)->GetByteArrayElements(env, jstruct, NULL);
 		if (inetPtr == NULL) {
 			(*env)->DeleteLocalRef(env, jstruct);
-			throwOOM(env, "GetByteArrayElements");
+			jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 			return NULL;
 		}
 
@@ -262,13 +266,13 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 
 		bytes = (*env)->NewByteArray(env, 4);
 		if (bytes == NULL) {
-			throwOOM(env, "NewByteArray 4");
+			jthrowCC_OutOfMemoryError_1(env, "NewByteArray 4");
 			return NULL;
 		}
 
 		jbyte* bytePtr = (*env)->GetByteArrayElements(env, bytes, NULL);
 		if (bytePtr == NULL) {
-			throwOOM(env, "GetByteArrayElements");
+			jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 			return NULL;
 		}
 
@@ -284,14 +288,14 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	} else {
 		if (len != sizeof(struct sockaddr_in6)) {
 			(*env)->DeleteLocalRef(env, jstruct);
-			throwIllegalArgumentsExc(env, "address.address has wrong size for AF_INET6");
+			jthrowCC_IllegalArgumentException_1(env, "address.address has wrong size for AF_INET6");
 			return NULL;
 		}
 
 		struct sockaddr_in6* inetPtr = (struct sockaddr_in6*) (*env)->GetByteArrayElements(env, jstruct, NULL);
 		if (inetPtr == NULL) {
 			(*env)->DeleteLocalRef(env, jstruct);
-			throwOOM(env, "GetByteArrayElements");
+			jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 			return NULL;
 		}
 
@@ -300,7 +304,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		if (bytes == NULL) {
 			(*env)->ReleaseByteArrayElements(env, jstruct, (jbyte*) inetPtr, JNI_ABORT);
 			(*env)->DeleteLocalRef(env, jstruct);
-			throwOOM(env, "NewByteArray 16");
+			jthrowCC_OutOfMemoryError_1(env, "NewByteArray 16");
 			return NULL;
 		}
 
@@ -308,7 +312,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		if (bytePtr == NULL) {
 			(*env)->ReleaseByteArrayElements(env, jstruct, (jbyte*) inetPtr, JNI_ABORT);
 			(*env)->DeleteLocalRef(env, jstruct);
-			throwOOM(env, "GetByteArrayElements");
+			jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 			return NULL;
 		}
 
@@ -323,22 +327,24 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		(*env)->ReleaseByteArrayElements(env, bytes, bytePtr, JNI_OK);
 	}
 
-	jobject inet = getInetAddressFromByteArray(env, bytes);
+	jobject inet = jcall_InetAddress_getByAddress_1(env, bytes);
+
 	(*env)->DeleteLocalRef(env, bytes);
 
-	//only null if length != 4 || != 16 || null which code above ensures never happens.
-	//Only remaining option is OOM
-	if (inet == NULL) {
-		throwOOM(env, "getInetAddressFromByteArray");
+	if (jerr(env)) {
 		return NULL;
 	}
 
-	jobject result = getInetSocketAddress(env, inet, port);
+	if (inet == NULL) {
+		jthrowCC_OutOfMemoryError_1(env, "jcall_InetAddress_getAddress");
+		return NULL;
+	}
+
+	jobject result = jnew_InetSocketAddress_2(env, inet, port);
+
 	(*env)->DeleteLocalRef(env, inet);
 	if (result == NULL) {
-		if (!(*env)->ExceptionCheck(env)) {
-			throwOOM(env, "getInetSocketAddress");
-		}
+		jthrowCC_OutOfMemoryError_1(env, "jnew_InetSocketAddress_2");
 	}
 
 	return result;
@@ -355,7 +361,7 @@ const int MAX_UNIX_PATH_LEN = sizeof(struct sockaddr_un) - sizeof(sa_family_t) -
 JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_to_1sockaddr_1un
   (JNIEnv *env, jobject inst, jstring addr) {
 	if (addr == NULL) {
-		throwNullPointerException(env, "address");
+		jthrowCC_NullPointerException_1(env, "address");
 		return NULL;
 	}
 
@@ -363,18 +369,18 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 
 	//technically 108 but I want the zero byte at the end for peace of mind.
 	if (len > MAX_UNIX_PATH_LEN) {
-		throwIllegalArgumentsExc(env, "address is too long");
+		jthrowCC_IllegalArgumentException_1(env, "address is too long");
 		return NULL;
 	}
 
 	if (len <= 0) {
-		throwIllegalArgumentsExc(env, "address is empty string");
+		jthrowCC_IllegalArgumentException_1(env, "address is empty string");
 		return NULL;
 	}
 
 	jbyteArray array = (*env)->NewByteArray(env, sizeof(struct sockaddr_un));
 	if (array == NULL) {
-		throwOOM(env, "NewByteArray sizeof(struct sockaddr_un)");
+		jthrowCC_OutOfMemoryError_1(env, "NewByteArray sizeof(struct sockaddr_un)");
 		return NULL;
 	}
 
@@ -390,9 +396,9 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	(*env)->ReleaseStringUTFChars(env, addr, path);
 	(*env)->ReleaseByteArrayElements(env, array, (jbyte*) ptr, JNI_OK);
 
-	jobject res = (*env)->NewObject(env, Sockaddr, SockaddrConstructor, AF_UNIX, array);
+	jobject res = jnew_Sockaddr_1(env, AF_UNIX, array);
 	if (res == NULL) {
-		throwOOM(env, "NewObject");
+		jthrowCC_OutOfMemoryError_1(env, "NewObject");
 		return NULL;
 	}
 
@@ -408,19 +414,19 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_from_1sockaddr_1un
   (JNIEnv * env, jobject inst, jobject sockaddr) {
 	if (sockaddr == NULL) {
-		throwNullPointerException(env, "address");
+		jthrowCC_NullPointerException_1(env, "address");
 		return NULL;
 	}
 
-	jint af = (*env)->GetIntField(env, sockaddr, Sockaddr_addressFamily);
+	jint af = jget_Sockaddr_addressFamily(env, sockaddr);
 	if (af != AF_UNIX) {
-		throwIllegalArgumentsExc(env, "Address Family is not AF_UNIX");
+		jthrowCC_IllegalArgumentException_1(env, "Address Family is not AF_UNIX");
 		return NULL;
 	}
 
-	jbyteArray jstruct = (*env)->GetObjectField(env, sockaddr, Sockaddr_address);
+	jbyteArray jstruct = jget_Sockaddr_address(env, sockaddr);
 	if (jstruct == NULL) {
-		throwNullPointerException(env, "address.address");
+		jthrowCC_NullPointerException_1(env, "address.address");
 		return NULL;
 	}
 
@@ -428,7 +434,7 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 
 	if (len > sizeof(struct sockaddr_un) && len > sizeof(sa_family_t)+1) {
 		(*env)->DeleteLocalRef(env, jstruct);
-		throwIllegalArgumentsExc(env, "address.address has wrong size for AF_UNIX");
+		jthrowCC_IllegalArgumentException_1(env, "address.address has wrong size for AF_UNIX");
 		return NULL;
 	}
 
@@ -437,7 +443,7 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	if (bptr[len-1] != 0) {
 		(*env)->ReleaseByteArrayElements(env, jstruct,  bptr, JNI_ABORT);
 		(*env)->DeleteLocalRef(env, jstruct);
-		throwIllegalArgumentsExc(env, "address.address last byte is not 0");
+		jthrowCC_IllegalArgumentException_1(env, "address.address last byte is not 0");
 		return NULL;
 	}
 
@@ -446,7 +452,7 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	(*env)->DeleteLocalRef(env, jstruct);
 
 	if (result == NULL) {
-		throwOOM(env, "NewStringUTF");
+		jthrowCC_OutOfMemoryError_1(env, "NewStringUTF");
 	}
 
 	return result;
@@ -479,29 +485,28 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	uts.sysname[_UTSNAME_SYSNAME_LENGTH-1] = 0;
 	uts.version[_UTSNAME_VERSION_LENGTH-1] = 0;
 
-	jobject utsname = (*env)->NewObject(env, Utsname, Utsname_constructor);
+	jobject utsname = jnew_Utsname(env);
 	if (utsname == NULL) {
-		throwOOM(env, "NewObject");
 		return NULL;
 	}
 
-	if (!setStringField(env, utsname, Utsname_sysname, (const char*) &uts.sysname)) {
+	if (!jsetC_Utsname_sysname(env, utsname, (char*) &uts.sysname)) {
 		return NULL;
 	}
 
-	if (!setStringField(env, utsname, Utsname_machine, (const char*) &uts.machine)) {
+	if (!jsetC_Utsname_machine(env, utsname, (char*) &uts.machine)) {
 		return NULL;
 	}
 
-	if (!setStringField(env, utsname, Utsname_nodename, (const char*) &uts.nodename)) {
+	if (!jsetC_Utsname_nodename(env, utsname, (char*) &uts.nodename)) {
 		return NULL;
 	}
 
-	if (!setStringField(env, utsname, Utsname_release, (const char*) &uts.release)) {
+	if (!jsetC_Utsname_release(env, utsname, (char*) &uts.release)) {
 		return NULL;
 	}
 
-	if (!setStringField(env, utsname, Utsname_version, (const char*) &uts.version)) {
+	if (!jsetC_Utsname_version(env, utsname, (char*) &uts.version)) {
 		return NULL;
 	}
 

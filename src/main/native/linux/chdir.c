@@ -36,7 +36,7 @@
 JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_chdir
   (JNIEnv * env, jobject inst, jstring path) {
 	if (path == NULL) {
-		throwIllegalArgumentsExc(env, "path is null");
+		jthrowCC_IllegalArgumentException_1(env, "path is null");
 		return;
 	}
 
@@ -44,7 +44,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 
 	const char* chars = (*env)->GetStringUTFChars(env, path, NULL);
 	if (chars == NULL) {
-		throwOOM(env, "GetStringUTFChars");
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return;
 	}
 
@@ -58,28 +58,28 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 
 	switch(err) {
 	case(EACCES):
-		throwFSAccessDenied(env, chars, NULL, "chdir caused EACCES");
+		jthrowCC_AccessDeniedException_1(env, chars, NULL, "chdir caused EACCES");
 		break;
 	case(EIO):
-		throwIOExc(env, "chdir caused EIO");
+		jthrowC_IOException_1(env, "chdir caused EIO");
 		break;
 	case(ELOOP):
-		throwFSLoop(env, chars);
+		jthrowCC_FileSystemLoopException(env, chars);
 		break;
 	case(ENAMETOOLONG):
-		throwInvalidPath(env, chars, "path is too long");
+		jthrowCC_InvalidPathException(env, chars, "path is too long");
 		break;
 	case(ENOENT):
-		throwFileNotFoundExc(env, chars);
+		jthrowCC_FileNotFoundException_1(env, chars);
 		break;
 	case(ENOMEM):
-		throwOOM(env, "Insufficient kernel memory was available.");
+		jthrowCC_OutOfMemoryError_1(env, "Insufficient kernel memory was available.");
 		break;
 	case(ENOTDIR):
-		throwNotDirectoryException(env, chars);
+		jthrowCC_NotDirectoryException(env, chars);
 		break;
 	default:
-		throwUnknownError(env, err);
+		jthrow_UnknownNativeErrorException_1(env, err);
 		break;
 	}
 

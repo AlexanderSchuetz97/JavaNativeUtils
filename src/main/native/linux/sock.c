@@ -42,29 +42,29 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 
 		switch(err) {
 		case(EINVAL):
-			throwIllegalArgumentsExc(env, "Invalid flags in type or unknown protocol or protocol family not available.");
+			jthrowCC_IllegalArgumentException_1(env, "Invalid flags in type or unknown protocol or protocol family not available.");
 			return -1;
 		case(EAFNOSUPPORT):
-			throwUnsupportedExc(env, "The implementation does not support the specified address family.");
+			jthrowCC_UnsupportedOperationException_1(env, "The implementation does not support the specified address family.");
 			return -1;
 		case (EPROTONOSUPPORT):
-			throwUnsupportedExc(env, "The protocol type or the specified protocol is not supported within this domain.");
+			jthrowCC_UnsupportedOperationException_1(env, "The protocol type or the specified protocol is not supported within this domain.");
 			return -1;
 		case (EACCES):
-			throwFSAccessDenied(env, NULL, NULL, "Permission to create a socket of the specified type and/or protocol is denied.");
+			jthrowCC_AccessDeniedException_1(env, NULL, NULL, "Permission to create a socket of the specified type and/or protocol is denied.");
 			return -1;
 		case (EMFILE):
-			throwQuotaExceededException(env, NULL, NULL, "The per-process limit on the number of open file descriptors has been reached.");
+			jthrowCC_QuotaExceededException_1(env, NULL, NULL, "The per-process limit on the number of open file descriptors has been reached.");
 			return -1;
 		case (ENFILE):
-			throwQuotaExceededException(env, NULL, NULL, "The system-wide limit on the total number of open files has been reached.");
+			jthrowCC_QuotaExceededException_1(env, NULL, NULL, "The system-wide limit on the total number of open files has been reached.");
 			return -1;
 		case (ENOBUFS):
 		case (ENOMEM):
-			throwOOM(env, "Insufficient memory is available. The socket cannot be created until sufficient resources are freed.");
+			jthrowCC_OutOfMemoryError_1(env, "Insufficient memory is available. The socket cannot be created until sufficient resources are freed.");
 			return -1;
 		default:
-			throwUnknownError(env, err);
+			jthrow_UnknownNativeErrorException_1(env, err);
 			return -1;
 		}
 	}
@@ -80,14 +80,14 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_bind
   (JNIEnv * env, jobject inst, jint fd, jobject jaddrobj) {
 	if (jaddrobj == NULL) {
-			throwNullPointerException(env, "address is null");
+			jthrowCC_NullPointerException_1(env, "address is null");
 			return;
 		}
 
-		jbyteArray jaddr = (jbyteArray) (*env)->GetObjectField(env, jaddrobj, Sockaddr_address);
+		jbyteArray jaddr = (jbyteArray) jget_Sockaddr_address(env, jaddrobj);
 
 		if (jaddr == NULL) {
-			throwNullPointerException(env, "address.address is null");
+			jthrowCC_NullPointerException_1(env, "address.address is null");
 			return;
 		}
 
@@ -96,7 +96,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 
 		struct sockaddr * addr = (struct sockaddr *) (*env)->GetByteArrayElements(env, jaddr, NULL);
 		if (addr == NULL) {
-			throwOOM(env, "GetByteArrayElements");
+			jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 			return;
 		}
 
@@ -114,63 +114,66 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 			if (size >= sizeof(sa_family_t) && addr->sa_family == AF_UNIX) {
 				switch(err) {
 					case(EBADF):
-						throwBadFileDescriptor(env);
+						jthrow_InvalidFileDescriptorException(env);
 						break;
 					case(ENOTSOCK):
-						throwIllegalArgumentsExc(env, "file descriptor does not refer to a socket");
+						jthrowCC_IllegalArgumentException_1(env, "file descriptor does not refer to a socket");
 						break;
 					case(EACCES):
-						throwFSAccessDenied(env, NULL, NULL, "Search permission is denied on a component of the path prefix.");
+						jthrowCC_AccessDeniedException_1(env, NULL, NULL, "Search permission is denied on a component of the path prefix.");
 						break;
 					case(EADDRNOTAVAIL):
-						throwBindException(env, "A nonexistent interface was requested or the requested address was not local.");
+						jthrowCC_BindException_1(env, "A nonexistent interface was requested or the requested address was not local.");
 						break;
 					case(ELOOP):
-						throwFSLoop(env, "socket address");
+						jthrowCC_FileSystemLoopException(env, "socket address");
 						break;
 					case(ENAMETOOLONG):
-						throwInvalidPath(env, "socket address", "addr is too long");
+						jthrowCC_InvalidPathException(env, "socket address", "addr is too long");
 						break;
 					case(ENOENT):
-						throwFileNotFoundExc(env, "A component in the directory prefix of the socket pathname does not exist.");
+						jthrowCC_FileNotFoundException_1(env, "A component in the directory prefix of the socket pathname does not exist.");
 						break;
 					case(ENOMEM):
-						throwOOM(env, "Insufficient kernel memory was available.");
+						jthrowCC_OutOfMemoryError_1(env, "Insufficient kernel memory was available.");
 						break;
 					case(ENOTDIR):
-						throwNotDirectoryException(env, "A component of the path prefix is not a directory.");
+						jthrowCC_NotDirectoryException(env, "A component of the path prefix is not a directory.");
 						break;
 					case(EROFS):
-						throwFSReadOnly(env);
+						jthrow_ReadOnlyFileSystemException(env);
 						break;
 					case(EINTR):
 						continue;
 					default:
-						throwUnknownError(env, err);
+						jthrow_UnknownNativeErrorException_1(env, err);
 						break;
 				}
-			} else {
-				switch(err) {
-					case(EBADF):
-						throwBadFileDescriptor(env);
-						break;
-					case(ENOTSOCK):
-						throwIllegalArgumentsExc(env, "file descriptor does not refer to a socket");
-						break;
-					case(EACCES):
-						throwFSAccessDenied(env, NULL, NULL, "The address is protected, and the user is not the superuser.");
-						break;
-					case(EADDRINUSE):
-						throwBindException(env, "could not bind local address because it is in use.");
-						break;
-					case(EINTR):
-						continue;
-					default:
-						throwUnknownError(env, err);
-						break;
-				}
+				goto cleanup;
 			}
 
+			switch(err) {
+				case(EBADF):
+					jthrow_InvalidFileDescriptorException(env);
+					break;
+				case(ENOTSOCK):
+					jthrowCC_IllegalArgumentException_1(env, "file descriptor does not refer to a socket");
+					break;
+				case(EACCES):
+					jthrowCC_AccessDeniedException_1(env, NULL, NULL, "The address is protected, and the user is not the superuser.");
+					break;
+				case(EADDRINUSE):
+					jthrowCC_BindException_1(env, "could not bind local address because it is in use.");
+					break;
+				case(EINTR):
+					continue;
+				default:
+					jthrow_UnknownNativeErrorException_1(env, err);
+					break;
+			}
+
+
+			cleanup:
 			(*env)->ReleaseByteArrayElements(env, jaddr, (jbyte*) addr, JNI_ABORT);
 			return;
 		}
@@ -184,14 +187,14 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_connect
   (JNIEnv * env, jobject inst, jint  fd, jobject jaddrobj) {
 	if (jaddrobj == NULL) {
-		throwNullPointerException(env, "address is null");
+		jthrowCC_NullPointerException_1(env, "address is null");
 		return;
 	}
 
-	jbyteArray jaddr = (jbyteArray) (*env)->GetObjectField(env, jaddrobj, Sockaddr_address);
+	jbyteArray jaddr = (jbyteArray) jget_Sockaddr_address(env, jaddrobj);
 
 	if (jaddr == NULL) {
-		throwNullPointerException(env, "address.address is null");
+		jthrowCC_NullPointerException_1(env, "address.address is null");
 		return;
 	}
 
@@ -200,7 +203,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 
 	struct sockaddr * addr = (struct sockaddr *) (*env)->GetByteArrayElements(env, jaddr, NULL);
 	if (addr == NULL) {
-		throwOOM(env, "GetByteArrayElements");
+		jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 		return;
 	}
 
@@ -218,51 +221,51 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 		switch(err) {
 			case(EPERM):
 			case(EACCES):
-				throwFSAccessDenied(env, NULL, NULL, "Permission denied due to either missing broadcast flag, local firewall rule, or SELinux policy.");
+				jthrowCC_AccessDeniedException_1(env, NULL, NULL, "Permission denied due to either missing broadcast flag, local firewall rule, or SELinux policy.");
 				break;
 			case(EADDRINUSE):
-				throwBindException(env, "could not bind local address because it is in use.");
+				jthrowCC_BindException_1(env, "could not bind local address because it is in use.");
 				break;
 			case(EADDRNOTAVAIL):
-				throwBindException(env, "could not bind local address because no free port is available.");
+				jthrowCC_BindException_1(env, "could not bind local address because no free port is available.");
 				break;
 			case(EAFNOSUPPORT):
-				throwIllegalArgumentsExc(env, "sa_family field in address was not valid");
+				jthrowCC_IllegalArgumentException_1(env, "sa_family field in address was not valid");
 				break;
 			case(EAGAIN):
-				throwIOExc(env, "the connection cannot be established immediately.");
+				jthrowC_IOException_1(env, "the connection cannot be established immediately.");
 				break;
 			case(EALREADY):
-				throwIOExc(env, "previous connection attempt has not yet been completed.");
+				jthrowC_IOException_1(env, "previous connection attempt has not yet been completed.");
 				break;
 			case (EBADF):
-				throwBadFileDescriptor(env);
+				jthrow_InvalidFileDescriptorException(env);
 				break;
 			case(ECONNREFUSED):
-				throwConnectException(env, "connection refused.");
+				jthrowCC_ConnectException_1(env, "connection refused.");
 				break;
 			case(EINPROGRESS):
-				throwOperationInProgressException(env, "connect");
+				jthrowCC_OperationInProgressException_1(env, "connect");
 				break;
 			case(EINTR):
 				continue;
 			case(EISCONN):
-				throwConnectException(env, "the socket is already connected");
+				jthrowCC_ConnectException_1(env, "the socket is already connected");
 				break;
 			case(ENETUNREACH):
-				throwConnectException(env, "Network is unreachable.");
+				jthrowCC_ConnectException_1(env, "Network is unreachable.");
 				break;
 			case(ENOTSOCK):
-				throwIllegalArgumentsExc(env, "file descriptor does not refer to a socket");
+				jthrowCC_IllegalArgumentException_1(env, "file descriptor does not refer to a socket");
 				break;
 			case(EPROTOTYPE):
-				throwIOExc(env, "The socket type does not support the requested communications protocol.");
+				jthrowC_IOException_1(env, "The socket type does not support the requested communications protocol.");
 				break;
 			case(ETIMEDOUT):
-				throwConnectException(env, "Connection timed out.");
+				jthrowCC_ConnectException_1(env, "Connection timed out.");
 				break;
 			default:
-				throwUnknownError(env, err);
+				jthrow_UnknownNativeErrorException_1(env, err);
 				break;
 		}
 
@@ -275,17 +278,17 @@ void handleSockOptError(JNIEnv * env) {
 	int err = errno;
 	switch (err) {
 		case EINVAL:
-			throwIllegalArgumentsExc(env, "payload length or payload content is invalid");
+			jthrowCC_IllegalArgumentException_1(env, "payload length or payload content is invalid");
 			return;
 		case ENOPROTOOPT:
-			throwUnsupportedExc(env, "The option is unknown at the level indicated.");
+			jthrowCC_UnsupportedOperationException_1(env, "The option is unknown at the level indicated.");
 			return;
 		case ENOTSOCK:
 		case EBADF:
-			throwBadFileDescriptor(env);
+			jthrow_InvalidFileDescriptorException(env);
 			return;
 		default:
-			throwUnknownError(env, err);
+			jthrow_UnknownNativeErrorException_1(env, err);
 			return;
 	}
 }
@@ -318,7 +321,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 JNIEXPORT jbyteArray JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_getsockopt__IIII
   (JNIEnv *env, jobject inst, jint fd, jint level, jint option, jint jlen) {
 	if (jlen <= 0) {
-		throwIllegalArgumentsExc(env, "len <= 0");
+		jthrowCC_IllegalArgumentException_1(env, "len <= 0");
 		return NULL;
 	}
 
@@ -340,7 +343,7 @@ JNIEXPORT jbyteArray JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_
 	jbyte* data = (*env)->GetByteArrayElements(env, array, NULL);
 	if (data == NULL) {
 		(*env)->DeleteLocalRef(env, array);
-		throwOOM(env, "GetByteArrayElements");
+		jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 		return NULL;
 	}
 
@@ -378,19 +381,19 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_setsockopt__III_3B
   (JNIEnv * env, jobject inst, jint fd, jint level, jint option, jbyteArray value) {
 	if (value == NULL) {
-		throwIllegalArgumentsExc(env, "value is null");
+		jthrowCC_IllegalArgumentException_1(env, "value is null");
 		return;
 	}
 
 	jsize len = (*env)->GetArrayLength(env, value);
 	if (len <= 0) {
-		throwIllegalArgumentsExc(env, "GetArrayLength return 0 or negative value for value array");
+		jthrowCC_IllegalArgumentException_1(env, "GetArrayLength return 0 or negative value for value array");
 		return;
 	}
 
 	jbyte* data = (*env)->GetByteArrayElements(env, value, NULL);
 	if (data == NULL) {
-		throwOOM(env, "GetByteArrayElements");
+		jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 		return;
 	}
 
@@ -415,14 +418,14 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_recvfrom
   (JNIEnv *env, jobject inst, jint fd, jbyteArray jbuf, jint off, jint len, jint flags, jobject address) {
 	if (jbuf == NULL) {
-		throwNullPointerException(env, "buffer");
+		jthrowCC_NullPointerException_1(env, "buffer");
 		return -1;
 	}
 
 	jsize alen = (*env)->GetArrayLength(env, jbuf);
 
 	if (off < 0 || len < 0 || len+off > alen) {
-		throwIllegalArgumentsExc(env, "offset+lengths");
+		jthrowCC_IllegalArgumentException_1(env, "offset+lengths");
 		return -1;
 	}
 
@@ -435,7 +438,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	if (address != NULL) {
 		tmpPtr = malloc(ADDRESS_BUFSIZE);
 		if (tmpPtr == NULL) {
-			throwOOM(env, "malloc");
+			jthrowCC_OutOfMemoryError_1(env, "malloc");
 			return -1;
 		}
 	}
@@ -443,7 +446,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	void* data = (*env)->GetByteArrayElements(env, jbuf, NULL);
 	if (data == NULL) {
 		free(tmpPtr);
-		throwOOM(env, "GetByteArrayElements");
+		jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 		return -1;
 	}
 
@@ -458,7 +461,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 		if (r != -1 && tmpPtr != NULL) {
 			struct sockaddr * sockPtr = (struct sockaddr *) tmpPtr;
 
-			jbyteArray existing = (*env)->GetObjectField(env, address, Sockaddr_address);
+			jbyteArray existing = jget_Sockaddr_address(env, address);
 			if (existing == NULL || (*env)->GetArrayLength(env, existing) != tmpSize) {
 
 				if (existing != NULL) {
@@ -469,14 +472,14 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 				if (existing == NULL) {
 					free(tmpPtr);
 					(*env)->ReleaseByteArrayElements(env, jbuf, data, JNI_ABORT);
-					throwOOM(env, "NewByteArray");
+					jthrowCC_OutOfMemoryError_1(env, "NewByteArray");
 					return -1;
 				}
 
-				(*env)->SetObjectField(env, address, Sockaddr_address, existing);
+				jset_Sockaddr_address(env, address, existing);
 			}
 
-			(*env)->SetIntField(env, address, Sockaddr_addressFamily, tmpSize != 0 ? ((jint) sockPtr->sa_family) : -1);
+			jset_Sockaddr_addressFamily(env, address,  tmpSize != 0 ? ((jint) sockPtr->sa_family) : -1);
 
 			jbyte* jdata = (*env)->GetByteArrayElements(env, existing, NULL);
 
@@ -484,7 +487,7 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 				free(tmpPtr);
 				(*env)->ReleaseByteArrayElements(env, jbuf, data, JNI_ABORT);
 				(*env)->DeleteLocalRef(env, existing);
-				throwOOM(env, "GetByteArrayElements");
+				jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 				return -1;
 
 			}
@@ -526,25 +529,25 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 			case(EAGAIN):
 				return 0;
 			case (ENOTCONN):
-				throwIOExc(env, "socket is not connected");
+				jthrowC_IOException_1(env, "socket is not connected");
 				return -1;
 			case(EBADF):
-				throwBadFileDescriptor(env);
+				jthrow_InvalidFileDescriptorException(env);
 				return -1;
 			case EINVAL:
-				throwIllegalArgumentsExc(env, "file descriptor is unsuitable for reading or buffer size does not match the required buffer size");
+				jthrowCC_IllegalArgumentException_1(env, "file descriptor is unsuitable for reading or buffer size does not match the required buffer size");
 				return -1;
 			case EIO:
-				throwIOExc(env, "I/O error");
+				jthrowC_IOException_1(env, "I/O error");
 				return -1;
 			case EISDIR:
-				throwIllegalArgumentsExc(env, "file descriptor refers to a directory");
+				jthrowCC_IllegalArgumentException_1(env, "file descriptor refers to a directory");
 				return -1;
 			case(ENOTSOCK):
-				throwIllegalArgumentsExc(env, "file descriptor does not refer to a socket");
+				jthrowCC_IllegalArgumentException_1(env, "file descriptor does not refer to a socket");
 				break;
 			default:
-				throwUnknownError(env, err);
+				jthrow_UnknownNativeErrorException_1(env, err);
 				return -1;
 		}
 	}
@@ -553,13 +556,13 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 void handle_getsockname_error(JNIEnv * env, int err) {
 	switch(err) {
 		case(EBADF):
-			throwBadFileDescriptor(env);
+			jthrow_InvalidFileDescriptorException(env);
 			return;
 		case(ENOTSOCK):
-			throwIllegalArgumentsExc(env, "The file descriptor does not refer to a socket.");
+			jthrowCC_IllegalArgumentException_1(env, "The file descriptor does not refer to a socket.");
 			return;
 		case(ENOBUFS):
-			throwOOM(env, "Insufficient resources were available in the system to perform the operation.");
+			jthrowCC_OutOfMemoryError_1(env, "Insufficient resources were available in the system to perform the operation.");
 			return;
 	}
 }
@@ -572,14 +575,14 @@ void handle_getsockname_error(JNIEnv * env, int err) {
 JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_getsockname
   (JNIEnv * env, jobject inst, jint fd, jobject jaddrobj) {
 	if (jaddrobj == NULL) {
-		throwNullPointerException(env, "address");
+		jthrowCC_NullPointerException_1(env, "address");
 		return;
 	}
 
-	jbyteArray jaddr = (jbyteArray) (*env)->GetObjectField(env, jaddrobj, Sockaddr_address);
+	jbyteArray jaddr = jget_Sockaddr_address(env, jaddrobj);
 
 	if (jaddr == NULL) {
-		throwNullPointerException(env, "address.address is null");
+		jthrowCC_NullPointerException_1(env, "address.address is null");
 		return;
 	}
 
@@ -597,16 +600,16 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 		(*env)->DeleteLocalRef(env, jaddr);
 		jaddr = (*env)->NewByteArray(env, len);
 		if (jaddr == NULL) {
-			throwOOM(env, "NewByteArray");
+			jthrowCC_OutOfMemoryError_1(env, "NewByteArray");
 			return;
 		}
 
-		(*env)->SetObjectField(env, jaddrobj, Sockaddr_address, jaddr);
+		jset_Sockaddr_address(env, jaddrobj, jaddr);
 	}
 
 	struct sockaddr * addr = (struct sockaddr *) (*env)->GetByteArrayElements(env, jaddr, NULL);
 	if (addr == NULL) {
-		throwOOM(env, "GetByteArrayElements");
+		jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 		return;
 	}
 
@@ -618,7 +621,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 		return;
 	}
 
-	(*env)->SetIntField(env, jaddrobj, Sockaddr_addressFamily, addr->sa_family);
+	jset_Sockaddr_addressFamily(env, jaddrobj, addr->sa_family);
 	(*env)->ReleaseByteArrayElements(env, jaddr, (jbyte*) addr, JNI_OK);
 }
 
@@ -629,13 +632,15 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 jint handle_msg (JNIEnv * env, jobject inst, jint fd, jobject msghdr, jint flags, bool isRead) {
 
 	if (msghdr == NULL) {
-		throwNullPointerException(env, "msghdr");
+		jthrowCC_NullPointerException_1(env, "msghdr");
 		return -1;
 	}
 
-	jobjectArray iovecs = (*env)->GetObjectField(env, msghdr, Msghdr_msg_iov);
+
+
+	jobjectArray iovecs = jget_Msghdr_msg_iov(env, msghdr);
 	if (iovecs == NULL) {
-		throwNullPointerException(env, "msghdr.msg_iov");
+		jthrowCC_NullPointerException_1(env, "msghdr.msg_iov");
 		return -1;
 	}
 
@@ -648,12 +653,10 @@ jint handle_msg (JNIEnv * env, jobject inst, jint fd, jobject msghdr, jint flags
 	};
 
 
-
-
 	jsize ioveclen = (*env)->GetArrayLength(env, iovecs);
 	if (ioveclen > 128) {
 		(*env)->DeleteLocalRef(env, iovecs);
-		throwIllegalArgumentsExc(env, "too many iovs");
+		jthrowCC_IllegalArgumentException_1(env, "too many iovs");
 		return -1;
 	}
 
@@ -670,16 +673,17 @@ jint handle_msg (JNIEnv * env, jobject inst, jint fd, jobject msghdr, jint flags
 			}
 
 			(*env)->DeleteLocalRef(env, iovecs);
-			throwNullPointerException(env, "msghdr.msg_iov[?]");
+			jthrowCC_NullPointerException_1(env, "msghdr.msg_iov[?]");
 			return -1;
 		}
 
-		iovecObjs[i].jbytes = (*env)->GetObjectField(env, iovecObjs[i].jiov, Iovec_payload);
-		iovecObjs[i].len = (*env)->GetIntField(env, iovecObjs[i].jiov, Iovec_len);
-		iovecObjs[i].off = (*env)->GetIntField(env, iovecObjs[i].jiov, Iovec_off);
+
+		iovecObjs[i].jbytes = jget_Iovec_payload(env, iovecObjs[i].jiov);
+		iovecObjs[i].len = jget_Iovec_len(env, iovecObjs[i].jiov);
+		iovecObjs[i].off = jget_Iovec_off(env, iovecObjs[i].jiov);
 
 		if (iovecObjs[i].jbytes == NULL) {
-			throwNullPointerException(env, "msghdr.msg_iov[?].payload");
+			jthrowCC_NullPointerException_1(env, "msghdr.msg_iov[?].payload");
 			for (int j = 0; j < i; j++) {
 				(*env)->ReleaseByteArrayElements(env, iovecObjs[j].jbytes, iovecObjs[j].ptr, JNI_ABORT);
 				(*env)->DeleteLocalRef(env, iovecObjs[j].jbytes);
@@ -688,7 +692,6 @@ jint handle_msg (JNIEnv * env, jobject inst, jint fd, jobject msghdr, jint flags
 
 			(*env)->DeleteLocalRef(env, iovecObjs[i].jiov);
 			(*env)->DeleteLocalRef(env, iovecs);
-			throwNullPointerException(env, "msghdr.msg_iov[?]");
 			return -1;
 		}
 
@@ -705,7 +708,7 @@ jint handle_msg (JNIEnv * env, jobject inst, jint fd, jobject msghdr, jint flags
 			(*env)->DeleteLocalRef(env, iovecObjs[i].jbytes);
 			(*env)->DeleteLocalRef(env, iovecs);
 
-			throwIllegalArgumentsExc(env, "msghdr.msg_iov[?].payload offset/len are invalid");
+			jthrowCC_IllegalArgumentException_1(env, "msghdr.msg_iov[?].payload offset/len are invalid");
 			return -1;
 		}
 
@@ -722,7 +725,7 @@ jint handle_msg (JNIEnv * env, jobject inst, jint fd, jobject msghdr, jint flags
 			(*env)->DeleteLocalRef(env, iovecObjs[i].jbytes);
 			(*env)->DeleteLocalRef(env, iovecs);
 
-			throwOOM(env, "GetByteArrayElements");
+			jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 			return -1;
 		}
 	}
@@ -741,8 +744,8 @@ jint handle_msg (JNIEnv * env, jobject inst, jint fd, jobject msghdr, jint flags
 	//IOV is now setup now other fields....
 
 
-	jobject jaddr = (*env)->GetObjectField(env, msghdr, Msghdr_msg_name);
-	jbyteArray jcontrol = (jbyteArray) (*env)->GetObjectField(env, msghdr, Msghdr_msg_control);
+	jobject jaddr = jget_Msghdr_msg_name(env, msghdr);
+	jbyteArray jcontrol =  jget_Msghdr_msg_control(env, msghdr);
 
 
 
@@ -755,7 +758,7 @@ jint handle_msg (JNIEnv * env, jobject inst, jint fd, jobject msghdr, jint flags
 	msg.msg_name = jaddr == NULL ? NULL : addrBuf;
 	msg.msg_namelen = jaddr == NULL ? 0 : ADDRESS_BUFSIZE;
 	if (!isRead && jaddr != NULL) {
-		jbyteArray addr = (jbyteArray) (*env)->GetObjectField(env, jaddr, Sockaddr_address);
+		jbyteArray addr = (jbyteArray) jget_Sockaddr_address(env, jaddr);
 		if (addr != NULL) {
 			jsize len = (*env)->GetArrayLength(env, addr);
 			if (len > ADDRESS_BUFSIZE) {
@@ -785,7 +788,7 @@ jint handle_msg (JNIEnv * env, jobject inst, jint fd, jobject msghdr, jint flags
 				(*env)->DeleteLocalRef(env, iovecObjs[j].jiov);
 			}
 
-			throwOOM(env, "GetByteArrayElements");
+			jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 			return -1;
 		}
 		msg.msg_controllen = (*env)->GetArrayLength(env, jcontrol);
@@ -811,18 +814,18 @@ jint handle_msg (JNIEnv * env, jobject inst, jint fd, jobject msghdr, jint flags
 	}
 
 	if (isRead) {
-		(*env)->SetBooleanField(env, msghdr, Msghdr_complete, (msg.msg_flags & MSG_EOR) == MSG_EOR);
-		(*env)->SetBooleanField(env, msghdr, Msghdr_truncated, (msg.msg_flags & MSG_TRUNC) == MSG_TRUNC);
-		(*env)->SetBooleanField(env, msghdr, Msghdr_controlDataTruncated, (msg.msg_flags & MSG_CTRUNC) == MSG_CTRUNC);
-		(*env)->SetBooleanField(env, msghdr, Msghdr_outOfBand, (msg.msg_flags & MSG_OOB) == MSG_OOB);
-		(*env)->SetBooleanField(env, msghdr, Msghdr_errQueue, (msg.msg_flags & MSG_ERRQUEUE) == MSG_ERRQUEUE);
+		jset_Msghdr_complete(env, msghdr, (msg.msg_flags & MSG_EOR) == MSG_EOR);
+		jset_Msghdr_truncated(env, msghdr, (msg.msg_flags & MSG_TRUNC) == MSG_TRUNC);
+		jset_Msghdr_controlDataTruncated(env, msghdr, (msg.msg_flags & MSG_CTRUNC) == MSG_CTRUNC);
+		jset_Msghdr_outOfBand(env, msghdr, (msg.msg_flags & MSG_OOB) == MSG_OOB);
+		jset_Msghdr_errQueue(env, msghdr, (msg.msg_flags & MSG_ERRQUEUE) == MSG_ERRQUEUE);
 	}
 
 	for (int j = 0; j < ioveclen; j++) {
 		(*env)->ReleaseByteArrayElements(env, iovecObjs[j].jbytes, iovecObjs[j].ptr, isRead ? JNI_OK : JNI_ABORT);
 		(*env)->DeleteLocalRef(env, iovecObjs[j].jbytes);
 		if (isRead) {
-			(*env)->SetIntField(env, iovecObjs[j].jiov, Iovec_size, iov[j].iov_len);
+			jset_Iovec_size(env, iovecObjs[j].jiov, iov[j].iov_len);
 		}
 		(*env)->DeleteLocalRef(env, iovecObjs[j].jiov);
 	}
@@ -833,9 +836,9 @@ jint handle_msg (JNIEnv * env, jobject inst, jint fd, jobject msghdr, jint flags
 	}
 
 	if (isRead) {
-		(*env)->SetIntField(env, msghdr, Msghdr_msg_controllen, (jint) msg.msg_controllen);
+		jset_Msghdr_msg_controllen(env, msghdr, (jint) msg.msg_controllen);
 		if (ret != -1 && jaddr != NULL) {
-			jbyteArray addr = (jbyteArray) (*env)->GetObjectField(env, jaddr, Sockaddr_address);
+			jbyteArray addr = jget_Sockaddr_address(env, jaddr);
 			if (addr == NULL || (*env)->GetArrayLength(env, addr) != msg.msg_namelen) {
 				if (addr != NULL) {
 					(*env)->DeleteLocalRef(env, addr);
@@ -843,12 +846,12 @@ jint handle_msg (JNIEnv * env, jobject inst, jint fd, jobject msghdr, jint flags
 
 				addr = (*env)->NewByteArray(env, msg.msg_namelen);
 				if (addr == NULL) {
-					throwOOM(env, "NewByteArray");
+					jthrowCC_OutOfMemoryError_1(env, "NewByteArray");
 					(*env)->DeleteLocalRef(env, jaddr);
 					return -1;
 				}
 
-				 (*env)->SetObjectField(env, jaddr, Sockaddr_address, addr);
+				jset_Sockaddr_address(env, jaddr, addr);
 			}
 
 			jbyte* ptr = (*env)->GetByteArrayElements(env, addr, NULL);
@@ -856,7 +859,7 @@ jint handle_msg (JNIEnv * env, jobject inst, jint fd, jobject msghdr, jint flags
 
 				(*env)->DeleteLocalRef(env, jaddr);
 				(*env)->DeleteLocalRef(env, addr);
-				throwOOM(env, "GetByteArrayElements");
+				jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 				return -1;
 			}
 
@@ -867,7 +870,7 @@ jint handle_msg (JNIEnv * env, jobject inst, jint fd, jobject msghdr, jint flags
 				af = ((struct sockaddr *) msg.msg_name)->sa_family;
 			}
 
-			(*env)->SetIntField(env, jaddr, Sockaddr_addressFamily, af);
+			jset_Sockaddr_addressFamily(env, jaddr, af);
 			(*env)->DeleteLocalRef(env, addr);
 			(*env)->DeleteLocalRef(env, jaddr);
 		}
@@ -888,28 +891,28 @@ jint handle_msg (JNIEnv * env, jobject inst, jint fd, jobject msghdr, jint flags
 		case(EAGAIN):
 			return 0;
 		case(EBADF):
-			throwBadFileDescriptor(env);
+			jthrow_InvalidFileDescriptorException(env);
 			return -1;
 		case(EINVAL):
-			throwIllegalArgumentsExc(env, "EINVAL");
+			jthrowCC_IllegalArgumentException_1(env, "EINVAL");
 			return -1;
 		case (ENOMEM):
-			throwOOM(env, "recvmsg");
+			jthrowCC_OutOfMemoryError_1(env, "recvmsg");
 			return -1;
 		case (ENOTCONN):
-			throwIOExc(env, "socket is not connected");
+			jthrowCC_IOException_1(env, "socket is not connected");
 			return -1;
 		case EIO:
-			throwIOExc(env, "I/O error");
+			jthrowCC_IOException_1(env, "I/O error");
 			return -1;
 		case (ECONNREFUSED):
-			throwConnectException(env, "connection refused.");
+			jthrowCC_ConnectException_1(env, "connection refused.");
 		return -1;
 		case(ENOTSOCK):
-			throwIllegalArgumentsExc(env, "file descriptor does not refer to a socket");
+			jthrowCC_IllegalArgumentException_1(env, "file descriptor does not refer to a socket");
 		return -1;
 		default:
-			throwUnknownError(env, err);
+			jthrow_UnknownNativeErrorException_1(env, err);
 			return -1;
 	}
 }
@@ -943,21 +946,21 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
   (JNIEnv * env, jobject inst, jbyteArray hdr, jint len) {
 
 	if (hdr == NULL) {
-		throwNullPointerException(env, "msg_control");
+		jthrowCC_NullPointerException_1(env, "msg_control");
 		return NULL;
 	}
 
 	if (len < 0) {
-		throwIllegalArgumentsExc(env, "msg_controllen < 0");
+		jthrowCC_IllegalArgumentException_1(env, "msg_controllen < 0");
 		return NULL;
 	}
 
 	if ((*env)->GetArrayLength(env, hdr) < len) {
-		throwIllegalArgumentsExc(env, "msg_controllen > msg_control.lenght");
+		jthrowCC_IllegalArgumentException_1(env, "msg_controllen > msg_control.lenght");
 		return NULL;
 	}
 
-	jobject resultList  = new_array_list(env);
+	jobject resultList  = jnew_ArrayList(env);
 	if (resultList == NULL) {
 		return NULL;
 	}
@@ -965,7 +968,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	jbyte* buf = (*env)->GetByteArrayElements(env, hdr, NULL);
 	if (buf == NULL) {
 		(*env)->DeleteLocalRef(env, resultList);
-		throwOOM(env, "GetByteArrayElements");
+		jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 		return NULL;
 	}
 
@@ -990,7 +993,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		jobject jhdr = (*env)->NewObject(env, Cmsghdr, CmsghdrConstructor);
 
 		if (jhdr == NULL) {
-			throwOOM(env, "NewObject");
+			jthrowCC_OutOfMemoryError_1(env, "NewObject");
 			(*env)->DeleteLocalRef(env, resultList);
 			return NULL;
 		}
@@ -1000,7 +1003,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		if (bytes == NULL) {
 			(*env)->DeleteLocalRef(env, resultList);
 			(*env)->DeleteLocalRef(env, jhdr);
-			throwOOM(env, "NewByteArray");
+			jthrowCC_OutOfMemoryError_1(env, "NewByteArray");
 			return NULL;
 		}
 
@@ -1010,7 +1013,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 			(*env)->DeleteLocalRef(env, resultList);
 			(*env)->DeleteLocalRef(env, jhdr);
 			(*env)->DeleteLocalRef(env, bytes);
-			throwOOM(env, "GetByteArrayElements");
+			jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
 			return NULL;
 		}
 
@@ -1022,7 +1025,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		(*env)->DeleteLocalRef(env, bytes);
 		(*env)->SetIntField(env, jhdr, Cmsghdr_cmsg_level, cmsg->cmsg_level);
 		(*env)->SetIntField(env, jhdr, Cmsghdr_cmsg_type, cmsg->cmsg_type);
-		collection_add(env, resultList, jhdr);
+		jcall_Collection_add(env, resultList, jhdr);
 		(*env)->DeleteLocalRef(env, jhdr);
 	}
 

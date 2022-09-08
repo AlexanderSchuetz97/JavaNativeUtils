@@ -81,7 +81,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_off
   (JNIEnv * env, jclass clazz, jlong ptr, jlong off) {
 	if (ptr == 0) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 
@@ -101,7 +101,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
   (JNIEnv *env , jclass clazz, jlong ptr, jlong off, jbyteArray buf, jint bufoff, jint len) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
 
@@ -118,11 +118,11 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
   (JNIEnv *env, jclass clazz, jlong ptr, jlong off, jbyte value) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
 	vptr+=(uintptr_t) off;
-	jbyte* dptr = (jbyte*) vptr;
+	volatile jbyte* dptr = (jbyte*) vptr;
 	*(dptr) = value;
 }
 
@@ -135,11 +135,11 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
   (JNIEnv *env, jclass clazz, jlong ptr, jlong off, jint value) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
 	vptr+=(uintptr_t) off;
-	jint* dptr = (jint*) vptr;
+	volatile jint* dptr = (jint*) vptr;
 	*(dptr) = value;
 }
 
@@ -152,11 +152,11 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
   (JNIEnv *env, jclass clazz, jlong ptr, jlong off, jlong value) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
 	vptr+=(uintptr_t) off;
-	jlong* dptr = (jlong*) vptr;
+	volatile jlong* dptr = (jlong*) vptr;
 	*(dptr) = value;
 }
 
@@ -169,11 +169,11 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
 	(JNIEnv *env, jclass clazz, jlong ptr, jlong off, jfloat value) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
 	vptr+=(uintptr_t) off;
-	jfloat* dptr = (jfloat*) vptr;
+	volatile jfloat* dptr = (jfloat*) vptr;
 	*(dptr) = value;
 }
 
@@ -186,11 +186,11 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
   (JNIEnv *env, jclass clazz, jlong ptr, jlong off, jdouble value) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
 	vptr+=(uintptr_t) off;
-	jdouble* dptr = (jdouble*) vptr;
+	volatile jdouble* dptr = (jdouble*) vptr;
 	*(dptr) = value;
 }
 
@@ -203,11 +203,11 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
   (JNIEnv *env, jclass clazz, jlong ptr, jlong off, jshort value) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
 	vptr+=(uintptr_t) off;
-	jshort* dptr = (jshort*) vptr;
+	volatile jshort* dptr = (jshort*) vptr;
 	*(dptr) = value;
 }
 
@@ -220,7 +220,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
   (JNIEnv *env, jclass clazz, jlong ptr, jlong off, jbyteArray buf, jint bufoff, jint len) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
 
@@ -237,11 +237,11 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
   (JNIEnv *env, jclass clazz, jlong ptr, jlong off) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 	vptr+=(uintptr_t) off;
-	jint* dptr = (jint*) vptr;
+	volatile jint* dptr = (jint*) vptr;
 	return *dptr;
 }
 
@@ -254,11 +254,11 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINa
   (JNIEnv *env, jclass clazz, jlong ptr, jlong off) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 	vptr+=(uintptr_t) off;
-	jlong* dptr = (jlong*) vptr;
+	volatile jlong* dptr = (jlong*) vptr;
 	return *dptr;
 }
 
@@ -271,11 +271,11 @@ JNIEXPORT jfloat JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIN
   (JNIEnv *env , jclass clazz, jlong ptr, jlong off) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 	vptr+=(uintptr_t) off;
-	jfloat* dptr = (jfloat*) vptr;
+	volatile jfloat* dptr = (jfloat*) vptr;
 	return *dptr;
 }
 
@@ -288,11 +288,11 @@ JNIEXPORT jdouble JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
   (JNIEnv * env, jclass clazz, jlong ptr, jlong off) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 	vptr+=(uintptr_t) off;
-	jdouble* dptr = (jdouble*) vptr;
+	volatile jdouble* dptr = (jdouble*) vptr;
 	return *dptr;
 }
 
@@ -305,11 +305,11 @@ JNIEXPORT jshort JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIN
   (JNIEnv *env , jclass clazz, jlong ptr, jlong off) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 	vptr+=(uintptr_t) off;
-	jshort* dptr = (jshort*) vptr;
+	volatile jshort* dptr = (jshort*) vptr;
 	return *dptr;
 }
 
@@ -322,11 +322,11 @@ JNIEXPORT jbyte JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINa
   (JNIEnv *env, jclass clazz, jlong ptr, jlong off) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 	vptr+=(uintptr_t) off;
-	jbyte* dptr = (jbyte*) vptr;
+	volatile jbyte* dptr = (jbyte*) vptr;
 	return *dptr;
 }
 
@@ -339,7 +339,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
   (JNIEnv *env, jclass clazz, jlong ptr, jlong off, jbyte value, jlong len) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
 
@@ -360,14 +360,14 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINa
   (JNIEnv *env, jclass clazz, jlong ptr, jlong off, jlong value) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 	vptr+=(uintptr_t) off;
 
 #if (defined(__i386__))
 	if (((uintptr_t)vptr) % 4 != 0) {
-		throwIllegalArgumentsExc(env, "memory alignment");
+		jthrowCC_IllegalArgumentException_1(env, "memory alignment");
 		return false;
 	}
 #endif
@@ -375,7 +375,7 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINa
 	if (xadd8b((uint64_t *)vptr, (uint64_t*) &value)) {
 		return value;
 	}
-	throwUnsupportedExc(env, "getAndAdd 8 byte not supported by cpu");
+	jthrowCC_UnsupportedOperationException_1(env, "getAndAdd 8 byte not supported by cpu");
 	return 0;
 }
 
@@ -388,14 +388,14 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
   (JNIEnv *env, jclass clazz, jlong ptr, jlong off, jint value) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 	vptr+=(uintptr_t) off;
 	if (xadd4b((uint32_t *)vptr, (uint32_t*) &value)) {
 		return value;
 	}
-	throwUnsupportedExc(env, "getAndAdd 4 byte not supported by cpu");
+	jthrowCC_UnsupportedOperationException_1(env, "getAndAdd 4 byte not supported by cpu");
 	return 0;
 }
 
@@ -408,14 +408,14 @@ JNIEXPORT jshort JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIN
   (JNIEnv *env, jclass clazz, jlong ptr, jlong off, jshort value) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 	vptr+=(uintptr_t) off;
 	if (xadd2b((uint16_t *)vptr, (uint16_t*) &value)) {
 		return value;
 	}
-	throwUnsupportedExc(env, "getAndAdd 2 byte not supported by cpu");
+	jthrowCC_UnsupportedOperationException_1(env, "getAndAdd 2 byte not supported by cpu");
 	return 0;
 }
 
@@ -428,14 +428,14 @@ JNIEXPORT jbyte JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINa
   (JNIEnv *env, jclass clazz, jlong ptr, jlong off, jbyte value) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 	vptr+=(uintptr_t) off;
 	if (xadd1b((uint8_t *)vptr, (uint8_t*) &value)) {
 		return value;
 	}
-	throwUnsupportedExc(env, "getAndAdd 1 byte not supported by cpu");
+	jthrowCC_UnsupportedOperationException_1(env, "getAndAdd 1 byte not supported by cpu");
 	return 0;
 };
 
@@ -448,14 +448,14 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINa
   (JNIEnv *env, jclass clazz, jlong ptr, jlong off, jlong value) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 	vptr+=(uintptr_t) off;
 
 #if (defined(__i386__))
 	if (((uintptr_t)vptr) % 4 != 0) {
-		throwIllegalArgumentsExc(env, "memory alignment");
+		jthrowCC_IllegalArgumentException_1(env, "memory alignment");
 		return false;
 	}
 #endif
@@ -463,7 +463,7 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINa
 	if (xchg8b((uint64_t *)vptr, (uint64_t*) &value)) {
 		return value;
 	}
-	throwUnsupportedExc(env, "getAndSet 8 byte not supported by cpu");
+	jthrowCC_UnsupportedOperationException_1(env, "getAndSet 8 byte not supported by cpu");
 	return 0;
 }
 
@@ -476,14 +476,14 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
   (JNIEnv *env, jclass clazz, jlong ptr, jlong off, jint value) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 	vptr+=(uintptr_t) off;
 	if (xchg4b((uint32_t *)vptr, (uint32_t*) &value)) {
 		return value;
 	}
-	throwUnsupportedExc(env, "getAndSet 4 byte not supported by cpu");
+	jthrowCC_UnsupportedOperationException_1(env, "getAndSet 4 byte not supported by cpu");
 	return 0;
 }
 
@@ -496,14 +496,14 @@ JNIEXPORT jshort JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIN
   (JNIEnv *env, jclass clazz, jlong ptr, jlong off, jshort value) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 	vptr+=(uintptr_t) off;
 	if (xchg2b((uint16_t *)vptr, (uint16_t*) &value)) {
 		return value;
 	}
-	throwUnsupportedExc(env, "getAndSet 2 byte not supported by cpu");
+	jthrowCC_UnsupportedOperationException_1(env, "getAndSet 2 byte not supported by cpu");
 	return 0;
 }
 
@@ -516,14 +516,14 @@ JNIEXPORT jbyte JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINa
   (JNIEnv *env, jclass clazz, jlong ptr, jlong off, jbyte value) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 	vptr+=(uintptr_t) off;
 	if (xchg1b((uint8_t *)vptr, (uint8_t*) &value)) {
 		return value;
 	}
-	throwUnsupportedExc(env, "getAndSet 1 byte not supported by cpu");
+	jthrowCC_UnsupportedOperationException_1(env, "getAndSet 1 byte not supported by cpu");
 	return 0;
 }
 
@@ -539,13 +539,13 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
   (JNIEnv *env, jclass clazz, jlong ptr, jlong off, jlong expect, jlong update) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 	vptr+=(uintptr_t) off;
 #if (defined(__i386__))
 	if (((uintptr_t)vptr) % 4 != 0) {
-		throwIllegalArgumentsExc(env, "memory alignment");
+		jthrowCC_IllegalArgumentException_1(env, "memory alignment");
 		return false;
 	}
 #endif
@@ -554,7 +554,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 	if (cmpxchg8b((uint64_t *)vptr, (uint64_t) expect, (uint64_t) update, &succ)) {
 		return succ;
 	}
-	throwUnsupportedExc(env, "compareAndSet 8 byte not supported by cpu");
+	jthrowCC_UnsupportedOperationException_1(env, "compareAndSet 8 byte not supported by cpu");
 	return 0;
 }
 
@@ -567,7 +567,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
   (JNIEnv *env, jclass clazz, jlong ptr, jlong off, jint expect, jint update) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 	vptr+=(uintptr_t) off;
@@ -575,7 +575,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 	if (cmpxchg4b((uint32_t *)vptr, (uint32_t) expect, (uint32_t) update, &succ)) {
 		return succ;
 	}
-	throwUnsupportedExc(env, "compareAndSet 4 byte not supported by cpu");
+	jthrowCC_UnsupportedOperationException_1(env, "compareAndSet 4 byte not supported by cpu");
 	return 0;
 }
 
@@ -588,7 +588,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
   (JNIEnv *env, jclass clazz, jlong ptr, jlong off, jshort expect, jshort update) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 	vptr+=(uintptr_t) off;
@@ -596,7 +596,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 	if (cmpxchg2b((uint16_t *)vptr, (uint16_t) expect, (uint16_t) update, &succ)) {
 		return succ;
 	}
-	throwUnsupportedExc(env, "compareAndSet 2 byte not supported by cpu");
+	jthrowCC_UnsupportedOperationException_1(env, "compareAndSet 2 byte not supported by cpu");
 	return 0;
 }
 
@@ -609,7 +609,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
   (JNIEnv *env, jclass clazz, jlong ptr, jlong off, jbyte expect, jbyte update) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 	vptr+=(uintptr_t) off;
@@ -617,7 +617,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 	if (cmpxchg1b((uint8_t *)vptr, (uint8_t) expect, (uint8_t) update, &succ)) {
 		return succ;
 	}
-	throwUnsupportedExc(env, "compareAndSet 1 byte not supported by cpu");
+	jthrowCC_UnsupportedOperationException_1(env, "compareAndSet 1 byte not supported by cpu");
 	return 0;
 }
 
@@ -630,13 +630,13 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
   (JNIEnv *env, jclass clazz, jlong ptr, jlong off, jbyteArray value) {
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 	vptr+=(uintptr_t) off;
 
 	if (((uintptr_t)vptr) % 8 != 0) {
-		throwIllegalArgumentsExc(env, "memory alignment");
+		jthrowCC_IllegalArgumentException_1(env, "memory alignment");
 		return false;
 	}
 
@@ -652,7 +652,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 		return succ;
 	}
 	(*env)->ReleasePrimitiveArrayCritical(env, value, critical, JNI_ABORT);
-	throwUnsupportedExc(env, "compareAndSet 16 byte not supported by cpu");
+	jthrowCC_UnsupportedOperationException_1(env, "compareAndSet 16 byte not supported by cpu");
 	return 0;
 }
 
@@ -671,7 +671,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 	void * vptr = (void *) (uintptr_t) ptr;
 
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return false;
 	}
 
@@ -681,7 +681,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 	bool succ = false;
 
 	if (!cmpxchg8b(iptr, expect, update, &succ)) {
-		throwUnsupportedExc(env, "spinAndSet not supported by cpu");
+		jthrowCC_UnsupportedOperationException_1(env, "spinAndSet not supported by cpu");
 		return false;
 	}
 
@@ -709,7 +709,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 		}
 
 		if (checkClosed(env, inst)) {
-			throwNullPointerException(env, "closed");
+			jthrowCC_NullPointerException_1(env, "closed");
 			return false;
 		}
 
@@ -735,7 +735,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
 	void * vptr = (void *) (uintptr_t) ptr;
 
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
 
@@ -745,7 +745,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
 	bool succ = false;
 
 	if (!cmpxchg8b(iptr, expect, update, &succ)) {
-		throwUnsupportedExc(env, "spinAndSet not supported by cpu");
+		jthrowCC_UnsupportedOperationException_1(env, "spinAndSet not supported by cpu");
 		return;
 	}
 
@@ -760,7 +760,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
 		}
 
 		if (checkClosed(env, inst)) {
-			throwNullPointerException(env, "closed");
+			jthrowCC_NullPointerException_1(env, "closed");
 			return;
 		}
 
@@ -780,7 +780,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 	void * vptr = (void *) (uintptr_t) ptr;
 
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 
@@ -801,7 +801,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 		}
 
 		if (checkClosed(env, inst)) {
-			throwNullPointerException(env, "closed");
+			jthrowCC_NullPointerException_1(env, "closed");
 			return false;
 		}
 
@@ -826,16 +826,16 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
 	void * vptr = (void *) (uintptr_t) ptr;
 
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
 
 	vptr += off;
-	uint64_t * iptr = (uint64_t *) vptr;
+	volatile uint64_t * iptr = (uint64_t *) vptr;
 
 	while(*iptr != expect) {
 		if (checkClosed(env, inst)) {
-			throwNullPointerException(env, "closed");
+			jthrowCC_NullPointerException_1(env, "closed");
 			return;
 		}
 
@@ -855,7 +855,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 	void * vptr = (void *) (uintptr_t) ptr;
 
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return false;
 	}
 
@@ -865,7 +865,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 	bool succ = false;
 
 	if (!cmpxchg4b(iptr, expect, update, &succ)) {
-		throwUnsupportedExc(env, "spinAndSet not supported by cpu");
+		jthrowCC_UnsupportedOperationException_1(env, "spinAndSet not supported by cpu");
 		return false;
 	}
 
@@ -893,7 +893,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 		}
 
 		if (checkClosed(env, inst)) {
-			throwNullPointerException(env, "closed");
+			jthrowCC_NullPointerException_1(env, "closed");
 			return false;
 		}
 
@@ -919,7 +919,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
 	void * vptr = (void *) (uintptr_t) ptr;
 
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
 
@@ -929,7 +929,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
 	bool succ = false;
 
 	if (!cmpxchg4b(iptr, expect, update, &succ)) {
-		throwUnsupportedExc(env, "spinAndSet not supported by cpu");
+		jthrowCC_UnsupportedOperationException_1(env, "spinAndSet not supported by cpu");
 		return;
 	}
 
@@ -944,7 +944,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
 		}
 
 		if (checkClosed(env, inst)) {
-			throwNullPointerException(env, "closed");
+			jthrowCC_NullPointerException_1(env, "closed");
 			return;
 		}
 
@@ -964,12 +964,12 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 	void * vptr = (void *) (uintptr_t) ptr;
 
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 
 	vptr += off;
-	uint32_t * iptr = (uint32_t *) vptr;
+	volatile uint32_t * iptr = (uint32_t *) vptr;
 
 	uint64_t start = currentTimeMillis();
 	while(*iptr != expect) {
@@ -985,7 +985,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 		}
 
 		if (checkClosed(env, inst)) {
-			throwNullPointerException(env, "closed");
+			jthrowCC_NullPointerException_1(env, "closed");
 			return false;
 		}
 
@@ -1010,16 +1010,16 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
 	void * vptr = (void *) (uintptr_t) ptr;
 
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
 
 	vptr += off;
-	uint32_t * iptr = (uint32_t *) vptr;
+	volatile uint32_t * iptr = (uint32_t *) vptr;
 
 	while(*iptr != expect) {
 		if (checkClosed(env, inst)) {
-			throwNullPointerException(env, "closed");
+			jthrowCC_NullPointerException_1(env, "closed");
 			return;
 		}
 
@@ -1039,7 +1039,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 	void * vptr = (void *) (uintptr_t) ptr;
 
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return false;
 	}
 
@@ -1049,7 +1049,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 	bool succ = false;
 
 	if (!cmpxchg2b(iptr, expect, update, &succ)) {
-		throwUnsupportedExc(env, "spinAndSet not supported by cpu");
+		jthrowCC_UnsupportedOperationException_1(env, "spinAndSet not supported by cpu");
 		return false;
 	}
 
@@ -1077,7 +1077,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 		}
 
 		if (checkClosed(env, inst)) {
-			throwNullPointerException(env, "closed");
+			jthrowCC_NullPointerException_1(env, "closed");
 			return false;
 		}
 
@@ -1103,7 +1103,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
 	void * vptr = (void *) (uintptr_t) ptr;
 
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
 
@@ -1113,7 +1113,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
 	bool succ = false;
 
 	if (!cmpxchg2b(iptr, expect, update, &succ)) {
-		throwUnsupportedExc(env, "spinAndSet not supported by cpu");
+		jthrowCC_UnsupportedOperationException_1(env, "spinAndSet not supported by cpu");
 		return;
 	}
 
@@ -1128,7 +1128,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
 		}
 
 		if (checkClosed(env, inst)) {
-			throwNullPointerException(env, "closed");
+			jthrowCC_NullPointerException_1(env, "closed");
 			return;
 		}
 
@@ -1148,12 +1148,12 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 	void * vptr = (void *) (uintptr_t) ptr;
 
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 
 	vptr += off;
-	uint16_t * iptr = (uint16_t *) vptr;
+	volatile uint16_t * iptr = (uint16_t *) vptr;
 
 	uint64_t start = currentTimeMillis();
 	while(*iptr != expect) {
@@ -1169,7 +1169,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 		}
 
 		if (checkClosed(env, inst)) {
-			throwNullPointerException(env, "closed");
+			jthrowCC_NullPointerException_1(env, "closed");
 			return false;
 		}
 
@@ -1194,16 +1194,16 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
 	void * vptr = (void *) (uintptr_t) ptr;
 
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
 
 	vptr += off;
-	uint16_t * iptr = (uint16_t *) vptr;
+	volatile uint16_t * iptr = (uint16_t *) vptr;
 
 	while(*iptr != expect) {
 		if (checkClosed(env, inst)) {
-			throwNullPointerException(env, "closed");
+			jthrowCC_NullPointerException_1(env, "closed");
 			return;
 		}
 
@@ -1223,7 +1223,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 	void * vptr = (void *) (uintptr_t) ptr;
 
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return false;
 	}
 
@@ -1233,7 +1233,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 	bool succ = false;
 
 	if (!cmpxchg1b(iptr, expect, update, &succ)) {
-		throwUnsupportedExc(env, "spinAndSet not supported by cpu");
+		jthrowCC_UnsupportedOperationException_1(env, "spinAndSet not supported by cpu");
 		return false;
 	}
 
@@ -1261,7 +1261,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 		}
 
 		if (checkClosed(env, inst)) {
-			throwNullPointerException(env, "closed");
+			jthrowCC_NullPointerException_1(env, "closed");
 			return false;
 		}
 
@@ -1287,7 +1287,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
 	void * vptr = (void *) (uintptr_t) ptr;
 
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
 
@@ -1297,7 +1297,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
 	bool succ = false;
 
 	if (!cmpxchg1b(iptr, expect, update, &succ)) {
-		throwUnsupportedExc(env, "spinAndSet not supported by cpu");
+		jthrowCC_UnsupportedOperationException_1(env, "spinAndSet not supported by cpu");
 		return;
 	}
 
@@ -1312,7 +1312,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
 		}
 
 		if (checkClosed(env, inst)) {
-			throwNullPointerException(env, "closed");
+			jthrowCC_NullPointerException_1(env, "closed");
 			return;
 		}
 
@@ -1332,12 +1332,12 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 	void * vptr = (void *) (uintptr_t) ptr;
 
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
 
 	vptr += off;
-	uint8_t * iptr = (uint8_t *) vptr;
+	volatile uint8_t * iptr = (uint8_t *) vptr;
 
 	uint64_t start = currentTimeMillis();
 	while(*iptr != expect) {
@@ -1353,7 +1353,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 		}
 
 		if (checkClosed(env, inst)) {
-			throwNullPointerException(env, "closed");
+			jthrowCC_NullPointerException_1(env, "closed");
 			return false;
 		}
 
@@ -1378,16 +1378,16 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
 	void * vptr = (void *) (uintptr_t) ptr;
 
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
 
 	vptr += off;
-	uint8_t * iptr = (uint8_t *) vptr;
+	volatile uint8_t * iptr = (uint8_t *) vptr;
 
 	while(*iptr != expect) {
 		if (checkClosed(env, inst)) {
-			throwNullPointerException(env, "closed");
+			jthrowCC_NullPointerException_1(env, "closed");
 			return;
 		}
 
@@ -1407,20 +1407,20 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
 	void * vptr = (void *) (uintptr_t) ptr;
 
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
 
 	void * vtrg = (void *) (uintptr_t) trg;
 
 	if (vtrg == NULL) {
-		throwNullPointerException(env, "target");
+		jthrowCC_NullPointerException_1(env, "target");
 		return;
 	}
 
 	if (size <= 0) {
 		if (size < 0) {
-			throwIllegalArgumentsExc(env, "size");
+			jthrowCC_IllegalArgumentException_1(env, "size");
 		}
 		return;
 	}
@@ -1440,7 +1440,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
 	void * vptr = (void *) (uintptr_t) ptr;
 
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
 
@@ -1448,19 +1448,19 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
 
 	void* nbuf = (*env)->GetDirectBufferAddress(env, buf);
 	if (nbuf == NULL) {
-		throwIllegalArgumentsExc(env, "GetDirectBufferAddress returned NULL");
+		jthrowCC_IllegalArgumentException_1(env, "GetDirectBufferAddress returned NULL");
 		return;
 	}
 
 	if (boff < 0) {
-		throwIllegalArgumentsExc(env, "bufferOffset < 0");
+		jthrowCC_IllegalArgumentException_1(env, "bufferOffset < 0");
 		return;
 	}
 
 
 	jlong capa = (*env)->GetDirectBufferCapacity(env, buf);
 	if (boff+blen > capa) {
-		throwIllegalArgumentsExc(env, "offset+length > GetDirectBufferCapacity");
+		jthrowCC_IllegalArgumentException_1(env, "offset+length > GetDirectBufferCapacity");
 		return;
 	}
 
@@ -1479,7 +1479,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
 	void * vptr = (void *) (uintptr_t) ptr;
 
 	if (vptr == NULL) {
-		throwNullPointerException(env, "ptr");
+		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
 
@@ -1487,19 +1487,19 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
 
 	void* nbuf = (*env)->GetDirectBufferAddress(env, buf);
 	if (nbuf == NULL) {
-		throwIllegalArgumentsExc(env, "GetDirectBufferAddress returned NULL");
+		jthrowCC_IllegalArgumentException_1(env, "GetDirectBufferAddress returned NULL");
 		return;
 	}
 
 	if (boff < 0) {
-		throwIllegalArgumentsExc(env, "bufferOffset < 0");
+		jthrowCC_IllegalArgumentException_1(env, "bufferOffset < 0");
 		return;
 	}
 
 
 	jlong capa = (*env)->GetDirectBufferCapacity(env, buf);
 	if (boff+blen > capa) {
-		throwIllegalArgumentsExc(env, "offset+length > GetDirectBufferCapacity");
+		jthrowCC_IllegalArgumentException_1(env, "offset+length > GetDirectBufferCapacity");
 		return;
 	}
 

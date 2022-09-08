@@ -32,12 +32,12 @@
 JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_CreateSymbolicLinkA
   (JNIEnv * env, jobject inst, jstring link, jstring target, jboolean isDir, jboolean isDev) {
 	if (link == NULL) {
-		throwIllegalArgumentsExc(env, "link is null");
+		jthrowCC_IllegalArgumentException_1(env, "link is null");
 		return;
 	}
 
 	if (target == NULL) {
-		throwIllegalArgumentsExc(env, "target is null");
+		jthrowCC_IllegalArgumentException_1(env, "target is null");
 		return;
 	}
 
@@ -66,7 +66,7 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 	(*env)->ReleaseStringUTFChars(env, target, targetBuf);
 
 	if (!success) {
-		throwUnknownError(env, GetLastError());
+		jthrow_UnknownNativeErrorException_1(env, GetLastError());
 	}
 }
 
@@ -78,12 +78,12 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_CreateHardLinkA
   (JNIEnv * env, jobject inst, jstring link, jstring target) {
 	if (link == NULL) {
-		throwIllegalArgumentsExc(env, "link is null");
+		jthrowCC_IllegalArgumentException_1(env, "link is null");
 		return;
 	}
 
 	if (target == NULL) {
-		throwIllegalArgumentsExc(env, "target is null");
+		jthrowCC_IllegalArgumentException_1(env, "target is null");
 		return;
 	}
 
@@ -103,6 +103,6 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 	(*env)->ReleaseStringUTFChars(env, target, targetBuf);
 
 	if (!success) {
-		throwUnknownError(env, GetLastError());
+		jthrow_UnknownNativeErrorException_1(env, GetLastError());
 	}
 }

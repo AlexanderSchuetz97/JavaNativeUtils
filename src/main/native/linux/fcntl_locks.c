@@ -35,17 +35,17 @@
 JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_fnctl_1F_1GETLK
   (JNIEnv * env, jobject inst, jint fd, jboolean exclusive, jlong start, jlong len) {
 	if (start < 0) {
-		throwIllegalArgumentsExc(env, "start of range invalid");
+		jthrowCC_IllegalArgumentException_1(env, "start of range invalid");
 		return -1;
 	}
 
 	if (len < 0) {
-		throwIllegalArgumentsExc(env, "length of range invalid");
+		jthrowCC_IllegalArgumentException_1(env, "length of range invalid");
 		return -1;
 	}
 
 	if (fd == -1) {
-		throwBadFileDescriptor(env);
+		jthrow_InvalidFileDescriptorException(env);
 		return -1;
 	}
 
@@ -65,10 +65,10 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 			case (EAGAIN):
 				break;
 			case (EBADF):
-				throwBadFileDescriptor(env);
+				jthrow_InvalidFileDescriptorException(env);
 				return false;
 			default:
-				throwUnknownError(env, err);
+				jthrow_UnknownNativeErrorException_1(env, err);
 				return false;
 		}
 	}
@@ -86,23 +86,23 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
   (JNIEnv * env, jobject inst, jint fd, jobject mode, jlong start, jlong len) {
 
 	if (start < 0) {
-		throwIllegalArgumentsExc(env, "start of range invalid");
+		jthrowCC_IllegalArgumentException_1(env, "start of range invalid");
 		return;
 	}
 
 	if (len < 0) {
-		throwIllegalArgumentsExc(env, "length of range invalid");
+		jthrowCC_IllegalArgumentException_1(env, "length of range invalid");
 		return;
 	}
 
-	int mMode = getEnumOrdinal(env, mode);
+	int mMode = jenum_ordinal(env, mode);
 	if (mMode < 0 || mMode > 2) {
-		throwIllegalArgumentsExc(env, "mode invalid");
+		jthrowCC_IllegalArgumentException_1(env, "mode invalid");
 		return;
 	}
 
 	if (fd == -1) {
-		throwBadFileDescriptor(env);
+		jthrow_InvalidFileDescriptorException(env);
 		return;
 	}
 
@@ -120,10 +120,10 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 			case (EAGAIN):
 				break;
 			case (EBADF):
-				throwBadFileDescriptor(env);
+				jthrow_InvalidFileDescriptorException(env);
 				return;
 			default:
-				throwUnknownError(env, err);
+				jthrow_UnknownNativeErrorException_1(env, err);
 				return;
 		}
 	}
@@ -138,23 +138,23 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
   (JNIEnv * env, jobject inst, jint fd, jobject mode, jlong start, jlong len) {
 
 	if (start < 0) {
-		throwIllegalArgumentsExc(env, "start of range invalid");
+		jthrowCC_IllegalArgumentException_1(env, "start of range invalid");
 		return false;
 	}
 
 	if (len < 0) {
-		throwIllegalArgumentsExc(env, "length of range invalid");
+		jthrowCC_IllegalArgumentException_1(env, "length of range invalid");
 		return false;
 	}
 
-	int mMode = getEnumOrdinal(env, mode);
+	int mMode = jenum_ordinal(env, mode);
 	if (mMode < 0 || mMode > 2) {
-		throwIllegalArgumentsExc(env, "mode invalid");
+		jthrowCC_IllegalArgumentException_1(env, "mode invalid");
 		return false;
 	}
 
 	if (fd == -1) {
-		throwBadFileDescriptor(env);
+		jthrow_InvalidFileDescriptorException(env);
 		return false;
 	}
 
@@ -175,10 +175,10 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 			case (EAGAIN):
 				return false;
 			case (EBADF):
-				throwBadFileDescriptor(env);
+				jthrow_InvalidFileDescriptorException(env);
 				return false;
 			default:
-				throwUnknownError(env, err);
+				jthrow_UnknownNativeErrorException_1(env, err);
 				return false;
 		}
 	}

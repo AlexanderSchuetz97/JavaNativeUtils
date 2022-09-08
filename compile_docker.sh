@@ -122,5 +122,7 @@ if [[ $BUILD_TARGETS == *"linux_aarch64"* ]] || [[ $BUILD_TARGETS == "all" ]]; t
     fi
 fi
 
+cp -r * ../../../target/classes
+
 
 cd ../../../
