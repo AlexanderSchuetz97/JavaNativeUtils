@@ -30,6 +30,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -1238,5 +1239,30 @@ public class MemTest {
             }
         }
 
+
+        @Test
+        public void testExIntSimple() {
+            int[] x = new int[]{0x24, 0x77};
+            memory.writeByte(3, 1);
+            memory.write(0, x, 1, 0, 2);
+            byte[] x2 = new byte[] {0x24, 0x77};
+            byte[] x3 = new byte[2];
+            memory.read(0,x3);
+            Assert.assertArrayEquals(x2, x3);
+            Assert.assertEquals(1, memory.read(3));
+
+            if (ByteOrder.nativeOrder() != ByteOrder.LITTLE_ENDIAN) {
+                return;
+            }
+
+            x = new int[]{0x24, 0x77FE};
+            memory.writeByte(6, 1);
+            memory.write(0, x, 3, 0, 2);
+            x2 = new byte[] {0x24, 0x00, 0x00, (byte)0xFE, 0x77, 0x00};
+            x3 = new byte[6];
+            memory.read(0,x3);
+            Assert.assertEquals(1, memory.read(6));
+            Assert.assertArrayEquals(x2, x3);
+        }
 
 }

@@ -18,32 +18,12 @@
 // If not, see <https://www.gnu.org/licenses/>.
 //
 
-package io.github.alexanderschuetz97.nativeutils;
+#if defined(__linux__)
+#include <endian.h>
+#elif defined(_WIN32)
+//I dont intend to ever support non LITTLE_ENDIAN windows systems (only xbox 360 comes to mind honestly)
+#define LITTLE_ENDIAN 1234
+#define BIG_ENDIAN 4321
+#define BYTE_ORDER 1234
+#endif
 
-import io.github.alexanderschuetz97.nativeutils.api.JVMNativeUtil;
-import io.github.alexanderschuetz97.nativeutils.api.NativeUtils;
-import org.junit.Assert;
-import org.junit.Test;
-
-import java.util.ArrayList;
-
-public class TestRef {
-
-    JVMNativeUtil jvmu = NativeUtils.getJVMUtil();
-
-    private long ngref()  {
-        ArrayList<String> ar = new ArrayList();
-        ar.add("bleh");
-        return jvmu.NewGlobalRef(ar);
-    }
-
-    @Test
-    public void test() {
-        long l = ngref();
-        System.gc();
-        ArrayList<String> ar = jvmu.NewLocalRef(l);
-        jvmu.DeleteGlobalRef(l);
-        Assert.assertEquals("bleh", ar.get(0));
-    }
-
-}

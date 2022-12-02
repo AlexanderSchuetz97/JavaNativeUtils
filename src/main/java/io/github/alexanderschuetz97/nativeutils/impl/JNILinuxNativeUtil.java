@@ -24,13 +24,7 @@ import io.github.alexanderschuetz97.nativeutils.api.NativeMemory;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.InvalidFileDescriptorException;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.QuotaExceededException;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
-import io.github.alexanderschuetz97.nativeutils.api.structs.Cmsghdr;
-import io.github.alexanderschuetz97.nativeutils.api.structs.IfNameIndex;
-import io.github.alexanderschuetz97.nativeutils.api.structs.Msghdr;
-import io.github.alexanderschuetz97.nativeutils.api.structs.PollFD;
-import io.github.alexanderschuetz97.nativeutils.api.structs.Sockaddr;
-import io.github.alexanderschuetz97.nativeutils.api.structs.Stat;
-import io.github.alexanderschuetz97.nativeutils.api.structs.Utsname;
+import io.github.alexanderschuetz97.nativeutils.api.structs.*;
 
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
@@ -359,6 +353,21 @@ public class JNILinuxNativeUtil extends JNICommonNativeUtil implements LinuxNati
 
     @Override
     public native long geteuid();
+
+    @Override
+    public native String getlogin_r();
+
+    @Override
+    public native long[] getgrouplist(String user, long group);
+
+    @Override
+    public native Group getgrgid_r(long group);
+
+    @Override
+    public native Passwd getpwnam_r(String user);
+
+    @Override
+    public native Passwd getpwuid_r(long id);
 
     @Override
     public native long getuid();

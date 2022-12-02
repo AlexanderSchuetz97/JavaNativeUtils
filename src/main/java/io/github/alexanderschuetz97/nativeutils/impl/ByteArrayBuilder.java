@@ -18,32 +18,42 @@
 // If not, see <https://www.gnu.org/licenses/>.
 //
 
-package io.github.alexanderschuetz97.nativeutils;
+package io.github.alexanderschuetz97.nativeutils.impl;
 
-import io.github.alexanderschuetz97.nativeutils.api.JVMNativeUtil;
-import io.github.alexanderschuetz97.nativeutils.api.NativeUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import java.util.Arrays;
 
-import java.util.ArrayList;
+/**
+ * Poor man's StringBuilder
+ */
+class ByteArrayBuilder {
 
-public class TestRef {
+    protected byte buf[] = new byte[64];
 
-    JVMNativeUtil jvmu = NativeUtils.getJVMUtil();
+    protected int nextIndex;
 
-    private long ngref()  {
-        ArrayList<String> ar = new ArrayList();
-        ar.add("bleh");
-        return jvmu.NewGlobalRef(ar);
+    private void ensureSize(int index) {
+        if (buf.length > index) {
+            return;
+        }
+
+        int cap = buf.length << 1;
+        if (cap - index < 0) {
+            cap = index;
+        }
+
+        buf = Arrays.copyOf(buf, cap);
     }
 
-    @Test
-    public void test() {
-        long l = ngref();
-        System.gc();
-        ArrayList<String> ar = jvmu.NewLocalRef(l);
-        jvmu.DeleteGlobalRef(l);
-        Assert.assertEquals("bleh", ar.get(0));
+    public void append(int by) {
+        ensureSize(nextIndex);
+        buf[nextIndex++] = (byte) by;
     }
 
+    public int getCount() {
+        return nextIndex;
+    }
+
+    public byte[] getBuffer() {
+        return buf;
+    }
 }

@@ -21,10 +21,27 @@ package io.github.alexanderschuetz97.nativeutils.api;
 
 public interface NativeUtil {
 
+    /**
+     * Returns true if this NativeUtil is instanceof {@link WindowsNativeUtil} and supports the Windows API functions.
+     */
     boolean isWindows();
 
+    /**
+     * Returns true if this NativeUtil is instanceof {@link LinuxNativeUtil} and supports the Linux API functions.
+     */
     boolean isLinux();
 
+    /**
+     * Returns true if this NativeUtil is instanceof {@link JVMNativeUtil} and supports the JVM/JNI API functions.
+     */
     boolean isJVM();
+
+
+    /**
+     * Returns true if this NativeUtil does not implement any useful functions.
+     * This indicates a jvm running on a platform not supported by JavaNativeUtils. (Apple OSX for example)
+     * or a failure to load the native libraries in which case taking a look at {@link NativeUtils#getNativeLibraryBinaries()} may help.
+     */
+    boolean isNoop();
 
 }

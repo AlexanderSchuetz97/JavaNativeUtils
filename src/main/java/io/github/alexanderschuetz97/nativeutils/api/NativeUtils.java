@@ -24,6 +24,8 @@ import io.github.alexanderschuetz97.nativeutils.impl.NoopNativeUtil;
 import io.github.alexanderschuetz97.nativeutils.impl.JNILinuxNativeUtil;
 import io.github.alexanderschuetz97.nativeutils.impl.JNIWindowsNativeUtil;
 
+import java.util.Map;
+
 public final class NativeUtils {
 
     private static NativeUtil instance;
@@ -109,6 +111,23 @@ public final class NativeUtils {
         }
 
         return instance;
+    }
+
+    /**
+     * Helper method to get all shared lib binaries in a map.
+     * If you know what platform you are developing for then you may write the byte[] to disk with the appropriate name
+     * and then call {@link System#load(String)} with the absolute path to the file on the disk.
+     *
+     * Afterwards call {@link NativeUtils#set(NativeUtil)} with null as parameter to force it to detect the loaded library.
+     *
+     * Note that "loading" the library more than once will cause issues. Only do this if you know for sure that
+     * the library has not been loaded automatically, or you know for sure that loading automatically has failed
+     * (Can be detected by calling {@link #get()} and then checking for {@link NativeUtil#isNoop()} returns true.
+     * It only returns true if automatic loading has failed. The cause for this is most likely due to running on an unsupported
+     * platform such as Apple OSX. In that case this method will not help you either...
+     */
+    public static Map<String, byte[]> getNativeLibraryBinaries() {
+        return NativeLibraryLoaderHelper.getNativeLibraryBinaries();
     }
 
 

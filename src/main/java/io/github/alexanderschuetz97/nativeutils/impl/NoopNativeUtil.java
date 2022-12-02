@@ -38,4 +38,9 @@ public class NoopNativeUtil implements NativeUtil {
     public boolean isJVM() {
         return false;
     }
+
+    @Override
+    public boolean isNoop() {
+        return true;
+    }
 }

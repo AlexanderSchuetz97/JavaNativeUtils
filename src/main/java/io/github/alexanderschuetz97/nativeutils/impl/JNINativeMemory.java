@@ -19,22 +19,26 @@
 //
 package io.github.alexanderschuetz97.nativeutils.impl;
 
+import io.github.alexanderschuetz97.nativeutils.api.NativeBuffer;
 import io.github.alexanderschuetz97.nativeutils.api.NativeMemory;
 import io.github.alexanderschuetz97.nativeutils.api.PointerHandler;
+import io.github.alexanderschuetz97.nativeutils.api.StructHelper;
 
 import java.io.SyncFailedException;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 class JNINativeMemory implements NativeMemory {
-
     private final boolean read;
     private final boolean write;
     private volatile long ptr;
     private final long size;
     private final PointerHandler handler;
+
+    private final int hashCode;
 
     private final ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
     private final ReentrantReadWriteLock.ReadLock rLock = rwl.readLock();
@@ -46,6 +50,7 @@ class JNINativeMemory implements NativeMemory {
         this.read = read;
         this.write = write;
         this.handler = Objects.requireNonNull(handler);
+        this.hashCode = (int)(ptr ^ (ptr >>> 32));
     }
 
 
@@ -347,9 +352,6 @@ class JNINativeMemory implements NativeMemory {
                 return;
             }
 
-
-
-
             int pos = buffer.position();
             writeBuffer(ptr, offset, buffer, pos, len);
             buffer.position(pos+len);
@@ -357,6 +359,336 @@ class JNINativeMemory implements NativeMemory {
             rLock.unlock();
         }
     }
+
+    @Override
+    public void write(long offset, byte[] bytes, int size, int off, int len) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("size");
+        }
+
+        if (len < 0 || off < 0 || off+len > bytes.length) {
+            throw new IllegalArgumentException("offsets");
+        }
+
+        if (size == 1) {
+            write(offset, bytes, off, len);
+            return;
+        }
+
+        if (len == 0) {
+            return;
+        }
+
+        lockForWrite(offset, ((long)len)*size);
+        try {
+            writeExpandedByteArray(ptr, offset, bytes, size, off, len);
+        } finally {
+            this.rLock.unlock();
+        }
+    }
+
+    static native void writeExpandedByteArray(long ptr, long offset, byte[] bytes, int size, int off, int len);
+
+    @Override
+    public void read(long offset, byte[] bytes, int size, int off, int len) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("size");
+        }
+
+        if (len < 0 || off < 0 || off+len > bytes.length) {
+            throw new IllegalArgumentException("offsets");
+        }
+
+        if (size == 1) {
+            write(offset, bytes, off, len);
+            return;
+        }
+
+        if (len == 0) {
+            return;
+        }
+
+        lockForRead(offset, ((long)len)*size);
+        try {
+            readExpandedByteArray(ptr, offset, bytes, size, off, len);
+        } finally {
+            this.rLock.unlock();
+        }
+    }
+
+    static native void readExpandedByteArray(long ptr, long offset, byte[] bytes, int size, int off, int len);
+
+
+    @Override
+    public void write(long offset, char[] chars, int size, int off, int len) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("size");
+        }
+
+        if (len < 0 || off < 0 || off+len > chars.length) {
+            throw new IllegalArgumentException("offsets");
+        }
+
+        if (len == 0) {
+            return;
+        }
+
+        lockForWrite(offset, ((long)len)*size);
+        try {
+            writeExpandedCharArray(ptr, offset, chars, size, off, len);
+        } finally {
+            this.rLock.unlock();
+        }
+    }
+
+    static native void writeExpandedCharArray(long ptr, long offset, char[] chars, int size, int off, int len);
+    @Override
+    public void read(long offset, char[] chars, int size, int off, int len) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("size");
+        }
+
+        if (len < 0 || off < 0 || off+len > chars.length) {
+            throw new IllegalArgumentException("offsets");
+        }
+
+        if (len == 0) {
+            return;
+        }
+
+        lockForRead(offset, ((long)len)*size);
+        try {
+            readExpandedCharArray(ptr, offset, chars, size, off, len);
+        } finally {
+            this.rLock.unlock();
+        }
+    }
+
+    static native void readExpandedCharArray(long ptr, long offset, char[] chars, int size, int off, int len);
+
+    @Override
+    public void write(long offset, short[] shorts, int size, int off, int len) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("size");
+        }
+
+        if (len < 0 || off < 0 || off+len > shorts.length) {
+            throw new IllegalArgumentException("offsets");
+        }
+
+        if (len == 0) {
+            return;
+        }
+
+        lockForWrite(offset, ((long)len)*size);
+        try {
+            writeExpandedShortArray(ptr, offset, shorts, size, off, len);
+        } finally {
+            this.rLock.unlock();
+        }
+    }
+
+
+    static native void writeExpandedShortArray(long ptr, long offset, short[] chars, int size, int off, int len);
+    @Override
+    public void read(long offset, short[] shorts, int size, int off, int len) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("size");
+        }
+
+        if (len < 0 || off < 0 || off+len > shorts.length) {
+            throw new IllegalArgumentException("offsets");
+        }
+
+        if (len == 0) {
+            return;
+        }
+
+        lockForRead(offset, ((long)len)*size);
+        try {
+            readExpandedShortArray(ptr, offset, shorts, size, off, len);
+        } finally {
+            this.rLock.unlock();
+        }
+    }
+
+    static native void readExpandedShortArray(long ptr, long offset, short[] chars, int size, int off, int len);
+
+    @Override
+    public void write(long offset, int[] ints, int size, int off, int len) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("size");
+        }
+
+        if (len < 0 || off < 0 || off+len > ints.length) {
+            throw new IllegalArgumentException("offsets");
+        }
+
+        if (len == 0) {
+            return;
+        }
+
+        lockForWrite(offset, ((long)len)*size);
+        try {
+            writeExpandedIntArray(ptr, offset, ints, size, off, len);
+        } finally {
+            this.rLock.unlock();
+        }
+    }
+
+    static native void writeExpandedIntArray(long ptr, long offset, int[] ints, int size, int off, int len);
+
+    @Override
+    public void read(long offset, int[] ints, int size, int off, int len) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("size");
+        }
+
+        if (len < 0 || off < 0 || off+len > ints.length) {
+            throw new IllegalArgumentException("offsets");
+        }
+
+        if (len == 0) {
+            return;
+        }
+
+        lockForRead(offset, ((long)len)*size);
+        try {
+            readExpandedIntArray(ptr, offset, ints, size, off, len);
+        } finally {
+            this.rLock.unlock();
+        }
+    }
+
+    static native void readExpandedIntArray(long ptr, long offset, int[] ints, int size, int off, int len);
+
+    @Override
+    public void write(long offset, long[] longs, int size, int off, int len) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("size");
+        }
+
+        if (len < 0 || off < 0 || off+len > longs.length) {
+            throw new IllegalArgumentException("offsets");
+        }
+
+        if (len == 0) {
+            return;
+        }
+
+        lockForWrite(offset, ((long)len)*size);
+        try {
+            writeExpandedLongArray(ptr, offset, longs, size, off, len);
+        } finally {
+            this.rLock.unlock();
+        }
+    }
+
+    static native void writeExpandedLongArray(long ptr, long offset, long[] ints, int size, int off, int len);
+    @Override
+    public void read(long offset, long[] longs, int size, int off, int len) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("size");
+        }
+
+        if (len < 0 || off < 0 || off+len > longs.length) {
+            throw new IllegalArgumentException("offsets");
+        }
+
+        if (len == 0) {
+            return;
+        }
+
+        lockForRead(offset, ((long)len)*size);
+        try {
+            readExpandedLongArray(ptr, offset, longs, size, off, len);
+        } finally {
+            this.rLock.unlock();
+        }
+    }
+
+    static native void readExpandedLongArray(long ptr, long offset, long[] ints, int size, int off, int len);
+
+    @Override
+    public void write(long offset, float[] floats, int off, int len) {
+        if (len < 0 || off < 0 || off+len > floats.length) {
+            throw new IllegalArgumentException("offsets");
+        }
+
+        if (len == 0) {
+            return;
+        }
+
+        lockForWrite(offset, (len * 4L));
+        try {
+            writeFloatArray(ptr, offset, floats, off, len);
+        } finally {
+            rLock.unlock();
+        }
+    }
+
+    static native void writeFloatArray(long ptr, long offset, float[] floats, int off, int len);
+
+    @Override
+    public void read(long offset, float[] floats, int off, int len) {
+        if (len < 0 || off < 0 || off+len > floats.length) {
+            throw new IllegalArgumentException("offsets");
+        }
+
+        if (len == 0) {
+            return;
+        }
+
+        lockForRead(offset, (len * 4L));
+        try {
+            readFloatArray(ptr, offset, floats, off, len);
+        } finally {
+            rLock.unlock();
+        }
+    }
+
+    static native void readFloatArray(long ptr, long offset, float[] floats, int off, int len);
+
+    @Override
+    public void write(long offset, double[] doubles, int off, int len) {
+        if (len < 0 || off < 0 || off+len > doubles.length) {
+            throw new IllegalArgumentException("offsets");
+        }
+
+        if (len == 0) {
+            return;
+        }
+
+        lockForWrite(offset, (len * 8L));
+        try {
+            writeDoubleArray(ptr, offset, doubles, off, len);
+        } finally {
+            rLock.unlock();
+        }
+    }
+
+    static native void writeDoubleArray(long ptr, long offset, double[] doubles, int off, int len);
+
+    @Override
+    public void read(long offset, double[] doubles, int off, int len) {
+        if (len < 0 || off < 0 || off+len > doubles.length) {
+            throw new IllegalArgumentException("offsets");
+        }
+
+        if (len == 0) {
+            return;
+        }
+
+        lockForRead(offset, (len * 8L));
+        try {
+            readDoubleArray(ptr, offset, doubles, off, len);
+        } finally {
+            rLock.unlock();
+        }
+    }
+
+    static native void readDoubleArray(long ptr, long offset, double[] doubles, int off, int len);
+
 
     @Override
     public void write(long offset, byte aByte) {
@@ -371,6 +703,11 @@ class JNINativeMemory implements NativeMemory {
     @Override
     public void writeByte(long offset, byte aByte) {
         write(offset, aByte);
+    }
+
+    @Override
+    public void writeByte(long offset, int aByte) {
+        writeByte(offset, (byte) aByte);
     }
 
     @Override
@@ -470,7 +807,7 @@ class JNINativeMemory implements NativeMemory {
         }
 
         if (bufferOffset < 0 || len < 0 || bufferOffset+len > buffer.length) {
-            throw new ArrayIndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException();
         }
         if (len == 0) {
             return;
@@ -885,6 +1222,67 @@ class JNINativeMemory implements NativeMemory {
         }
     }
 
+    @Override
+    public long indexOf(long offset, byte value) {
+        lockForRead(offset, 1);
+        try {
+            return indexOf(ptr, offset, remaining(offset), value);
+        } finally {
+            rLock.unlock();
+        }
+    }
+
+    @Override
+    public int readUntilByte(long offset, byte value, byte[] buffer, int off, int len) {
+        if (len < 0 || off < 0) {
+            throw new IllegalArgumentException("buffer offset");
+        }
+
+        if (ptr == 0) {
+            throw new NullPointerException();
+        }
+
+        if (len == 0) {
+            return 0;
+        }
+
+        if (!read) {
+            throw new UnsupportedOperationException("memory does not support reading");
+        }
+
+        if (offset < 0) {
+            throw new IllegalArgumentException("out of bounds");
+        }
+
+        rLock.lock();
+        try {
+            int max = (int) Math.min(remaining(offset), len);
+            if (max == 0) {
+                return 0;
+            }
+            return readUntilByte(ptr, offset, max, value, buffer, off);
+        } finally {
+            rLock.unlock();
+        }
+    }
+
+    @Override
+    public NativeBuffer stream() {
+        return new MemoryNativeBuffer(this, 0);
+    }
+
+    @Override
+    public NativeBuffer stream(long offset) {
+        if (isValid(offset)) {
+            throw new IndexOutOfBoundsException(""+offset);
+        }
+        return new MemoryNativeBuffer(this, offset);
+    }
+
+    static native int readUntilByte(long ptr, long offset, int max, byte value, byte[] buffer, int off);
+
+    static native long indexOf(long ptr, long offset, long max, byte value);
+
     //NATIVE STUFF
     static native long off(long ptr, long offset);
 
@@ -985,6 +1383,24 @@ class JNINativeMemory implements NativeMemory {
         if (ptr == 0) {
             return "INVALID";
         }
-        return "0x" + Long.toHexString(ptr)  + " - " + Long.toHexString(ptr+size);
+        return "0x" + Long.toHexString(ptr)  + " - 0x" + Long.toHexString(ptr+size);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        JNINativeMemory that = (JNINativeMemory) o;
+        return ptr == that.ptr && hashCode == that.hashCode;
+    }
+
+    @Override
+    public int hashCode() {
+        return hashCode;
     }
 }

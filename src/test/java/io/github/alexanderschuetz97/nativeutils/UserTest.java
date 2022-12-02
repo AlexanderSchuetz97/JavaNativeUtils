@@ -20,23 +20,41 @@
 
 package io.github.alexanderschuetz97.nativeutils;
 
-import io.github.alexanderschuetz97.nativeutils.api.JVMNativeUtil;
 import io.github.alexanderschuetz97.nativeutils.api.LinuxNativeUtil;
 import io.github.alexanderschuetz97.nativeutils.api.NativeUtils;
+import io.github.alexanderschuetz97.nativeutils.api.structs.Group;
+import io.github.alexanderschuetz97.nativeutils.api.structs.Passwd;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.Map;
 
-public class WordExp {
-
-    private LinuxNativeUtil util = NativeUtils.getLinuxUtil();
+public class UserTest {
 
     @Test
-    public void test() {
-        Map.Entry<String, String> e = System.getenv().entrySet().iterator().next();
-        String[] ss = util.wordexp("a $"+e.getKey()+" b", true, true, true);
-        Assert.assertArrayEquals(new String[]{"a", e.getValue(), "b"}, ss);
+    public void testUser() throws Exception {
+        LinuxNativeUtil lnu = NativeUtils.getLinuxUtil();
+        long uid = lnu.getuid();
+        String username = lnu.getlogin_r();
+        Passwd passwd = lnu.getpwuid_r(uid);
+        Assert.assertEquals(passwd.getPw_name(), username);
+        Passwd passwd2 = lnu.getpwnam_r(username);
+        Assert.assertEquals(passwd, passwd2);
+
+        long[] gid = lnu.getgrouplist(username, passwd.getPw_gid());
+        boolean found = false;
+        for (long l : gid) {
+            if (l == passwd.getPw_gid()) {
+                found = true;
+                continue;
+            }
+
+            Group group = lnu.getgrgid_r(l);
+            Assert.assertNotNull(group.getGr_name());
+            Assert.assertTrue(group.getGr_mem().contains(username));
+        }
+
+        Assert.assertTrue(Arrays.toString(gid) + "->" + passwd.getPw_gid(), found);
     }
 }

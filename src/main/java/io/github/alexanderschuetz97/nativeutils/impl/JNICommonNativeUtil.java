@@ -47,6 +47,11 @@ public abstract class JNICommonNativeUtil implements JVMNativeUtil {
         return true;
     }
 
+    @Override
+    public boolean isNoop() {
+        return false;
+    }
+
     public native void MonitorEnter(Object obj);
 
     public native void MonitorExit(Object obj);

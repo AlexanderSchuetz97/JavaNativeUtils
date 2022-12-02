@@ -24,13 +24,7 @@ import io.github.alexanderschuetz97.nativeutils.api.exceptions.OperationInProgre
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.PermissionDeniedException;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.QuotaExceededException;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
-import io.github.alexanderschuetz97.nativeutils.api.structs.Cmsghdr;
-import io.github.alexanderschuetz97.nativeutils.api.structs.IfNameIndex;
-import io.github.alexanderschuetz97.nativeutils.api.structs.Msghdr;
-import io.github.alexanderschuetz97.nativeutils.api.structs.PollFD;
-import io.github.alexanderschuetz97.nativeutils.api.structs.Sockaddr;
-import io.github.alexanderschuetz97.nativeutils.api.structs.Stat;
-import io.github.alexanderschuetz97.nativeutils.api.structs.Utsname;
+import io.github.alexanderschuetz97.nativeutils.api.structs.*;
 
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
@@ -368,8 +362,6 @@ public interface LinuxNativeUtil extends NativeUtil {
      */
     void setsockopt(int fd, int level, int optname, byte[] payload) throws InvalidFileDescriptorException, IllegalArgumentException, UnsupportedOperationException;
 
-
-
     /**
      * Close a file descriptor
      */
@@ -551,6 +543,40 @@ public interface LinuxNativeUtil extends NativeUtil {
      * returns the effective uid of the user running the process.
      */
     long geteuid();
+
+    /**
+     * Returns the username of the current user
+     * @throws IOException if an IOError occurs while gathering infos (syscall queries a buch of files)
+     * @throws UnknownNativeErrorException If something enexpected occurs
+     * @throws IllegalStateException If ENOTTY/ENXIO occurs
+     */
+    String getlogin_r() throws IOException, UnknownNativeErrorException, IllegalStateException;
+
+    /**
+     * Returns group list for given username
+     * @param user the username
+     * @param group the first group of the user. (This is usually equal to the UID but call getpwnam to be safe)
+     * @return a int[] containing all gids the user is in. If the user is not found a array only containing the "group" parameter is returned as this function does not disclose if the user exists or not.
+     */
+    long[] getgrouplist(String user, long group);
+
+    /**
+     * Returns info about a group.
+     * Returns null if the group was not found.
+     * @param group groupid
+     */
+    Group getgrgid_r(long group);
+
+    /**
+     * Returns user information about a given user.
+     * Returns null if the user was not found
+     */
+    Passwd getpwnam_r(String user);
+
+    /**
+     * Returns user information about a given user by uid
+     */
+    Passwd getpwuid_r(long id);
 
     /**
      * returns the real uid of the user running the process.

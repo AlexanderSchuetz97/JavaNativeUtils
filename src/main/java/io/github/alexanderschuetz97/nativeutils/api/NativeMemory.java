@@ -20,7 +20,6 @@
 package io.github.alexanderschuetz97.nativeutils.api;
 
 import java.io.SyncFailedException;
-import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -152,6 +151,95 @@ public interface NativeMemory extends AutoCloseable {
     void write(long offset, ByteBuffer buffer, int len);
 
     /**
+     * Writes the byte[] to the memory.
+     * @param size parameter controls how many bytes are used per index of the array.
+     *             size = 1 would just write the byte[] as is
+     *             size = 2 would write a '0' byte followed by the byte
+     *             size = 3 would write 2 '0' bytes followed by the char
+     *             ...
+     *
+     */
+    void write(long offset, byte[] bytes, int size, int off, int len);
+
+
+    void read(long offset, byte[] bytes, int size, int off, int len);
+
+    /**
+     * Writes the char[] to the memory.
+     * @param size parameter controls how many bytes are used per index of the array.
+     *             size = 1 would first cast each char to a byte.
+     *             size = 3 would write a 0 byte followed by the char
+     *             size = 4 would write 2 0 bytes followed by the char
+     *             ...
+     *
+     */
+    void write(long offset, char[] chars, int size, int off, int len);
+
+
+    void read(long offset, char[] chars, int size, int off, int len);
+
+    /**
+     * Writes the short[] to the memory.
+     * @param size parameter controls how many bytes are used per index of the array.
+     *             size = 1 would first cast each short to a byte.
+     *             size = 3 would write a 0 byte followed by the short
+     *             size = 4 would write 2 0 bytes followed by the short
+     *             ...
+     *
+     */
+    void write(long offset, short[] shorts, int size, int off, int len);
+
+    void read(long offset, short[] shorts, int size, int off, int len);
+
+
+    /**
+     * Writes the int[] to the memory.
+     * @param size parameter controls how many bytes are used per index of the array.
+     *             size = 1 would first cast each int to a byte.
+     *             ...
+     *             size = 3 would write the 24 least significant bits as 3 bytes.
+     *             size = 4 would write the int[] as is
+     *             ...
+     *             size = 5 would prefix each int with a 0 byte
+     *      *      ...
+     *
+     */
+    void write(long offset, int[] ints, int size, int off, int len);
+
+    void read(long offset, int[] ints, int size, int off, int len);
+
+    /**
+     * Writes the long[] to the memory.
+     * @param size parameter controls how many bytes are used per index of the array.
+     *             size = 1 would first cast each long to a byte.
+     *             ...
+     *             size = 3 would write the 24 least significant bits as 3 bytes.
+     *             size = 4 would write each long to a int.
+     *             ...
+     *             size = 9 would prefix each long with a 0 byte
+     *      *      ...
+     *
+     */
+    void write(long offset, long[] longs, int size, int off, int len);
+
+
+    void read(long offset, long[] longs, int size, int off, int len);
+
+    /**
+     * Writes the float[] to memory using 4 bytes per float.
+     */
+    void write(long offset, float[] floats, int off, int len);
+
+    void read(long offset, float[] floats, int off, int len);
+
+    /**
+     * Writes the double[] to memory using 8 bytes per float.
+     */
+    void write(long offset, double[] doubles, int off, int len);
+
+
+    void read(long offset, double[] doubles, int off, int len);
+    /**
      * writes a single byte to the offset address.
      */
     void write(long offset, byte aByte);
@@ -160,6 +248,8 @@ public interface NativeMemory extends AutoCloseable {
      * writes a single byte to the offset address.
      */
     void writeByte(long offset, byte aByte);
+
+    void writeByte(long offset, int aByte);
 
     /**
      * writes a pointer value to the given offset.
@@ -524,5 +614,38 @@ public interface NativeMemory extends AutoCloseable {
      * This operation will always throw an exception i386 (x86 - 32 bit) jvms because the cpu instructions set does not support it.
      */
     boolean compareAndSet(long offset, byte[] data);
+
+    /**
+     * Returns the next offset in the memory that has the given value.
+     * the return value is an absolute index meaning it ranges from the given offset up until the maximum valid offset of this memory.
+     * returns -1 in case the value is not found anywhere until the end of the memory.
+     */
+    long indexOf(long offset, byte value);
+
+    /**
+     * reads bytes into a buffer until a byte is encountered that is equal to the value parameter.
+     * all bytes up until and including the byte equal to value are read into the given buffer.
+     * if the end of the memory or buffer is encountered then reading ceases.
+     * After reading has ceased the amount of bytes read is returned (this includes the value byte if it was found).
+     *
+     * Note: each byte is read individually. This ensures that the 'value' byte will never be encountered twice in the resulting buffer.
+     * There can however be no guarantees made in terms of integrity of the read data should the memory be modified concurrently.
+     *
+     *
+     * This method can be used to read zero terminated strings from memory.
+     *
+     * @param len for optimal performance a value <= 512 is recommended.
+     * @param offset this method permits offsets beyond the memory size. The method will just return 0 in those cases.
+     */
+    int readUntilByte(long offset, byte value, byte[] buffer, int off, int len);
+
+    /**
+     * Creates a new NativeBuffer instance that can be used to read this memory as one would read a InputStream
+     * Every instance of NativeBuffer is completely independent (other than all of them accessing this memory object)
+     * Note: the returned object must not be used by multiple threads at once.
+     */
+    NativeBuffer stream();
+    NativeBuffer stream(long offset);
+
 
 }

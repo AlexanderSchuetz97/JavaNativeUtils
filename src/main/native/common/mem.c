@@ -24,10 +24,8 @@
 #include <stddef.h>
 #include "atomics.h"
 #include <string.h>
-
-
-
-
+#include "endianutil.h"
+#include <assert.h>
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
@@ -1506,4 +1504,1171 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINat
 	nbuf+=boff;
 
 	memmove(vptr, nbuf, blen);
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    indexOf
+ * Signature: (JJJB)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_indexOf
+  (JNIEnv * env, jclass clazz, jlong ptr, jlong off, jlong max, jbyte value) {
+	void * vptr = (void *) (uintptr_t) ptr;
+	if (vptr == NULL) {
+		jthrowCC_NullPointerException_1(env, "ptr");
+		return 0;
+	}
+
+	vptr += off;
+	volatile jbyte * bptr = (volatile jbyte*) vptr;
+
+	for (jlong x = 0; x < max; x++) {
+		if (bptr[x] == value) {
+			return off+x;
+		}
+	}
+
+	return -1;
+}
+
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    readUntilByte
+ * Signature: (JJIB[BI)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_readUntilByte
+  (JNIEnv * env, jclass clazz, jlong ptr, jlong off, jint max, jbyte value, jbyteArray buf, jint bufOff) {
+	void * vptr = (void *) (uintptr_t) ptr;
+	if (vptr == NULL) {
+		jthrowCC_NullPointerException_1(env, "ptr");
+		return 0;
+	}
+	if (buf == NULL) {
+		jthrowCC_NullPointerException_1(env, "buf");
+		return 0;
+	}
+
+
+	if (bufOff < 0 || (*env)->GetArrayLength(env, buf) < bufOff+max) {
+		jthrowCC_IllegalArgumentException_1(env, "buffer");
+		return 0;
+	}
+
+	vptr += off;
+	volatile jbyte * bptr = (volatile jbyte*) vptr;
+
+
+	//To big to fit on stack
+	if (max > 512) {
+		jbyte* copy = (*env)->GetByteArrayElements(env, buf, NULL);
+
+		jint x = 0;
+		while(x < max) {
+			jbyte cur = bptr[x++];
+			copy[bufOff++] = cur;
+			if (cur == value) {
+				break;
+			}
+		}
+
+		(*env)->ReleaseByteArrayElements(env, buf, copy, x > 0 ? JNI_OK : JNI_ABORT);
+
+		return x;
+	}
+
+	jbyte stack[max];
+
+	jint x = 0;
+	while(x < max) {
+		jbyte cur = bptr[x];
+		stack[x++] = cur;
+		if (cur == value) {
+			break;
+		}
+	}
+
+	if (x > 0) {
+		(*env)->SetByteArrayRegion(env, buf, bufOff, (jsize) x, stack);
+	}
+
+	return x;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    writeDoubleArray
+ * Signature: (JJ[DII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_writeDoubleArray
+  (JNIEnv * env, jclass clazz, jlong ptr, jlong off, jdoubleArray array, jint arrayOff, jint arrayLen) {
+	void * vptr = (void *) (uintptr_t) ptr;
+	if (vptr == NULL) {
+		jthrowCC_NullPointerException_1(env, "ptr");
+		return;
+	}
+	if (array == NULL) {
+		jthrowCC_NullPointerException_1(env, "buf");
+		return;
+	}
+
+
+	if (arrayOff < 0 || (*env)->GetArrayLength(env, array) < arrayOff+arrayLen) {
+		jthrowCC_IllegalArgumentException_1(env, "buffer");
+		return;
+	}
+
+	vptr += off;
+	jdouble* jdptr = (jdouble*) vptr;
+	(*env)->SetDoubleArrayRegion(env, array, arrayOff, (jsize) arrayLen, jdptr);
+}
+
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    writeFloatArray
+ * Signature: (JJ[FII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_writeFloatArray
+  (JNIEnv * env, jclass clazz, jlong ptr, jlong off, jfloatArray array, jint arrayOff, jint arrayLen) {
+	void * vptr = (void *) (uintptr_t) ptr;
+	if (vptr == NULL) {
+		jthrowCC_NullPointerException_1(env, "ptr");
+		return;
+	}
+	if (array == NULL) {
+		jthrowCC_NullPointerException_1(env, "buf");
+		return;
+	}
+
+
+	if (arrayOff < 0 || (*env)->GetArrayLength(env, array) < arrayOff+arrayLen) {
+		jthrowCC_IllegalArgumentException_1(env, "buffer");
+		return;
+	}
+
+	vptr += off;
+	jfloat* jfptr = (jfloat*) vptr;
+	(*env)->SetFloatArrayRegion(env, array, arrayOff, (jsize) arrayLen, jfptr);
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    writeExpandedByteArray
+ * Signature: (JJ[BIII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_writeExpandedByteArray
+  (JNIEnv * env, jclass clazz, jlong ptr, jlong off, jbyteArray array, jint size, jint arrayOff, jint arrayLen) {
+	void * vptr = (void *) (uintptr_t) ptr;
+	if (vptr == NULL) {
+		jthrowCC_NullPointerException_1(env, "ptr");
+		return;
+	}
+	if (array == NULL) {
+		jthrowCC_NullPointerException_1(env, "buf");
+		return;
+	}
+
+
+	if (arrayOff < 0 || (*env)->GetArrayLength(env, array) < arrayOff+arrayLen) {
+		jthrowCC_IllegalArgumentException_1(env, "buffer");
+		return;
+	}
+
+	vptr += off;
+	if (size == 1) {
+		(*env)->SetByteArrayRegion(env, array, arrayOff, arrayLen, (jbyte*) vptr);
+		return;
+	}
+
+
+	jbyte * bPtr = (*env)->GetByteArrayElements(env, array, NULL);
+	if (bPtr == NULL) {
+		jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
+		return;
+	}
+
+	jsize psize = size-sizeof(jbyte);
+	vptr += off;
+#if BYTE_ORDER == LITTLE_ENDIAN
+	struct padder {
+		jbyte padding[psize];
+		jbyte value;
+	} __attribute__((packed));
+#elif BYTE_ORDER == BIG_ENDIAN
+	struct padder {
+		jbyte value;
+		jbyte padding[psize];
+	} __attribute__((packed));
+#else
+#error
+#endif
+	struct padder* pptr = (struct padder*) vptr;
+	assert(((uintptr_t)&pptr[1]) - ((uintptr_t)&pptr[0]) == size);
+
+
+	for (jsize i = 0; i < arrayLen; i++) {
+		if (psize > 0) {
+			memset(&pptr[i].padding[0], 0, psize);
+		}
+		pptr[i].value = bPtr[arrayOff+i];
+	}
+
+	(*env)->ReleaseByteArrayElements(env, array, bPtr, JNI_ABORT);
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    writeExpandedCharArray
+ * Signature: (JJ[CIII)V
+ */
+
+
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_writeExpandedCharArray
+	(JNIEnv * env, jclass clazz, jlong ptr, jlong off, jcharArray array, jint size, jint arrayOff, jint arrayLen) {
+	void * vptr = (void *) (uintptr_t) ptr;
+	if (vptr == NULL) {
+		jthrowCC_NullPointerException_1(env, "ptr");
+		return;
+	}
+	if (array == NULL) {
+		jthrowCC_NullPointerException_1(env, "buf");
+		return;
+	}
+
+
+	if (arrayOff < 0 || (*env)->GetArrayLength(env, array) < arrayOff+arrayLen) {
+		jthrowCC_IllegalArgumentException_1(env, "buffer");
+		return;
+	}
+
+	vptr += off;
+	if (size == 2) {
+		(*env)->SetCharArrayRegion(env, array, arrayOff, arrayLen, (jchar*) vptr);
+		return;
+	}
+
+	jchar * bPtr = (*env)->GetCharArrayElements(env, array, NULL);
+	if (bPtr == NULL) {
+		jthrowCC_OutOfMemoryError_1(env, "GetCharArrayElements");
+		return;
+	}
+
+	switch(size) {
+		case (1): {
+			jbyte* pptr = (jbyte*) vptr;
+			for (jsize i = 0; i < arrayLen; i++) {
+				pptr[i] = (jbyte) bPtr[arrayOff+i];
+			}
+
+			(*env)->ReleaseCharArrayElements(env, array, bPtr, JNI_ABORT);
+			return;
+		}
+	}
+
+	jsize psize = size-sizeof(jchar);
+
+#if BYTE_ORDER == LITTLE_ENDIAN
+	struct padder {
+		jbyte padding[psize];
+		jchar value;
+	} __attribute__((packed));
+#elif BYTE_ORDER == BIG_ENDIAN
+	struct padder {
+		jchar value;
+		jbyte padding[psize];
+	} __attribute__((packed));
+#else
+#error
+#endif
+	struct padder* pptr = (struct padder*) vptr;
+	assert(((uintptr_t)&pptr[1]) - ((uintptr_t)&pptr[0]) == size);
+	for (jsize i = 0; i < arrayLen; i++) {
+		if (psize > 0) {
+			memset(&pptr[i].padding[0], 0, psize);
+		}
+		pptr[i].value = bPtr[arrayOff+i];
+	}
+
+	(*env)->ReleaseCharArrayElements(env, array, bPtr, JNI_ABORT);
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    writeExpandedShortArray
+ * Signature: (JJ[SIII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_writeExpandedShortArray
+	(JNIEnv * env, jclass clazz, jlong ptr, jlong off, jshortArray array, jint size, jint arrayOff, jint arrayLen) {
+	void * vptr = (void *) (uintptr_t) ptr;
+	if (vptr == NULL) {
+		jthrowCC_NullPointerException_1(env, "ptr");
+		return;
+	}
+	if (array == NULL) {
+		jthrowCC_NullPointerException_1(env, "buf");
+		return;
+	}
+
+
+	if (arrayOff < 0 || (*env)->GetArrayLength(env, array) < arrayOff+arrayLen) {
+		jthrowCC_IllegalArgumentException_1(env, "buffer");
+		return;
+	}
+
+	vptr += off;
+	if (size == 2) {
+		(*env)->SetShortArrayRegion(env, array, arrayOff, arrayLen, (jshort*) vptr);
+		return;
+	}
+
+	jshort * bPtr = (*env)->GetShortArrayElements(env, array, NULL);
+	if (bPtr == NULL) {
+		jthrowCC_OutOfMemoryError_1(env, "GetShortArrayElements");
+		return;
+	}
+
+
+	switch(size) {
+		case (1): {
+			jbyte* pptr = (jbyte*) vptr;
+			for (jsize i = 0; i < arrayLen; i++) {
+				pptr[i] = (jbyte) bPtr[arrayOff+i];
+			}
+
+			(*env)->ReleaseShortArrayElements(env, array, bPtr, JNI_ABORT);
+			return;
+		}
+	}
+
+	jsize psize = size-sizeof(jshort);
+
+#if BYTE_ORDER == LITTLE_ENDIAN
+	struct padder {
+		jbyte padding[psize];
+		jshort value;
+	} __attribute__((packed));
+#elif BYTE_ORDER == BIG_ENDIAN
+	struct padder {
+		jshort value;
+		jbyte padding[psize];
+	} __attribute__((packed));
+#else
+#error
+#endif
+	struct padder* pptr = (struct padder*) vptr;
+	assert(((uintptr_t)&pptr[1]) - ((uintptr_t)&pptr[0]) == size);
+	for (jsize i = 0; i < arrayLen; i++) {
+		if (psize > 0) {
+			memset(&pptr[i].padding[0], 0, psize);
+		}
+		pptr[i].value = bPtr[arrayOff+i];
+	}
+
+	(*env)->ReleaseShortArrayElements(env, array, bPtr, JNI_ABORT);
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    writeExpandedIntArray
+ * Signature: (JJ[IIII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_writeExpandedIntArray
+	(JNIEnv * env, jclass clazz, jlong ptr, jlong off, jintArray array, jint size, jint arrayOff, jint arrayLen) {
+	void * vptr = (void *) (uintptr_t) ptr;
+	if (vptr == NULL) {
+		jthrowCC_NullPointerException_1(env, "ptr");
+		return;
+	}
+	if (array == NULL) {
+		jthrowCC_NullPointerException_1(env, "buf");
+		return;
+	}
+
+
+	if (arrayOff < 0 || (*env)->GetArrayLength(env, array) < arrayOff+arrayLen) {
+		jthrowCC_IllegalArgumentException_1(env, "buffer");
+		return;
+	}
+
+	vptr += off;
+	if (size == 4) {
+		(*env)->SetIntArrayRegion(env, array, arrayOff, arrayLen, (jint*) vptr);
+		return;
+	}
+
+	jint * bPtr = (*env)->GetIntArrayElements(env, array, NULL);
+	if (bPtr == NULL) {
+		jthrowCC_OutOfMemoryError_1(env, "GetIntArrayElements");
+		return;
+	}
+
+
+
+	switch(size) {
+		case (1): {
+			jbyte* pptr = (jbyte*) vptr;
+			for (jsize i = 0; i < arrayLen; i++) {
+				pptr[i] = (jbyte) bPtr[arrayOff+i];
+			}
+
+			(*env)->ReleaseIntArrayElements(env, array, bPtr, JNI_ABORT);
+			return;
+		}
+		case (2): {
+			uint16_t* pptr = (uint16_t*) vptr;
+			for (jsize i = 0; i < arrayLen; i++) {
+				pptr[i] = (uint16_t) bPtr[arrayOff+i];
+			}
+
+			(*env)->ReleaseIntArrayElements(env, array, bPtr, JNI_ABORT);
+			return;
+		}
+		case (3): {
+			uint8_t* pptr = (uint8_t*) vptr;
+			jsize x = 0;
+			for (jsize i = 0; i < arrayLen; i++) {
+				uint32_t u32 = (uint32_t) bPtr[arrayOff+i];
+#if BYTE_ORDER == LITTLE_ENDIAN
+				pptr[x++] = (uint8_t)((u32 >> 0) & 0xff);
+				pptr[x++] = (uint8_t)((u32 >> 8) & 0xff);
+				pptr[x++] = (uint8_t)((u32 >> 16) & 0xff);
+#elif BYTE_ORDER == BIG_ENDIAN
+				pptr[x++] = (uint8_t)((u32 >> 16) & 0xff);
+				pptr[x++] = (uint8_t)((u32 >> 8) & 0xff);
+				pptr[x++] = (uint8_t)((u32 >> 0) & 0xff);
+#else
+#error
+#endif
+			}
+
+			(*env)->ReleaseIntArrayElements(env, array, bPtr, JNI_ABORT);
+			return;
+		}
+	}
+
+	jsize psize = size-sizeof(jint);
+
+#if BYTE_ORDER == LITTLE_ENDIAN
+	struct padder {
+		jbyte padding[psize];
+		jint value;
+	} __attribute__((packed));
+#elif BYTE_ORDER == BIG_ENDIAN
+	struct padder {
+		jint value;
+		jbyte padding[psize];
+	} __attribute__((packed));
+#else
+#error
+#endif
+	struct padder* pptr = (struct padder*) vptr;
+	assert(((uintptr_t)&pptr[1]) - ((uintptr_t)&pptr[0]) == size);
+
+	for (jsize i = 0; i < arrayLen; i++) {
+		if (psize > 0) {
+			memset(&pptr[i].padding[0], 0, psize);
+		}
+		pptr[i].value = bPtr[arrayOff+i];
+	}
+
+	(*env)->ReleaseIntArrayElements(env, array, bPtr, JNI_ABORT);
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    writeExpandedLongArray
+ * Signature: (JJ[JIII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_writeExpandedLongArray
+	(JNIEnv * env, jclass clazz, jlong ptr, jlong off, jlongArray array, jint size, jint arrayOff, jint arrayLen) {
+	void * vptr = (void *) (uintptr_t) ptr;
+	if (vptr == NULL) {
+		jthrowCC_NullPointerException_1(env, "ptr");
+		return;
+	}
+	if (array == NULL) {
+		jthrowCC_NullPointerException_1(env, "buf");
+		return;
+	}
+
+
+	if (arrayOff < 0 || (*env)->GetArrayLength(env, array) < arrayOff+arrayLen) {
+		jthrowCC_IllegalArgumentException_1(env, "buffer");
+		return;
+	}
+
+	jlong * bPtr = (*env)->GetLongArrayElements(env, array, NULL);
+	if (bPtr == NULL) {
+		jthrowCC_OutOfMemoryError_1(env, "GetLongArrayElements");
+		return;
+	}
+
+	vptr += off;
+	switch(size) {
+		case (1): {
+			jbyte* pptr = (jbyte*) vptr;
+			for (jsize i = 0; i < arrayLen; i++) {
+				pptr[i] = (jbyte) bPtr[arrayOff+i];
+			}
+
+			(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_ABORT);
+			return;
+		}
+		case (2): {
+			uint16_t* pptr = (uint16_t*) vptr;
+			for (jsize i = 0; i < arrayLen; i++) {
+				pptr[i] = (uint16_t) bPtr[arrayOff+i];
+			}
+
+			(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_ABORT);
+			return;
+		}
+		case (3): {
+			uint8_t* pptr = (uint8_t*) vptr;
+			jsize x = 0;
+			for (jsize i = 0; i < arrayLen; i++) {
+				uint32_t u32 = (uint32_t) bPtr[arrayOff+i];
+#if BYTE_ORDER == LITTLE_ENDIAN
+				pptr[x++] = (uint8_t)((u32 >> 0) & 0xff);
+				pptr[x++] = (uint8_t)((u32 >> 8) & 0xff);
+				pptr[x++] = (uint8_t)((u32 >> 16) & 0xff);
+#elif BYTE_ORDER == BIG_ENDIAN
+				pptr[x++] = (uint8_t)((u32 >> 16) & 0xff);
+				pptr[x++] = (uint8_t)((u32 >> 8) & 0xff);
+				pptr[x++] = (uint8_t)((u32 >> 0) & 0xff);
+#else
+#error
+#endif
+			}
+
+			(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_ABORT);
+			return;
+		}
+		case (4): {
+			uint32_t* pptr = (uint32_t*) vptr;
+			for (jsize i = 0; i < arrayLen; i++) {
+				pptr[i] = (uint32_t) bPtr[arrayOff+i];
+			}
+
+			(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_ABORT);
+			return;
+		}
+		case (5): {
+			uint8_t* pptr = (uint8_t*) vptr;
+			jsize x = 0;
+			for (jsize i = 0; i < arrayLen; i++) {
+				uint64_t u64 = (uint64_t) bPtr[arrayOff+i];
+#if BYTE_ORDER == LITTLE_ENDIAN
+				pptr[x++] = (uint8_t)((u64 >> 0) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 8) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 16) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 24) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 32) & 0xff);
+#elif BYTE_ORDER == BIG_ENDIAN
+				pptr[x++] = (uint8_t)((u64 >> 32) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 24) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 16) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 8) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 0) & 0xff);
+#else
+#error
+#endif
+			}
+
+			(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_ABORT);
+			return;
+		}
+		case (6): {
+			uint8_t* pptr = (uint8_t*) vptr;
+			jsize x = 0;
+			for (jsize i = 0; i < arrayLen; i++) {
+				uint64_t u64 = (uint64_t) bPtr[arrayOff+i];
+#if BYTE_ORDER == LITTLE_ENDIAN
+				pptr[x++] = (uint8_t)((u64 >> 0) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 8) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 16) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 24) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 32) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 40) & 0xff);
+#elif BYTE_ORDER == BIG_ENDIAN
+				pptr[x++] = (uint8_t)((u64 >> 40) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 32) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 24) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 16) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 8) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 0) & 0xff);
+#else
+#error
+#endif
+			}
+
+			(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_ABORT);
+			return;
+		}
+		case (7): {
+			uint8_t* pptr = (uint8_t*) vptr;
+			jsize x = 0;
+			for (jsize i = 0; i < arrayLen; i++) {
+				uint64_t u64 = (uint64_t) bPtr[arrayOff+i];
+#if BYTE_ORDER == LITTLE_ENDIAN
+				pptr[x++] = (uint8_t)((u64 >> 0) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 8) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 16) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 24) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 32) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 40) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 48) & 0xff);
+#elif BYTE_ORDER == BIG_ENDIAN
+				pptr[x++] = (uint8_t)((u64 >> 48) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 40) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 32) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 24) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 16) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 8) & 0xff);
+				pptr[x++] = (uint8_t)((u64 >> 0) & 0xff);
+#else
+#error
+#endif
+			}
+
+			(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_ABORT);
+			return;
+		}
+	}
+
+	jsize psize = size-sizeof(jlong);
+
+#if BYTE_ORDER == LITTLE_ENDIAN
+	struct padder {
+		jbyte padding[psize];
+		jlong value;
+	} __attribute__((packed));
+#elif BYTE_ORDER == BIG_ENDIAN
+	struct padder {
+		jlong value;
+		jbyte padding[psize];
+	} __attribute__((packed));
+#else
+#error
+#endif
+	struct padder* pptr = (struct padder*) vptr;
+	assert(((uintptr_t)&pptr[1]) - ((uintptr_t)&pptr[0]) == size);
+
+	for (jsize i = 0; i < arrayLen; i++) {
+		if (psize > 0) {
+			memset(&pptr[i].padding[0], 0, psize);
+		}
+		pptr[i].value = bPtr[arrayOff+i];
+	}
+
+	(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_ABORT);
+}
+
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    readDoubleArray
+ * Signature: (JJ[DII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_readDoubleArray
+  (JNIEnv * env, jclass clazz, jlong ptr, jlong off, jdoubleArray array, jint arrayOff, jint arrayLen) {
+	void * vptr = (void *) (uintptr_t) ptr;
+	if (vptr == NULL) {
+		jthrowCC_NullPointerException_1(env, "ptr");
+		return;
+	}
+	if (array == NULL) {
+		jthrowCC_NullPointerException_1(env, "buf");
+		return;
+	}
+
+
+	if (arrayOff < 0 || (*env)->GetArrayLength(env, array) < arrayOff+arrayLen) {
+		jthrowCC_IllegalArgumentException_1(env, "buffer");
+		return;
+	}
+
+	vptr += off;
+	jdouble* jdptr = (jdouble*) vptr;
+	(*env)->GetDoubleArrayRegion(env, array, arrayOff, (jsize) arrayLen, jdptr);
+}
+
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    readFloatArray
+ * Signature: (JJ[FII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_readFloatArray
+  (JNIEnv * env, jclass clazz, jlong ptr, jlong off, jfloatArray array, jint arrayOff, jint arrayLen) {
+	void * vptr = (void *) (uintptr_t) ptr;
+	if (vptr == NULL) {
+		jthrowCC_NullPointerException_1(env, "ptr");
+		return;
+	}
+	if (array == NULL) {
+		jthrowCC_NullPointerException_1(env, "buf");
+		return;
+	}
+
+
+	if (arrayOff < 0 || (*env)->GetArrayLength(env, array) < arrayOff+arrayLen) {
+		jthrowCC_IllegalArgumentException_1(env, "buffer");
+		return;
+	}
+
+	vptr += off;
+	jfloat* jfptr = (jfloat*) vptr;
+	(*env)->GetFloatArrayRegion(env, array, arrayOff, (jsize) arrayLen, jfptr);
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    readExpandedByteArray
+ * Signature: (JJ[BIII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_readExpandedByteArray
+(JNIEnv * env, jclass clazz, jlong ptr, jlong off, jbyteArray array, jint size, jint arrayOff, jint arrayLen) {
+	void * vptr = (void *) (uintptr_t) ptr;
+	if (vptr == NULL) {
+		jthrowCC_NullPointerException_1(env, "ptr");
+		return;
+	}
+	if (array == NULL) {
+		jthrowCC_NullPointerException_1(env, "buf");
+		return;
+	}
+
+
+	if (arrayOff < 0 || (*env)->GetArrayLength(env, array) < arrayOff+arrayLen) {
+		jthrowCC_IllegalArgumentException_1(env, "buffer");
+		return;
+	}
+
+	vptr += off;
+	if (size == 1) {
+		(*env)->GetByteArrayRegion(env, array, arrayOff, arrayLen, (jbyte*) vptr);
+		return;
+	}
+
+
+	jbyte * bPtr = (*env)->GetByteArrayElements(env, array, NULL);
+	if (bPtr == NULL) {
+		jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
+		return;
+	}
+
+#if BYTE_ORDER == BIG_ENDIAN
+		vptr+=size-sizeof(jbyte);
+#endif
+
+	for (jsize i = 0; i < arrayLen; i++) {
+		jbyte* pptr = (jbyte*) vptr;
+		bPtr[arrayOff+i] = pptr[0];
+		vptr+=size;
+	}
+
+	(*env)->ReleaseByteArrayElements(env, array, bPtr, JNI_OK);
+}
+
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    readExpandedCharArray
+ * Signature: (JJ[BIII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_readExpandedCharArray
+(JNIEnv * env, jclass clazz, jlong ptr, jlong off, jcharArray array, jint size, jint arrayOff, jint arrayLen) {
+	void * vptr = (void *) (uintptr_t) ptr;
+	if (vptr == NULL) {
+		jthrowCC_NullPointerException_1(env, "ptr");
+		return;
+	}
+	if (array == NULL) {
+		jthrowCC_NullPointerException_1(env, "buf");
+		return;
+	}
+
+
+	if (arrayOff < 0 || (*env)->GetArrayLength(env, array) < arrayOff+arrayLen) {
+		jthrowCC_IllegalArgumentException_1(env, "buffer");
+		return;
+	}
+
+	vptr += off;
+	if (size == 2) {
+		(*env)->GetCharArrayRegion(env, array, arrayOff, arrayLen, (jshort*) vptr);
+		return;
+	}
+
+
+	jchar * bPtr = (*env)->GetCharArrayElements(env, array, NULL);
+	if (bPtr == NULL) {
+		jthrowCC_OutOfMemoryError_1(env, "GetCharArrayElements");
+		return;
+	}
+
+	if (size == 1) {
+		jbyte* pptr = (jbyte*) vptr;
+		for (jsize i = 0; i < arrayLen; i++) {
+			bPtr[arrayOff+i] = (jchar) pptr[i];
+		}
+
+		(*env)->ReleaseCharArrayElements(env, array, bPtr, JNI_OK);
+
+		return;
+	}
+
+#if BYTE_ORDER == BIG_ENDIAN
+		vptr+=size-sizeof(jchar);
+#endif
+
+	for (jsize i = 0; i < arrayLen; i++) {
+		jchar* pptr = (jchar*) vptr;
+		bPtr[arrayOff+i] = pptr[0];
+		vptr+=size;
+	}
+
+	(*env)->ReleaseCharArrayElements(env, array, bPtr, JNI_OK);
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    readExpandedShortArray
+ * Signature: (JJ[BIII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_readExpandedShortArray
+(JNIEnv * env, jclass clazz, jlong ptr, jlong off, jshortArray array, jint size, jint arrayOff, jint arrayLen) {
+	void * vptr = (void *) (uintptr_t) ptr;
+	if (vptr == NULL) {
+		jthrowCC_NullPointerException_1(env, "ptr");
+		return;
+	}
+	if (array == NULL) {
+		jthrowCC_NullPointerException_1(env, "buf");
+		return;
+	}
+
+
+	if (arrayOff < 0 || (*env)->GetArrayLength(env, array) < arrayOff+arrayLen) {
+		jthrowCC_IllegalArgumentException_1(env, "buffer");
+		return;
+	}
+
+	vptr += off;
+	if (size == 2) {
+		(*env)->GetCharArrayRegion(env, array, arrayOff, arrayLen, (jshort*) vptr);
+		return;
+	}
+
+
+	jshort * bPtr = (*env)->GetShortArrayElements(env, array, NULL);
+	if (bPtr == NULL) {
+		jthrowCC_OutOfMemoryError_1(env, "GetShortArrayElements");
+		return;
+	}
+
+	if (size == 1) {
+		jbyte* pptr = (jbyte*) vptr;
+		for (jsize i = 0; i < arrayLen; i++) {
+			bPtr[arrayOff+i] = (jshort) pptr[i];
+		}
+
+		(*env)->ReleaseShortArrayElements(env, array, bPtr, JNI_OK);
+
+		return;
+	}
+
+#if BYTE_ORDER == BIG_ENDIAN
+		vptr+=size-sizeof(jshort);
+#endif
+
+	for (jsize i = 0; i < arrayLen; i++) {
+		jshort* pptr = (jshort*) vptr;
+		bPtr[arrayOff+i] = pptr[0];
+		vptr+=size;
+	}
+
+	(*env)->ReleaseShortArrayElements(env, array, bPtr, JNI_OK);
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    readExpandedIntArray
+ * Signature: (JJ[BIII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_readExpandedIntArray
+(JNIEnv * env, jclass clazz, jlong ptr, jlong off, jintArray array, jint size, jint arrayOff, jint arrayLen) {
+	void * vptr = (void *) (uintptr_t) ptr;
+	if (vptr == NULL) {
+		jthrowCC_NullPointerException_1(env, "ptr");
+		return;
+	}
+	if (array == NULL) {
+		jthrowCC_NullPointerException_1(env, "buf");
+		return;
+	}
+
+
+	if (arrayOff < 0 || (*env)->GetArrayLength(env, array) < arrayOff+arrayLen) {
+		jthrowCC_IllegalArgumentException_1(env, "buffer");
+		return;
+	}
+
+	vptr += off;
+	if (size == 4) {
+		(*env)->GetIntArrayRegion(env, array, arrayOff, arrayLen, (jint*) vptr);
+		return;
+	}
+
+
+	jint * bPtr = (*env)->GetIntArrayElements(env, array, NULL);
+	if (bPtr == NULL) {
+		jthrowCC_OutOfMemoryError_1(env, "GetIntArrayElements");
+		return;
+	}
+
+	switch(size) {
+		case (1): {
+			jbyte* pptr = (jbyte*) vptr;
+			for (jsize i = 0; i < arrayLen; i++) {
+				bPtr[arrayOff+i] = (jint) pptr[i];
+			}
+
+			(*env)->ReleaseIntArrayElements(env, array, bPtr, JNI_OK);
+
+			return;
+		}
+		case (2): {
+			jshort* pptr = (jshort*) vptr;
+			for (jsize i = 0; i < arrayLen; i++) {
+				bPtr[arrayOff+i] = (jint) pptr[i];
+			}
+
+			(*env)->ReleaseIntArrayElements(env, array, bPtr, JNI_OK);
+			return;
+		}
+		case (3): {
+			uint8_t* pptr = (uint8_t*) vptr;
+			jsize x = 0;
+			for (jsize i = 0; i < arrayLen; i++) {
+				uint32_t val = 0;
+#if BYTE_ORDER == LITTLE_ENDIAN
+				val |= (((uint32_t)pptr[x++]) << 0);
+				val |= (((uint32_t)pptr[x++]) << 8);
+				val |= (((uint32_t)pptr[x++]) << 16);
+#elif BYTE_ORDER == BIG_ENDIAN
+				val |= (((uint32_t)pptr[x++]) << 16);
+				val |= (((uint32_t)pptr[x++]) << 8);
+				val |= (((uint32_t)pptr[x++]) << 0);
+#else
+#error
+#endif
+				bPtr[arrayOff+i] = (jint) val;
+			}
+
+			(*env)->ReleaseIntArrayElements(env, array, bPtr, JNI_OK);
+			return;
+		}
+	}
+
+#if BYTE_ORDER == BIG_ENDIAN
+		vptr+=size-sizeof(jint);
+#endif
+
+	for (jsize i = 0; i < arrayLen; i++) {
+		jint* pptr = (jint*) vptr;
+		bPtr[arrayOff+i] = pptr[0];
+		vptr+=size;
+	}
+
+	(*env)->ReleaseIntArrayElements(env, array, bPtr, JNI_OK);
+}
+
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    readExpandedLongArray
+ * Signature: (JJ[BIII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_readExpandedLongArray
+(JNIEnv * env, jclass clazz, jlong ptr, jlong off, jlongArray array, jint size, jint arrayOff, jint arrayLen) {
+	void * vptr = (void *) (uintptr_t) ptr;
+	if (vptr == NULL) {
+		jthrowCC_NullPointerException_1(env, "ptr");
+		return;
+	}
+	if (array == NULL) {
+		jthrowCC_NullPointerException_1(env, "buf");
+		return;
+	}
+
+
+	if (arrayOff < 0 || (*env)->GetArrayLength(env, array) < arrayOff+arrayLen) {
+		jthrowCC_IllegalArgumentException_1(env, "buffer");
+		return;
+	}
+
+	vptr += off;
+	if (size == 8) {
+		(*env)->GetLongArrayRegion(env, array, arrayOff, arrayLen, (jlong*) vptr);
+		return;
+	}
+
+
+	jlong * bPtr = (*env)->GetLongArrayElements(env, array, NULL);
+	if (bPtr == NULL) {
+		jthrowCC_OutOfMemoryError_1(env, "GetLongArrayElements");
+		return;
+	}
+
+	switch(size) {
+		case (1): {
+			jbyte* pptr = (jbyte*) vptr;
+			for (jsize i = 0; i < arrayLen; i++) {
+				bPtr[arrayOff+i] = (jint) pptr[i];
+			}
+
+			(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_OK);
+
+			return;
+		}
+		case (2): {
+			jshort* pptr = (jshort*) vptr;
+			for (jsize i = 0; i < arrayLen; i++) {
+				bPtr[arrayOff+i] = (jint) pptr[i];
+			}
+
+			(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_OK);
+			return;
+		}
+		case (3): {
+			uint8_t* pptr = (uint8_t*) vptr;
+			jsize x = 0;
+			for (jsize i = 0; i < arrayLen; i++) {
+				uint32_t val = 0;
+#if BYTE_ORDER == LITTLE_ENDIAN
+				val |= (((uint32_t)pptr[x++]) << 0);
+				val |= (((uint32_t)pptr[x++]) << 8);
+				val |= (((uint32_t)pptr[x++]) << 16);
+#elif BYTE_ORDER == BIG_ENDIAN
+				val |= (((uint32_t)pptr[x++]) << 16);
+				val |= (((uint32_t)pptr[x++]) << 8);
+				val |= (((uint32_t)pptr[x++]) << 0);
+#else
+#error
+#endif
+				bPtr[arrayOff+i] = (jlong) val;
+			}
+
+			(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_OK);
+			return;
+		}
+		case (4): {
+			jint* pptr = (jint*) vptr;
+			for (jsize i = 0; i < arrayLen; i++) {
+				bPtr[arrayOff+i] = (jlong) pptr[i];
+			}
+
+			(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_OK);
+			return;
+		}
+		case (5): {
+			uint8_t* pptr = (uint8_t*) vptr;
+			jsize x = 0;
+			for (jsize i = 0; i < arrayLen; i++) {
+				uint64_t val = 0;
+#if BYTE_ORDER == LITTLE_ENDIAN
+				val |= (((uint64_t)pptr[x++]) << 0);
+				val |= (((uint64_t)pptr[x++]) << 8);
+				val |= (((uint64_t)pptr[x++]) << 16);
+				val |= (((uint64_t)pptr[x++]) << 24);
+				val |= (((uint64_t)pptr[x++]) << 32);
+#elif BYTE_ORDER == BIG_ENDIAN
+				val |= (((uint64_t)pptr[x++]) << 32);
+				val |= (((uint64_t)pptr[x++]) << 24);
+				val |= (((uint64_t)pptr[x++]) << 16);
+				val |= (((uint64_t)pptr[x++]) << 8);
+				val |= (((uint64_t)pptr[x++]) << 0);
+#else
+#error
+#endif
+				bPtr[arrayOff+i] = (jlong) val;
+			}
+
+			(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_OK);
+			return;
+		}
+		case (6): {
+			uint8_t* pptr = (uint8_t*) vptr;
+			jsize x = 0;
+			for (jsize i = 0; i < arrayLen; i++) {
+				uint64_t val = 0;
+#if BYTE_ORDER == LITTLE_ENDIAN
+				val |= (((uint64_t)pptr[x++]) << 0);
+				val |= (((uint64_t)pptr[x++]) << 8);
+				val |= (((uint64_t)pptr[x++]) << 16);
+				val |= (((uint64_t)pptr[x++]) << 24);
+				val |= (((uint64_t)pptr[x++]) << 32);
+				val |= (((uint64_t)pptr[x++]) << 40);
+#elif BYTE_ORDER == BIG_ENDIAN
+				val |= (((uint64_t)pptr[x++]) << 40);
+				val |= (((uint64_t)pptr[x++]) << 32);
+				val |= (((uint64_t)pptr[x++]) << 24);
+				val |= (((uint64_t)pptr[x++]) << 16);
+				val |= (((uint64_t)pptr[x++]) << 8);
+				val |= (((uint64_t)pptr[x++]) << 0);
+#else
+#error
+#endif
+				bPtr[arrayOff+i] = (jlong) val;
+			}
+
+			(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_OK);
+			return;
+		}
+		case (7): {
+			uint8_t* pptr = (uint8_t*) vptr;
+			jsize x = 0;
+			for (jsize i = 0; i < arrayLen; i++) {
+				uint64_t val = 0;
+#if BYTE_ORDER == LITTLE_ENDIAN
+				val |= (((uint64_t)pptr[x++]) << 0);
+				val |= (((uint64_t)pptr[x++]) << 8);
+				val |= (((uint64_t)pptr[x++]) << 16);
+				val |= (((uint64_t)pptr[x++]) << 24);
+				val |= (((uint64_t)pptr[x++]) << 32);
+				val |= (((uint64_t)pptr[x++]) << 40);
+				val |= (((uint64_t)pptr[x++]) << 48);
+#elif BYTE_ORDER == BIG_ENDIAN
+				val |= (((uint64_t)pptr[x++]) << 48);
+				val |= (((uint64_t)pptr[x++]) << 40);
+				val |= (((uint64_t)pptr[x++]) << 32);
+				val |= (((uint64_t)pptr[x++]) << 24);
+				val |= (((uint64_t)pptr[x++]) << 16);
+				val |= (((uint64_t)pptr[x++]) << 8);
+				val |= (((uint64_t)pptr[x++]) << 0);
+#else
+#error
+#endif
+				bPtr[arrayOff+i] = (jlong) val;
+			}
+
+			(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_OK);
+			return;
+		}
+	}
+
+#if BYTE_ORDER == BIG_ENDIAN
+		vptr+=size-sizeof(jlong);
+#endif
+
+	for (jsize i = 0; i < arrayLen; i++) {
+		jlong* pptr = (jlong*) vptr;
+		bPtr[arrayOff+i] = pptr[0];
+		vptr+=size;
+	}
+
+	(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_OK);
 }

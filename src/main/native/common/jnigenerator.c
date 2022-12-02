@@ -91,6 +91,11 @@ jboolean jinstanceof_Win32FileAttributeData(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, Win32FileAttributeData);
 }
 
+static jclass Passwd = 0;
+jboolean jinstanceof_Passwd(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, Passwd);
+}
+
 static jclass IpAdapterAddresses$IpAdapterUnicastAddress = 0;
 jboolean jinstanceof_IpAdapterAddresses$IpAdapterUnicastAddress(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, IpAdapterAddresses$IpAdapterUnicastAddress);
@@ -214,6 +219,11 @@ jboolean jinstanceof_Msghdr(JNIEnv * env, jobject value) {
 static jclass IOException = 0;
 jboolean jinstanceof_IOException(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, IOException);
+}
+
+static jclass Group = 0;
+jboolean jinstanceof_Group(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, Group);
 }
 
 static jclass IllegalArgumentException = 0;
@@ -491,6 +501,204 @@ void jcall_GUID_setData4(JNIEnv * env, jobject instance, jbyteArray p0) {
 static jmethodID GUID_M_toString_0 = 0;
 jstring jcall_GUID_toString(JNIEnv * env, jobject instance) {
     return (jstring) (*env) -> CallObjectMethod(env, instance, GUID_M_toString_0);
+}
+
+static jfieldID Group_gr_gid = 0;
+void jset_Group_gr_gid(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, Group_gr_gid, value);
+}
+
+jint jget_Group_gr_gid(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, Group_gr_gid);
+}
+
+static jfieldID Group_gr_name = 0;
+void jset_Group_gr_name(JNIEnv * env, jobject instance, jstring value) {
+   (*env)->SetObjectField(env, instance, Group_gr_name, value);
+}
+
+jboolean jsetC_Group_gr_name(JNIEnv * env, jobject instance, char * value) {
+    return jsetCC_Group_gr_name(env, instance, (char*) value);
+}
+
+jboolean jsetCC_Group_gr_name(JNIEnv * env, jobject instance, const char * value) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,Group_gr_name, 0);
+        return JNI_TRUE;
+    }
+    jstring tmp = (*env)->NewStringUTF(env, value);
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewStringUTF");
+        return JNI_FALSE;
+    }
+    (*env)->SetObjectField(env, instance, Group_gr_name, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jboolean jsetWC_Group_gr_name(JNIEnv * env, jobject instance, wchar_t * value) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,Group_gr_name, 0);
+        return JNI_TRUE;
+    }
+    
+    jsize i = 0;
+    while (value[i] != 0) {
+        i++;
+    }
+    
+    jstring tmp;
+    if (sizeof(wchar_t) == sizeof(jchar)) {
+        tmp = (*env) -> NewString(env, (const jchar*) value, i);
+    } else {
+        jchar tBuf[i];
+        for (jsize j = 0; j < i; j++) {
+            tBuf[j] = (jchar) value[j];
+        }
+        tmp = (*env) -> NewString(env, (const jchar*) tBuf, i);
+    }
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewByteArray");
+        return JNI_FALSE;
+    }
+    (*env)->SetObjectField(env, instance, Group_gr_name, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jstring jget_Group_gr_name(JNIEnv * env, jobject instance) {
+   return (jstring) (*env)->GetObjectField(env, instance, Group_gr_name);
+}
+
+static jfieldID Group_gr_passwd = 0;
+void jset_Group_gr_passwd(JNIEnv * env, jobject instance, jstring value) {
+   (*env)->SetObjectField(env, instance, Group_gr_passwd, value);
+}
+
+jboolean jsetC_Group_gr_passwd(JNIEnv * env, jobject instance, char * value) {
+    return jsetCC_Group_gr_passwd(env, instance, (char*) value);
+}
+
+jboolean jsetCC_Group_gr_passwd(JNIEnv * env, jobject instance, const char * value) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,Group_gr_passwd, 0);
+        return JNI_TRUE;
+    }
+    jstring tmp = (*env)->NewStringUTF(env, value);
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewStringUTF");
+        return JNI_FALSE;
+    }
+    (*env)->SetObjectField(env, instance, Group_gr_passwd, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jboolean jsetWC_Group_gr_passwd(JNIEnv * env, jobject instance, wchar_t * value) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,Group_gr_passwd, 0);
+        return JNI_TRUE;
+    }
+    
+    jsize i = 0;
+    while (value[i] != 0) {
+        i++;
+    }
+    
+    jstring tmp;
+    if (sizeof(wchar_t) == sizeof(jchar)) {
+        tmp = (*env) -> NewString(env, (const jchar*) value, i);
+    } else {
+        jchar tBuf[i];
+        for (jsize j = 0; j < i; j++) {
+            tBuf[j] = (jchar) value[j];
+        }
+        tmp = (*env) -> NewString(env, (const jchar*) tBuf, i);
+    }
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewByteArray");
+        return JNI_FALSE;
+    }
+    (*env)->SetObjectField(env, instance, Group_gr_passwd, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jstring jget_Group_gr_passwd(JNIEnv * env, jobject instance) {
+   return (jstring) (*env)->GetObjectField(env, instance, Group_gr_passwd);
+}
+
+static jfieldID Group_gr_mem = 0;
+void jset_Group_gr_mem(JNIEnv * env, jobject instance, jobject value) {
+   (*env)->SetObjectField(env, instance, Group_gr_mem, value);
+}
+
+jobject jget_Group_gr_mem(JNIEnv * env, jobject instance) {
+   return (*env)->GetObjectField(env, instance, Group_gr_mem);
+}
+
+static jmethodID Group_C_0 = 0;
+jobject jnew_Group(JNIEnv * env) {
+    jobject obj = (*env) -> NewObject(env, Group, Group_C_0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID Group_M_equals_0 = 0;
+jboolean jcall_Group_equals(JNIEnv * env, jobject instance, jobject p0) {
+    return (*env) -> CallBooleanMethod(env, instance, Group_M_equals_0, p0);
+}
+
+static jmethodID Group_M_getGr_gid_0 = 0;
+jint jcall_Group_getGr_gid(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, Group_M_getGr_gid_0);
+}
+
+static jmethodID Group_M_getGr_mem_0 = 0;
+jobject jcall_Group_getGr_mem(JNIEnv * env, jobject instance) {
+    return (*env) -> CallObjectMethod(env, instance, Group_M_getGr_mem_0);
+}
+
+static jmethodID Group_M_getGr_name_0 = 0;
+jstring jcall_Group_getGr_name(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, Group_M_getGr_name_0);
+}
+
+static jmethodID Group_M_getGr_passwd_0 = 0;
+jstring jcall_Group_getGr_passwd(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, Group_M_getGr_passwd_0);
+}
+
+static jmethodID Group_M_hashCode_0 = 0;
+jint jcall_Group_hashCode(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, Group_M_hashCode_0);
+}
+
+static jmethodID Group_M_setGr_gid_0 = 0;
+void jcall_Group_setGr_gid(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, Group_M_setGr_gid_0, p0);
+}
+
+static jmethodID Group_M_setGr_mem_0 = 0;
+void jcall_Group_setGr_mem(JNIEnv * env, jobject instance, jobject p0) {
+    (*env) -> CallVoidMethod(env, instance, Group_M_setGr_mem_0, p0);
+}
+
+static jmethodID Group_M_setGr_name_0 = 0;
+void jcall_Group_setGr_name(JNIEnv * env, jobject instance, jstring p0) {
+    (*env) -> CallVoidMethod(env, instance, Group_M_setGr_name_0, p0);
+}
+
+static jmethodID Group_M_setGr_passwd_0 = 0;
+void jcall_Group_setGr_passwd(JNIEnv * env, jobject instance, jstring p0) {
+    (*env) -> CallVoidMethod(env, instance, Group_M_setGr_passwd_0, p0);
+}
+
+static jmethodID Group_M_toString_0 = 0;
+jstring jcall_Group_toString(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, Group_M_toString_0);
 }
 
 static jfieldID Iovec_payload = 0;
@@ -1644,6 +1852,408 @@ jboolean jcall_Msghdr_isTruncated(JNIEnv * env, jobject instance) {
     return (*env) -> CallBooleanMethod(env, instance, Msghdr_M_isTruncated_0);
 }
 
+static jfieldID Passwd_pw_name = 0;
+void jset_Passwd_pw_name(JNIEnv * env, jobject instance, jstring value) {
+   (*env)->SetObjectField(env, instance, Passwd_pw_name, value);
+}
+
+jboolean jsetC_Passwd_pw_name(JNIEnv * env, jobject instance, char * value) {
+    return jsetCC_Passwd_pw_name(env, instance, (char*) value);
+}
+
+jboolean jsetCC_Passwd_pw_name(JNIEnv * env, jobject instance, const char * value) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,Passwd_pw_name, 0);
+        return JNI_TRUE;
+    }
+    jstring tmp = (*env)->NewStringUTF(env, value);
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewStringUTF");
+        return JNI_FALSE;
+    }
+    (*env)->SetObjectField(env, instance, Passwd_pw_name, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jboolean jsetWC_Passwd_pw_name(JNIEnv * env, jobject instance, wchar_t * value) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,Passwd_pw_name, 0);
+        return JNI_TRUE;
+    }
+    
+    jsize i = 0;
+    while (value[i] != 0) {
+        i++;
+    }
+    
+    jstring tmp;
+    if (sizeof(wchar_t) == sizeof(jchar)) {
+        tmp = (*env) -> NewString(env, (const jchar*) value, i);
+    } else {
+        jchar tBuf[i];
+        for (jsize j = 0; j < i; j++) {
+            tBuf[j] = (jchar) value[j];
+        }
+        tmp = (*env) -> NewString(env, (const jchar*) tBuf, i);
+    }
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewByteArray");
+        return JNI_FALSE;
+    }
+    (*env)->SetObjectField(env, instance, Passwd_pw_name, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jstring jget_Passwd_pw_name(JNIEnv * env, jobject instance) {
+   return (jstring) (*env)->GetObjectField(env, instance, Passwd_pw_name);
+}
+
+static jfieldID Passwd_pw_passwd = 0;
+void jset_Passwd_pw_passwd(JNIEnv * env, jobject instance, jstring value) {
+   (*env)->SetObjectField(env, instance, Passwd_pw_passwd, value);
+}
+
+jboolean jsetC_Passwd_pw_passwd(JNIEnv * env, jobject instance, char * value) {
+    return jsetCC_Passwd_pw_passwd(env, instance, (char*) value);
+}
+
+jboolean jsetCC_Passwd_pw_passwd(JNIEnv * env, jobject instance, const char * value) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,Passwd_pw_passwd, 0);
+        return JNI_TRUE;
+    }
+    jstring tmp = (*env)->NewStringUTF(env, value);
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewStringUTF");
+        return JNI_FALSE;
+    }
+    (*env)->SetObjectField(env, instance, Passwd_pw_passwd, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jboolean jsetWC_Passwd_pw_passwd(JNIEnv * env, jobject instance, wchar_t * value) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,Passwd_pw_passwd, 0);
+        return JNI_TRUE;
+    }
+    
+    jsize i = 0;
+    while (value[i] != 0) {
+        i++;
+    }
+    
+    jstring tmp;
+    if (sizeof(wchar_t) == sizeof(jchar)) {
+        tmp = (*env) -> NewString(env, (const jchar*) value, i);
+    } else {
+        jchar tBuf[i];
+        for (jsize j = 0; j < i; j++) {
+            tBuf[j] = (jchar) value[j];
+        }
+        tmp = (*env) -> NewString(env, (const jchar*) tBuf, i);
+    }
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewByteArray");
+        return JNI_FALSE;
+    }
+    (*env)->SetObjectField(env, instance, Passwd_pw_passwd, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jstring jget_Passwd_pw_passwd(JNIEnv * env, jobject instance) {
+   return (jstring) (*env)->GetObjectField(env, instance, Passwd_pw_passwd);
+}
+
+static jfieldID Passwd_pw_uid = 0;
+void jset_Passwd_pw_uid(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, Passwd_pw_uid, value);
+}
+
+jint jget_Passwd_pw_uid(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, Passwd_pw_uid);
+}
+
+static jfieldID Passwd_pw_gid = 0;
+void jset_Passwd_pw_gid(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, Passwd_pw_gid, value);
+}
+
+jint jget_Passwd_pw_gid(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, Passwd_pw_gid);
+}
+
+static jfieldID Passwd_pw_gecos = 0;
+void jset_Passwd_pw_gecos(JNIEnv * env, jobject instance, jstring value) {
+   (*env)->SetObjectField(env, instance, Passwd_pw_gecos, value);
+}
+
+jboolean jsetC_Passwd_pw_gecos(JNIEnv * env, jobject instance, char * value) {
+    return jsetCC_Passwd_pw_gecos(env, instance, (char*) value);
+}
+
+jboolean jsetCC_Passwd_pw_gecos(JNIEnv * env, jobject instance, const char * value) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,Passwd_pw_gecos, 0);
+        return JNI_TRUE;
+    }
+    jstring tmp = (*env)->NewStringUTF(env, value);
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewStringUTF");
+        return JNI_FALSE;
+    }
+    (*env)->SetObjectField(env, instance, Passwd_pw_gecos, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jboolean jsetWC_Passwd_pw_gecos(JNIEnv * env, jobject instance, wchar_t * value) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,Passwd_pw_gecos, 0);
+        return JNI_TRUE;
+    }
+    
+    jsize i = 0;
+    while (value[i] != 0) {
+        i++;
+    }
+    
+    jstring tmp;
+    if (sizeof(wchar_t) == sizeof(jchar)) {
+        tmp = (*env) -> NewString(env, (const jchar*) value, i);
+    } else {
+        jchar tBuf[i];
+        for (jsize j = 0; j < i; j++) {
+            tBuf[j] = (jchar) value[j];
+        }
+        tmp = (*env) -> NewString(env, (const jchar*) tBuf, i);
+    }
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewByteArray");
+        return JNI_FALSE;
+    }
+    (*env)->SetObjectField(env, instance, Passwd_pw_gecos, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jstring jget_Passwd_pw_gecos(JNIEnv * env, jobject instance) {
+   return (jstring) (*env)->GetObjectField(env, instance, Passwd_pw_gecos);
+}
+
+static jfieldID Passwd_pw_dir = 0;
+void jset_Passwd_pw_dir(JNIEnv * env, jobject instance, jstring value) {
+   (*env)->SetObjectField(env, instance, Passwd_pw_dir, value);
+}
+
+jboolean jsetC_Passwd_pw_dir(JNIEnv * env, jobject instance, char * value) {
+    return jsetCC_Passwd_pw_dir(env, instance, (char*) value);
+}
+
+jboolean jsetCC_Passwd_pw_dir(JNIEnv * env, jobject instance, const char * value) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,Passwd_pw_dir, 0);
+        return JNI_TRUE;
+    }
+    jstring tmp = (*env)->NewStringUTF(env, value);
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewStringUTF");
+        return JNI_FALSE;
+    }
+    (*env)->SetObjectField(env, instance, Passwd_pw_dir, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jboolean jsetWC_Passwd_pw_dir(JNIEnv * env, jobject instance, wchar_t * value) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,Passwd_pw_dir, 0);
+        return JNI_TRUE;
+    }
+    
+    jsize i = 0;
+    while (value[i] != 0) {
+        i++;
+    }
+    
+    jstring tmp;
+    if (sizeof(wchar_t) == sizeof(jchar)) {
+        tmp = (*env) -> NewString(env, (const jchar*) value, i);
+    } else {
+        jchar tBuf[i];
+        for (jsize j = 0; j < i; j++) {
+            tBuf[j] = (jchar) value[j];
+        }
+        tmp = (*env) -> NewString(env, (const jchar*) tBuf, i);
+    }
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewByteArray");
+        return JNI_FALSE;
+    }
+    (*env)->SetObjectField(env, instance, Passwd_pw_dir, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jstring jget_Passwd_pw_dir(JNIEnv * env, jobject instance) {
+   return (jstring) (*env)->GetObjectField(env, instance, Passwd_pw_dir);
+}
+
+static jfieldID Passwd_pw_shell = 0;
+void jset_Passwd_pw_shell(JNIEnv * env, jobject instance, jstring value) {
+   (*env)->SetObjectField(env, instance, Passwd_pw_shell, value);
+}
+
+jboolean jsetC_Passwd_pw_shell(JNIEnv * env, jobject instance, char * value) {
+    return jsetCC_Passwd_pw_shell(env, instance, (char*) value);
+}
+
+jboolean jsetCC_Passwd_pw_shell(JNIEnv * env, jobject instance, const char * value) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,Passwd_pw_shell, 0);
+        return JNI_TRUE;
+    }
+    jstring tmp = (*env)->NewStringUTF(env, value);
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewStringUTF");
+        return JNI_FALSE;
+    }
+    (*env)->SetObjectField(env, instance, Passwd_pw_shell, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jboolean jsetWC_Passwd_pw_shell(JNIEnv * env, jobject instance, wchar_t * value) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,Passwd_pw_shell, 0);
+        return JNI_TRUE;
+    }
+    
+    jsize i = 0;
+    while (value[i] != 0) {
+        i++;
+    }
+    
+    jstring tmp;
+    if (sizeof(wchar_t) == sizeof(jchar)) {
+        tmp = (*env) -> NewString(env, (const jchar*) value, i);
+    } else {
+        jchar tBuf[i];
+        for (jsize j = 0; j < i; j++) {
+            tBuf[j] = (jchar) value[j];
+        }
+        tmp = (*env) -> NewString(env, (const jchar*) tBuf, i);
+    }
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewByteArray");
+        return JNI_FALSE;
+    }
+    (*env)->SetObjectField(env, instance, Passwd_pw_shell, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jstring jget_Passwd_pw_shell(JNIEnv * env, jobject instance) {
+   return (jstring) (*env)->GetObjectField(env, instance, Passwd_pw_shell);
+}
+
+static jmethodID Passwd_C_0 = 0;
+jobject jnew_Passwd(JNIEnv * env) {
+    jobject obj = (*env) -> NewObject(env, Passwd, Passwd_C_0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID Passwd_M_equals_0 = 0;
+jboolean jcall_Passwd_equals(JNIEnv * env, jobject instance, jobject p0) {
+    return (*env) -> CallBooleanMethod(env, instance, Passwd_M_equals_0, p0);
+}
+
+static jmethodID Passwd_M_getPw_dir_0 = 0;
+jstring jcall_Passwd_getPw_dir(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, Passwd_M_getPw_dir_0);
+}
+
+static jmethodID Passwd_M_getPw_gecos_0 = 0;
+jstring jcall_Passwd_getPw_gecos(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, Passwd_M_getPw_gecos_0);
+}
+
+static jmethodID Passwd_M_getPw_gid_0 = 0;
+jint jcall_Passwd_getPw_gid(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, Passwd_M_getPw_gid_0);
+}
+
+static jmethodID Passwd_M_getPw_name_0 = 0;
+jstring jcall_Passwd_getPw_name(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, Passwd_M_getPw_name_0);
+}
+
+static jmethodID Passwd_M_getPw_passwd_0 = 0;
+jstring jcall_Passwd_getPw_passwd(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, Passwd_M_getPw_passwd_0);
+}
+
+static jmethodID Passwd_M_getPw_shell_0 = 0;
+jstring jcall_Passwd_getPw_shell(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, Passwd_M_getPw_shell_0);
+}
+
+static jmethodID Passwd_M_getPw_uid_0 = 0;
+jint jcall_Passwd_getPw_uid(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, Passwd_M_getPw_uid_0);
+}
+
+static jmethodID Passwd_M_hashCode_0 = 0;
+jint jcall_Passwd_hashCode(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, Passwd_M_hashCode_0);
+}
+
+static jmethodID Passwd_M_setPw_dir_0 = 0;
+void jcall_Passwd_setPw_dir(JNIEnv * env, jobject instance, jstring p0) {
+    (*env) -> CallVoidMethod(env, instance, Passwd_M_setPw_dir_0, p0);
+}
+
+static jmethodID Passwd_M_setPw_gecos_0 = 0;
+void jcall_Passwd_setPw_gecos(JNIEnv * env, jobject instance, jstring p0) {
+    (*env) -> CallVoidMethod(env, instance, Passwd_M_setPw_gecos_0, p0);
+}
+
+static jmethodID Passwd_M_setPw_gid_0 = 0;
+void jcall_Passwd_setPw_gid(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, Passwd_M_setPw_gid_0, p0);
+}
+
+static jmethodID Passwd_M_setPw_name_0 = 0;
+void jcall_Passwd_setPw_name(JNIEnv * env, jobject instance, jstring p0) {
+    (*env) -> CallVoidMethod(env, instance, Passwd_M_setPw_name_0, p0);
+}
+
+static jmethodID Passwd_M_setPw_passwd_0 = 0;
+void jcall_Passwd_setPw_passwd(JNIEnv * env, jobject instance, jstring p0) {
+    (*env) -> CallVoidMethod(env, instance, Passwd_M_setPw_passwd_0, p0);
+}
+
+static jmethodID Passwd_M_setPw_shell_0 = 0;
+void jcall_Passwd_setPw_shell(JNIEnv * env, jobject instance, jstring p0) {
+    (*env) -> CallVoidMethod(env, instance, Passwd_M_setPw_shell_0, p0);
+}
+
+static jmethodID Passwd_M_setPw_uid_0 = 0;
+void jcall_Passwd_setPw_uid(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, Passwd_M_setPw_uid_0, p0);
+}
+
+static jmethodID Passwd_M_toString_0 = 0;
+jstring jcall_Passwd_toString(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, Passwd_M_toString_0);
+}
+
 static jfieldID PollFD_fd = 0;
 void jset_PollFD_fd(JNIEnv * env, jobject instance, jint value) {
    (*env)->SetIntField(env, instance, PollFD_fd, value);
@@ -1876,6 +2486,11 @@ void jcall_Sockaddr_copyTo(JNIEnv * env, jobject instance, jobject p0) {
     (*env) -> CallVoidMethod(env, instance, Sockaddr_M_copyTo_0, p0);
 }
 
+static jmethodID Sockaddr_M_equals_0 = 0;
+jboolean jcall_Sockaddr_equals(JNIEnv * env, jobject instance, jobject p0) {
+    return (*env) -> CallBooleanMethod(env, instance, Sockaddr_M_equals_0, p0);
+}
+
 static jmethodID Sockaddr_M_getAddress_0 = 0;
 jbyteArray jcall_Sockaddr_getAddress(JNIEnv * env, jobject instance) {
     return (jbyteArray) (*env) -> CallObjectMethod(env, instance, Sockaddr_M_getAddress_0);
@@ -1884,6 +2499,11 @@ jbyteArray jcall_Sockaddr_getAddress(JNIEnv * env, jobject instance) {
 static jmethodID Sockaddr_M_getAddressFamily_0 = 0;
 jint jcall_Sockaddr_getAddressFamily(JNIEnv * env, jobject instance) {
     return (*env) -> CallIntMethod(env, instance, Sockaddr_M_getAddressFamily_0);
+}
+
+static jmethodID Sockaddr_M_hashCode_0 = 0;
+jint jcall_Sockaddr_hashCode(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, Sockaddr_M_hashCode_0);
 }
 
 static jfieldID Stat_dev = 0;
@@ -2547,6 +3167,11 @@ jobject jnew_Utsname(JNIEnv * env) {
     return obj;
 }
 
+static jmethodID Utsname_M_equals_0 = 0;
+jboolean jcall_Utsname_equals(JNIEnv * env, jobject instance, jobject p0) {
+    return (*env) -> CallBooleanMethod(env, instance, Utsname_M_equals_0, p0);
+}
+
 static jmethodID Utsname_M_getMachine_0 = 0;
 jstring jcall_Utsname_getMachine(JNIEnv * env, jobject instance) {
     return (jstring) (*env) -> CallObjectMethod(env, instance, Utsname_M_getMachine_0);
@@ -2570,6 +3195,16 @@ jstring jcall_Utsname_getSysname(JNIEnv * env, jobject instance) {
 static jmethodID Utsname_M_getVersion_0 = 0;
 jstring jcall_Utsname_getVersion(JNIEnv * env, jobject instance) {
     return (jstring) (*env) -> CallObjectMethod(env, instance, Utsname_M_getVersion_0);
+}
+
+static jmethodID Utsname_M_hashCode_0 = 0;
+jint jcall_Utsname_hashCode(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, Utsname_M_hashCode_0);
+}
+
+static jmethodID Utsname_M_toString_0 = 0;
+jstring jcall_Utsname_toString(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, Utsname_M_toString_0);
 }
 
 static jfieldID Win32FileAttributeData_dwFileAttributes = 0;
@@ -4561,6 +5196,13 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
+    Passwd = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Passwd");
+    if (Passwd == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd");
+        return JNI_FALSE;
+    }
+
     IpAdapterAddresses$IpAdapterUnicastAddress = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/IpAdapterAddresses$IpAdapterUnicastAddress");
     if (IpAdapterAddresses$IpAdapterUnicastAddress == 0) {
         (*env) -> ExceptionClear(env);
@@ -4733,6 +5375,13 @@ jboolean jnigenerator_init(JNIEnv * env) {
     if (IOException == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find java/io/IOException");
+        return JNI_FALSE;
+    }
+
+    Group = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Group");
+    if (Group == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Group");
         return JNI_FALSE;
     }
 
@@ -5006,6 +5655,118 @@ jboolean jnigenerator_init(JNIEnv * env) {
     if (GUID_M_toString_0 == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/GUID.toString()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    Group_gr_gid = (*env) -> GetFieldID(env, Group, "gr_gid", "I");
+    if (Group_gr_gid == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Group_gr_gid_I");
+        return JNI_FALSE;
+    }
+
+    Group_gr_name = (*env) -> GetFieldID(env, Group, "gr_name", "Ljava/lang/String;");
+    if (Group_gr_name == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Group_gr_name_Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    Group_gr_passwd = (*env) -> GetFieldID(env, Group, "gr_passwd", "Ljava/lang/String;");
+    if (Group_gr_passwd == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Group_gr_passwd_Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    Group_gr_mem = (*env) -> GetFieldID(env, Group, "gr_mem", "Ljava/util/List;");
+    if (Group_gr_mem == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Group_gr_mem_Ljava/util/List;");
+        return JNI_FALSE;
+    }
+
+    Group_C_0 = (*env) -> GetMethodID(env, Group, "<init>", "()V");
+    if (Group_C_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Group.<init>()V");
+        return JNI_FALSE;
+    }
+
+    Group_M_equals_0 = (*env) -> GetMethodID(env, Group, "equals", "(Ljava/lang/Object;)Z");
+    if (Group_M_equals_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Group.equals(Ljava/lang/Object;)Z");
+        return JNI_FALSE;
+    }
+
+    Group_M_getGr_gid_0 = (*env) -> GetMethodID(env, Group, "getGr_gid", "()I");
+    if (Group_M_getGr_gid_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Group.getGr_gid()I");
+        return JNI_FALSE;
+    }
+
+    Group_M_getGr_mem_0 = (*env) -> GetMethodID(env, Group, "getGr_mem", "()Ljava/util/List;");
+    if (Group_M_getGr_mem_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Group.getGr_mem()Ljava/util/List;");
+        return JNI_FALSE;
+    }
+
+    Group_M_getGr_name_0 = (*env) -> GetMethodID(env, Group, "getGr_name", "()Ljava/lang/String;");
+    if (Group_M_getGr_name_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Group.getGr_name()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    Group_M_getGr_passwd_0 = (*env) -> GetMethodID(env, Group, "getGr_passwd", "()Ljava/lang/String;");
+    if (Group_M_getGr_passwd_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Group.getGr_passwd()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    Group_M_hashCode_0 = (*env) -> GetMethodID(env, Group, "hashCode", "()I");
+    if (Group_M_hashCode_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Group.hashCode()I");
+        return JNI_FALSE;
+    }
+
+    Group_M_setGr_gid_0 = (*env) -> GetMethodID(env, Group, "setGr_gid", "(I)V");
+    if (Group_M_setGr_gid_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Group.setGr_gid(I)V");
+        return JNI_FALSE;
+    }
+
+    Group_M_setGr_mem_0 = (*env) -> GetMethodID(env, Group, "setGr_mem", "(Ljava/util/List;)V");
+    if (Group_M_setGr_mem_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Group.setGr_mem(Ljava/util/List;)V");
+        return JNI_FALSE;
+    }
+
+    Group_M_setGr_name_0 = (*env) -> GetMethodID(env, Group, "setGr_name", "(Ljava/lang/String;)V");
+    if (Group_M_setGr_name_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Group.setGr_name(Ljava/lang/String;)V");
+        return JNI_FALSE;
+    }
+
+    Group_M_setGr_passwd_0 = (*env) -> GetMethodID(env, Group, "setGr_passwd", "(Ljava/lang/String;)V");
+    if (Group_M_setGr_passwd_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Group.setGr_passwd(Ljava/lang/String;)V");
+        return JNI_FALSE;
+    }
+
+    Group_M_toString_0 = (*env) -> GetMethodID(env, Group, "toString", "()Ljava/lang/String;");
+    if (Group_M_toString_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Group.toString()Ljava/lang/String;");
         return JNI_FALSE;
     }
 
@@ -5835,6 +6596,181 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
+    Passwd_pw_name = (*env) -> GetFieldID(env, Passwd, "pw_name", "Ljava/lang/String;");
+    if (Passwd_pw_name == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd_pw_name_Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    Passwd_pw_passwd = (*env) -> GetFieldID(env, Passwd, "pw_passwd", "Ljava/lang/String;");
+    if (Passwd_pw_passwd == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd_pw_passwd_Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    Passwd_pw_uid = (*env) -> GetFieldID(env, Passwd, "pw_uid", "I");
+    if (Passwd_pw_uid == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd_pw_uid_I");
+        return JNI_FALSE;
+    }
+
+    Passwd_pw_gid = (*env) -> GetFieldID(env, Passwd, "pw_gid", "I");
+    if (Passwd_pw_gid == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd_pw_gid_I");
+        return JNI_FALSE;
+    }
+
+    Passwd_pw_gecos = (*env) -> GetFieldID(env, Passwd, "pw_gecos", "Ljava/lang/String;");
+    if (Passwd_pw_gecos == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd_pw_gecos_Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    Passwd_pw_dir = (*env) -> GetFieldID(env, Passwd, "pw_dir", "Ljava/lang/String;");
+    if (Passwd_pw_dir == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd_pw_dir_Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    Passwd_pw_shell = (*env) -> GetFieldID(env, Passwd, "pw_shell", "Ljava/lang/String;");
+    if (Passwd_pw_shell == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd_pw_shell_Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    Passwd_C_0 = (*env) -> GetMethodID(env, Passwd, "<init>", "()V");
+    if (Passwd_C_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd.<init>()V");
+        return JNI_FALSE;
+    }
+
+    Passwd_M_equals_0 = (*env) -> GetMethodID(env, Passwd, "equals", "(Ljava/lang/Object;)Z");
+    if (Passwd_M_equals_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd.equals(Ljava/lang/Object;)Z");
+        return JNI_FALSE;
+    }
+
+    Passwd_M_getPw_dir_0 = (*env) -> GetMethodID(env, Passwd, "getPw_dir", "()Ljava/lang/String;");
+    if (Passwd_M_getPw_dir_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd.getPw_dir()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    Passwd_M_getPw_gecos_0 = (*env) -> GetMethodID(env, Passwd, "getPw_gecos", "()Ljava/lang/String;");
+    if (Passwd_M_getPw_gecos_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd.getPw_gecos()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    Passwd_M_getPw_gid_0 = (*env) -> GetMethodID(env, Passwd, "getPw_gid", "()I");
+    if (Passwd_M_getPw_gid_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd.getPw_gid()I");
+        return JNI_FALSE;
+    }
+
+    Passwd_M_getPw_name_0 = (*env) -> GetMethodID(env, Passwd, "getPw_name", "()Ljava/lang/String;");
+    if (Passwd_M_getPw_name_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd.getPw_name()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    Passwd_M_getPw_passwd_0 = (*env) -> GetMethodID(env, Passwd, "getPw_passwd", "()Ljava/lang/String;");
+    if (Passwd_M_getPw_passwd_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd.getPw_passwd()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    Passwd_M_getPw_shell_0 = (*env) -> GetMethodID(env, Passwd, "getPw_shell", "()Ljava/lang/String;");
+    if (Passwd_M_getPw_shell_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd.getPw_shell()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    Passwd_M_getPw_uid_0 = (*env) -> GetMethodID(env, Passwd, "getPw_uid", "()I");
+    if (Passwd_M_getPw_uid_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd.getPw_uid()I");
+        return JNI_FALSE;
+    }
+
+    Passwd_M_hashCode_0 = (*env) -> GetMethodID(env, Passwd, "hashCode", "()I");
+    if (Passwd_M_hashCode_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd.hashCode()I");
+        return JNI_FALSE;
+    }
+
+    Passwd_M_setPw_dir_0 = (*env) -> GetMethodID(env, Passwd, "setPw_dir", "(Ljava/lang/String;)V");
+    if (Passwd_M_setPw_dir_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd.setPw_dir(Ljava/lang/String;)V");
+        return JNI_FALSE;
+    }
+
+    Passwd_M_setPw_gecos_0 = (*env) -> GetMethodID(env, Passwd, "setPw_gecos", "(Ljava/lang/String;)V");
+    if (Passwd_M_setPw_gecos_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd.setPw_gecos(Ljava/lang/String;)V");
+        return JNI_FALSE;
+    }
+
+    Passwd_M_setPw_gid_0 = (*env) -> GetMethodID(env, Passwd, "setPw_gid", "(I)V");
+    if (Passwd_M_setPw_gid_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd.setPw_gid(I)V");
+        return JNI_FALSE;
+    }
+
+    Passwd_M_setPw_name_0 = (*env) -> GetMethodID(env, Passwd, "setPw_name", "(Ljava/lang/String;)V");
+    if (Passwd_M_setPw_name_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd.setPw_name(Ljava/lang/String;)V");
+        return JNI_FALSE;
+    }
+
+    Passwd_M_setPw_passwd_0 = (*env) -> GetMethodID(env, Passwd, "setPw_passwd", "(Ljava/lang/String;)V");
+    if (Passwd_M_setPw_passwd_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd.setPw_passwd(Ljava/lang/String;)V");
+        return JNI_FALSE;
+    }
+
+    Passwd_M_setPw_shell_0 = (*env) -> GetMethodID(env, Passwd, "setPw_shell", "(Ljava/lang/String;)V");
+    if (Passwd_M_setPw_shell_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd.setPw_shell(Ljava/lang/String;)V");
+        return JNI_FALSE;
+    }
+
+    Passwd_M_setPw_uid_0 = (*env) -> GetMethodID(env, Passwd, "setPw_uid", "(I)V");
+    if (Passwd_M_setPw_uid_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd.setPw_uid(I)V");
+        return JNI_FALSE;
+    }
+
+    Passwd_M_toString_0 = (*env) -> GetMethodID(env, Passwd, "toString", "()Ljava/lang/String;");
+    if (Passwd_M_toString_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd.toString()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
     PollFD_fd = (*env) -> GetFieldID(env, PollFD, "fd", "I");
     if (PollFD_fd == 0) {
         (*env) -> ExceptionClear(env);
@@ -6172,6 +7108,13 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
+    Sockaddr_M_equals_0 = (*env) -> GetMethodID(env, Sockaddr, "equals", "(Ljava/lang/Object;)Z");
+    if (Sockaddr_M_equals_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr.equals(Ljava/lang/Object;)Z");
+        return JNI_FALSE;
+    }
+
     Sockaddr_M_getAddress_0 = (*env) -> GetMethodID(env, Sockaddr, "getAddress", "()[B");
     if (Sockaddr_M_getAddress_0 == 0) {
         (*env) -> ExceptionClear(env);
@@ -6183,6 +7126,13 @@ jboolean jnigenerator_init(JNIEnv * env) {
     if (Sockaddr_M_getAddressFamily_0 == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr.getAddressFamily()I");
+        return JNI_FALSE;
+    }
+
+    Sockaddr_M_hashCode_0 = (*env) -> GetMethodID(env, Sockaddr, "hashCode", "()I");
+    if (Sockaddr_M_hashCode_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr.hashCode()I");
         return JNI_FALSE;
     }
 
@@ -6606,6 +7556,13 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
+    Utsname_M_equals_0 = (*env) -> GetMethodID(env, Utsname, "equals", "(Ljava/lang/Object;)Z");
+    if (Utsname_M_equals_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Utsname.equals(Ljava/lang/Object;)Z");
+        return JNI_FALSE;
+    }
+
     Utsname_M_getMachine_0 = (*env) -> GetMethodID(env, Utsname, "getMachine", "()Ljava/lang/String;");
     if (Utsname_M_getMachine_0 == 0) {
         (*env) -> ExceptionClear(env);
@@ -6638,6 +7595,20 @@ jboolean jnigenerator_init(JNIEnv * env) {
     if (Utsname_M_getVersion_0 == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Utsname.getVersion()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    Utsname_M_hashCode_0 = (*env) -> GetMethodID(env, Utsname, "hashCode", "()I");
+    if (Utsname_M_hashCode_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Utsname.hashCode()I");
+        return JNI_FALSE;
+    }
+
+    Utsname_M_toString_0 = (*env) -> GetMethodID(env, Utsname, "toString", "()Ljava/lang/String;");
+    if (Utsname_M_toString_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Utsname.toString()Ljava/lang/String;");
         return JNI_FALSE;
     }
 
@@ -7783,6 +8754,11 @@ void jnigenerator_destroy(JNIEnv * env) {
         Win32FileAttributeData = 0;
     }
 
+    if (Passwd != 0) {
+        (*env) -> DeleteGlobalRef(env, Passwd);
+        Passwd = 0;
+    }
+
     if (IpAdapterAddresses$IpAdapterUnicastAddress != 0) {
         (*env) -> DeleteGlobalRef(env, IpAdapterAddresses$IpAdapterUnicastAddress);
         IpAdapterAddresses$IpAdapterUnicastAddress = 0;
@@ -7908,6 +8884,11 @@ void jnigenerator_destroy(JNIEnv * env) {
         IOException = 0;
     }
 
+    if (Group != 0) {
+        (*env) -> DeleteGlobalRef(env, Group);
+        Group = 0;
+    }
+
     if (IllegalArgumentException != 0) {
         (*env) -> DeleteGlobalRef(env, IllegalArgumentException);
         IllegalArgumentException = 0;
@@ -8007,6 +8988,22 @@ void jnigenerator_destroy(JNIEnv * env) {
     GUID_M_setData3_0 = 0;
     GUID_M_setData4_0 = 0;
     GUID_M_toString_0 = 0;
+    Group_gr_gid = 0;
+    Group_gr_name = 0;
+    Group_gr_passwd = 0;
+    Group_gr_mem = 0;
+    Group_C_0 = 0;
+    Group_M_equals_0 = 0;
+    Group_M_getGr_gid_0 = 0;
+    Group_M_getGr_mem_0 = 0;
+    Group_M_getGr_name_0 = 0;
+    Group_M_getGr_passwd_0 = 0;
+    Group_M_hashCode_0 = 0;
+    Group_M_setGr_gid_0 = 0;
+    Group_M_setGr_mem_0 = 0;
+    Group_M_setGr_name_0 = 0;
+    Group_M_setGr_passwd_0 = 0;
+    Group_M_toString_0 = 0;
     Iovec_payload = 0;
     Iovec_off = 0;
     Iovec_len = 0;
@@ -8125,6 +9122,31 @@ void jnigenerator_destroy(JNIEnv * env) {
     Msghdr_M_isErrQueue_0 = 0;
     Msghdr_M_isOutOfBand_0 = 0;
     Msghdr_M_isTruncated_0 = 0;
+    Passwd_pw_name = 0;
+    Passwd_pw_passwd = 0;
+    Passwd_pw_uid = 0;
+    Passwd_pw_gid = 0;
+    Passwd_pw_gecos = 0;
+    Passwd_pw_dir = 0;
+    Passwd_pw_shell = 0;
+    Passwd_C_0 = 0;
+    Passwd_M_equals_0 = 0;
+    Passwd_M_getPw_dir_0 = 0;
+    Passwd_M_getPw_gecos_0 = 0;
+    Passwd_M_getPw_gid_0 = 0;
+    Passwd_M_getPw_name_0 = 0;
+    Passwd_M_getPw_passwd_0 = 0;
+    Passwd_M_getPw_shell_0 = 0;
+    Passwd_M_getPw_uid_0 = 0;
+    Passwd_M_hashCode_0 = 0;
+    Passwd_M_setPw_dir_0 = 0;
+    Passwd_M_setPw_gecos_0 = 0;
+    Passwd_M_setPw_gid_0 = 0;
+    Passwd_M_setPw_name_0 = 0;
+    Passwd_M_setPw_passwd_0 = 0;
+    Passwd_M_setPw_shell_0 = 0;
+    Passwd_M_setPw_uid_0 = 0;
+    Passwd_M_toString_0 = 0;
     PollFD_fd = 0;
     PollFD_events = 0;
     PollFD_revents = 0;
@@ -8199,8 +9221,10 @@ void jnigenerator_destroy(JNIEnv * env) {
     Sockaddr_C_2 = 0;
     Sockaddr_M_clone_0 = 0;
     Sockaddr_M_copyTo_0 = 0;
+    Sockaddr_M_equals_0 = 0;
     Sockaddr_M_getAddress_0 = 0;
     Sockaddr_M_getAddressFamily_0 = 0;
+    Sockaddr_M_hashCode_0 = 0;
     Stat_dev = 0;
     Stat_ino = 0;
     Stat_mode = 0;
@@ -8261,11 +9285,14 @@ void jnigenerator_destroy(JNIEnv * env) {
     Utsname_version = 0;
     Utsname_machine = 0;
     Utsname_C_0 = 0;
+    Utsname_M_equals_0 = 0;
     Utsname_M_getMachine_0 = 0;
     Utsname_M_getNodename_0 = 0;
     Utsname_M_getRelease_0 = 0;
     Utsname_M_getSysname_0 = 0;
     Utsname_M_getVersion_0 = 0;
+    Utsname_M_hashCode_0 = 0;
+    Utsname_M_toString_0 = 0;
     Win32FileAttributeData_dwFileAttributes = 0;
     Win32FileAttributeData_nFileSizeLow = 0;
     Win32FileAttributeData_nFileSizeHigh = 0;

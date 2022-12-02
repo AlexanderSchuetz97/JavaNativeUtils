@@ -234,6 +234,7 @@ public interface LinuxConst {
     int IFA_F_SECONDARY = 0x1;
 
     int IFF_UP = 1;
+    int IFF_NO_PI = 4096;
 
     //if_tun.h
     int TUNSETIFF = 1074025674;

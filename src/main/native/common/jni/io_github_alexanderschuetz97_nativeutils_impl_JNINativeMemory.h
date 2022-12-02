@@ -17,6 +17,118 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    writeExpandedByteArray
+ * Signature: (JJ[BIII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_writeExpandedByteArray
+  (JNIEnv *, jclass, jlong, jlong, jbyteArray, jint, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    readExpandedByteArray
+ * Signature: (JJ[BIII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_readExpandedByteArray
+  (JNIEnv *, jclass, jlong, jlong, jbyteArray, jint, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    writeExpandedCharArray
+ * Signature: (JJ[CIII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_writeExpandedCharArray
+  (JNIEnv *, jclass, jlong, jlong, jcharArray, jint, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    readExpandedCharArray
+ * Signature: (JJ[CIII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_readExpandedCharArray
+  (JNIEnv *, jclass, jlong, jlong, jcharArray, jint, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    writeExpandedShortArray
+ * Signature: (JJ[SIII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_writeExpandedShortArray
+  (JNIEnv *, jclass, jlong, jlong, jshortArray, jint, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    readExpandedShortArray
+ * Signature: (JJ[SIII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_readExpandedShortArray
+  (JNIEnv *, jclass, jlong, jlong, jshortArray, jint, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    writeExpandedIntArray
+ * Signature: (JJ[IIII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_writeExpandedIntArray
+  (JNIEnv *, jclass, jlong, jlong, jintArray, jint, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    readExpandedIntArray
+ * Signature: (JJ[IIII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_readExpandedIntArray
+  (JNIEnv *, jclass, jlong, jlong, jintArray, jint, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    writeExpandedLongArray
+ * Signature: (JJ[JIII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_writeExpandedLongArray
+  (JNIEnv *, jclass, jlong, jlong, jlongArray, jint, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    readExpandedLongArray
+ * Signature: (JJ[JIII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_readExpandedLongArray
+  (JNIEnv *, jclass, jlong, jlong, jlongArray, jint, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    writeFloatArray
+ * Signature: (JJ[FII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_writeFloatArray
+  (JNIEnv *, jclass, jlong, jlong, jfloatArray, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    readFloatArray
+ * Signature: (JJ[FII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_readFloatArray
+  (JNIEnv *, jclass, jlong, jlong, jfloatArray, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    writeDoubleArray
+ * Signature: (JJ[DII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_writeDoubleArray
+  (JNIEnv *, jclass, jlong, jlong, jdoubleArray, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    readDoubleArray
+ * Signature: (JJ[DII)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_readDoubleArray
+  (JNIEnv *, jclass, jlong, jlong, jdoubleArray, jint, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
  * Method:    supportsAtomicOperations
  * Signature: ()Z
  */
@@ -30,6 +142,22 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
  */
 JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_supports16ByteCompareAndSet
   (JNIEnv *, jobject);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    readUntilByte
+ * Signature: (JJIB[BI)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_readUntilByte
+  (JNIEnv *, jclass, jlong, jlong, jint, jbyte, jbyteArray, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory
+ * Method:    indexOf
+ * Signature: (JJJB)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory_indexOf
+  (JNIEnv *, jclass, jlong, jlong, jlong, jbyte);
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNINativeMemory

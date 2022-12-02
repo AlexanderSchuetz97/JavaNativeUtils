@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 
 /**
  * Utility to load the native libraries. It can be used to unpack the .so/.dll files from the jar and load them into the jvm.
@@ -239,16 +241,14 @@ public class NativeLibraryLoaderHelper {
 
     private static void loadLib(File aBase, String aLibName) throws IOException {
         //System.out.println("loading lib " + aLibName);
-
+        Random rng = new Random();
         File tempLibFile = new File(aBase, aLibName);
-        StringBuilder tempBuilder = new StringBuilder();
         while (tempLibFile.exists()) {
-            tempBuilder.append('X');
-            tempLibFile = new File(aBase, tempBuilder.toString() + aLibName);
+            tempLibFile = new File(aBase, new UUID(rng.nextLong(), rng.nextLong()).toString().replace("-","") + aLibName);
         }
 
         if (!tempLibFile.createNewFile()) {
-            throw new IOException("Could not createOrOpen temporary library file!");
+            throw new IOException("Could not call createNewFile on temporary library file!");
         }
 
         tempLibFile.deleteOnExit();
@@ -261,7 +261,7 @@ public class NativeLibraryLoaderHelper {
             tempInput = NativeLibraryLoaderHelper.class.getResourceAsStream("/" + aLibName);
             if (tempInput == null) {
                 throw new IOException("The shared library file " + aLibName + " was not found by getResourceAsStream " +
-                        "its either not there or this class was loaded by a classloader that doesnt support resources well!");
+                        "its either not there or this class was loaded by a classloader that doesn't support resources well!");
             }
             int i = 0;
             while (i != -1) {

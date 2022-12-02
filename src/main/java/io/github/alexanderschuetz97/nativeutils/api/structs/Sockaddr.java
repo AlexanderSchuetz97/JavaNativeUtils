@@ -104,4 +104,19 @@ public class Sockaddr {
 
         other.address = Arrays.copyOf(address, address.length);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Sockaddr sockaddr = (Sockaddr) o;
+        return addressFamily == sockaddr.addressFamily && Arrays.equals(address, sockaddr.address);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(addressFamily);
+        result = 31 * result + Arrays.hashCode(address);
+        return result;
+    }
 }
