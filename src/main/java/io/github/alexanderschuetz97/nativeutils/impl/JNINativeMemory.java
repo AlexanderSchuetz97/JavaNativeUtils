@@ -137,6 +137,7 @@ class JNINativeMemory implements NativeMemory {
         }
     }
 
+    @Override
     public void sync(long offset, long length, boolean invalidate) throws SyncFailedException {
         lockForWrite(offset, length);
         try {

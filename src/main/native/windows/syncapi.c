@@ -52,6 +52,36 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    OpenEventA
+ * Signature: (IZLjava/lang/String;)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_OpenEventA
+  (JNIEnv * env, jobject inst, jint acc, jboolean inherit, jstring name) {
+	LPCSTR cname = NULL;
+	if (name != NULL) {
+		cname = (*env)->GetStringUTFChars(env, name, NULL);
+		if (cname == NULL) {
+			jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
+			return -1;
+		}
+	}
+
+	HANDLE h = OpenEventA(acc, inherit, cname);
+
+	if (h == INVALID_HANDLE_VALUE) {
+		jthrow_UnknownNativeErrorException_1(env, GetLastError());
+	}
+
+
+	if (name != NULL) {
+		(*env)->ReleaseStringUTFChars(env, name, cname);
+	}
+
+	return (jlong) (uintptr_t) h;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
  * Method:    ResetEvent
  * Signature: (J)V
  */
@@ -64,6 +94,25 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 	}
 
 	if (!ResetEvent(h)) {
+		jthrow_UnknownNativeErrorException_1(env, GetLastError());
+	}
+}
+
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    SetEvent
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_SetEvent
+  (JNIEnv * env, jobject inst, jlong handle) {
+	HANDLE h = (HANDLE) (uintptr_t) handle;
+	if (h == INVALID_HANDLE_VALUE) {
+		jthrow_InvalidFileDescriptorException(env);
+		return;
+	}
+
+	if (!SetEvent(h)) {
 		jthrow_UnknownNativeErrorException_1(env, GetLastError());
 	}
 }

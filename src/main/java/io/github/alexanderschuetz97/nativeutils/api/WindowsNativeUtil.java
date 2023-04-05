@@ -20,25 +20,13 @@
 package io.github.alexanderschuetz97.nativeutils.api;
 
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.*;
-import io.github.alexanderschuetz97.nativeutils.api.structs.GUID;
-import io.github.alexanderschuetz97.nativeutils.api.structs.IpAdapterAddresses;
-import io.github.alexanderschuetz97.nativeutils.api.structs.RegData;
-import io.github.alexanderschuetz97.nativeutils.api.structs.RegEnumKeyExResult;
-import io.github.alexanderschuetz97.nativeutils.api.structs.RegQueryInfoKeyResult;
-import io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInfoData;
-import io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInterfaceData;
-import io.github.alexanderschuetz97.nativeutils.api.structs.Stat;
-import io.github.alexanderschuetz97.nativeutils.api.structs.Win32FileAttributeData;
+import io.github.alexanderschuetz97.nativeutils.api.structs.*;
 
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
-import java.net.NetworkInterface;
 import java.nio.ByteBuffer;
-import java.nio.file.AccessDeniedException;
 import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.InvalidPathException;
 import java.util.Collection;
-import java.util.List;
 
 public interface WindowsNativeUtil extends NativeUtil {
 
@@ -283,22 +271,31 @@ public interface WindowsNativeUtil extends NativeUtil {
     int CTL_CODE(int DeviceType, int Function, int Method, int Access);
 
     /**
-     * Returns a newly event handle from the OS.
+     * Returns a newly created event handle from the OS.
      * CloseHandle destroys this handle.
      *
      * @param lpEventAttributes pointer treated as LPSECURITY_ATTRIBUTES
      * @param manualReset if true then the event must be manually reset by calling ResetEvent
-     * @param initalState if true then the event is initally set and must be first manually reset using ResetEvent
+     * @param initialState if true then the event is initally set and must be first manually reset using ResetEvent
      * @param name name of the event, may be null.
      * @return the handle to the event.
      */
-    long CreateEventA(long lpEventAttributes, boolean manualReset, boolean initalState, String name) throws UnknownNativeErrorException;
+    long CreateEventA(long lpEventAttributes, boolean manualReset, boolean initialState, String name) throws UnknownNativeErrorException;
 
+
+    long OpenEventA(int desiredAccess, boolean inheritHandle, String name) throws UnknownNativeErrorException;
+
+    /**
+     * Sets a event identified by the handle
+     * @param handle
+     * @return
+     */
+    void SetEvent(long handle) throws UnknownNativeErrorException, InvalidFileDescriptorException;
 
     /**
      * Resets the given event handle.
      */
-    void ResetEvent(long handle) throws UnknownNativeErrorException;
+    void ResetEvent(long handle) throws UnknownNativeErrorException, InvalidFileDescriptorException;
 
     /**
      * Waits for a single event handle. Be aware that Java has no way to interrupt this call.
@@ -567,4 +564,13 @@ public interface WindowsNativeUtil extends NativeUtil {
      * @param nShowCmd defines how to action is displayed to the user value from 0 to 11 are valid
      */
     long ShellExecuteA(long hwnd, String lpOperation, String lpFile, String lpParameters, String lpDirectory, int nShowCmd) throws ShellExecuteException;
+
+
+
+
+    //TODO
+    //long CreateIpForwardEntry(MibIpForwardRow pRoute) throws UnknownNativeErrorException;
+
+    //long DeleteIpForwardEntry(MibIpForwardRow pRoute) throws UnknownNativeErrorException;
+
 }

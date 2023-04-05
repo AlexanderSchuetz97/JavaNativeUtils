@@ -80,10 +80,71 @@ public class JavaNativeUtilsStandaloneTest {
             case("admincmd"):
                 admincmd(args);
                 return;
+            case("createEvent"):
+                createEvent();
+                return;
+            case("openEvent"):
+                openEvent();
+                return;
+            case("checkLinux"):
+                checkLinux();
+                return;
             default:
                 System.out.println("no such test " + args[0]);
                 System.exit(-1);
                 return;
+        }
+    }
+
+    public static void checkLinux() {
+        NativeUtils.getLinuxUtil();
+    }
+    public static void openEvent() {
+        WindowsNativeUtil wnu = NativeUtils.getWindowsUtil();
+        long l;
+        try {
+            l = wnu.OpenEventA(WinConst.SYNCHRONIZE | WinConst.EVENT_MODIFY_STATE, true, "Global\\Test");
+
+            try {
+                wnu.SetEvent(l);
+                Thread.sleep(4000);
+                System.out.println("WFSO 60s!");
+                wnu.WaitForSingleObject(l, 60000);
+                System.out.println("SUCCESS!");
+            } finally {
+                wnu.CloseHandle(l);
+            }
+        } catch (InterruptedException | InvalidFileDescriptorException e) {
+            throw new RuntimeException(e);
+        } catch (UnknownNativeErrorException e) {
+            System.out.println(wnu.FormatMessageA(e.intCode()));
+            e.printStackTrace();
+            System.exit(-1);
+        }
+    }
+
+    public static void createEvent() {
+        WindowsNativeUtil wnu = NativeUtils.getWindowsUtil();
+        long l;
+        try {
+            l = wnu.CreateEventA(0, true, false, "Global\\Test");
+
+            try {
+                System.out.println("WFSO 60s!");
+                wnu.WaitForSingleObject(l, 60000);
+                wnu.ResetEvent(l);
+                Thread.sleep(1000);
+                wnu.SetEvent(l);
+                System.out.println("SUCCESS!");
+            } finally {
+                wnu.CloseHandle(l);
+            }
+        } catch (InterruptedException | InvalidFileDescriptorException e) {
+            throw new RuntimeException(e);
+        } catch (UnknownNativeErrorException e) {
+            System.out.println(wnu.FormatMessageA(e.intCode()));
+            e.printStackTrace();
+            System.exit(-1);
         }
     }
 

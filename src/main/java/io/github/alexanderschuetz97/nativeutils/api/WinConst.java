@@ -179,5 +179,13 @@ public interface WinConst {
     int TokenIsSandboxed = 47;
     int TokenIsAppSilo = 48;
     int MaxTokenInfoClass = 49;
+
+    //OpenEventA access
+    int DELETE = 0x00010000;
+    int SYNCHRONIZE = 0x00100000;
+    int WRITE_DAC = 0x00040000;
+    int WRITE_OWNER = 0x00080000;
+    int EVENT_ALL_ACCESS = 0x1f0003;
+    int EVENT_MODIFY_STATE = 0x0002;
 }
 

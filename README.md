@@ -89,7 +89,9 @@ if (NativeUtils.isWindows()) {
 * SetupDiDestroyDeviceInfoList
 * DeviceIoControl
 * CreateEventA
+* OpenEventA
 * ResetEvent
+* SetEvent
 * WaitForSingleObject
 * WaitForMultipleObjects
 * GetOverlappedResult
@@ -153,7 +155,7 @@ Accessing sun.misc.Unsafe is also non-trivial in newer Java Versions depending o
 * i386 (GLIBC 2.17 or newer)
 * amd64 (GLIBC 2.17 or newer)
 * armhf (GLIBC 2.17 or newer)
-* aarch64 (GLIBC 2.17 or newer) (untested, automatic loading may not work since there is no documentation what "os.arch" is on aarch64)
+* aarch64 (GLIBC 2.17 or newer)
 
 If an unsupported operating system or processor architecture is used then getWindowsUtil() or getLinuxUtil() throws an exception.
 To check if the current system supports linux or windows syscalls use the isLinux() or isWindows() method.

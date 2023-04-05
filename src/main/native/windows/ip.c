@@ -315,6 +315,72 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	cleanup:
 	free(pip);
 	return jret;
+}
 
 
+bool mapIPFORWARDROW(JNIEnv * env, jobject jaddr, PMIB_IPFORWARDROW caddr) {
+	if (jaddr == NULL) {
+		jthrowCC_NullPointerException_1(env, "pRoute");
+		return false;
+	}
+
+
+	jobject fwt = jget_MibIpForwardRow_ForwardType(env, jaddr);
+	if (fwt == NULL) {
+		jthrowCC_NullPointerException_1(env, "pRoute.ForwardType");
+		return false;
+	}
+	jobject fwp = jget_MibIpForwardRow_ForwardProto(env, jaddr);
+	if (fwp == NULL) {
+		jthrowCC_NullPointerException_1(env, "pRoute.ForwardProto");
+		return false;
+	}
+
+
+	memset((void*) &caddr, 0, sizeof(MIB_IPADDRROW));
+
+	caddr->dwForwardDest = jget_MibIpForwardRow_dwForwardDest(env, jaddr);
+	caddr->dwForwardMask = jget_MibIpForwardRow_dwForwardMask(env, jaddr);
+	caddr->dwForwardPolicy = jget_MibIpForwardRow_dwForwardPolicy(env, jaddr);
+	caddr->dwForwardNextHop = jget_MibIpForwardRow_dwForwardNextHop(env, jaddr);
+	caddr->dwForwardIfIndex = jget_MibIpForwardRow_dwForwardIfIndex(env, jaddr);
+	caddr->dwForwardType = jget_MibIpForwardRow$MIB_IPFORWARD_TYPE_dwForwardType(env, fwt);
+	caddr->dwForwardProto = jget_MibIpForwardRow$MIB_IPFORWARD_PROTO_dwForwardProto(env, fwp);
+	caddr->dwForwardAge = jget_MibIpForwardRow_dwForwardAge(env, jaddr);
+	caddr->dwForwardNextHopAS = jget_MibIpForwardRow_dwForwardNextHopAS(env, jaddr);
+	caddr->dwForwardMetric1 = jget_MibIpForwardRow_dwForwardMetric1(env, jaddr);
+	caddr->dwForwardMetric2 = jget_MibIpForwardRow_dwForwardMetric2(env, jaddr);
+	caddr->dwForwardMetric3 = jget_MibIpForwardRow_dwForwardMetric3(env, jaddr);
+	caddr->dwForwardMetric4 = jget_MibIpForwardRow_dwForwardMetric4(env, jaddr);
+	return true;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    CreateIpForwardEntry
+ * Signature: (Lio/github/alexanderschuetz97/nativeutils/api/structs/MIB_IPFORWARDROW;)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_CreateIpForwardEntry
+  (JNIEnv * env, jobject inst, jobject jaddr) {
+	MIB_IPFORWARDROW caddr;
+	if (!mapIPFORWARDROW(env, jaddr, &caddr)) {
+		return 0;
+	}
+
+	return (jlong) CreateIpForwardEntry(&caddr);
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    DeleteIpForwardEntry
+ * Signature: (Lio/github/alexanderschuetz97/nativeutils/api/structs/MIB_IPFORWARDROW;)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_DeleteIpForwardEntry
+  (JNIEnv * env, jobject inst, jobject jaddr) {
+	MIB_IPFORWARDROW caddr;
+	if (!mapIPFORWARDROW(env, jaddr, &caddr)) {
+		return 0;
+	}
+
+	return (jlong) DeleteIpForwardEntry(&caddr);
 }

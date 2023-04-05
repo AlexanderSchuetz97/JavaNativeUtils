@@ -161,6 +161,22 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    OpenEventA
+ * Signature: (IZLjava/lang/String;)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_OpenEventA
+  (JNIEnv *, jobject, jint, jboolean, jstring);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    SetEvent
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_SetEvent
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
  * Method:    ResetEvent
  * Signature: (J)V
  */
@@ -462,6 +478,22 @@ JNIEXPORT jbyteArray JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_
  */
 JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_ShellExecuteA
   (JNIEnv *, jobject, jlong, jstring, jstring, jstring, jstring, jint);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    CreateIpForwardEntry
+ * Signature: (Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow;)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_CreateIpForwardEntry
+  (JNIEnv *, jobject, jobject);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    DeleteIpForwardEntry
+ * Signature: (Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow;)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_DeleteIpForwardEntry
+  (JNIEnv *, jobject, jobject);
 
 #ifdef __cplusplus
 }

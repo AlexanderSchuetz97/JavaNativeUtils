@@ -6,7 +6,7 @@
 
     <groupId>io.github.alexanderschuetz97</groupId>
     <artifactId>JavaNativeUtils</artifactId>
-    <version>2.1</version>
+    <version>2.2</version>
     <packaging>bundle</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -80,6 +80,15 @@
                         <phase>process-classes</phase>
                         <configuration>
                             <structs>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.MibIpForwardRow</classname>
+                                </struct>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.MibIpForwardRow$MIB_IPFORWARD_TYPE</classname>
+                                </struct>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.MibIpForwardRow$MIB_IPFORWARD_PROTO</classname>
+                                </struct>
                                 <struct>
                                     <classname>io.github.alexanderschuetz97.nativeutils.api.structs.Passwd</classname>
                                 </struct>

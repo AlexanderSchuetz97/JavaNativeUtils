@@ -236,9 +236,19 @@ jboolean jinstanceof_FileAlreadyExistsException(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, FileAlreadyExistsException);
 }
 
+static jclass MibIpForwardRow = 0;
+jboolean jinstanceof_MibIpForwardRow(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, MibIpForwardRow);
+}
+
 static jclass InetSocketAddress = 0;
 jboolean jinstanceof_InetSocketAddress(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, InetSocketAddress);
+}
+
+static jclass MibIpForwardRow$MIB_IPFORWARD_TYPE = 0;
+jboolean jinstanceof_MibIpForwardRow$MIB_IPFORWARD_TYPE(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, MibIpForwardRow$MIB_IPFORWARD_TYPE);
 }
 
 static jclass FileNotFoundException = 0;
@@ -269,6 +279,11 @@ jboolean jinstanceof_PollFD$PollEvent(JNIEnv * env, jobject value) {
 static jclass Iovec = 0;
 jboolean jinstanceof_Iovec(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, Iovec);
+}
+
+static jclass MibIpForwardRow$MIB_IPFORWARD_PROTO = 0;
+jboolean jinstanceof_MibIpForwardRow$MIB_IPFORWARD_PROTO(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, MibIpForwardRow$MIB_IPFORWARD_PROTO);
 }
 
 static jclass Sockaddr = 0;
@@ -1640,6 +1655,476 @@ jint jcall_IpAdapterAddresses$IpAdapterUnicastAddress_getSuffixOrigin(JNIEnv * e
 static jmethodID IpAdapterAddresses$IpAdapterUnicastAddress_M_getValidLifetime_0 = 0;
 jlong jcall_IpAdapterAddresses$IpAdapterUnicastAddress_getValidLifetime(JNIEnv * env, jobject instance) {
     return (*env) -> CallLongMethod(env, instance, IpAdapterAddresses$IpAdapterUnicastAddress_M_getValidLifetime_0);
+}
+
+static jfieldID MibIpForwardRow_dwForwardDest = 0;
+void jset_MibIpForwardRow_dwForwardDest(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, MibIpForwardRow_dwForwardDest, value);
+}
+
+jint jget_MibIpForwardRow_dwForwardDest(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, MibIpForwardRow_dwForwardDest);
+}
+
+static jfieldID MibIpForwardRow_dwForwardMask = 0;
+void jset_MibIpForwardRow_dwForwardMask(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, MibIpForwardRow_dwForwardMask, value);
+}
+
+jint jget_MibIpForwardRow_dwForwardMask(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, MibIpForwardRow_dwForwardMask);
+}
+
+static jfieldID MibIpForwardRow_dwForwardPolicy = 0;
+void jset_MibIpForwardRow_dwForwardPolicy(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, MibIpForwardRow_dwForwardPolicy, value);
+}
+
+jint jget_MibIpForwardRow_dwForwardPolicy(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, MibIpForwardRow_dwForwardPolicy);
+}
+
+static jfieldID MibIpForwardRow_dwForwardNextHop = 0;
+void jset_MibIpForwardRow_dwForwardNextHop(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, MibIpForwardRow_dwForwardNextHop, value);
+}
+
+jint jget_MibIpForwardRow_dwForwardNextHop(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, MibIpForwardRow_dwForwardNextHop);
+}
+
+static jfieldID MibIpForwardRow_dwForwardIfIndex = 0;
+void jset_MibIpForwardRow_dwForwardIfIndex(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, MibIpForwardRow_dwForwardIfIndex, value);
+}
+
+jint jget_MibIpForwardRow_dwForwardIfIndex(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, MibIpForwardRow_dwForwardIfIndex);
+}
+
+static jfieldID MibIpForwardRow_ForwardType = 0;
+void jset_MibIpForwardRow_ForwardType(JNIEnv * env, jobject instance, jobject value) {
+   (*env)->SetObjectField(env, instance, MibIpForwardRow_ForwardType, value);
+}
+
+jobject jget_MibIpForwardRow_ForwardType(JNIEnv * env, jobject instance) {
+   return (*env)->GetObjectField(env, instance, MibIpForwardRow_ForwardType);
+}
+
+static jfieldID MibIpForwardRow_ForwardProto = 0;
+void jset_MibIpForwardRow_ForwardProto(JNIEnv * env, jobject instance, jobject value) {
+   (*env)->SetObjectField(env, instance, MibIpForwardRow_ForwardProto, value);
+}
+
+jobject jget_MibIpForwardRow_ForwardProto(JNIEnv * env, jobject instance) {
+   return (*env)->GetObjectField(env, instance, MibIpForwardRow_ForwardProto);
+}
+
+static jfieldID MibIpForwardRow_dwForwardAge = 0;
+void jset_MibIpForwardRow_dwForwardAge(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, MibIpForwardRow_dwForwardAge, value);
+}
+
+jint jget_MibIpForwardRow_dwForwardAge(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, MibIpForwardRow_dwForwardAge);
+}
+
+static jfieldID MibIpForwardRow_dwForwardNextHopAS = 0;
+void jset_MibIpForwardRow_dwForwardNextHopAS(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, MibIpForwardRow_dwForwardNextHopAS, value);
+}
+
+jint jget_MibIpForwardRow_dwForwardNextHopAS(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, MibIpForwardRow_dwForwardNextHopAS);
+}
+
+static jfieldID MibIpForwardRow_dwForwardMetric1 = 0;
+void jset_MibIpForwardRow_dwForwardMetric1(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, MibIpForwardRow_dwForwardMetric1, value);
+}
+
+jint jget_MibIpForwardRow_dwForwardMetric1(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, MibIpForwardRow_dwForwardMetric1);
+}
+
+static jfieldID MibIpForwardRow_dwForwardMetric2 = 0;
+void jset_MibIpForwardRow_dwForwardMetric2(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, MibIpForwardRow_dwForwardMetric2, value);
+}
+
+jint jget_MibIpForwardRow_dwForwardMetric2(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, MibIpForwardRow_dwForwardMetric2);
+}
+
+static jfieldID MibIpForwardRow_dwForwardMetric3 = 0;
+void jset_MibIpForwardRow_dwForwardMetric3(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, MibIpForwardRow_dwForwardMetric3, value);
+}
+
+jint jget_MibIpForwardRow_dwForwardMetric3(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, MibIpForwardRow_dwForwardMetric3);
+}
+
+static jfieldID MibIpForwardRow_dwForwardMetric4 = 0;
+void jset_MibIpForwardRow_dwForwardMetric4(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, MibIpForwardRow_dwForwardMetric4, value);
+}
+
+jint jget_MibIpForwardRow_dwForwardMetric4(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, MibIpForwardRow_dwForwardMetric4);
+}
+
+static jfieldID MibIpForwardRow_dwForwardMetric5 = 0;
+void jset_MibIpForwardRow_dwForwardMetric5(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, MibIpForwardRow_dwForwardMetric5, value);
+}
+
+jint jget_MibIpForwardRow_dwForwardMetric5(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, MibIpForwardRow_dwForwardMetric5);
+}
+
+static jmethodID MibIpForwardRow_C_0 = 0;
+jobject jnew_MibIpForwardRow(JNIEnv * env) {
+    jobject obj = (*env) -> NewObject(env, MibIpForwardRow, MibIpForwardRow_C_0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID MibIpForwardRow_M_getDwForwardAge_0 = 0;
+jint jcall_MibIpForwardRow_getDwForwardAge(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, MibIpForwardRow_M_getDwForwardAge_0);
+}
+
+static jmethodID MibIpForwardRow_M_getDwForwardDest_0 = 0;
+jint jcall_MibIpForwardRow_getDwForwardDest(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, MibIpForwardRow_M_getDwForwardDest_0);
+}
+
+static jmethodID MibIpForwardRow_M_getDwForwardIfIndex_0 = 0;
+jint jcall_MibIpForwardRow_getDwForwardIfIndex(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, MibIpForwardRow_M_getDwForwardIfIndex_0);
+}
+
+static jmethodID MibIpForwardRow_M_getDwForwardMask_0 = 0;
+jint jcall_MibIpForwardRow_getDwForwardMask(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, MibIpForwardRow_M_getDwForwardMask_0);
+}
+
+static jmethodID MibIpForwardRow_M_getDwForwardMetric1_0 = 0;
+jint jcall_MibIpForwardRow_getDwForwardMetric1(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, MibIpForwardRow_M_getDwForwardMetric1_0);
+}
+
+static jmethodID MibIpForwardRow_M_getDwForwardMetric2_0 = 0;
+jint jcall_MibIpForwardRow_getDwForwardMetric2(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, MibIpForwardRow_M_getDwForwardMetric2_0);
+}
+
+static jmethodID MibIpForwardRow_M_getDwForwardMetric3_0 = 0;
+jint jcall_MibIpForwardRow_getDwForwardMetric3(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, MibIpForwardRow_M_getDwForwardMetric3_0);
+}
+
+static jmethodID MibIpForwardRow_M_getDwForwardMetric4_0 = 0;
+jint jcall_MibIpForwardRow_getDwForwardMetric4(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, MibIpForwardRow_M_getDwForwardMetric4_0);
+}
+
+static jmethodID MibIpForwardRow_M_getDwForwardMetric5_0 = 0;
+jint jcall_MibIpForwardRow_getDwForwardMetric5(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, MibIpForwardRow_M_getDwForwardMetric5_0);
+}
+
+static jmethodID MibIpForwardRow_M_getDwForwardNextHop_0 = 0;
+jint jcall_MibIpForwardRow_getDwForwardNextHop(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, MibIpForwardRow_M_getDwForwardNextHop_0);
+}
+
+static jmethodID MibIpForwardRow_M_getDwForwardNextHopAS_0 = 0;
+jint jcall_MibIpForwardRow_getDwForwardNextHopAS(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, MibIpForwardRow_M_getDwForwardNextHopAS_0);
+}
+
+static jmethodID MibIpForwardRow_M_getDwForwardPolicy_0 = 0;
+jint jcall_MibIpForwardRow_getDwForwardPolicy(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, MibIpForwardRow_M_getDwForwardPolicy_0);
+}
+
+static jmethodID MibIpForwardRow_M_getForwardProto_0 = 0;
+jobject jcall_MibIpForwardRow_getForwardProto(JNIEnv * env, jobject instance) {
+    return (*env) -> CallObjectMethod(env, instance, MibIpForwardRow_M_getForwardProto_0);
+}
+
+static jmethodID MibIpForwardRow_M_getForwardType_0 = 0;
+jobject jcall_MibIpForwardRow_getForwardType(JNIEnv * env, jobject instance) {
+    return (*env) -> CallObjectMethod(env, instance, MibIpForwardRow_M_getForwardType_0);
+}
+
+static jmethodID MibIpForwardRow_M_setDwForwardAge_0 = 0;
+void jcall_MibIpForwardRow_setDwForwardAge(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow_M_setDwForwardAge_0, p0);
+}
+
+static jmethodID MibIpForwardRow_M_setDwForwardDest_0 = 0;
+void jcall_MibIpForwardRow_setDwForwardDest(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow_M_setDwForwardDest_0, p0);
+}
+
+static jmethodID MibIpForwardRow_M_setDwForwardIfIndex_0 = 0;
+void jcall_MibIpForwardRow_setDwForwardIfIndex(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow_M_setDwForwardIfIndex_0, p0);
+}
+
+static jmethodID MibIpForwardRow_M_setDwForwardMask_0 = 0;
+void jcall_MibIpForwardRow_setDwForwardMask(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow_M_setDwForwardMask_0, p0);
+}
+
+static jmethodID MibIpForwardRow_M_setDwForwardMetric1_0 = 0;
+void jcall_MibIpForwardRow_setDwForwardMetric1(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow_M_setDwForwardMetric1_0, p0);
+}
+
+static jmethodID MibIpForwardRow_M_setDwForwardMetric2_0 = 0;
+void jcall_MibIpForwardRow_setDwForwardMetric2(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow_M_setDwForwardMetric2_0, p0);
+}
+
+static jmethodID MibIpForwardRow_M_setDwForwardMetric3_0 = 0;
+void jcall_MibIpForwardRow_setDwForwardMetric3(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow_M_setDwForwardMetric3_0, p0);
+}
+
+static jmethodID MibIpForwardRow_M_setDwForwardMetric4_0 = 0;
+void jcall_MibIpForwardRow_setDwForwardMetric4(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow_M_setDwForwardMetric4_0, p0);
+}
+
+static jmethodID MibIpForwardRow_M_setDwForwardMetric5_0 = 0;
+void jcall_MibIpForwardRow_setDwForwardMetric5(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow_M_setDwForwardMetric5_0, p0);
+}
+
+static jmethodID MibIpForwardRow_M_setDwForwardNextHop_0 = 0;
+void jcall_MibIpForwardRow_setDwForwardNextHop(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow_M_setDwForwardNextHop_0, p0);
+}
+
+static jmethodID MibIpForwardRow_M_setDwForwardNextHopAS_0 = 0;
+void jcall_MibIpForwardRow_setDwForwardNextHopAS(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow_M_setDwForwardNextHopAS_0, p0);
+}
+
+static jmethodID MibIpForwardRow_M_setDwForwardPolicy_0 = 0;
+void jcall_MibIpForwardRow_setDwForwardPolicy(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow_M_setDwForwardPolicy_0, p0);
+}
+
+static jmethodID MibIpForwardRow_M_setForwardProto_0 = 0;
+void jcall_MibIpForwardRow_setForwardProto(JNIEnv * env, jobject instance, jobject p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow_M_setForwardProto_0, p0);
+}
+
+static jmethodID MibIpForwardRow_M_setForwardType_0 = 0;
+void jcall_MibIpForwardRow_setForwardType(JNIEnv * env, jobject instance, jobject p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow_M_setForwardType_0, p0);
+}
+
+static jobject MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OTHER = 0;
+jobject jenum_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OTHER() {
+   return MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OTHER;
+}
+
+static jobject MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_LOCAL = 0;
+jobject jenum_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_LOCAL() {
+   return MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_LOCAL;
+}
+
+static jobject MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NETMGMT = 0;
+jobject jenum_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NETMGMT() {
+   return MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NETMGMT;
+}
+
+static jobject MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ICMP = 0;
+jobject jenum_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ICMP() {
+   return MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ICMP;
+}
+
+static jobject MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_EGP = 0;
+jobject jenum_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_EGP() {
+   return MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_EGP;
+}
+
+static jobject MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_GGP = 0;
+jobject jenum_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_GGP() {
+   return MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_GGP;
+}
+
+static jobject MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_HELLO = 0;
+jobject jenum_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_HELLO() {
+   return MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_HELLO;
+}
+
+static jobject MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_RIP = 0;
+jobject jenum_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_RIP() {
+   return MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_RIP;
+}
+
+static jobject MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_IS_IS = 0;
+jobject jenum_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_IS_IS() {
+   return MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_IS_IS;
+}
+
+static jobject MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ES_IS = 0;
+jobject jenum_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ES_IS() {
+   return MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ES_IS;
+}
+
+static jobject MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_CISCO = 0;
+jobject jenum_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_CISCO() {
+   return MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_CISCO;
+}
+
+static jobject MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BBN = 0;
+jobject jenum_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BBN() {
+   return MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BBN;
+}
+
+static jobject MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OSPF = 0;
+jobject jenum_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OSPF() {
+   return MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OSPF;
+}
+
+static jobject MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BGP = 0;
+jobject jenum_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BGP() {
+   return MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BGP;
+}
+
+static jobject MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_AUTOSTATIC = 0;
+jobject jenum_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_AUTOSTATIC() {
+   return MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_AUTOSTATIC;
+}
+
+static jobject MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC = 0;
+jobject jenum_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC() {
+   return MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC;
+}
+
+static jobject MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC_NON_DOD = 0;
+jobject jenum_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC_NON_DOD() {
+   return MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC_NON_DOD;
+}
+
+static jfieldID MibIpForwardRow$MIB_IPFORWARD_PROTO_dwForwardProto = 0;
+void jset_MibIpForwardRow$MIB_IPFORWARD_PROTO_dwForwardProto(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, MibIpForwardRow$MIB_IPFORWARD_PROTO_dwForwardProto, value);
+}
+
+jint jget_MibIpForwardRow$MIB_IPFORWARD_PROTO_dwForwardProto(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, MibIpForwardRow$MIB_IPFORWARD_PROTO_dwForwardProto);
+}
+
+static jfieldID MibIpForwardRow$MIB_IPFORWARD_PROTO_$VALUES = 0;
+void jset_MibIpForwardRow$MIB_IPFORWARD_PROTO_$VALUES(JNIEnv * env, jobjectArray value) {
+   (*env)->SetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, MibIpForwardRow$MIB_IPFORWARD_PROTO_$VALUES, value);
+}
+
+jobjectArray jget_MibIpForwardRow$MIB_IPFORWARD_PROTO_$VALUES(JNIEnv * env) {
+   return (jobjectArray) (*env)->GetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, MibIpForwardRow$MIB_IPFORWARD_PROTO_$VALUES);
+}
+
+jsize jenum_MibIpForwardRow$MIB_IPFORWARD_PROTO_count() {
+    return 17;
+}
+jobject MibIpForwardRow$MIB_IPFORWARD_PROTO_enum_values[17];
+jobject* jenum_MibIpForwardRow$MIB_IPFORWARD_PROTO_values() {
+    return MibIpForwardRow$MIB_IPFORWARD_PROTO_enum_values;
+}
+
+static jmethodID MibIpForwardRow$MIB_IPFORWARD_PROTO_C_0 = 0;
+jobject jnew_MibIpForwardRow$MIB_IPFORWARD_PROTO(JNIEnv * env, jstring p0, jint p1, jint p2) {
+    jobject obj = (*env) -> NewObject(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, MibIpForwardRow$MIB_IPFORWARD_PROTO_C_0, p0, p1, p2);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID MibIpForwardRow$MIB_IPFORWARD_PROTO_M_getDwForwardProto_0 = 0;
+jint jcall_MibIpForwardRow$MIB_IPFORWARD_PROTO_getDwForwardProto(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, MibIpForwardRow$MIB_IPFORWARD_PROTO_M_getDwForwardProto_0);
+}
+
+static jmethodID MibIpForwardRow$MIB_IPFORWARD_PROTO_M_getForDwForwardProto_0 = 0;
+jobject jcall_MibIpForwardRow$MIB_IPFORWARD_PROTO_getForDwForwardProto(JNIEnv * env, jint p0) {
+    return (*env) -> CallStaticObjectMethod(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, MibIpForwardRow$MIB_IPFORWARD_PROTO_M_getForDwForwardProto_0, p0);
+}
+
+static jobject MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_OTHER = 0;
+jobject jenum_MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_OTHER() {
+   return MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_OTHER;
+}
+
+static jobject MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INVALID = 0;
+jobject jenum_MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INVALID() {
+   return MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INVALID;
+}
+
+static jobject MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_DIRECT = 0;
+jobject jenum_MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_DIRECT() {
+   return MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_DIRECT;
+}
+
+static jobject MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INDIRECT = 0;
+jobject jenum_MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INDIRECT() {
+   return MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INDIRECT;
+}
+
+static jfieldID MibIpForwardRow$MIB_IPFORWARD_TYPE_dwForwardType = 0;
+void jset_MibIpForwardRow$MIB_IPFORWARD_TYPE_dwForwardType(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, MibIpForwardRow$MIB_IPFORWARD_TYPE_dwForwardType, value);
+}
+
+jint jget_MibIpForwardRow$MIB_IPFORWARD_TYPE_dwForwardType(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, MibIpForwardRow$MIB_IPFORWARD_TYPE_dwForwardType);
+}
+
+static jfieldID MibIpForwardRow$MIB_IPFORWARD_TYPE_$VALUES = 0;
+void jset_MibIpForwardRow$MIB_IPFORWARD_TYPE_$VALUES(JNIEnv * env, jobjectArray value) {
+   (*env)->SetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_TYPE, MibIpForwardRow$MIB_IPFORWARD_TYPE_$VALUES, value);
+}
+
+jobjectArray jget_MibIpForwardRow$MIB_IPFORWARD_TYPE_$VALUES(JNIEnv * env) {
+   return (jobjectArray) (*env)->GetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_TYPE, MibIpForwardRow$MIB_IPFORWARD_TYPE_$VALUES);
+}
+
+jsize jenum_MibIpForwardRow$MIB_IPFORWARD_TYPE_count() {
+    return 4;
+}
+jobject MibIpForwardRow$MIB_IPFORWARD_TYPE_enum_values[4];
+jobject* jenum_MibIpForwardRow$MIB_IPFORWARD_TYPE_values() {
+    return MibIpForwardRow$MIB_IPFORWARD_TYPE_enum_values;
+}
+
+static jmethodID MibIpForwardRow$MIB_IPFORWARD_TYPE_C_0 = 0;
+jobject jnew_MibIpForwardRow$MIB_IPFORWARD_TYPE(JNIEnv * env, jstring p0, jint p1, jint p2) {
+    jobject obj = (*env) -> NewObject(env, MibIpForwardRow$MIB_IPFORWARD_TYPE, MibIpForwardRow$MIB_IPFORWARD_TYPE_C_0, p0, p1, p2);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID MibIpForwardRow$MIB_IPFORWARD_TYPE_M_getDwForwardType_0 = 0;
+jint jcall_MibIpForwardRow$MIB_IPFORWARD_TYPE_getDwForwardType(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, MibIpForwardRow$MIB_IPFORWARD_TYPE_M_getDwForwardType_0);
+}
+
+static jmethodID MibIpForwardRow$MIB_IPFORWARD_TYPE_M_getForDwForwardType_0 = 0;
+jobject jcall_MibIpForwardRow$MIB_IPFORWARD_TYPE_getForDwForwardType(JNIEnv * env, jint p0) {
+    return (*env) -> CallStaticObjectMethod(env, MibIpForwardRow$MIB_IPFORWARD_TYPE, MibIpForwardRow$MIB_IPFORWARD_TYPE_M_getForDwForwardType_0, p0);
 }
 
 static jfieldID Msghdr_msg_iov = 0;
@@ -5399,10 +5884,24 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
+    MibIpForwardRow = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow");
+    if (MibIpForwardRow == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow");
+        return JNI_FALSE;
+    }
+
     InetSocketAddress = makeGlobalClassRef(env, "java/net/InetSocketAddress");
     if (InetSocketAddress == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find java/net/InetSocketAddress");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow$MIB_IPFORWARD_TYPE = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE");
+    if (MibIpForwardRow$MIB_IPFORWARD_TYPE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE");
         return JNI_FALSE;
     }
 
@@ -5445,6 +5944,13 @@ jboolean jnigenerator_init(JNIEnv * env) {
     if (Iovec == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Iovec");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow$MIB_IPFORWARD_PROTO = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO");
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO");
         return JNI_FALSE;
     }
 
@@ -6418,6 +6924,719 @@ jboolean jnigenerator_init(JNIEnv * env) {
     if (IpAdapterAddresses$IpAdapterUnicastAddress_M_getValidLifetime_0 == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/IpAdapterAddresses$IpAdapterUnicastAddress.getValidLifetime()J");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_dwForwardDest = (*env) -> GetFieldID(env, MibIpForwardRow, "dwForwardDest", "I");
+    if (MibIpForwardRow_dwForwardDest == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow_dwForwardDest_I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_dwForwardMask = (*env) -> GetFieldID(env, MibIpForwardRow, "dwForwardMask", "I");
+    if (MibIpForwardRow_dwForwardMask == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow_dwForwardMask_I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_dwForwardPolicy = (*env) -> GetFieldID(env, MibIpForwardRow, "dwForwardPolicy", "I");
+    if (MibIpForwardRow_dwForwardPolicy == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow_dwForwardPolicy_I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_dwForwardNextHop = (*env) -> GetFieldID(env, MibIpForwardRow, "dwForwardNextHop", "I");
+    if (MibIpForwardRow_dwForwardNextHop == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow_dwForwardNextHop_I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_dwForwardIfIndex = (*env) -> GetFieldID(env, MibIpForwardRow, "dwForwardIfIndex", "I");
+    if (MibIpForwardRow_dwForwardIfIndex == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow_dwForwardIfIndex_I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_ForwardType = (*env) -> GetFieldID(env, MibIpForwardRow, "ForwardType", "Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE;");
+    if (MibIpForwardRow_ForwardType == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow_ForwardType_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE;");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_ForwardProto = (*env) -> GetFieldID(env, MibIpForwardRow, "ForwardProto", "Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+    if (MibIpForwardRow_ForwardProto == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow_ForwardProto_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_dwForwardAge = (*env) -> GetFieldID(env, MibIpForwardRow, "dwForwardAge", "I");
+    if (MibIpForwardRow_dwForwardAge == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow_dwForwardAge_I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_dwForwardNextHopAS = (*env) -> GetFieldID(env, MibIpForwardRow, "dwForwardNextHopAS", "I");
+    if (MibIpForwardRow_dwForwardNextHopAS == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow_dwForwardNextHopAS_I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_dwForwardMetric1 = (*env) -> GetFieldID(env, MibIpForwardRow, "dwForwardMetric1", "I");
+    if (MibIpForwardRow_dwForwardMetric1 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow_dwForwardMetric1_I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_dwForwardMetric2 = (*env) -> GetFieldID(env, MibIpForwardRow, "dwForwardMetric2", "I");
+    if (MibIpForwardRow_dwForwardMetric2 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow_dwForwardMetric2_I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_dwForwardMetric3 = (*env) -> GetFieldID(env, MibIpForwardRow, "dwForwardMetric3", "I");
+    if (MibIpForwardRow_dwForwardMetric3 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow_dwForwardMetric3_I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_dwForwardMetric4 = (*env) -> GetFieldID(env, MibIpForwardRow, "dwForwardMetric4", "I");
+    if (MibIpForwardRow_dwForwardMetric4 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow_dwForwardMetric4_I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_dwForwardMetric5 = (*env) -> GetFieldID(env, MibIpForwardRow, "dwForwardMetric5", "I");
+    if (MibIpForwardRow_dwForwardMetric5 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow_dwForwardMetric5_I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_C_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "<init>", "()V");
+    if (MibIpForwardRow_C_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.<init>()V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_getDwForwardAge_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "getDwForwardAge", "()I");
+    if (MibIpForwardRow_M_getDwForwardAge_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.getDwForwardAge()I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_getDwForwardDest_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "getDwForwardDest", "()I");
+    if (MibIpForwardRow_M_getDwForwardDest_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.getDwForwardDest()I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_getDwForwardIfIndex_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "getDwForwardIfIndex", "()I");
+    if (MibIpForwardRow_M_getDwForwardIfIndex_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.getDwForwardIfIndex()I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_getDwForwardMask_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "getDwForwardMask", "()I");
+    if (MibIpForwardRow_M_getDwForwardMask_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.getDwForwardMask()I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_getDwForwardMetric1_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "getDwForwardMetric1", "()I");
+    if (MibIpForwardRow_M_getDwForwardMetric1_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.getDwForwardMetric1()I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_getDwForwardMetric2_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "getDwForwardMetric2", "()I");
+    if (MibIpForwardRow_M_getDwForwardMetric2_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.getDwForwardMetric2()I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_getDwForwardMetric3_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "getDwForwardMetric3", "()I");
+    if (MibIpForwardRow_M_getDwForwardMetric3_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.getDwForwardMetric3()I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_getDwForwardMetric4_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "getDwForwardMetric4", "()I");
+    if (MibIpForwardRow_M_getDwForwardMetric4_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.getDwForwardMetric4()I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_getDwForwardMetric5_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "getDwForwardMetric5", "()I");
+    if (MibIpForwardRow_M_getDwForwardMetric5_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.getDwForwardMetric5()I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_getDwForwardNextHop_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "getDwForwardNextHop", "()I");
+    if (MibIpForwardRow_M_getDwForwardNextHop_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.getDwForwardNextHop()I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_getDwForwardNextHopAS_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "getDwForwardNextHopAS", "()I");
+    if (MibIpForwardRow_M_getDwForwardNextHopAS_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.getDwForwardNextHopAS()I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_getDwForwardPolicy_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "getDwForwardPolicy", "()I");
+    if (MibIpForwardRow_M_getDwForwardPolicy_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.getDwForwardPolicy()I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_getForwardProto_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "getForwardProto", "()Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+    if (MibIpForwardRow_M_getForwardProto_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.getForwardProto()Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_getForwardType_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "getForwardType", "()Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE;");
+    if (MibIpForwardRow_M_getForwardType_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.getForwardType()Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE;");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_setDwForwardAge_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "setDwForwardAge", "(I)V");
+    if (MibIpForwardRow_M_setDwForwardAge_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.setDwForwardAge(I)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_setDwForwardDest_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "setDwForwardDest", "(I)V");
+    if (MibIpForwardRow_M_setDwForwardDest_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.setDwForwardDest(I)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_setDwForwardIfIndex_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "setDwForwardIfIndex", "(I)V");
+    if (MibIpForwardRow_M_setDwForwardIfIndex_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.setDwForwardIfIndex(I)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_setDwForwardMask_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "setDwForwardMask", "(I)V");
+    if (MibIpForwardRow_M_setDwForwardMask_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.setDwForwardMask(I)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_setDwForwardMetric1_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "setDwForwardMetric1", "(I)V");
+    if (MibIpForwardRow_M_setDwForwardMetric1_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.setDwForwardMetric1(I)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_setDwForwardMetric2_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "setDwForwardMetric2", "(I)V");
+    if (MibIpForwardRow_M_setDwForwardMetric2_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.setDwForwardMetric2(I)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_setDwForwardMetric3_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "setDwForwardMetric3", "(I)V");
+    if (MibIpForwardRow_M_setDwForwardMetric3_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.setDwForwardMetric3(I)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_setDwForwardMetric4_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "setDwForwardMetric4", "(I)V");
+    if (MibIpForwardRow_M_setDwForwardMetric4_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.setDwForwardMetric4(I)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_setDwForwardMetric5_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "setDwForwardMetric5", "(I)V");
+    if (MibIpForwardRow_M_setDwForwardMetric5_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.setDwForwardMetric5(I)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_setDwForwardNextHop_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "setDwForwardNextHop", "(I)V");
+    if (MibIpForwardRow_M_setDwForwardNextHop_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.setDwForwardNextHop(I)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_setDwForwardNextHopAS_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "setDwForwardNextHopAS", "(I)V");
+    if (MibIpForwardRow_M_setDwForwardNextHopAS_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.setDwForwardNextHopAS(I)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_setDwForwardPolicy_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "setDwForwardPolicy", "(I)V");
+    if (MibIpForwardRow_M_setDwForwardPolicy_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.setDwForwardPolicy(I)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_setForwardProto_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "setForwardProto", "(Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;)V");
+    if (MibIpForwardRow_M_setForwardProto_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.setForwardProto(Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow_M_setForwardType_0 = (*env) -> GetMethodID(env, MibIpForwardRow, "setForwardType", "(Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE;)V");
+    if (MibIpForwardRow_M_setForwardType_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow.setForwardType(Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE;)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OTHER = 0;
+    jfieldID enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OTHER = 0;
+    enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OTHER = (*env) -> GetStaticFieldID(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, "MIB_IPPROTO_OTHER", "Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+    if (enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OTHER == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OTHER_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OTHER = (*env) -> GetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OTHER);
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OTHER == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OTHER_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_LOCAL = 0;
+    jfieldID enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_LOCAL = 0;
+    enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_LOCAL = (*env) -> GetStaticFieldID(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, "MIB_IPPROTO_LOCAL", "Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+    if (enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_LOCAL == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_LOCAL_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_LOCAL = (*env) -> GetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_LOCAL);
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_LOCAL == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_LOCAL_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NETMGMT = 0;
+    jfieldID enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NETMGMT = 0;
+    enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NETMGMT = (*env) -> GetStaticFieldID(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, "MIB_IPPROTO_NETMGMT", "Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+    if (enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NETMGMT == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NETMGMT_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NETMGMT = (*env) -> GetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NETMGMT);
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NETMGMT == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NETMGMT_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ICMP = 0;
+    jfieldID enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ICMP = 0;
+    enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ICMP = (*env) -> GetStaticFieldID(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, "MIB_IPPROTO_ICMP", "Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+    if (enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ICMP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ICMP_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ICMP = (*env) -> GetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ICMP);
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ICMP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ICMP_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_EGP = 0;
+    jfieldID enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_EGP = 0;
+    enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_EGP = (*env) -> GetStaticFieldID(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, "MIB_IPPROTO_EGP", "Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+    if (enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_EGP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_EGP_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_EGP = (*env) -> GetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_EGP);
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_EGP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_EGP_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_GGP = 0;
+    jfieldID enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_GGP = 0;
+    enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_GGP = (*env) -> GetStaticFieldID(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, "MIB_IPPROTO_GGP", "Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+    if (enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_GGP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_GGP_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_GGP = (*env) -> GetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_GGP);
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_GGP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_GGP_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_HELLO = 0;
+    jfieldID enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_HELLO = 0;
+    enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_HELLO = (*env) -> GetStaticFieldID(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, "MIB_IPPROTO_HELLO", "Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+    if (enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_HELLO == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_HELLO_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_HELLO = (*env) -> GetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_HELLO);
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_HELLO == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_HELLO_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_RIP = 0;
+    jfieldID enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_RIP = 0;
+    enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_RIP = (*env) -> GetStaticFieldID(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, "MIB_IPPROTO_RIP", "Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+    if (enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_RIP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_RIP_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_RIP = (*env) -> GetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_RIP);
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_RIP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_RIP_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_IS_IS = 0;
+    jfieldID enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_IS_IS = 0;
+    enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_IS_IS = (*env) -> GetStaticFieldID(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, "MIB_IPPROTO_IS_IS", "Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+    if (enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_IS_IS == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_IS_IS_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_IS_IS = (*env) -> GetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_IS_IS);
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_IS_IS == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_IS_IS_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ES_IS = 0;
+    jfieldID enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ES_IS = 0;
+    enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ES_IS = (*env) -> GetStaticFieldID(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, "MIB_IPPROTO_ES_IS", "Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+    if (enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ES_IS == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ES_IS_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ES_IS = (*env) -> GetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ES_IS);
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ES_IS == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ES_IS_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_CISCO = 0;
+    jfieldID enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_CISCO = 0;
+    enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_CISCO = (*env) -> GetStaticFieldID(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, "MIB_IPPROTO_CISCO", "Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+    if (enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_CISCO == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_CISCO_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_CISCO = (*env) -> GetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_CISCO);
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_CISCO == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_CISCO_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BBN = 0;
+    jfieldID enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BBN = 0;
+    enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BBN = (*env) -> GetStaticFieldID(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, "MIB_IPPROTO_BBN", "Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+    if (enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BBN == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BBN_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BBN = (*env) -> GetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BBN);
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BBN == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BBN_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OSPF = 0;
+    jfieldID enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OSPF = 0;
+    enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OSPF = (*env) -> GetStaticFieldID(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, "MIB_IPPROTO_OSPF", "Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+    if (enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OSPF == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OSPF_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OSPF = (*env) -> GetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OSPF);
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OSPF == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OSPF_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BGP = 0;
+    jfieldID enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BGP = 0;
+    enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BGP = (*env) -> GetStaticFieldID(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, "MIB_IPPROTO_BGP", "Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+    if (enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BGP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BGP_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BGP = (*env) -> GetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BGP);
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BGP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BGP_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_AUTOSTATIC = 0;
+    jfieldID enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_AUTOSTATIC = 0;
+    enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_AUTOSTATIC = (*env) -> GetStaticFieldID(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, "MIB_IPPROTO_NT_AUTOSTATIC", "Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+    if (enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_AUTOSTATIC == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_AUTOSTATIC_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_AUTOSTATIC = (*env) -> GetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_AUTOSTATIC);
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_AUTOSTATIC == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_AUTOSTATIC_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC = 0;
+    jfieldID enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC = 0;
+    enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC = (*env) -> GetStaticFieldID(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, "MIB_IPPROTO_NT_STATIC", "Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+    if (enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC = (*env) -> GetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC);
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC_NON_DOD = 0;
+    jfieldID enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC_NON_DOD = 0;
+    enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC_NON_DOD = (*env) -> GetStaticFieldID(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, "MIB_IPPROTO_NT_STATIC_NON_DOD", "Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+    if (enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC_NON_DOD == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC_NON_DOD_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC_NON_DOD = (*env) -> GetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, enum_field_init_MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC_NON_DOD);
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC_NON_DOD == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC_NON_DOD_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+    
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_dwForwardProto = (*env) -> GetFieldID(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, "dwForwardProto", "I");
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_dwForwardProto == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_dwForwardProto_I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_$VALUES = (*env) -> GetStaticFieldID(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, "$VALUES", "[Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_$VALUES == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO_$VALUES_[Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+
+    for (int i = 0; i < 17; i++) {
+        MibIpForwardRow$MIB_IPFORWARD_PROTO_enum_values[i] = 0;
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_enum_values[0] = MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OTHER;
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_enum_values[1] = MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_LOCAL;
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_enum_values[2] = MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NETMGMT;
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_enum_values[3] = MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ICMP;
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_enum_values[4] = MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_EGP;
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_enum_values[5] = MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_GGP;
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_enum_values[6] = MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_HELLO;
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_enum_values[7] = MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_RIP;
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_enum_values[8] = MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_IS_IS;
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_enum_values[9] = MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ES_IS;
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_enum_values[10] = MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_CISCO;
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_enum_values[11] = MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BBN;
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_enum_values[12] = MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OSPF;
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_enum_values[13] = MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BGP;
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_enum_values[14] = MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_AUTOSTATIC;
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_enum_values[15] = MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC;
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_enum_values[16] = MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC_NON_DOD;
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_C_0 = (*env) -> GetMethodID(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, "<init>", "(Ljava/lang/String;II)V");
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_C_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO.<init>(Ljava/lang/String;II)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_M_getDwForwardProto_0 = (*env) -> GetMethodID(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, "getDwForwardProto", "()I");
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_M_getDwForwardProto_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO.getDwForwardProto()I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_M_getForDwForwardProto_0 = (*env) -> GetStaticMethodID(env, MibIpForwardRow$MIB_IPFORWARD_PROTO, "getForDwForwardProto", "(I)Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_M_getForDwForwardProto_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO.getForDwForwardProto(I)Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_PROTO;");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_OTHER = 0;
+    jfieldID enum_field_init_MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_OTHER = 0;
+    enum_field_init_MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_OTHER = (*env) -> GetStaticFieldID(env, MibIpForwardRow$MIB_IPFORWARD_TYPE, "MIB_IPROUTE_TYPE_OTHER", "Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE;");
+    if (enum_field_init_MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_OTHER == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_OTHER_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE;");
+        return JNI_FALSE;
+    }
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_OTHER = (*env) -> GetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_TYPE, enum_field_init_MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_OTHER);
+    if (MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_OTHER == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_OTHER_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE;");
+        return JNI_FALSE;
+    }
+    
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INVALID = 0;
+    jfieldID enum_field_init_MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INVALID = 0;
+    enum_field_init_MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INVALID = (*env) -> GetStaticFieldID(env, MibIpForwardRow$MIB_IPFORWARD_TYPE, "MIB_IPROUTE_TYPE_INVALID", "Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE;");
+    if (enum_field_init_MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INVALID == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INVALID_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE;");
+        return JNI_FALSE;
+    }
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INVALID = (*env) -> GetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_TYPE, enum_field_init_MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INVALID);
+    if (MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INVALID == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INVALID_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE;");
+        return JNI_FALSE;
+    }
+    
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_DIRECT = 0;
+    jfieldID enum_field_init_MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_DIRECT = 0;
+    enum_field_init_MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_DIRECT = (*env) -> GetStaticFieldID(env, MibIpForwardRow$MIB_IPFORWARD_TYPE, "MIB_IPROUTE_TYPE_DIRECT", "Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE;");
+    if (enum_field_init_MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_DIRECT == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_DIRECT_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE;");
+        return JNI_FALSE;
+    }
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_DIRECT = (*env) -> GetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_TYPE, enum_field_init_MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_DIRECT);
+    if (MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_DIRECT == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_DIRECT_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE;");
+        return JNI_FALSE;
+    }
+    
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INDIRECT = 0;
+    jfieldID enum_field_init_MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INDIRECT = 0;
+    enum_field_init_MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INDIRECT = (*env) -> GetStaticFieldID(env, MibIpForwardRow$MIB_IPFORWARD_TYPE, "MIB_IPROUTE_TYPE_INDIRECT", "Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE;");
+    if (enum_field_init_MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INDIRECT == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INDIRECT_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE;");
+        return JNI_FALSE;
+    }
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INDIRECT = (*env) -> GetStaticObjectField(env, MibIpForwardRow$MIB_IPFORWARD_TYPE, enum_field_init_MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INDIRECT);
+    if (MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INDIRECT == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INDIRECT_Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE;");
+        return JNI_FALSE;
+    }
+    
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_dwForwardType = (*env) -> GetFieldID(env, MibIpForwardRow$MIB_IPFORWARD_TYPE, "dwForwardType", "I");
+    if (MibIpForwardRow$MIB_IPFORWARD_TYPE_dwForwardType == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE_dwForwardType_I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_$VALUES = (*env) -> GetStaticFieldID(env, MibIpForwardRow$MIB_IPFORWARD_TYPE, "$VALUES", "[Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE;");
+    if (MibIpForwardRow$MIB_IPFORWARD_TYPE_$VALUES == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE_$VALUES_[Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE;");
+        return JNI_FALSE;
+    }
+
+    for (int i = 0; i < 4; i++) {
+        MibIpForwardRow$MIB_IPFORWARD_TYPE_enum_values[i] = 0;
+    }
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_enum_values[0] = MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_OTHER;
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_enum_values[1] = MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INVALID;
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_enum_values[2] = MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_DIRECT;
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_enum_values[3] = MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INDIRECT;
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_C_0 = (*env) -> GetMethodID(env, MibIpForwardRow$MIB_IPFORWARD_TYPE, "<init>", "(Ljava/lang/String;II)V");
+    if (MibIpForwardRow$MIB_IPFORWARD_TYPE_C_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE.<init>(Ljava/lang/String;II)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_M_getDwForwardType_0 = (*env) -> GetMethodID(env, MibIpForwardRow$MIB_IPFORWARD_TYPE, "getDwForwardType", "()I");
+    if (MibIpForwardRow$MIB_IPFORWARD_TYPE_M_getDwForwardType_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE.getDwForwardType()I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_M_getForDwForwardType_0 = (*env) -> GetStaticMethodID(env, MibIpForwardRow$MIB_IPFORWARD_TYPE, "getForDwForwardType", "(I)Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE;");
+    if (MibIpForwardRow$MIB_IPFORWARD_TYPE_M_getForDwForwardType_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE.getForDwForwardType(I)Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow$MIB_IPFORWARD_TYPE;");
         return JNI_FALSE;
     }
 
@@ -8899,9 +10118,19 @@ void jnigenerator_destroy(JNIEnv * env) {
         FileAlreadyExistsException = 0;
     }
 
+    if (MibIpForwardRow != 0) {
+        (*env) -> DeleteGlobalRef(env, MibIpForwardRow);
+        MibIpForwardRow = 0;
+    }
+
     if (InetSocketAddress != 0) {
         (*env) -> DeleteGlobalRef(env, InetSocketAddress);
         InetSocketAddress = 0;
+    }
+
+    if (MibIpForwardRow$MIB_IPFORWARD_TYPE != 0) {
+        (*env) -> DeleteGlobalRef(env, MibIpForwardRow$MIB_IPFORWARD_TYPE);
+        MibIpForwardRow$MIB_IPFORWARD_TYPE = 0;
     }
 
     if (FileNotFoundException != 0) {
@@ -8932,6 +10161,11 @@ void jnigenerator_destroy(JNIEnv * env) {
     if (Iovec != 0) {
         (*env) -> DeleteGlobalRef(env, Iovec);
         Iovec = 0;
+    }
+
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO != 0) {
+        (*env) -> DeleteGlobalRef(env, MibIpForwardRow$MIB_IPFORWARD_PROTO);
+        MibIpForwardRow$MIB_IPFORWARD_PROTO = 0;
     }
 
     if (Sockaddr != 0) {
@@ -9097,6 +10331,151 @@ void jnigenerator_destroy(JNIEnv * env) {
     IpAdapterAddresses$IpAdapterUnicastAddress_M_getPrefixOrigin_0 = 0;
     IpAdapterAddresses$IpAdapterUnicastAddress_M_getSuffixOrigin_0 = 0;
     IpAdapterAddresses$IpAdapterUnicastAddress_M_getValidLifetime_0 = 0;
+    MibIpForwardRow_dwForwardDest = 0;
+    MibIpForwardRow_dwForwardMask = 0;
+    MibIpForwardRow_dwForwardPolicy = 0;
+    MibIpForwardRow_dwForwardNextHop = 0;
+    MibIpForwardRow_dwForwardIfIndex = 0;
+    MibIpForwardRow_ForwardType = 0;
+    MibIpForwardRow_ForwardProto = 0;
+    MibIpForwardRow_dwForwardAge = 0;
+    MibIpForwardRow_dwForwardNextHopAS = 0;
+    MibIpForwardRow_dwForwardMetric1 = 0;
+    MibIpForwardRow_dwForwardMetric2 = 0;
+    MibIpForwardRow_dwForwardMetric3 = 0;
+    MibIpForwardRow_dwForwardMetric4 = 0;
+    MibIpForwardRow_dwForwardMetric5 = 0;
+    MibIpForwardRow_C_0 = 0;
+    MibIpForwardRow_M_getDwForwardAge_0 = 0;
+    MibIpForwardRow_M_getDwForwardDest_0 = 0;
+    MibIpForwardRow_M_getDwForwardIfIndex_0 = 0;
+    MibIpForwardRow_M_getDwForwardMask_0 = 0;
+    MibIpForwardRow_M_getDwForwardMetric1_0 = 0;
+    MibIpForwardRow_M_getDwForwardMetric2_0 = 0;
+    MibIpForwardRow_M_getDwForwardMetric3_0 = 0;
+    MibIpForwardRow_M_getDwForwardMetric4_0 = 0;
+    MibIpForwardRow_M_getDwForwardMetric5_0 = 0;
+    MibIpForwardRow_M_getDwForwardNextHop_0 = 0;
+    MibIpForwardRow_M_getDwForwardNextHopAS_0 = 0;
+    MibIpForwardRow_M_getDwForwardPolicy_0 = 0;
+    MibIpForwardRow_M_getForwardProto_0 = 0;
+    MibIpForwardRow_M_getForwardType_0 = 0;
+    MibIpForwardRow_M_setDwForwardAge_0 = 0;
+    MibIpForwardRow_M_setDwForwardDest_0 = 0;
+    MibIpForwardRow_M_setDwForwardIfIndex_0 = 0;
+    MibIpForwardRow_M_setDwForwardMask_0 = 0;
+    MibIpForwardRow_M_setDwForwardMetric1_0 = 0;
+    MibIpForwardRow_M_setDwForwardMetric2_0 = 0;
+    MibIpForwardRow_M_setDwForwardMetric3_0 = 0;
+    MibIpForwardRow_M_setDwForwardMetric4_0 = 0;
+    MibIpForwardRow_M_setDwForwardMetric5_0 = 0;
+    MibIpForwardRow_M_setDwForwardNextHop_0 = 0;
+    MibIpForwardRow_M_setDwForwardNextHopAS_0 = 0;
+    MibIpForwardRow_M_setDwForwardPolicy_0 = 0;
+    MibIpForwardRow_M_setForwardProto_0 = 0;
+    MibIpForwardRow_M_setForwardType_0 = 0;
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OTHER != 0) {
+        (*env)->DeleteGlobalRef(env, MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OTHER);
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OTHER = 0;
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_LOCAL != 0) {
+        (*env)->DeleteGlobalRef(env, MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_LOCAL);
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_LOCAL = 0;
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NETMGMT != 0) {
+        (*env)->DeleteGlobalRef(env, MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NETMGMT);
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NETMGMT = 0;
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ICMP != 0) {
+        (*env)->DeleteGlobalRef(env, MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ICMP);
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ICMP = 0;
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_EGP != 0) {
+        (*env)->DeleteGlobalRef(env, MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_EGP);
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_EGP = 0;
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_GGP != 0) {
+        (*env)->DeleteGlobalRef(env, MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_GGP);
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_GGP = 0;
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_HELLO != 0) {
+        (*env)->DeleteGlobalRef(env, MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_HELLO);
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_HELLO = 0;
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_RIP != 0) {
+        (*env)->DeleteGlobalRef(env, MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_RIP);
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_RIP = 0;
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_IS_IS != 0) {
+        (*env)->DeleteGlobalRef(env, MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_IS_IS);
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_IS_IS = 0;
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ES_IS != 0) {
+        (*env)->DeleteGlobalRef(env, MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ES_IS);
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_ES_IS = 0;
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_CISCO != 0) {
+        (*env)->DeleteGlobalRef(env, MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_CISCO);
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_CISCO = 0;
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BBN != 0) {
+        (*env)->DeleteGlobalRef(env, MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BBN);
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BBN = 0;
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OSPF != 0) {
+        (*env)->DeleteGlobalRef(env, MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OSPF);
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_OSPF = 0;
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BGP != 0) {
+        (*env)->DeleteGlobalRef(env, MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BGP);
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_BGP = 0;
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_AUTOSTATIC != 0) {
+        (*env)->DeleteGlobalRef(env, MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_AUTOSTATIC);
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_AUTOSTATIC = 0;
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC != 0) {
+        (*env)->DeleteGlobalRef(env, MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC);
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC = 0;
+    if (MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC_NON_DOD != 0) {
+        (*env)->DeleteGlobalRef(env, MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC_NON_DOD);
+    }
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_MIB_IPPROTO_NT_STATIC_NON_DOD = 0;
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_dwForwardProto = 0;
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_$VALUES = 0;
+    for (int i = 0; i < 17; i++) {
+        MibIpForwardRow$MIB_IPFORWARD_PROTO_enum_values[i] = 0;
+    }
+
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_C_0 = 0;
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_M_getDwForwardProto_0 = 0;
+    MibIpForwardRow$MIB_IPFORWARD_PROTO_M_getForDwForwardProto_0 = 0;
+    if (MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_OTHER != 0) {
+        (*env)->DeleteGlobalRef(env, MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_OTHER);
+    }
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_OTHER = 0;
+    if (MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INVALID != 0) {
+        (*env)->DeleteGlobalRef(env, MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INVALID);
+    }
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INVALID = 0;
+    if (MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_DIRECT != 0) {
+        (*env)->DeleteGlobalRef(env, MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_DIRECT);
+    }
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_DIRECT = 0;
+    if (MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INDIRECT != 0) {
+        (*env)->DeleteGlobalRef(env, MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INDIRECT);
+    }
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_MIB_IPROUTE_TYPE_INDIRECT = 0;
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_dwForwardType = 0;
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_$VALUES = 0;
+    for (int i = 0; i < 4; i++) {
+        MibIpForwardRow$MIB_IPFORWARD_TYPE_enum_values[i] = 0;
+    }
+
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_C_0 = 0;
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_M_getDwForwardType_0 = 0;
+    MibIpForwardRow$MIB_IPFORWARD_TYPE_M_getForDwForwardType_0 = 0;
     Msghdr_msg_iov = 0;
     Msghdr_msg_control = 0;
     Msghdr_msg_name = 0;

@@ -24,21 +24,11 @@ import io.github.alexanderschuetz97.nativeutils.api.WindowsNativeUtil;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.InvalidFileDescriptorException;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.SharingViolationException;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
-import io.github.alexanderschuetz97.nativeutils.api.structs.GUID;
-import io.github.alexanderschuetz97.nativeutils.api.structs.IpAdapterAddresses;
-import io.github.alexanderschuetz97.nativeutils.api.structs.RegData;
-import io.github.alexanderschuetz97.nativeutils.api.structs.RegEnumKeyExResult;
-import io.github.alexanderschuetz97.nativeutils.api.structs.RegQueryInfoKeyResult;
-import io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInfoData;
-import io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInterfaceData;
-import io.github.alexanderschuetz97.nativeutils.api.structs.Stat;
-import io.github.alexanderschuetz97.nativeutils.api.structs.Win32FileAttributeData;
+import io.github.alexanderschuetz97.nativeutils.api.structs.*;
 
 import java.io.FileDescriptor;
-import java.io.FileNotFoundException;
 import java.nio.ByteBuffer;
 import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.InvalidPathException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -175,6 +165,12 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
 
     @Override
     public native long CreateEventA(long lpEventAttributes, boolean manualReset, boolean initalState, String name) throws UnknownNativeErrorException;
+
+    @Override
+    public native long OpenEventA(int desiredAccess, boolean inheritHandle, String name) throws UnknownNativeErrorException;
+
+    @Override
+    public native void SetEvent(long handle) throws UnknownNativeErrorException;
 
     @Override
     public native void ResetEvent(long handle) throws UnknownNativeErrorException;
@@ -470,6 +466,12 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
 
     @Override
     public native long ShellExecuteA(long hwnd, String lpOperation, String lpFile, String lpParameters, String lpDirectory, int nShowCmd);
+
+    //@Override
+    public native long CreateIpForwardEntry(MibIpForwardRow pRoute) throws UnknownNativeErrorException;
+
+    //@Override
+    public native long DeleteIpForwardEntry(MibIpForwardRow pRoute) throws UnknownNativeErrorException;
 
     @Override
     public boolean isWindows() {
