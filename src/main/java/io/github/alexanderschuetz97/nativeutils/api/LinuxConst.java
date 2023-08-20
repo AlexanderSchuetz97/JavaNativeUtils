@@ -234,6 +234,7 @@ public interface LinuxConst {
     int IFA_F_SECONDARY = 0x1;
 
     int IFF_UP = 1;
+
     int IFF_NO_PI = 4096;
 
     //if_tun.h
@@ -242,5 +243,36 @@ public interface LinuxConst {
     int TUNGETSNDBUF = (int) 2147767507L;
 
 
+    int RTA_UNSPEC = 0;
+    int RTA_DST = 1;
+    int RTA_SRC = 2;
+    int RTA_IIF = 3;
+    int RTA_OIF = 4;
+    int RTA_GATEWAY = 5;
+    int RTA_PRIORITY = 6;
+    int RTA_PREFSRC = 7;
+    int RTA_METRICS = 8;
+    int RTA_MULTIPATH = 9;
+    int RTA_PROTOINFO = 10; /* no longer used */
+    int RTA_FLOW = 11;
+    int RTA_CACHEINFO = 12;
+    int RTA_SESSION = 13; /* no longer used */
+    int RTA_MP_ALGO = 14; /* no longer used */
+    int RTA_TABLE = 15;
+    int RTA_MARK = 16;
+    int RTA_MFC_STATS = 17;
+    int RTA_VIA = 18;
+    int RTA_NEWDST = 19;
+    int RTA_PREF = 20;
+    int RTA_ENCAP_TYPE = 21;
+    int RTA_ENCAP = 22;
+    int RTA_EXPIRES = 23;
+    int RTA_PAD = 24;
+    int RTA_UID = 25;
+    int RTA_TTL_PROPAGATE = 26;
+    int RTA_IP_PROTO = 27;
+    int RTA_SPORT = 28;
+    int RTA_DPORT = 29;
+    int RTA_NH_ID = 30;
 }
 

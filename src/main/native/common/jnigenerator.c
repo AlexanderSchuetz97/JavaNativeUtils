@@ -52,7 +52,7 @@ jbyteArray jarrayB(JNIEnv * env, jbyte * buffer, jsize len) {
         return 0;
     }
     if (len == 0) {
-        return 0;
+        return res;
     }
     if (buffer == 0) {
         (*env)->DeleteLocalRef(env, res);
@@ -91,19 +91,9 @@ jboolean jinstanceof_Win32FileAttributeData(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, Win32FileAttributeData);
 }
 
-static jclass Passwd = 0;
-jboolean jinstanceof_Passwd(JNIEnv * env, jobject value) {
-   return (*env)->IsInstanceOf(env, value, Passwd);
-}
-
 static jclass IpAdapterAddresses$IpAdapterUnicastAddress = 0;
 jboolean jinstanceof_IpAdapterAddresses$IpAdapterUnicastAddress(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, IpAdapterAddresses$IpAdapterUnicastAddress);
-}
-
-static jclass OperationInProgressException = 0;
-jboolean jinstanceof_OperationInProgressException(JNIEnv * env, jobject value) {
-   return (*env)->IsInstanceOf(env, value, OperationInProgressException);
 }
 
 static jclass PermissionDeniedException = 0;
@@ -111,24 +101,9 @@ jboolean jinstanceof_PermissionDeniedException(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, PermissionDeniedException);
 }
 
-static jclass ShellExecuteException = 0;
-jboolean jinstanceof_ShellExecuteException(JNIEnv * env, jobject value) {
-   return (*env)->IsInstanceOf(env, value, ShellExecuteException);
-}
-
 static jclass GUID = 0;
 jboolean jinstanceof_GUID(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, GUID);
-}
-
-static jclass BindException = 0;
-jboolean jinstanceof_BindException(JNIEnv * env, jobject value) {
-   return (*env)->IsInstanceOf(env, value, BindException);
-}
-
-static jclass Iterable = 0;
-jboolean jinstanceof_Iterable(JNIEnv * env, jobject value) {
-   return (*env)->IsInstanceOf(env, value, Iterable);
 }
 
 static jclass NullPointerException = 0;
@@ -141,39 +116,9 @@ jboolean jinstanceof_Utsname(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, Utsname);
 }
 
-static jclass ArrayList = 0;
-jboolean jinstanceof_ArrayList(JNIEnv * env, jobject value) {
-   return (*env)->IsInstanceOf(env, value, ArrayList);
-}
-
 static jclass InetAddress = 0;
 jboolean jinstanceof_InetAddress(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, InetAddress);
-}
-
-static jclass Cmsghdr = 0;
-jboolean jinstanceof_Cmsghdr(JNIEnv * env, jobject value) {
-   return (*env)->IsInstanceOf(env, value, Cmsghdr);
-}
-
-static jclass InvalidPathException = 0;
-jboolean jinstanceof_InvalidPathException(JNIEnv * env, jobject value) {
-   return (*env)->IsInstanceOf(env, value, InvalidPathException);
-}
-
-static jclass FileSystemLoopException = 0;
-jboolean jinstanceof_FileSystemLoopException(JNIEnv * env, jobject value) {
-   return (*env)->IsInstanceOf(env, value, FileSystemLoopException);
-}
-
-static jclass UnknownNativeErrorException = 0;
-jboolean jinstanceof_UnknownNativeErrorException(JNIEnv * env, jobject value) {
-   return (*env)->IsInstanceOf(env, value, UnknownNativeErrorException);
-}
-
-static jclass ConnectException = 0;
-jboolean jinstanceof_ConnectException(JNIEnv * env, jobject value) {
-   return (*env)->IsInstanceOf(env, value, ConnectException);
 }
 
 static jclass PollFD = 0;
@@ -181,24 +126,19 @@ jboolean jinstanceof_PollFD(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, PollFD);
 }
 
-static jclass UnsupportedOperationException = 0;
-jboolean jinstanceof_UnsupportedOperationException(JNIEnv * env, jobject value) {
-   return (*env)->IsInstanceOf(env, value, UnsupportedOperationException);
+static jclass RegEnumKeyExResult = 0;
+jboolean jinstanceof_RegEnumKeyExResult(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, RegEnumKeyExResult);
 }
 
-static jclass Stat = 0;
-jboolean jinstanceof_Stat(JNIEnv * env, jobject value) {
-   return (*env)->IsInstanceOf(env, value, Stat);
+static jclass RegData$RegType = 0;
+jboolean jinstanceof_RegData$RegType(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, RegData$RegType);
 }
 
-static jclass Iterator = 0;
-jboolean jinstanceof_Iterator(JNIEnv * env, jobject value) {
-   return (*env)->IsInstanceOf(env, value, Iterator);
-}
-
-static jclass NotDirectoryException = 0;
-jboolean jinstanceof_NotDirectoryException(JNIEnv * env, jobject value) {
-   return (*env)->IsInstanceOf(env, value, NotDirectoryException);
+static jclass RegData = 0;
+jboolean jinstanceof_RegData(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, RegData);
 }
 
 static jclass Collection = 0;
@@ -206,34 +146,24 @@ jboolean jinstanceof_Collection(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, Collection);
 }
 
+static jclass SpDeviceInterfaceData = 0;
+jboolean jinstanceof_SpDeviceInterfaceData(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, SpDeviceInterfaceData);
+}
+
 static jclass NotLinkException = 0;
 jboolean jinstanceof_NotLinkException(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, NotLinkException);
 }
 
+static jclass MibIpForwardRow2 = 0;
+jboolean jinstanceof_MibIpForwardRow2(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, MibIpForwardRow2);
+}
+
 static jclass Msghdr = 0;
 jboolean jinstanceof_Msghdr(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, Msghdr);
-}
-
-static jclass IOException = 0;
-jboolean jinstanceof_IOException(JNIEnv * env, jobject value) {
-   return (*env)->IsInstanceOf(env, value, IOException);
-}
-
-static jclass Group = 0;
-jboolean jinstanceof_Group(JNIEnv * env, jobject value) {
-   return (*env)->IsInstanceOf(env, value, Group);
-}
-
-static jclass IllegalArgumentException = 0;
-jboolean jinstanceof_IllegalArgumentException(JNIEnv * env, jobject value) {
-   return (*env)->IsInstanceOf(env, value, IllegalArgumentException);
-}
-
-static jclass FileAlreadyExistsException = 0;
-jboolean jinstanceof_FileAlreadyExistsException(JNIEnv * env, jobject value) {
-   return (*env)->IsInstanceOf(env, value, FileAlreadyExistsException);
 }
 
 static jclass MibIpForwardRow = 0;
@@ -261,11 +191,6 @@ jboolean jinstanceof_Exception(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, Exception);
 }
 
-static jclass QuotaExceededException = 0;
-jboolean jinstanceof_QuotaExceededException(JNIEnv * env, jobject value) {
-   return (*env)->IsInstanceOf(env, value, QuotaExceededException);
-}
-
 static jclass InvalidFileDescriptorException = 0;
 jboolean jinstanceof_InvalidFileDescriptorException(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, InvalidFileDescriptorException);
@@ -291,11 +216,6 @@ jboolean jinstanceof_Sockaddr(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, Sockaddr);
 }
 
-static jclass MutexAbandonedException = 0;
-jboolean jinstanceof_MutexAbandonedException(JNIEnv * env, jobject value) {
-   return (*env)->IsInstanceOf(env, value, MutexAbandonedException);
-}
-
 static jclass AccessDeniedException = 0;
 jboolean jinstanceof_AccessDeniedException(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, AccessDeniedException);
@@ -304,6 +224,141 @@ jboolean jinstanceof_AccessDeniedException(JNIEnv * env, jobject value) {
 static jclass ReadOnlyFileSystemException = 0;
 jboolean jinstanceof_ReadOnlyFileSystemException(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, ReadOnlyFileSystemException);
+}
+
+static jclass FileIsDirectoryException = 0;
+jboolean jinstanceof_FileIsDirectoryException(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, FileIsDirectoryException);
+}
+
+static jclass Passwd = 0;
+jboolean jinstanceof_Passwd(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, Passwd);
+}
+
+static jclass OperationInProgressException = 0;
+jboolean jinstanceof_OperationInProgressException(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, OperationInProgressException);
+}
+
+static jclass ShellExecuteException = 0;
+jboolean jinstanceof_ShellExecuteException(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, ShellExecuteException);
+}
+
+static jclass SpDeviceInfoData = 0;
+jboolean jinstanceof_SpDeviceInfoData(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, SpDeviceInfoData);
+}
+
+static jclass BindException = 0;
+jboolean jinstanceof_BindException(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, BindException);
+}
+
+static jclass Iterable = 0;
+jboolean jinstanceof_Iterable(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, Iterable);
+}
+
+static jclass ArrayList = 0;
+jboolean jinstanceof_ArrayList(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, ArrayList);
+}
+
+static jclass IfNameIndex = 0;
+jboolean jinstanceof_IfNameIndex(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, IfNameIndex);
+}
+
+static jclass Cmsghdr = 0;
+jboolean jinstanceof_Cmsghdr(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, Cmsghdr);
+}
+
+static jclass InvalidPathException = 0;
+jboolean jinstanceof_InvalidPathException(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, InvalidPathException);
+}
+
+static jclass FileSystemLoopException = 0;
+jboolean jinstanceof_FileSystemLoopException(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, FileSystemLoopException);
+}
+
+static jclass UnknownNativeErrorException = 0;
+jboolean jinstanceof_UnknownNativeErrorException(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, UnknownNativeErrorException);
+}
+
+static jclass ConnectException = 0;
+jboolean jinstanceof_ConnectException(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, ConnectException);
+}
+
+static jclass NoSuchElementException = 0;
+jboolean jinstanceof_NoSuchElementException(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, NoSuchElementException);
+}
+
+static jclass UnsupportedOperationException = 0;
+jboolean jinstanceof_UnsupportedOperationException(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, UnsupportedOperationException);
+}
+
+static jclass Stat = 0;
+jboolean jinstanceof_Stat(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, Stat);
+}
+
+static jclass Iterator = 0;
+jboolean jinstanceof_Iterator(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, Iterator);
+}
+
+static jclass NotDirectoryException = 0;
+jboolean jinstanceof_NotDirectoryException(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, NotDirectoryException);
+}
+
+static jclass IOException = 0;
+jboolean jinstanceof_IOException(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, IOException);
+}
+
+static jclass Group = 0;
+jboolean jinstanceof_Group(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, Group);
+}
+
+static jclass IllegalArgumentException = 0;
+jboolean jinstanceof_IllegalArgumentException(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, IllegalArgumentException);
+}
+
+static jclass FileAlreadyExistsException = 0;
+jboolean jinstanceof_FileAlreadyExistsException(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, FileAlreadyExistsException);
+}
+
+static jclass QuotaExceededException = 0;
+jboolean jinstanceof_QuotaExceededException(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, QuotaExceededException);
+}
+
+static jclass Statvfs = 0;
+jboolean jinstanceof_Statvfs(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, Statvfs);
+}
+
+static jclass RegQueryInfoKeyResult = 0;
+jboolean jinstanceof_RegQueryInfoKeyResult(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, RegQueryInfoKeyResult);
+}
+
+static jclass MutexAbandonedException = 0;
+jboolean jinstanceof_MutexAbandonedException(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, MutexAbandonedException);
 }
 
 static jclass OutOfMemoryError = 0;
@@ -714,6 +769,102 @@ void jcall_Group_setGr_passwd(JNIEnv * env, jobject instance, jstring p0) {
 static jmethodID Group_M_toString_0 = 0;
 jstring jcall_Group_toString(JNIEnv * env, jobject instance) {
     return (jstring) (*env) -> CallObjectMethod(env, instance, Group_M_toString_0);
+}
+
+static jfieldID IfNameIndex_index = 0;
+void jset_IfNameIndex_index(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, IfNameIndex_index, value);
+}
+
+jint jget_IfNameIndex_index(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, IfNameIndex_index);
+}
+
+static jfieldID IfNameIndex_name = 0;
+void jset_IfNameIndex_name(JNIEnv * env, jobject instance, jstring value) {
+   (*env)->SetObjectField(env, instance, IfNameIndex_name, value);
+}
+
+jboolean jsetC_IfNameIndex_name(JNIEnv * env, jobject instance, char * value) {
+    return jsetCC_IfNameIndex_name(env, instance, (char*) value);
+}
+
+jboolean jsetCC_IfNameIndex_name(JNIEnv * env, jobject instance, const char * value) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,IfNameIndex_name, 0);
+        return JNI_TRUE;
+    }
+    jstring tmp = (*env)->NewStringUTF(env, value);
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewStringUTF");
+        return JNI_FALSE;
+    }
+    (*env)->SetObjectField(env, instance, IfNameIndex_name, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jboolean jsetWC_IfNameIndex_name(JNIEnv * env, jobject instance, wchar_t * value) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,IfNameIndex_name, 0);
+        return JNI_TRUE;
+    }
+    
+    jsize i = 0;
+    while (value[i] != 0) {
+        i++;
+    }
+    
+    jstring tmp;
+    if (sizeof(wchar_t) == sizeof(jchar)) {
+        tmp = (*env) -> NewString(env, (const jchar*) value, i);
+    } else {
+        jchar tBuf[i];
+        for (jsize j = 0; j < i; j++) {
+            tBuf[j] = (jchar) value[j];
+        }
+        tmp = (*env) -> NewString(env, (const jchar*) tBuf, i);
+    }
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewByteArray");
+        return JNI_FALSE;
+    }
+    (*env)->SetObjectField(env, instance, IfNameIndex_name, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jstring jget_IfNameIndex_name(JNIEnv * env, jobject instance) {
+   return (jstring) (*env)->GetObjectField(env, instance, IfNameIndex_name);
+}
+
+static jmethodID IfNameIndex_C_0 = 0;
+jobject jnew_IfNameIndex(JNIEnv * env, jint p0, jstring p1) {
+    jobject obj = (*env) -> NewObject(env, IfNameIndex, IfNameIndex_C_0, p0, p1);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID IfNameIndex_M_equals_0 = 0;
+jboolean jcall_IfNameIndex_equals(JNIEnv * env, jobject instance, jobject p0) {
+    return (*env) -> CallBooleanMethod(env, instance, IfNameIndex_M_equals_0, p0);
+}
+
+static jmethodID IfNameIndex_M_getIndex_0 = 0;
+jint jcall_IfNameIndex_getIndex(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, IfNameIndex_M_getIndex_0);
+}
+
+static jmethodID IfNameIndex_M_getName_0 = 0;
+jstring jcall_IfNameIndex_getName(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, IfNameIndex_M_getName_0);
+}
+
+static jmethodID IfNameIndex_M_hashCode_0 = 0;
+jint jcall_IfNameIndex_hashCode(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, IfNameIndex_M_hashCode_0);
 }
 
 static jfieldID Iovec_payload = 0;
@@ -2127,6 +2278,324 @@ jobject jcall_MibIpForwardRow$MIB_IPFORWARD_TYPE_getForDwForwardType(JNIEnv * en
     return (*env) -> CallStaticObjectMethod(env, MibIpForwardRow$MIB_IPFORWARD_TYPE, MibIpForwardRow$MIB_IPFORWARD_TYPE_M_getForDwForwardType_0, p0);
 }
 
+static jfieldID MibIpForwardRow2_InterfaceLuid = 0;
+void jset_MibIpForwardRow2_InterfaceLuid(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, MibIpForwardRow2_InterfaceLuid, value);
+}
+
+jlong jget_MibIpForwardRow2_InterfaceLuid(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, MibIpForwardRow2_InterfaceLuid);
+}
+
+static jfieldID MibIpForwardRow2_InterfaceIndex = 0;
+void jset_MibIpForwardRow2_InterfaceIndex(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, MibIpForwardRow2_InterfaceIndex, value);
+}
+
+jint jget_MibIpForwardRow2_InterfaceIndex(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, MibIpForwardRow2_InterfaceIndex);
+}
+
+static jfieldID MibIpForwardRow2_DestinationPrefixAddress = 0;
+void jset_MibIpForwardRow2_DestinationPrefixAddress(JNIEnv * env, jobject instance, jobject value) {
+   (*env)->SetObjectField(env, instance, MibIpForwardRow2_DestinationPrefixAddress, value);
+}
+
+jobject jget_MibIpForwardRow2_DestinationPrefixAddress(JNIEnv * env, jobject instance) {
+   return (*env)->GetObjectField(env, instance, MibIpForwardRow2_DestinationPrefixAddress);
+}
+
+static jfieldID MibIpForwardRow2_DestinationPrefixLength = 0;
+void jset_MibIpForwardRow2_DestinationPrefixLength(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, MibIpForwardRow2_DestinationPrefixLength, value);
+}
+
+jint jget_MibIpForwardRow2_DestinationPrefixLength(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, MibIpForwardRow2_DestinationPrefixLength);
+}
+
+static jfieldID MibIpForwardRow2_NextHop = 0;
+void jset_MibIpForwardRow2_NextHop(JNIEnv * env, jobject instance, jobject value) {
+   (*env)->SetObjectField(env, instance, MibIpForwardRow2_NextHop, value);
+}
+
+jobject jget_MibIpForwardRow2_NextHop(JNIEnv * env, jobject instance) {
+   return (*env)->GetObjectField(env, instance, MibIpForwardRow2_NextHop);
+}
+
+static jfieldID MibIpForwardRow2_SitePrefixLength = 0;
+void jset_MibIpForwardRow2_SitePrefixLength(JNIEnv * env, jobject instance, jbyte value) {
+   (*env)->SetByteField(env, instance, MibIpForwardRow2_SitePrefixLength, value);
+}
+
+jbyte jget_MibIpForwardRow2_SitePrefixLength(JNIEnv * env, jobject instance) {
+   return (*env)->GetByteField(env, instance, MibIpForwardRow2_SitePrefixLength);
+}
+
+static jfieldID MibIpForwardRow2_ValidLifetime = 0;
+void jset_MibIpForwardRow2_ValidLifetime(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, MibIpForwardRow2_ValidLifetime, value);
+}
+
+jlong jget_MibIpForwardRow2_ValidLifetime(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, MibIpForwardRow2_ValidLifetime);
+}
+
+static jfieldID MibIpForwardRow2_PreferredLifetime = 0;
+void jset_MibIpForwardRow2_PreferredLifetime(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, MibIpForwardRow2_PreferredLifetime, value);
+}
+
+jlong jget_MibIpForwardRow2_PreferredLifetime(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, MibIpForwardRow2_PreferredLifetime);
+}
+
+static jfieldID MibIpForwardRow2_Metric = 0;
+void jset_MibIpForwardRow2_Metric(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, MibIpForwardRow2_Metric, value);
+}
+
+jlong jget_MibIpForwardRow2_Metric(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, MibIpForwardRow2_Metric);
+}
+
+static jfieldID MibIpForwardRow2_Protocol = 0;
+void jset_MibIpForwardRow2_Protocol(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, MibIpForwardRow2_Protocol, value);
+}
+
+jlong jget_MibIpForwardRow2_Protocol(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, MibIpForwardRow2_Protocol);
+}
+
+static jfieldID MibIpForwardRow2_Loopback = 0;
+void jset_MibIpForwardRow2_Loopback(JNIEnv * env, jobject instance, jboolean value) {
+   (*env)->SetBooleanField(env, instance, MibIpForwardRow2_Loopback, value);
+}
+
+jboolean jget_MibIpForwardRow2_Loopback(JNIEnv * env, jobject instance) {
+   return (*env)->GetBooleanField(env, instance, MibIpForwardRow2_Loopback);
+}
+
+static jfieldID MibIpForwardRow2_AutoconfigureAddress = 0;
+void jset_MibIpForwardRow2_AutoconfigureAddress(JNIEnv * env, jobject instance, jboolean value) {
+   (*env)->SetBooleanField(env, instance, MibIpForwardRow2_AutoconfigureAddress, value);
+}
+
+jboolean jget_MibIpForwardRow2_AutoconfigureAddress(JNIEnv * env, jobject instance) {
+   return (*env)->GetBooleanField(env, instance, MibIpForwardRow2_AutoconfigureAddress);
+}
+
+static jfieldID MibIpForwardRow2_Publish = 0;
+void jset_MibIpForwardRow2_Publish(JNIEnv * env, jobject instance, jboolean value) {
+   (*env)->SetBooleanField(env, instance, MibIpForwardRow2_Publish, value);
+}
+
+jboolean jget_MibIpForwardRow2_Publish(JNIEnv * env, jobject instance) {
+   return (*env)->GetBooleanField(env, instance, MibIpForwardRow2_Publish);
+}
+
+static jfieldID MibIpForwardRow2_Immortal = 0;
+void jset_MibIpForwardRow2_Immortal(JNIEnv * env, jobject instance, jboolean value) {
+   (*env)->SetBooleanField(env, instance, MibIpForwardRow2_Immortal, value);
+}
+
+jboolean jget_MibIpForwardRow2_Immortal(JNIEnv * env, jobject instance) {
+   return (*env)->GetBooleanField(env, instance, MibIpForwardRow2_Immortal);
+}
+
+static jfieldID MibIpForwardRow2_Age = 0;
+void jset_MibIpForwardRow2_Age(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, MibIpForwardRow2_Age, value);
+}
+
+jlong jget_MibIpForwardRow2_Age(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, MibIpForwardRow2_Age);
+}
+
+static jfieldID MibIpForwardRow2_Origin = 0;
+void jset_MibIpForwardRow2_Origin(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, MibIpForwardRow2_Origin, value);
+}
+
+jlong jget_MibIpForwardRow2_Origin(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, MibIpForwardRow2_Origin);
+}
+
+static jmethodID MibIpForwardRow2_C_0 = 0;
+jobject jnew_MibIpForwardRow2(JNIEnv * env) {
+    jobject obj = (*env) -> NewObject(env, MibIpForwardRow2, MibIpForwardRow2_C_0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID MibIpForwardRow2_M_getAge_0 = 0;
+jlong jcall_MibIpForwardRow2_getAge(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, MibIpForwardRow2_M_getAge_0);
+}
+
+static jmethodID MibIpForwardRow2_M_getDestinationPrefixAddress_0 = 0;
+jobject jcall_MibIpForwardRow2_getDestinationPrefixAddress(JNIEnv * env, jobject instance) {
+    return (*env) -> CallObjectMethod(env, instance, MibIpForwardRow2_M_getDestinationPrefixAddress_0);
+}
+
+static jmethodID MibIpForwardRow2_M_getDestinationPrefixLength_0 = 0;
+jint jcall_MibIpForwardRow2_getDestinationPrefixLength(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, MibIpForwardRow2_M_getDestinationPrefixLength_0);
+}
+
+static jmethodID MibIpForwardRow2_M_getInterfaceIndex_0 = 0;
+jint jcall_MibIpForwardRow2_getInterfaceIndex(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, MibIpForwardRow2_M_getInterfaceIndex_0);
+}
+
+static jmethodID MibIpForwardRow2_M_getInterfaceLuid_0 = 0;
+jlong jcall_MibIpForwardRow2_getInterfaceLuid(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, MibIpForwardRow2_M_getInterfaceLuid_0);
+}
+
+static jmethodID MibIpForwardRow2_M_getMetric_0 = 0;
+jlong jcall_MibIpForwardRow2_getMetric(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, MibIpForwardRow2_M_getMetric_0);
+}
+
+static jmethodID MibIpForwardRow2_M_getNextHop_0 = 0;
+jobject jcall_MibIpForwardRow2_getNextHop(JNIEnv * env, jobject instance) {
+    return (*env) -> CallObjectMethod(env, instance, MibIpForwardRow2_M_getNextHop_0);
+}
+
+static jmethodID MibIpForwardRow2_M_getOrigin_0 = 0;
+jlong jcall_MibIpForwardRow2_getOrigin(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, MibIpForwardRow2_M_getOrigin_0);
+}
+
+static jmethodID MibIpForwardRow2_M_getPreferredLifetime_0 = 0;
+jlong jcall_MibIpForwardRow2_getPreferredLifetime(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, MibIpForwardRow2_M_getPreferredLifetime_0);
+}
+
+static jmethodID MibIpForwardRow2_M_getProtocol_0 = 0;
+jlong jcall_MibIpForwardRow2_getProtocol(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, MibIpForwardRow2_M_getProtocol_0);
+}
+
+static jmethodID MibIpForwardRow2_M_getSitePrefixLength_0 = 0;
+jbyte jcall_MibIpForwardRow2_getSitePrefixLength(JNIEnv * env, jobject instance) {
+    return (*env) -> CallByteMethod(env, instance, MibIpForwardRow2_M_getSitePrefixLength_0);
+}
+
+static jmethodID MibIpForwardRow2_M_getValidLifetime_0 = 0;
+jlong jcall_MibIpForwardRow2_getValidLifetime(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, MibIpForwardRow2_M_getValidLifetime_0);
+}
+
+static jmethodID MibIpForwardRow2_M_isAutoconfigureAddress_0 = 0;
+jboolean jcall_MibIpForwardRow2_isAutoconfigureAddress(JNIEnv * env, jobject instance) {
+    return (*env) -> CallBooleanMethod(env, instance, MibIpForwardRow2_M_isAutoconfigureAddress_0);
+}
+
+static jmethodID MibIpForwardRow2_M_isImmortal_0 = 0;
+jboolean jcall_MibIpForwardRow2_isImmortal(JNIEnv * env, jobject instance) {
+    return (*env) -> CallBooleanMethod(env, instance, MibIpForwardRow2_M_isImmortal_0);
+}
+
+static jmethodID MibIpForwardRow2_M_isLoopback_0 = 0;
+jboolean jcall_MibIpForwardRow2_isLoopback(JNIEnv * env, jobject instance) {
+    return (*env) -> CallBooleanMethod(env, instance, MibIpForwardRow2_M_isLoopback_0);
+}
+
+static jmethodID MibIpForwardRow2_M_isPublish_0 = 0;
+jboolean jcall_MibIpForwardRow2_isPublish(JNIEnv * env, jobject instance) {
+    return (*env) -> CallBooleanMethod(env, instance, MibIpForwardRow2_M_isPublish_0);
+}
+
+static jmethodID MibIpForwardRow2_M_setAge_0 = 0;
+void jcall_MibIpForwardRow2_setAge(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow2_M_setAge_0, p0);
+}
+
+static jmethodID MibIpForwardRow2_M_setAutoconfigureAddress_0 = 0;
+void jcall_MibIpForwardRow2_setAutoconfigureAddress(JNIEnv * env, jobject instance, jboolean p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow2_M_setAutoconfigureAddress_0, p0);
+}
+
+static jmethodID MibIpForwardRow2_M_setDestinationPrefixAddress_0 = 0;
+void jcall_MibIpForwardRow2_setDestinationPrefixAddress(JNIEnv * env, jobject instance, jobject p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow2_M_setDestinationPrefixAddress_0, p0);
+}
+
+static jmethodID MibIpForwardRow2_M_setDestinationPrefixLength_0 = 0;
+void jcall_MibIpForwardRow2_setDestinationPrefixLength(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow2_M_setDestinationPrefixLength_0, p0);
+}
+
+static jmethodID MibIpForwardRow2_M_setImmortal_0 = 0;
+void jcall_MibIpForwardRow2_setImmortal(JNIEnv * env, jobject instance, jboolean p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow2_M_setImmortal_0, p0);
+}
+
+static jmethodID MibIpForwardRow2_M_setInterfaceIndex_0 = 0;
+void jcall_MibIpForwardRow2_setInterfaceIndex(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow2_M_setInterfaceIndex_0, p0);
+}
+
+static jmethodID MibIpForwardRow2_M_setInterfaceLuid_0 = 0;
+void jcall_MibIpForwardRow2_setInterfaceLuid(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow2_M_setInterfaceLuid_0, p0);
+}
+
+static jmethodID MibIpForwardRow2_M_setLoopback_0 = 0;
+void jcall_MibIpForwardRow2_setLoopback(JNIEnv * env, jobject instance, jboolean p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow2_M_setLoopback_0, p0);
+}
+
+static jmethodID MibIpForwardRow2_M_setMetric_0 = 0;
+void jcall_MibIpForwardRow2_setMetric(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow2_M_setMetric_0, p0);
+}
+
+static jmethodID MibIpForwardRow2_M_setNextHop_0 = 0;
+void jcall_MibIpForwardRow2_setNextHop(JNIEnv * env, jobject instance, jobject p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow2_M_setNextHop_0, p0);
+}
+
+static jmethodID MibIpForwardRow2_M_setOrigin_0 = 0;
+void jcall_MibIpForwardRow2_setOrigin(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow2_M_setOrigin_0, p0);
+}
+
+static jmethodID MibIpForwardRow2_M_setPreferredLifetime_0 = 0;
+void jcall_MibIpForwardRow2_setPreferredLifetime(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow2_M_setPreferredLifetime_0, p0);
+}
+
+static jmethodID MibIpForwardRow2_M_setProtocol_0 = 0;
+void jcall_MibIpForwardRow2_setProtocol(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow2_M_setProtocol_0, p0);
+}
+
+static jmethodID MibIpForwardRow2_M_setPublish_0 = 0;
+void jcall_MibIpForwardRow2_setPublish(JNIEnv * env, jobject instance, jboolean p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow2_M_setPublish_0, p0);
+}
+
+static jmethodID MibIpForwardRow2_M_setSitePrefixLength_0 = 0;
+void jcall_MibIpForwardRow2_setSitePrefixLength(JNIEnv * env, jobject instance, jbyte p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow2_M_setSitePrefixLength_0, p0);
+}
+
+static jmethodID MibIpForwardRow2_M_setValidLifetime_0 = 0;
+void jcall_MibIpForwardRow2_setValidLifetime(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, MibIpForwardRow2_M_setValidLifetime_0, p0);
+}
+
+static jmethodID MibIpForwardRow2_M_toString_0 = 0;
+jstring jcall_MibIpForwardRow2_toString(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, MibIpForwardRow2_M_toString_0);
+}
+
 static jfieldID Msghdr_msg_iov = 0;
 void jset_Msghdr_msg_iov(JNIEnv * env, jobject instance, jobjectArray value) {
    (*env)->SetObjectField(env, instance, Msghdr_msg_iov, value);
@@ -2886,6 +3355,525 @@ jobject jnew_PollFD$PollEvent(JNIEnv * env, jstring p0, jint p1) {
     return obj;
 }
 
+static jfieldID RegData_type = 0;
+void jset_RegData_type(JNIEnv * env, jobject instance, jobject value) {
+   (*env)->SetObjectField(env, instance, RegData_type, value);
+}
+
+jobject jget_RegData_type(JNIEnv * env, jobject instance) {
+   return (*env)->GetObjectField(env, instance, RegData_type);
+}
+
+static jfieldID RegData_value = 0;
+void jset_RegData_value(JNIEnv * env, jobject instance, jobject value) {
+   (*env)->SetObjectField(env, instance, RegData_value, value);
+}
+
+jobject jget_RegData_value(JNIEnv * env, jobject instance) {
+   return (*env)->GetObjectField(env, instance, RegData_value);
+}
+
+static jmethodID RegData_C_0 = 0;
+jobject jnew_RegData(JNIEnv * env, jint p0) {
+    jobject obj = (*env) -> NewObject(env, RegData, RegData_C_0, p0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID RegData_C_1 = 0;
+jobject jnew_RegData_1(JNIEnv * env, jlong p0) {
+    jobject obj = (*env) -> NewObject(env, RegData, RegData_C_1, p0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID RegData_C_2 = 0;
+jobject jnew_RegData_2(JNIEnv * env, jobject p0, jobject p1) {
+    jobject obj = (*env) -> NewObject(env, RegData, RegData_C_2, p0, p1);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID RegData_M_asInt_0 = 0;
+jint jcall_RegData_asInt(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, RegData_M_asInt_0);
+}
+
+static jmethodID RegData_M_asLong_0 = 0;
+jlong jcall_RegData_asLong(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, RegData_M_asLong_0);
+}
+
+static jmethodID RegData_M_binary_0 = 0;
+jbyteArray jcall_RegData_binary(JNIEnv * env, jobject instance) {
+    return (jbyteArray) (*env) -> CallObjectMethod(env, instance, RegData_M_binary_0);
+}
+
+static jmethodID RegData_M_number_0 = 0;
+jobject jcall_RegData_number(JNIEnv * env, jobject instance) {
+    return (*env) -> CallObjectMethod(env, instance, RegData_M_number_0);
+}
+
+static jmethodID RegData_M_string_0 = 0;
+jstring jcall_RegData_string(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, RegData_M_string_0);
+}
+
+static jmethodID RegData_M_strings_0 = 0;
+jobjectArray jcall_RegData_strings(JNIEnv * env, jobject instance) {
+    return (jobjectArray) (*env) -> CallObjectMethod(env, instance, RegData_M_strings_0);
+}
+
+static jmethodID RegData_M_toString_0 = 0;
+jstring jcall_RegData_toString(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, RegData_M_toString_0);
+}
+
+static jmethodID RegData_M_type_0 = 0;
+jobject jcall_RegData_type(JNIEnv * env, jobject instance) {
+    return (*env) -> CallObjectMethod(env, instance, RegData_M_type_0);
+}
+
+static jmethodID RegData_M_value_0 = 0;
+jobject jcall_RegData_value(JNIEnv * env, jobject instance) {
+    return (*env) -> CallObjectMethod(env, instance, RegData_M_value_0);
+}
+
+static jobject RegData$RegType_REG_BINARY = 0;
+jobject jenum_RegData$RegType_REG_BINARY() {
+   return RegData$RegType_REG_BINARY;
+}
+
+static jobject RegData$RegType_REG_DWORD = 0;
+jobject jenum_RegData$RegType_REG_DWORD() {
+   return RegData$RegType_REG_DWORD;
+}
+
+static jobject RegData$RegType_REG_EXPAND_SZ = 0;
+jobject jenum_RegData$RegType_REG_EXPAND_SZ() {
+   return RegData$RegType_REG_EXPAND_SZ;
+}
+
+static jobject RegData$RegType_REG_LINK = 0;
+jobject jenum_RegData$RegType_REG_LINK() {
+   return RegData$RegType_REG_LINK;
+}
+
+static jobject RegData$RegType_REG_MULTI_SZ = 0;
+jobject jenum_RegData$RegType_REG_MULTI_SZ() {
+   return RegData$RegType_REG_MULTI_SZ;
+}
+
+static jobject RegData$RegType_REG_NONE = 0;
+jobject jenum_RegData$RegType_REG_NONE() {
+   return RegData$RegType_REG_NONE;
+}
+
+static jobject RegData$RegType_REG_QWORD = 0;
+jobject jenum_RegData$RegType_REG_QWORD() {
+   return RegData$RegType_REG_QWORD;
+}
+
+static jobject RegData$RegType_REG_SZ = 0;
+jobject jenum_RegData$RegType_REG_SZ() {
+   return RegData$RegType_REG_SZ;
+}
+
+static jfieldID RegData$RegType_$VALUES = 0;
+void jset_RegData$RegType_$VALUES(JNIEnv * env, jobjectArray value) {
+   (*env)->SetStaticObjectField(env, RegData$RegType, RegData$RegType_$VALUES, value);
+}
+
+jobjectArray jget_RegData$RegType_$VALUES(JNIEnv * env) {
+   return (jobjectArray) (*env)->GetStaticObjectField(env, RegData$RegType, RegData$RegType_$VALUES);
+}
+
+jsize jenum_RegData$RegType_count() {
+    return 8;
+}
+jobject RegData$RegType_enum_values[8];
+jobject* jenum_RegData$RegType_values() {
+    return RegData$RegType_enum_values;
+}
+
+static jmethodID RegData$RegType_C_0 = 0;
+jobject jnew_RegData$RegType(JNIEnv * env, jstring p0, jint p1) {
+    jobject obj = (*env) -> NewObject(env, RegData$RegType, RegData$RegType_C_0, p0, p1);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jfieldID RegEnumKeyExResult_name = 0;
+void jset_RegEnumKeyExResult_name(JNIEnv * env, jobject instance, jstring value) {
+   (*env)->SetObjectField(env, instance, RegEnumKeyExResult_name, value);
+}
+
+jboolean jsetC_RegEnumKeyExResult_name(JNIEnv * env, jobject instance, char * value) {
+    return jsetCC_RegEnumKeyExResult_name(env, instance, (char*) value);
+}
+
+jboolean jsetCC_RegEnumKeyExResult_name(JNIEnv * env, jobject instance, const char * value) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,RegEnumKeyExResult_name, 0);
+        return JNI_TRUE;
+    }
+    jstring tmp = (*env)->NewStringUTF(env, value);
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewStringUTF");
+        return JNI_FALSE;
+    }
+    (*env)->SetObjectField(env, instance, RegEnumKeyExResult_name, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jboolean jsetWC_RegEnumKeyExResult_name(JNIEnv * env, jobject instance, wchar_t * value) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,RegEnumKeyExResult_name, 0);
+        return JNI_TRUE;
+    }
+    
+    jsize i = 0;
+    while (value[i] != 0) {
+        i++;
+    }
+    
+    jstring tmp;
+    if (sizeof(wchar_t) == sizeof(jchar)) {
+        tmp = (*env) -> NewString(env, (const jchar*) value, i);
+    } else {
+        jchar tBuf[i];
+        for (jsize j = 0; j < i; j++) {
+            tBuf[j] = (jchar) value[j];
+        }
+        tmp = (*env) -> NewString(env, (const jchar*) tBuf, i);
+    }
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewByteArray");
+        return JNI_FALSE;
+    }
+    (*env)->SetObjectField(env, instance, RegEnumKeyExResult_name, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jstring jget_RegEnumKeyExResult_name(JNIEnv * env, jobject instance) {
+   return (jstring) (*env)->GetObjectField(env, instance, RegEnumKeyExResult_name);
+}
+
+static jfieldID RegEnumKeyExResult_className = 0;
+void jset_RegEnumKeyExResult_className(JNIEnv * env, jobject instance, jstring value) {
+   (*env)->SetObjectField(env, instance, RegEnumKeyExResult_className, value);
+}
+
+jboolean jsetC_RegEnumKeyExResult_className(JNIEnv * env, jobject instance, char * value) {
+    return jsetCC_RegEnumKeyExResult_className(env, instance, (char*) value);
+}
+
+jboolean jsetCC_RegEnumKeyExResult_className(JNIEnv * env, jobject instance, const char * value) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,RegEnumKeyExResult_className, 0);
+        return JNI_TRUE;
+    }
+    jstring tmp = (*env)->NewStringUTF(env, value);
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewStringUTF");
+        return JNI_FALSE;
+    }
+    (*env)->SetObjectField(env, instance, RegEnumKeyExResult_className, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jboolean jsetWC_RegEnumKeyExResult_className(JNIEnv * env, jobject instance, wchar_t * value) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,RegEnumKeyExResult_className, 0);
+        return JNI_TRUE;
+    }
+    
+    jsize i = 0;
+    while (value[i] != 0) {
+        i++;
+    }
+    
+    jstring tmp;
+    if (sizeof(wchar_t) == sizeof(jchar)) {
+        tmp = (*env) -> NewString(env, (const jchar*) value, i);
+    } else {
+        jchar tBuf[i];
+        for (jsize j = 0; j < i; j++) {
+            tBuf[j] = (jchar) value[j];
+        }
+        tmp = (*env) -> NewString(env, (const jchar*) tBuf, i);
+    }
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewByteArray");
+        return JNI_FALSE;
+    }
+    (*env)->SetObjectField(env, instance, RegEnumKeyExResult_className, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jstring jget_RegEnumKeyExResult_className(JNIEnv * env, jobject instance) {
+   return (jstring) (*env)->GetObjectField(env, instance, RegEnumKeyExResult_className);
+}
+
+static jfieldID RegEnumKeyExResult_lastWriteTime = 0;
+void jset_RegEnumKeyExResult_lastWriteTime(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, RegEnumKeyExResult_lastWriteTime, value);
+}
+
+jlong jget_RegEnumKeyExResult_lastWriteTime(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, RegEnumKeyExResult_lastWriteTime);
+}
+
+static jmethodID RegEnumKeyExResult_C_0 = 0;
+jobject jnew_RegEnumKeyExResult(JNIEnv * env) {
+    jobject obj = (*env) -> NewObject(env, RegEnumKeyExResult, RegEnumKeyExResult_C_0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID RegEnumKeyExResult_M_equals_0 = 0;
+jboolean jcall_RegEnumKeyExResult_equals(JNIEnv * env, jobject instance, jobject p0) {
+    return (*env) -> CallBooleanMethod(env, instance, RegEnumKeyExResult_M_equals_0, p0);
+}
+
+static jmethodID RegEnumKeyExResult_M_getClassName_0 = 0;
+jstring jcall_RegEnumKeyExResult_getClassName(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, RegEnumKeyExResult_M_getClassName_0);
+}
+
+static jmethodID RegEnumKeyExResult_M_getLastWriteTime_0 = 0;
+jlong jcall_RegEnumKeyExResult_getLastWriteTime(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, RegEnumKeyExResult_M_getLastWriteTime_0);
+}
+
+static jmethodID RegEnumKeyExResult_M_getName_0 = 0;
+jstring jcall_RegEnumKeyExResult_getName(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, RegEnumKeyExResult_M_getName_0);
+}
+
+static jmethodID RegEnumKeyExResult_M_hashCode_0 = 0;
+jint jcall_RegEnumKeyExResult_hashCode(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, RegEnumKeyExResult_M_hashCode_0);
+}
+
+static jmethodID RegEnumKeyExResult_M_toString_0 = 0;
+jstring jcall_RegEnumKeyExResult_toString(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, RegEnumKeyExResult_M_toString_0);
+}
+
+static jfieldID RegQueryInfoKeyResult_keyClass = 0;
+void jset_RegQueryInfoKeyResult_keyClass(JNIEnv * env, jobject instance, jstring value) {
+   (*env)->SetObjectField(env, instance, RegQueryInfoKeyResult_keyClass, value);
+}
+
+jboolean jsetC_RegQueryInfoKeyResult_keyClass(JNIEnv * env, jobject instance, char * value) {
+    return jsetCC_RegQueryInfoKeyResult_keyClass(env, instance, (char*) value);
+}
+
+jboolean jsetCC_RegQueryInfoKeyResult_keyClass(JNIEnv * env, jobject instance, const char * value) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,RegQueryInfoKeyResult_keyClass, 0);
+        return JNI_TRUE;
+    }
+    jstring tmp = (*env)->NewStringUTF(env, value);
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewStringUTF");
+        return JNI_FALSE;
+    }
+    (*env)->SetObjectField(env, instance, RegQueryInfoKeyResult_keyClass, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jboolean jsetWC_RegQueryInfoKeyResult_keyClass(JNIEnv * env, jobject instance, wchar_t * value) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,RegQueryInfoKeyResult_keyClass, 0);
+        return JNI_TRUE;
+    }
+    
+    jsize i = 0;
+    while (value[i] != 0) {
+        i++;
+    }
+    
+    jstring tmp;
+    if (sizeof(wchar_t) == sizeof(jchar)) {
+        tmp = (*env) -> NewString(env, (const jchar*) value, i);
+    } else {
+        jchar tBuf[i];
+        for (jsize j = 0; j < i; j++) {
+            tBuf[j] = (jchar) value[j];
+        }
+        tmp = (*env) -> NewString(env, (const jchar*) tBuf, i);
+    }
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewByteArray");
+        return JNI_FALSE;
+    }
+    (*env)->SetObjectField(env, instance, RegQueryInfoKeyResult_keyClass, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jstring jget_RegQueryInfoKeyResult_keyClass(JNIEnv * env, jobject instance) {
+   return (jstring) (*env)->GetObjectField(env, instance, RegQueryInfoKeyResult_keyClass);
+}
+
+static jfieldID RegQueryInfoKeyResult_subKeys = 0;
+void jset_RegQueryInfoKeyResult_subKeys(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, RegQueryInfoKeyResult_subKeys, value);
+}
+
+jint jget_RegQueryInfoKeyResult_subKeys(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, RegQueryInfoKeyResult_subKeys);
+}
+
+static jfieldID RegQueryInfoKeyResult_maxSubKeyLen = 0;
+void jset_RegQueryInfoKeyResult_maxSubKeyLen(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, RegQueryInfoKeyResult_maxSubKeyLen, value);
+}
+
+jint jget_RegQueryInfoKeyResult_maxSubKeyLen(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, RegQueryInfoKeyResult_maxSubKeyLen);
+}
+
+static jfieldID RegQueryInfoKeyResult_maxClassLen = 0;
+void jset_RegQueryInfoKeyResult_maxClassLen(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, RegQueryInfoKeyResult_maxClassLen, value);
+}
+
+jint jget_RegQueryInfoKeyResult_maxClassLen(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, RegQueryInfoKeyResult_maxClassLen);
+}
+
+static jfieldID RegQueryInfoKeyResult_values = 0;
+void jset_RegQueryInfoKeyResult_values(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, RegQueryInfoKeyResult_values, value);
+}
+
+jint jget_RegQueryInfoKeyResult_values(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, RegQueryInfoKeyResult_values);
+}
+
+static jfieldID RegQueryInfoKeyResult_maxValueNameLen = 0;
+void jset_RegQueryInfoKeyResult_maxValueNameLen(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, RegQueryInfoKeyResult_maxValueNameLen, value);
+}
+
+jint jget_RegQueryInfoKeyResult_maxValueNameLen(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, RegQueryInfoKeyResult_maxValueNameLen);
+}
+
+static jfieldID RegQueryInfoKeyResult_maxValueLen = 0;
+void jset_RegQueryInfoKeyResult_maxValueLen(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, RegQueryInfoKeyResult_maxValueLen, value);
+}
+
+jint jget_RegQueryInfoKeyResult_maxValueLen(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, RegQueryInfoKeyResult_maxValueLen);
+}
+
+static jfieldID RegQueryInfoKeyResult_securityDescriptorSize = 0;
+void jset_RegQueryInfoKeyResult_securityDescriptorSize(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, RegQueryInfoKeyResult_securityDescriptorSize, value);
+}
+
+jint jget_RegQueryInfoKeyResult_securityDescriptorSize(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, RegQueryInfoKeyResult_securityDescriptorSize);
+}
+
+static jfieldID RegQueryInfoKeyResult_lastWriteTime = 0;
+void jset_RegQueryInfoKeyResult_lastWriteTime(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, RegQueryInfoKeyResult_lastWriteTime, value);
+}
+
+jlong jget_RegQueryInfoKeyResult_lastWriteTime(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, RegQueryInfoKeyResult_lastWriteTime);
+}
+
+static jmethodID RegQueryInfoKeyResult_C_0 = 0;
+jobject jnew_RegQueryInfoKeyResult(JNIEnv * env) {
+    jobject obj = (*env) -> NewObject(env, RegQueryInfoKeyResult, RegQueryInfoKeyResult_C_0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID RegQueryInfoKeyResult_M_equals_0 = 0;
+jboolean jcall_RegQueryInfoKeyResult_equals(JNIEnv * env, jobject instance, jobject p0) {
+    return (*env) -> CallBooleanMethod(env, instance, RegQueryInfoKeyResult_M_equals_0, p0);
+}
+
+static jmethodID RegQueryInfoKeyResult_M_getKeyClass_0 = 0;
+jstring jcall_RegQueryInfoKeyResult_getKeyClass(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, RegQueryInfoKeyResult_M_getKeyClass_0);
+}
+
+static jmethodID RegQueryInfoKeyResult_M_getLastWriteTime_0 = 0;
+jlong jcall_RegQueryInfoKeyResult_getLastWriteTime(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, RegQueryInfoKeyResult_M_getLastWriteTime_0);
+}
+
+static jmethodID RegQueryInfoKeyResult_M_getMaxClassLen_0 = 0;
+jint jcall_RegQueryInfoKeyResult_getMaxClassLen(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, RegQueryInfoKeyResult_M_getMaxClassLen_0);
+}
+
+static jmethodID RegQueryInfoKeyResult_M_getMaxSubKeyLen_0 = 0;
+jint jcall_RegQueryInfoKeyResult_getMaxSubKeyLen(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, RegQueryInfoKeyResult_M_getMaxSubKeyLen_0);
+}
+
+static jmethodID RegQueryInfoKeyResult_M_getMaxValueLen_0 = 0;
+jint jcall_RegQueryInfoKeyResult_getMaxValueLen(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, RegQueryInfoKeyResult_M_getMaxValueLen_0);
+}
+
+static jmethodID RegQueryInfoKeyResult_M_getMaxValueNameLen_0 = 0;
+jint jcall_RegQueryInfoKeyResult_getMaxValueNameLen(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, RegQueryInfoKeyResult_M_getMaxValueNameLen_0);
+}
+
+static jmethodID RegQueryInfoKeyResult_M_getSecurityDescriptorSize_0 = 0;
+jint jcall_RegQueryInfoKeyResult_getSecurityDescriptorSize(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, RegQueryInfoKeyResult_M_getSecurityDescriptorSize_0);
+}
+
+static jmethodID RegQueryInfoKeyResult_M_getSubKeys_0 = 0;
+jint jcall_RegQueryInfoKeyResult_getSubKeys(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, RegQueryInfoKeyResult_M_getSubKeys_0);
+}
+
+static jmethodID RegQueryInfoKeyResult_M_getValues_0 = 0;
+jint jcall_RegQueryInfoKeyResult_getValues(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, RegQueryInfoKeyResult_M_getValues_0);
+}
+
+static jmethodID RegQueryInfoKeyResult_M_hashCode_0 = 0;
+jint jcall_RegQueryInfoKeyResult_hashCode(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, RegQueryInfoKeyResult_M_hashCode_0);
+}
+
+static jmethodID RegQueryInfoKeyResult_M_toString_0 = 0;
+jstring jcall_RegQueryInfoKeyResult_toString(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, RegQueryInfoKeyResult_M_toString_0);
+}
+
 static jfieldID Sockaddr_EMPTY = 0;
 void jset_Sockaddr_EMPTY(JNIEnv * env, jbyteArray value) {
    (*env)->SetStaticObjectField(env, Sockaddr, Sockaddr_EMPTY, value);
@@ -2989,6 +3977,174 @@ jint jcall_Sockaddr_getAddressFamily(JNIEnv * env, jobject instance) {
 static jmethodID Sockaddr_M_hashCode_0 = 0;
 jint jcall_Sockaddr_hashCode(JNIEnv * env, jobject instance) {
     return (*env) -> CallIntMethod(env, instance, Sockaddr_M_hashCode_0);
+}
+
+static jmethodID Sockaddr_M_parseWin32_SOCKADDR_INET_0 = 0;
+jobject jcall_Sockaddr_parseWin32_SOCKADDR_INET(JNIEnv * env, jobject instance) {
+    return (*env) -> CallObjectMethod(env, instance, Sockaddr_M_parseWin32_SOCKADDR_INET_0);
+}
+
+static jmethodID Sockaddr_M_toString_0 = 0;
+jstring jcall_Sockaddr_toString(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, Sockaddr_M_toString_0);
+}
+
+static jfieldID SpDeviceInfoData_cbSize = 0;
+void jset_SpDeviceInfoData_cbSize(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, SpDeviceInfoData_cbSize, value);
+}
+
+jint jget_SpDeviceInfoData_cbSize(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, SpDeviceInfoData_cbSize);
+}
+
+static jfieldID SpDeviceInfoData_InterfaceClassGuid = 0;
+void jset_SpDeviceInfoData_InterfaceClassGuid(JNIEnv * env, jobject instance, jobject value) {
+   (*env)->SetObjectField(env, instance, SpDeviceInfoData_InterfaceClassGuid, value);
+}
+
+jobject jget_SpDeviceInfoData_InterfaceClassGuid(JNIEnv * env, jobject instance) {
+   return (*env)->GetObjectField(env, instance, SpDeviceInfoData_InterfaceClassGuid);
+}
+
+static jfieldID SpDeviceInfoData_DevInst = 0;
+void jset_SpDeviceInfoData_DevInst(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, SpDeviceInfoData_DevInst, value);
+}
+
+jint jget_SpDeviceInfoData_DevInst(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, SpDeviceInfoData_DevInst);
+}
+
+static jfieldID SpDeviceInfoData_ptr = 0;
+void jset_SpDeviceInfoData_ptr(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, SpDeviceInfoData_ptr, value);
+}
+
+jlong jget_SpDeviceInfoData_ptr(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, SpDeviceInfoData_ptr);
+}
+
+static jmethodID SpDeviceInfoData_C_0 = 0;
+jobject jnew_SpDeviceInfoData(JNIEnv * env) {
+    jobject obj = (*env) -> NewObject(env, SpDeviceInfoData, SpDeviceInfoData_C_0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID SpDeviceInfoData_C_1 = 0;
+jobject jnew_SpDeviceInfoData_1(JNIEnv * env, jint p0, jobject p1, jint p2, jlong p3) {
+    jobject obj = (*env) -> NewObject(env, SpDeviceInfoData, SpDeviceInfoData_C_1, p0, p1, p2, p3);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID SpDeviceInfoData_M_getCbSize_0 = 0;
+jint jcall_SpDeviceInfoData_getCbSize(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, SpDeviceInfoData_M_getCbSize_0);
+}
+
+static jmethodID SpDeviceInfoData_M_getDevInst_0 = 0;
+jint jcall_SpDeviceInfoData_getDevInst(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, SpDeviceInfoData_M_getDevInst_0);
+}
+
+static jmethodID SpDeviceInfoData_M_getInterfaceClassGuid_0 = 0;
+jobject jcall_SpDeviceInfoData_getInterfaceClassGuid(JNIEnv * env, jobject instance) {
+    return (*env) -> CallObjectMethod(env, instance, SpDeviceInfoData_M_getInterfaceClassGuid_0);
+}
+
+static jmethodID SpDeviceInfoData_M_getPtr_0 = 0;
+jlong jcall_SpDeviceInfoData_getPtr(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, SpDeviceInfoData_M_getPtr_0);
+}
+
+static jmethodID SpDeviceInfoData_M_toString_0 = 0;
+jstring jcall_SpDeviceInfoData_toString(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, SpDeviceInfoData_M_toString_0);
+}
+
+static jfieldID SpDeviceInterfaceData_cbSize = 0;
+void jset_SpDeviceInterfaceData_cbSize(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, SpDeviceInterfaceData_cbSize, value);
+}
+
+jint jget_SpDeviceInterfaceData_cbSize(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, SpDeviceInterfaceData_cbSize);
+}
+
+static jfieldID SpDeviceInterfaceData_InterfaceClassGuid = 0;
+void jset_SpDeviceInterfaceData_InterfaceClassGuid(JNIEnv * env, jobject instance, jobject value) {
+   (*env)->SetObjectField(env, instance, SpDeviceInterfaceData_InterfaceClassGuid, value);
+}
+
+jobject jget_SpDeviceInterfaceData_InterfaceClassGuid(JNIEnv * env, jobject instance) {
+   return (*env)->GetObjectField(env, instance, SpDeviceInterfaceData_InterfaceClassGuid);
+}
+
+static jfieldID SpDeviceInterfaceData_flags = 0;
+void jset_SpDeviceInterfaceData_flags(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, SpDeviceInterfaceData_flags, value);
+}
+
+jint jget_SpDeviceInterfaceData_flags(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, SpDeviceInterfaceData_flags);
+}
+
+static jfieldID SpDeviceInterfaceData_ptr = 0;
+void jset_SpDeviceInterfaceData_ptr(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, SpDeviceInterfaceData_ptr, value);
+}
+
+jlong jget_SpDeviceInterfaceData_ptr(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, SpDeviceInterfaceData_ptr);
+}
+
+static jmethodID SpDeviceInterfaceData_C_0 = 0;
+jobject jnew_SpDeviceInterfaceData(JNIEnv * env) {
+    jobject obj = (*env) -> NewObject(env, SpDeviceInterfaceData, SpDeviceInterfaceData_C_0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID SpDeviceInterfaceData_C_1 = 0;
+jobject jnew_SpDeviceInterfaceData_1(JNIEnv * env, jint p0, jobject p1, jint p2) {
+    jobject obj = (*env) -> NewObject(env, SpDeviceInterfaceData, SpDeviceInterfaceData_C_1, p0, p1, p2);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID SpDeviceInterfaceData_M_getCbSize_0 = 0;
+jint jcall_SpDeviceInterfaceData_getCbSize(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, SpDeviceInterfaceData_M_getCbSize_0);
+}
+
+static jmethodID SpDeviceInterfaceData_M_getFlags_0 = 0;
+jint jcall_SpDeviceInterfaceData_getFlags(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, SpDeviceInterfaceData_M_getFlags_0);
+}
+
+static jmethodID SpDeviceInterfaceData_M_getInterfaceClassGuid_0 = 0;
+jobject jcall_SpDeviceInterfaceData_getInterfaceClassGuid(JNIEnv * env, jobject instance) {
+    return (*env) -> CallObjectMethod(env, instance, SpDeviceInterfaceData_M_getInterfaceClassGuid_0);
+}
+
+static jmethodID SpDeviceInterfaceData_M_getPtr_0 = 0;
+jlong jcall_SpDeviceInterfaceData_getPtr(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, SpDeviceInterfaceData_M_getPtr_0);
+}
+
+static jmethodID SpDeviceInterfaceData_M_toString_0 = 0;
+jstring jcall_SpDeviceInterfaceData_toString(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, SpDeviceInterfaceData_M_toString_0);
 }
 
 static jfieldID Stat_dev = 0;
@@ -3351,6 +4507,229 @@ jboolean jcall_Stat_isSymbolicLink(JNIEnv * env, jobject instance) {
 static jmethodID Stat_M_toString_0 = 0;
 jstring jcall_Stat_toString(JNIEnv * env, jobject instance) {
     return (jstring) (*env) -> CallObjectMethod(env, instance, Stat_M_toString_0);
+}
+
+static jfieldID Statvfs_f_bsize = 0;
+void jset_Statvfs_f_bsize(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, Statvfs_f_bsize, value);
+}
+
+jlong jget_Statvfs_f_bsize(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, Statvfs_f_bsize);
+}
+
+static jfieldID Statvfs_f_frsize = 0;
+void jset_Statvfs_f_frsize(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, Statvfs_f_frsize, value);
+}
+
+jlong jget_Statvfs_f_frsize(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, Statvfs_f_frsize);
+}
+
+static jfieldID Statvfs_f_blocks = 0;
+void jset_Statvfs_f_blocks(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, Statvfs_f_blocks, value);
+}
+
+jlong jget_Statvfs_f_blocks(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, Statvfs_f_blocks);
+}
+
+static jfieldID Statvfs_f_bfree = 0;
+void jset_Statvfs_f_bfree(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, Statvfs_f_bfree, value);
+}
+
+jlong jget_Statvfs_f_bfree(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, Statvfs_f_bfree);
+}
+
+static jfieldID Statvfs_f_bavail = 0;
+void jset_Statvfs_f_bavail(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, Statvfs_f_bavail, value);
+}
+
+jlong jget_Statvfs_f_bavail(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, Statvfs_f_bavail);
+}
+
+static jfieldID Statvfs_f_files = 0;
+void jset_Statvfs_f_files(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, Statvfs_f_files, value);
+}
+
+jlong jget_Statvfs_f_files(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, Statvfs_f_files);
+}
+
+static jfieldID Statvfs_f_ffree = 0;
+void jset_Statvfs_f_ffree(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, Statvfs_f_ffree, value);
+}
+
+jlong jget_Statvfs_f_ffree(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, Statvfs_f_ffree);
+}
+
+static jfieldID Statvfs_f_favail = 0;
+void jset_Statvfs_f_favail(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, Statvfs_f_favail, value);
+}
+
+jlong jget_Statvfs_f_favail(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, Statvfs_f_favail);
+}
+
+static jfieldID Statvfs_f_fsid = 0;
+void jset_Statvfs_f_fsid(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, Statvfs_f_fsid, value);
+}
+
+jlong jget_Statvfs_f_fsid(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, Statvfs_f_fsid);
+}
+
+static jfieldID Statvfs_f_flag = 0;
+void jset_Statvfs_f_flag(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, Statvfs_f_flag, value);
+}
+
+jlong jget_Statvfs_f_flag(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, Statvfs_f_flag);
+}
+
+static jfieldID Statvfs_f_namemax = 0;
+void jset_Statvfs_f_namemax(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, Statvfs_f_namemax, value);
+}
+
+jlong jget_Statvfs_f_namemax(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, Statvfs_f_namemax);
+}
+
+static jmethodID Statvfs_C_0 = 0;
+jobject jnew_Statvfs(JNIEnv * env) {
+    jobject obj = (*env) -> NewObject(env, Statvfs, Statvfs_C_0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID Statvfs_M_getF_bavail_0 = 0;
+jlong jcall_Statvfs_getF_bavail(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, Statvfs_M_getF_bavail_0);
+}
+
+static jmethodID Statvfs_M_getF_bfree_0 = 0;
+jlong jcall_Statvfs_getF_bfree(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, Statvfs_M_getF_bfree_0);
+}
+
+static jmethodID Statvfs_M_getF_blocks_0 = 0;
+jlong jcall_Statvfs_getF_blocks(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, Statvfs_M_getF_blocks_0);
+}
+
+static jmethodID Statvfs_M_getF_bsize_0 = 0;
+jlong jcall_Statvfs_getF_bsize(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, Statvfs_M_getF_bsize_0);
+}
+
+static jmethodID Statvfs_M_getF_favail_0 = 0;
+jlong jcall_Statvfs_getF_favail(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, Statvfs_M_getF_favail_0);
+}
+
+static jmethodID Statvfs_M_getF_ffree_0 = 0;
+jlong jcall_Statvfs_getF_ffree(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, Statvfs_M_getF_ffree_0);
+}
+
+static jmethodID Statvfs_M_getF_files_0 = 0;
+jlong jcall_Statvfs_getF_files(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, Statvfs_M_getF_files_0);
+}
+
+static jmethodID Statvfs_M_getF_flag_0 = 0;
+jlong jcall_Statvfs_getF_flag(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, Statvfs_M_getF_flag_0);
+}
+
+static jmethodID Statvfs_M_getF_frsize_0 = 0;
+jlong jcall_Statvfs_getF_frsize(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, Statvfs_M_getF_frsize_0);
+}
+
+static jmethodID Statvfs_M_getF_fsid_0 = 0;
+jlong jcall_Statvfs_getF_fsid(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, Statvfs_M_getF_fsid_0);
+}
+
+static jmethodID Statvfs_M_getF_namemax_0 = 0;
+jlong jcall_Statvfs_getF_namemax(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, Statvfs_M_getF_namemax_0);
+}
+
+static jmethodID Statvfs_M_setF_bavail_0 = 0;
+void jcall_Statvfs_setF_bavail(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, Statvfs_M_setF_bavail_0, p0);
+}
+
+static jmethodID Statvfs_M_setF_bfree_0 = 0;
+void jcall_Statvfs_setF_bfree(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, Statvfs_M_setF_bfree_0, p0);
+}
+
+static jmethodID Statvfs_M_setF_blocks_0 = 0;
+void jcall_Statvfs_setF_blocks(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, Statvfs_M_setF_blocks_0, p0);
+}
+
+static jmethodID Statvfs_M_setF_bsize_0 = 0;
+void jcall_Statvfs_setF_bsize(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, Statvfs_M_setF_bsize_0, p0);
+}
+
+static jmethodID Statvfs_M_setF_favail_0 = 0;
+void jcall_Statvfs_setF_favail(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, Statvfs_M_setF_favail_0, p0);
+}
+
+static jmethodID Statvfs_M_setF_ffree_0 = 0;
+void jcall_Statvfs_setF_ffree(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, Statvfs_M_setF_ffree_0, p0);
+}
+
+static jmethodID Statvfs_M_setF_files_0 = 0;
+void jcall_Statvfs_setF_files(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, Statvfs_M_setF_files_0, p0);
+}
+
+static jmethodID Statvfs_M_setF_flag_0 = 0;
+void jcall_Statvfs_setF_flag(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, Statvfs_M_setF_flag_0, p0);
+}
+
+static jmethodID Statvfs_M_setF_frsize_0 = 0;
+void jcall_Statvfs_setF_frsize(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, Statvfs_M_setF_frsize_0, p0);
+}
+
+static jmethodID Statvfs_M_setF_fsid_0 = 0;
+void jcall_Statvfs_setF_fsid(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, Statvfs_M_setF_fsid_0, p0);
+}
+
+static jmethodID Statvfs_M_setF_namemax_0 = 0;
+void jcall_Statvfs_setF_namemax(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, Statvfs_M_setF_namemax_0, p0);
+}
+
+static jmethodID Statvfs_M_toString_0 = 0;
+jstring jcall_Statvfs_toString(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, Statvfs_M_toString_0);
 }
 
 static jfieldID Utsname_sysname = 0;
@@ -4271,6 +5650,29 @@ void jcall_Iterator_remove(JNIEnv * env, jobject instance) {
     (*env) -> CallVoidMethod(env, instance, Iterator_M_remove_0);
 }
 
+static jmethodID FileIsDirectoryException_EC_0 = 0;
+void jthrow_FileIsDirectoryException(JNIEnv * env, jstring p0) {
+    if ((*env) -> ExceptionCheck(env)) {
+        return;
+    }
+    jobject obj = (*env) -> NewObject(env, FileIsDirectoryException, FileIsDirectoryException_EC_0, p0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+        return;
+    }
+    (*env)->Throw(env, obj);
+}
+
+void jthrowC_FileIsDirectoryException(JNIEnv * env, char* p0) {
+    jthrowCC_FileIsDirectoryException(env, (const char*)p0);
+}
+
+void jthrowCC_FileIsDirectoryException(JNIEnv * env, const char* p0) {
+    if ((*env) -> ExceptionCheck(env)) {
+        return;
+    }
+    (*env) -> ThrowNew(env, FileIsDirectoryException, p0);
+}
 static jmethodID InvalidFileDescriptorException_EC_0 = 0;
 void jthrow_InvalidFileDescriptorException(JNIEnv * env) {
     if ((*env) -> ExceptionCheck(env)) {
@@ -5624,6 +7026,42 @@ void jthrow_ReadOnlyFileSystemException(JNIEnv * env) {
     (*env)->Throw(env, obj);
 }
 
+static jmethodID NoSuchElementException_EC_0 = 0;
+void jthrow_NoSuchElementException(JNIEnv * env) {
+    if ((*env) -> ExceptionCheck(env)) {
+        return;
+    }
+    jobject obj = (*env) -> NewObject(env, NoSuchElementException, NoSuchElementException_EC_0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+        return;
+    }
+    (*env)->Throw(env, obj);
+}
+
+static jmethodID NoSuchElementException_EC_1 = 0;
+void jthrow_NoSuchElementException_1(JNIEnv * env, jstring p0) {
+    if ((*env) -> ExceptionCheck(env)) {
+        return;
+    }
+    jobject obj = (*env) -> NewObject(env, NoSuchElementException, NoSuchElementException_EC_1, p0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+        return;
+    }
+    (*env)->Throw(env, obj);
+}
+
+void jthrowC_NoSuchElementException_1(JNIEnv * env, char* p0) {
+    jthrowCC_NoSuchElementException_1(env, (const char*)p0);
+}
+
+void jthrowCC_NoSuchElementException_1(JNIEnv * env, const char* p0) {
+    if ((*env) -> ExceptionCheck(env)) {
+        return;
+    }
+    (*env) -> ThrowNew(env, NoSuchElementException, p0);
+}
 
 jboolean jnigenerator_init(JNIEnv * env) {
     internal_Exception = makeGlobalClassRef(env, "java/lang/Exception");
@@ -5681,24 +7119,10 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
-    Passwd = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Passwd");
-    if (Passwd == 0) {
-        (*env) -> ExceptionClear(env);
-        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd");
-        return JNI_FALSE;
-    }
-
     IpAdapterAddresses$IpAdapterUnicastAddress = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/IpAdapterAddresses$IpAdapterUnicastAddress");
     if (IpAdapterAddresses$IpAdapterUnicastAddress == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/IpAdapterAddresses$IpAdapterUnicastAddress");
-        return JNI_FALSE;
-    }
-
-    OperationInProgressException = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/exceptions/OperationInProgressException");
-    if (OperationInProgressException == 0) {
-        (*env) -> ExceptionClear(env);
-        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/OperationInProgressException");
         return JNI_FALSE;
     }
 
@@ -5709,31 +7133,10 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
-    ShellExecuteException = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/exceptions/ShellExecuteException");
-    if (ShellExecuteException == 0) {
-        (*env) -> ExceptionClear(env);
-        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/ShellExecuteException");
-        return JNI_FALSE;
-    }
-
     GUID = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/GUID");
     if (GUID == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/GUID");
-        return JNI_FALSE;
-    }
-
-    BindException = makeGlobalClassRef(env, "java/net/BindException");
-    if (BindException == 0) {
-        (*env) -> ExceptionClear(env);
-        (*env) -> ThrowNew(env, Exception, "cant find java/net/BindException");
-        return JNI_FALSE;
-    }
-
-    Iterable = makeGlobalClassRef(env, "java/lang/Iterable");
-    if (Iterable == 0) {
-        (*env) -> ExceptionClear(env);
-        (*env) -> ThrowNew(env, Exception, "cant find java/lang/Iterable");
         return JNI_FALSE;
     }
 
@@ -5751,52 +7154,10 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
-    ArrayList = makeGlobalClassRef(env, "java/util/ArrayList");
-    if (ArrayList == 0) {
-        (*env) -> ExceptionClear(env);
-        (*env) -> ThrowNew(env, Exception, "cant find java/util/ArrayList");
-        return JNI_FALSE;
-    }
-
     InetAddress = makeGlobalClassRef(env, "java/net/InetAddress");
     if (InetAddress == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find java/net/InetAddress");
-        return JNI_FALSE;
-    }
-
-    Cmsghdr = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Cmsghdr");
-    if (Cmsghdr == 0) {
-        (*env) -> ExceptionClear(env);
-        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Cmsghdr");
-        return JNI_FALSE;
-    }
-
-    InvalidPathException = makeGlobalClassRef(env, "java/nio/file/InvalidPathException");
-    if (InvalidPathException == 0) {
-        (*env) -> ExceptionClear(env);
-        (*env) -> ThrowNew(env, Exception, "cant find java/nio/file/InvalidPathException");
-        return JNI_FALSE;
-    }
-
-    FileSystemLoopException = makeGlobalClassRef(env, "java/nio/file/FileSystemLoopException");
-    if (FileSystemLoopException == 0) {
-        (*env) -> ExceptionClear(env);
-        (*env) -> ThrowNew(env, Exception, "cant find java/nio/file/FileSystemLoopException");
-        return JNI_FALSE;
-    }
-
-    UnknownNativeErrorException = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/exceptions/UnknownNativeErrorException");
-    if (UnknownNativeErrorException == 0) {
-        (*env) -> ExceptionClear(env);
-        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/UnknownNativeErrorException");
-        return JNI_FALSE;
-    }
-
-    ConnectException = makeGlobalClassRef(env, "java/net/ConnectException");
-    if (ConnectException == 0) {
-        (*env) -> ExceptionClear(env);
-        (*env) -> ThrowNew(env, Exception, "cant find java/net/ConnectException");
         return JNI_FALSE;
     }
 
@@ -5807,31 +7168,24 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
-    UnsupportedOperationException = makeGlobalClassRef(env, "java/lang/UnsupportedOperationException");
-    if (UnsupportedOperationException == 0) {
+    RegEnumKeyExResult = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/RegEnumKeyExResult");
+    if (RegEnumKeyExResult == 0) {
         (*env) -> ExceptionClear(env);
-        (*env) -> ThrowNew(env, Exception, "cant find java/lang/UnsupportedOperationException");
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegEnumKeyExResult");
         return JNI_FALSE;
     }
 
-    Stat = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Stat");
-    if (Stat == 0) {
+    RegData$RegType = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType");
+    if (RegData$RegType == 0) {
         (*env) -> ExceptionClear(env);
-        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Stat");
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType");
         return JNI_FALSE;
     }
 
-    Iterator = makeGlobalClassRef(env, "java/util/Iterator");
-    if (Iterator == 0) {
+    RegData = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/RegData");
+    if (RegData == 0) {
         (*env) -> ExceptionClear(env);
-        (*env) -> ThrowNew(env, Exception, "cant find java/util/Iterator");
-        return JNI_FALSE;
-    }
-
-    NotDirectoryException = makeGlobalClassRef(env, "java/nio/file/NotDirectoryException");
-    if (NotDirectoryException == 0) {
-        (*env) -> ExceptionClear(env);
-        (*env) -> ThrowNew(env, Exception, "cant find java/nio/file/NotDirectoryException");
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData");
         return JNI_FALSE;
     }
 
@@ -5842,6 +7196,13 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
+    SpDeviceInterfaceData = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData");
+    if (SpDeviceInterfaceData == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData");
+        return JNI_FALSE;
+    }
+
     NotLinkException = makeGlobalClassRef(env, "java/nio/file/NotLinkException");
     if (NotLinkException == 0) {
         (*env) -> ExceptionClear(env);
@@ -5849,38 +7210,17 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
+    MibIpForwardRow2 = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2");
+    if (MibIpForwardRow2 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2");
+        return JNI_FALSE;
+    }
+
     Msghdr = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Msghdr");
     if (Msghdr == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Msghdr");
-        return JNI_FALSE;
-    }
-
-    IOException = makeGlobalClassRef(env, "java/io/IOException");
-    if (IOException == 0) {
-        (*env) -> ExceptionClear(env);
-        (*env) -> ThrowNew(env, Exception, "cant find java/io/IOException");
-        return JNI_FALSE;
-    }
-
-    Group = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Group");
-    if (Group == 0) {
-        (*env) -> ExceptionClear(env);
-        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Group");
-        return JNI_FALSE;
-    }
-
-    IllegalArgumentException = makeGlobalClassRef(env, "java/lang/IllegalArgumentException");
-    if (IllegalArgumentException == 0) {
-        (*env) -> ExceptionClear(env);
-        (*env) -> ThrowNew(env, Exception, "cant find java/lang/IllegalArgumentException");
-        return JNI_FALSE;
-    }
-
-    FileAlreadyExistsException = makeGlobalClassRef(env, "java/nio/file/FileAlreadyExistsException");
-    if (FileAlreadyExistsException == 0) {
-        (*env) -> ExceptionClear(env);
-        (*env) -> ThrowNew(env, Exception, "cant find java/nio/file/FileAlreadyExistsException");
         return JNI_FALSE;
     }
 
@@ -5919,13 +7259,6 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
-    QuotaExceededException = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/exceptions/QuotaExceededException");
-    if (QuotaExceededException == 0) {
-        (*env) -> ExceptionClear(env);
-        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/QuotaExceededException");
-        return JNI_FALSE;
-    }
-
     InvalidFileDescriptorException = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/exceptions/InvalidFileDescriptorException");
     if (InvalidFileDescriptorException == 0) {
         (*env) -> ExceptionClear(env);
@@ -5961,13 +7294,6 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
-    MutexAbandonedException = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/exceptions/MutexAbandonedException");
-    if (MutexAbandonedException == 0) {
-        (*env) -> ExceptionClear(env);
-        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/MutexAbandonedException");
-        return JNI_FALSE;
-    }
-
     AccessDeniedException = makeGlobalClassRef(env, "java/nio/file/AccessDeniedException");
     if (AccessDeniedException == 0) {
         (*env) -> ExceptionClear(env);
@@ -5979,6 +7305,195 @@ jboolean jnigenerator_init(JNIEnv * env) {
     if (ReadOnlyFileSystemException == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find java/nio/file/ReadOnlyFileSystemException");
+        return JNI_FALSE;
+    }
+
+    FileIsDirectoryException = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/exceptions/FileIsDirectoryException");
+    if (FileIsDirectoryException == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/FileIsDirectoryException");
+        return JNI_FALSE;
+    }
+
+    Passwd = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Passwd");
+    if (Passwd == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Passwd");
+        return JNI_FALSE;
+    }
+
+    OperationInProgressException = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/exceptions/OperationInProgressException");
+    if (OperationInProgressException == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/OperationInProgressException");
+        return JNI_FALSE;
+    }
+
+    ShellExecuteException = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/exceptions/ShellExecuteException");
+    if (ShellExecuteException == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/ShellExecuteException");
+        return JNI_FALSE;
+    }
+
+    SpDeviceInfoData = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData");
+    if (SpDeviceInfoData == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData");
+        return JNI_FALSE;
+    }
+
+    BindException = makeGlobalClassRef(env, "java/net/BindException");
+    if (BindException == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find java/net/BindException");
+        return JNI_FALSE;
+    }
+
+    Iterable = makeGlobalClassRef(env, "java/lang/Iterable");
+    if (Iterable == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find java/lang/Iterable");
+        return JNI_FALSE;
+    }
+
+    ArrayList = makeGlobalClassRef(env, "java/util/ArrayList");
+    if (ArrayList == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find java/util/ArrayList");
+        return JNI_FALSE;
+    }
+
+    IfNameIndex = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/IfNameIndex");
+    if (IfNameIndex == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/IfNameIndex");
+        return JNI_FALSE;
+    }
+
+    Cmsghdr = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Cmsghdr");
+    if (Cmsghdr == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Cmsghdr");
+        return JNI_FALSE;
+    }
+
+    InvalidPathException = makeGlobalClassRef(env, "java/nio/file/InvalidPathException");
+    if (InvalidPathException == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find java/nio/file/InvalidPathException");
+        return JNI_FALSE;
+    }
+
+    FileSystemLoopException = makeGlobalClassRef(env, "java/nio/file/FileSystemLoopException");
+    if (FileSystemLoopException == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find java/nio/file/FileSystemLoopException");
+        return JNI_FALSE;
+    }
+
+    UnknownNativeErrorException = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/exceptions/UnknownNativeErrorException");
+    if (UnknownNativeErrorException == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/UnknownNativeErrorException");
+        return JNI_FALSE;
+    }
+
+    ConnectException = makeGlobalClassRef(env, "java/net/ConnectException");
+    if (ConnectException == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find java/net/ConnectException");
+        return JNI_FALSE;
+    }
+
+    NoSuchElementException = makeGlobalClassRef(env, "java/util/NoSuchElementException");
+    if (NoSuchElementException == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find java/util/NoSuchElementException");
+        return JNI_FALSE;
+    }
+
+    UnsupportedOperationException = makeGlobalClassRef(env, "java/lang/UnsupportedOperationException");
+    if (UnsupportedOperationException == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find java/lang/UnsupportedOperationException");
+        return JNI_FALSE;
+    }
+
+    Stat = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Stat");
+    if (Stat == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Stat");
+        return JNI_FALSE;
+    }
+
+    Iterator = makeGlobalClassRef(env, "java/util/Iterator");
+    if (Iterator == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find java/util/Iterator");
+        return JNI_FALSE;
+    }
+
+    NotDirectoryException = makeGlobalClassRef(env, "java/nio/file/NotDirectoryException");
+    if (NotDirectoryException == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find java/nio/file/NotDirectoryException");
+        return JNI_FALSE;
+    }
+
+    IOException = makeGlobalClassRef(env, "java/io/IOException");
+    if (IOException == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find java/io/IOException");
+        return JNI_FALSE;
+    }
+
+    Group = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Group");
+    if (Group == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Group");
+        return JNI_FALSE;
+    }
+
+    IllegalArgumentException = makeGlobalClassRef(env, "java/lang/IllegalArgumentException");
+    if (IllegalArgumentException == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find java/lang/IllegalArgumentException");
+        return JNI_FALSE;
+    }
+
+    FileAlreadyExistsException = makeGlobalClassRef(env, "java/nio/file/FileAlreadyExistsException");
+    if (FileAlreadyExistsException == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find java/nio/file/FileAlreadyExistsException");
+        return JNI_FALSE;
+    }
+
+    QuotaExceededException = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/exceptions/QuotaExceededException");
+    if (QuotaExceededException == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/QuotaExceededException");
+        return JNI_FALSE;
+    }
+
+    Statvfs = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs");
+    if (Statvfs == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs");
+        return JNI_FALSE;
+    }
+
+    RegQueryInfoKeyResult = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult");
+    if (RegQueryInfoKeyResult == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult");
+        return JNI_FALSE;
+    }
+
+    MutexAbandonedException = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/exceptions/MutexAbandonedException");
+    if (MutexAbandonedException == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/MutexAbandonedException");
         return JNI_FALSE;
     }
 
@@ -6273,6 +7788,55 @@ jboolean jnigenerator_init(JNIEnv * env) {
     if (Group_M_toString_0 == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Group.toString()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    IfNameIndex_index = (*env) -> GetFieldID(env, IfNameIndex, "index", "I");
+    if (IfNameIndex_index == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/IfNameIndex_index_I");
+        return JNI_FALSE;
+    }
+
+    IfNameIndex_name = (*env) -> GetFieldID(env, IfNameIndex, "name", "Ljava/lang/String;");
+    if (IfNameIndex_name == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/IfNameIndex_name_Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    IfNameIndex_C_0 = (*env) -> GetMethodID(env, IfNameIndex, "<init>", "(ILjava/lang/String;)V");
+    if (IfNameIndex_C_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/IfNameIndex.<init>(ILjava/lang/String;)V");
+        return JNI_FALSE;
+    }
+
+    IfNameIndex_M_equals_0 = (*env) -> GetMethodID(env, IfNameIndex, "equals", "(Ljava/lang/Object;)Z");
+    if (IfNameIndex_M_equals_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/IfNameIndex.equals(Ljava/lang/Object;)Z");
+        return JNI_FALSE;
+    }
+
+    IfNameIndex_M_getIndex_0 = (*env) -> GetMethodID(env, IfNameIndex, "getIndex", "()I");
+    if (IfNameIndex_M_getIndex_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/IfNameIndex.getIndex()I");
+        return JNI_FALSE;
+    }
+
+    IfNameIndex_M_getName_0 = (*env) -> GetMethodID(env, IfNameIndex, "getName", "()Ljava/lang/String;");
+    if (IfNameIndex_M_getName_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/IfNameIndex.getName()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    IfNameIndex_M_hashCode_0 = (*env) -> GetMethodID(env, IfNameIndex, "hashCode", "()I");
+    if (IfNameIndex_M_hashCode_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/IfNameIndex.hashCode()I");
         return JNI_FALSE;
     }
 
@@ -7640,6 +9204,356 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
+    MibIpForwardRow2_InterfaceLuid = (*env) -> GetFieldID(env, MibIpForwardRow2, "InterfaceLuid", "J");
+    if (MibIpForwardRow2_InterfaceLuid == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2_InterfaceLuid_J");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_InterfaceIndex = (*env) -> GetFieldID(env, MibIpForwardRow2, "InterfaceIndex", "I");
+    if (MibIpForwardRow2_InterfaceIndex == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2_InterfaceIndex_I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_DestinationPrefixAddress = (*env) -> GetFieldID(env, MibIpForwardRow2, "DestinationPrefixAddress", "Lio/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr;");
+    if (MibIpForwardRow2_DestinationPrefixAddress == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2_DestinationPrefixAddress_Lio/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr;");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_DestinationPrefixLength = (*env) -> GetFieldID(env, MibIpForwardRow2, "DestinationPrefixLength", "I");
+    if (MibIpForwardRow2_DestinationPrefixLength == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2_DestinationPrefixLength_I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_NextHop = (*env) -> GetFieldID(env, MibIpForwardRow2, "NextHop", "Lio/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr;");
+    if (MibIpForwardRow2_NextHop == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2_NextHop_Lio/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr;");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_SitePrefixLength = (*env) -> GetFieldID(env, MibIpForwardRow2, "SitePrefixLength", "B");
+    if (MibIpForwardRow2_SitePrefixLength == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2_SitePrefixLength_B");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_ValidLifetime = (*env) -> GetFieldID(env, MibIpForwardRow2, "ValidLifetime", "J");
+    if (MibIpForwardRow2_ValidLifetime == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2_ValidLifetime_J");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_PreferredLifetime = (*env) -> GetFieldID(env, MibIpForwardRow2, "PreferredLifetime", "J");
+    if (MibIpForwardRow2_PreferredLifetime == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2_PreferredLifetime_J");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_Metric = (*env) -> GetFieldID(env, MibIpForwardRow2, "Metric", "J");
+    if (MibIpForwardRow2_Metric == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2_Metric_J");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_Protocol = (*env) -> GetFieldID(env, MibIpForwardRow2, "Protocol", "J");
+    if (MibIpForwardRow2_Protocol == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2_Protocol_J");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_Loopback = (*env) -> GetFieldID(env, MibIpForwardRow2, "Loopback", "Z");
+    if (MibIpForwardRow2_Loopback == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2_Loopback_Z");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_AutoconfigureAddress = (*env) -> GetFieldID(env, MibIpForwardRow2, "AutoconfigureAddress", "Z");
+    if (MibIpForwardRow2_AutoconfigureAddress == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2_AutoconfigureAddress_Z");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_Publish = (*env) -> GetFieldID(env, MibIpForwardRow2, "Publish", "Z");
+    if (MibIpForwardRow2_Publish == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2_Publish_Z");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_Immortal = (*env) -> GetFieldID(env, MibIpForwardRow2, "Immortal", "Z");
+    if (MibIpForwardRow2_Immortal == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2_Immortal_Z");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_Age = (*env) -> GetFieldID(env, MibIpForwardRow2, "Age", "J");
+    if (MibIpForwardRow2_Age == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2_Age_J");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_Origin = (*env) -> GetFieldID(env, MibIpForwardRow2, "Origin", "J");
+    if (MibIpForwardRow2_Origin == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2_Origin_J");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_C_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "<init>", "()V");
+    if (MibIpForwardRow2_C_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.<init>()V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_getAge_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "getAge", "()J");
+    if (MibIpForwardRow2_M_getAge_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.getAge()J");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_getDestinationPrefixAddress_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "getDestinationPrefixAddress", "()Lio/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr;");
+    if (MibIpForwardRow2_M_getDestinationPrefixAddress_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.getDestinationPrefixAddress()Lio/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr;");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_getDestinationPrefixLength_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "getDestinationPrefixLength", "()I");
+    if (MibIpForwardRow2_M_getDestinationPrefixLength_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.getDestinationPrefixLength()I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_getInterfaceIndex_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "getInterfaceIndex", "()I");
+    if (MibIpForwardRow2_M_getInterfaceIndex_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.getInterfaceIndex()I");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_getInterfaceLuid_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "getInterfaceLuid", "()J");
+    if (MibIpForwardRow2_M_getInterfaceLuid_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.getInterfaceLuid()J");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_getMetric_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "getMetric", "()J");
+    if (MibIpForwardRow2_M_getMetric_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.getMetric()J");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_getNextHop_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "getNextHop", "()Lio/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr;");
+    if (MibIpForwardRow2_M_getNextHop_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.getNextHop()Lio/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr;");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_getOrigin_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "getOrigin", "()J");
+    if (MibIpForwardRow2_M_getOrigin_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.getOrigin()J");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_getPreferredLifetime_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "getPreferredLifetime", "()J");
+    if (MibIpForwardRow2_M_getPreferredLifetime_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.getPreferredLifetime()J");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_getProtocol_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "getProtocol", "()J");
+    if (MibIpForwardRow2_M_getProtocol_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.getProtocol()J");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_getSitePrefixLength_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "getSitePrefixLength", "()B");
+    if (MibIpForwardRow2_M_getSitePrefixLength_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.getSitePrefixLength()B");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_getValidLifetime_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "getValidLifetime", "()J");
+    if (MibIpForwardRow2_M_getValidLifetime_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.getValidLifetime()J");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_isAutoconfigureAddress_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "isAutoconfigureAddress", "()Z");
+    if (MibIpForwardRow2_M_isAutoconfigureAddress_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.isAutoconfigureAddress()Z");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_isImmortal_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "isImmortal", "()Z");
+    if (MibIpForwardRow2_M_isImmortal_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.isImmortal()Z");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_isLoopback_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "isLoopback", "()Z");
+    if (MibIpForwardRow2_M_isLoopback_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.isLoopback()Z");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_isPublish_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "isPublish", "()Z");
+    if (MibIpForwardRow2_M_isPublish_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.isPublish()Z");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_setAge_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "setAge", "(J)V");
+    if (MibIpForwardRow2_M_setAge_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.setAge(J)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_setAutoconfigureAddress_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "setAutoconfigureAddress", "(Z)V");
+    if (MibIpForwardRow2_M_setAutoconfigureAddress_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.setAutoconfigureAddress(Z)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_setDestinationPrefixAddress_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "setDestinationPrefixAddress", "(Lio/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr;)V");
+    if (MibIpForwardRow2_M_setDestinationPrefixAddress_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.setDestinationPrefixAddress(Lio/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr;)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_setDestinationPrefixLength_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "setDestinationPrefixLength", "(I)V");
+    if (MibIpForwardRow2_M_setDestinationPrefixLength_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.setDestinationPrefixLength(I)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_setImmortal_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "setImmortal", "(Z)V");
+    if (MibIpForwardRow2_M_setImmortal_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.setImmortal(Z)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_setInterfaceIndex_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "setInterfaceIndex", "(I)V");
+    if (MibIpForwardRow2_M_setInterfaceIndex_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.setInterfaceIndex(I)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_setInterfaceLuid_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "setInterfaceLuid", "(J)V");
+    if (MibIpForwardRow2_M_setInterfaceLuid_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.setInterfaceLuid(J)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_setLoopback_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "setLoopback", "(Z)V");
+    if (MibIpForwardRow2_M_setLoopback_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.setLoopback(Z)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_setMetric_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "setMetric", "(J)V");
+    if (MibIpForwardRow2_M_setMetric_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.setMetric(J)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_setNextHop_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "setNextHop", "(Lio/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr;)V");
+    if (MibIpForwardRow2_M_setNextHop_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.setNextHop(Lio/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr;)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_setOrigin_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "setOrigin", "(J)V");
+    if (MibIpForwardRow2_M_setOrigin_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.setOrigin(J)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_setPreferredLifetime_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "setPreferredLifetime", "(J)V");
+    if (MibIpForwardRow2_M_setPreferredLifetime_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.setPreferredLifetime(J)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_setProtocol_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "setProtocol", "(J)V");
+    if (MibIpForwardRow2_M_setProtocol_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.setProtocol(J)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_setPublish_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "setPublish", "(Z)V");
+    if (MibIpForwardRow2_M_setPublish_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.setPublish(Z)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_setSitePrefixLength_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "setSitePrefixLength", "(B)V");
+    if (MibIpForwardRow2_M_setSitePrefixLength_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.setSitePrefixLength(B)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_setValidLifetime_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "setValidLifetime", "(J)V");
+    if (MibIpForwardRow2_M_setValidLifetime_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.setValidLifetime(J)V");
+        return JNI_FALSE;
+    }
+
+    MibIpForwardRow2_M_toString_0 = (*env) -> GetMethodID(env, MibIpForwardRow2, "toString", "()Ljava/lang/String;");
+    if (MibIpForwardRow2_M_toString_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2.toString()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
     Msghdr_msg_iov = (*env) -> GetFieldID(env, Msghdr, "msg_iov", "[Lio/github/alexanderschuetz97/nativeutils/api/structs/Iovec;");
     if (Msghdr_msg_iov == 0) {
         (*env) -> ExceptionClear(env);
@@ -8271,6 +10185,473 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
+    RegData_type = (*env) -> GetFieldID(env, RegData, "type", "Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+    if (RegData_type == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData_type_Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+
+    RegData_value = (*env) -> GetFieldID(env, RegData, "value", "Ljava/lang/Object;");
+    if (RegData_value == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData_value_Ljava/lang/Object;");
+        return JNI_FALSE;
+    }
+
+    RegData_C_0 = (*env) -> GetMethodID(env, RegData, "<init>", "(I)V");
+    if (RegData_C_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData.<init>(I)V");
+        return JNI_FALSE;
+    }
+
+    RegData_C_1 = (*env) -> GetMethodID(env, RegData, "<init>", "(J)V");
+    if (RegData_C_1 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData.<init>(J)V");
+        return JNI_FALSE;
+    }
+
+    RegData_C_2 = (*env) -> GetMethodID(env, RegData, "<init>", "(Ljava/lang/Object;Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;)V");
+    if (RegData_C_2 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData.<init>(Ljava/lang/Object;Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;)V");
+        return JNI_FALSE;
+    }
+
+    RegData_M_asInt_0 = (*env) -> GetMethodID(env, RegData, "asInt", "()I");
+    if (RegData_M_asInt_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData.asInt()I");
+        return JNI_FALSE;
+    }
+
+    RegData_M_asLong_0 = (*env) -> GetMethodID(env, RegData, "asLong", "()J");
+    if (RegData_M_asLong_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData.asLong()J");
+        return JNI_FALSE;
+    }
+
+    RegData_M_binary_0 = (*env) -> GetMethodID(env, RegData, "binary", "()[B");
+    if (RegData_M_binary_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData.binary()[B");
+        return JNI_FALSE;
+    }
+
+    RegData_M_number_0 = (*env) -> GetMethodID(env, RegData, "number", "()Ljava/lang/Number;");
+    if (RegData_M_number_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData.number()Ljava/lang/Number;");
+        return JNI_FALSE;
+    }
+
+    RegData_M_string_0 = (*env) -> GetMethodID(env, RegData, "string", "()Ljava/lang/String;");
+    if (RegData_M_string_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData.string()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    RegData_M_strings_0 = (*env) -> GetMethodID(env, RegData, "strings", "()[Ljava/lang/String;");
+    if (RegData_M_strings_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData.strings()[Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    RegData_M_toString_0 = (*env) -> GetMethodID(env, RegData, "toString", "()Ljava/lang/String;");
+    if (RegData_M_toString_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData.toString()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    RegData_M_type_0 = (*env) -> GetMethodID(env, RegData, "type", "()Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+    if (RegData_M_type_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData.type()Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+
+    RegData_M_value_0 = (*env) -> GetMethodID(env, RegData, "value", "()Ljava/lang/Object;");
+    if (RegData_M_value_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData.value()Ljava/lang/Object;");
+        return JNI_FALSE;
+    }
+
+    RegData$RegType_REG_BINARY = 0;
+    jfieldID enum_field_init_RegData$RegType_REG_BINARY = 0;
+    enum_field_init_RegData$RegType_REG_BINARY = (*env) -> GetStaticFieldID(env, RegData$RegType, "REG_BINARY", "Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+    if (enum_field_init_RegData$RegType_REG_BINARY == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType_REG_BINARY_Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+    RegData$RegType_REG_BINARY = (*env) -> GetStaticObjectField(env, RegData$RegType, enum_field_init_RegData$RegType_REG_BINARY);
+    if (RegData$RegType_REG_BINARY == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType_REG_BINARY_Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+    
+    RegData$RegType_REG_DWORD = 0;
+    jfieldID enum_field_init_RegData$RegType_REG_DWORD = 0;
+    enum_field_init_RegData$RegType_REG_DWORD = (*env) -> GetStaticFieldID(env, RegData$RegType, "REG_DWORD", "Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+    if (enum_field_init_RegData$RegType_REG_DWORD == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType_REG_DWORD_Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+    RegData$RegType_REG_DWORD = (*env) -> GetStaticObjectField(env, RegData$RegType, enum_field_init_RegData$RegType_REG_DWORD);
+    if (RegData$RegType_REG_DWORD == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType_REG_DWORD_Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+    
+    RegData$RegType_REG_EXPAND_SZ = 0;
+    jfieldID enum_field_init_RegData$RegType_REG_EXPAND_SZ = 0;
+    enum_field_init_RegData$RegType_REG_EXPAND_SZ = (*env) -> GetStaticFieldID(env, RegData$RegType, "REG_EXPAND_SZ", "Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+    if (enum_field_init_RegData$RegType_REG_EXPAND_SZ == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType_REG_EXPAND_SZ_Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+    RegData$RegType_REG_EXPAND_SZ = (*env) -> GetStaticObjectField(env, RegData$RegType, enum_field_init_RegData$RegType_REG_EXPAND_SZ);
+    if (RegData$RegType_REG_EXPAND_SZ == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType_REG_EXPAND_SZ_Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+    
+    RegData$RegType_REG_LINK = 0;
+    jfieldID enum_field_init_RegData$RegType_REG_LINK = 0;
+    enum_field_init_RegData$RegType_REG_LINK = (*env) -> GetStaticFieldID(env, RegData$RegType, "REG_LINK", "Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+    if (enum_field_init_RegData$RegType_REG_LINK == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType_REG_LINK_Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+    RegData$RegType_REG_LINK = (*env) -> GetStaticObjectField(env, RegData$RegType, enum_field_init_RegData$RegType_REG_LINK);
+    if (RegData$RegType_REG_LINK == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType_REG_LINK_Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+    
+    RegData$RegType_REG_MULTI_SZ = 0;
+    jfieldID enum_field_init_RegData$RegType_REG_MULTI_SZ = 0;
+    enum_field_init_RegData$RegType_REG_MULTI_SZ = (*env) -> GetStaticFieldID(env, RegData$RegType, "REG_MULTI_SZ", "Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+    if (enum_field_init_RegData$RegType_REG_MULTI_SZ == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType_REG_MULTI_SZ_Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+    RegData$RegType_REG_MULTI_SZ = (*env) -> GetStaticObjectField(env, RegData$RegType, enum_field_init_RegData$RegType_REG_MULTI_SZ);
+    if (RegData$RegType_REG_MULTI_SZ == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType_REG_MULTI_SZ_Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+    
+    RegData$RegType_REG_NONE = 0;
+    jfieldID enum_field_init_RegData$RegType_REG_NONE = 0;
+    enum_field_init_RegData$RegType_REG_NONE = (*env) -> GetStaticFieldID(env, RegData$RegType, "REG_NONE", "Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+    if (enum_field_init_RegData$RegType_REG_NONE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType_REG_NONE_Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+    RegData$RegType_REG_NONE = (*env) -> GetStaticObjectField(env, RegData$RegType, enum_field_init_RegData$RegType_REG_NONE);
+    if (RegData$RegType_REG_NONE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType_REG_NONE_Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+    
+    RegData$RegType_REG_QWORD = 0;
+    jfieldID enum_field_init_RegData$RegType_REG_QWORD = 0;
+    enum_field_init_RegData$RegType_REG_QWORD = (*env) -> GetStaticFieldID(env, RegData$RegType, "REG_QWORD", "Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+    if (enum_field_init_RegData$RegType_REG_QWORD == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType_REG_QWORD_Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+    RegData$RegType_REG_QWORD = (*env) -> GetStaticObjectField(env, RegData$RegType, enum_field_init_RegData$RegType_REG_QWORD);
+    if (RegData$RegType_REG_QWORD == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType_REG_QWORD_Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+    
+    RegData$RegType_REG_SZ = 0;
+    jfieldID enum_field_init_RegData$RegType_REG_SZ = 0;
+    enum_field_init_RegData$RegType_REG_SZ = (*env) -> GetStaticFieldID(env, RegData$RegType, "REG_SZ", "Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+    if (enum_field_init_RegData$RegType_REG_SZ == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType_REG_SZ_Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+    RegData$RegType_REG_SZ = (*env) -> GetStaticObjectField(env, RegData$RegType, enum_field_init_RegData$RegType_REG_SZ);
+    if (RegData$RegType_REG_SZ == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant get enum value of io/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType_REG_SZ_Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+    
+    RegData$RegType_$VALUES = (*env) -> GetStaticFieldID(env, RegData$RegType, "$VALUES", "[Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+    if (RegData$RegType_$VALUES == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType_$VALUES_[Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+
+    for (int i = 0; i < 8; i++) {
+        RegData$RegType_enum_values[i] = 0;
+    }
+    RegData$RegType_enum_values[0] = RegData$RegType_REG_BINARY;
+    RegData$RegType_enum_values[1] = RegData$RegType_REG_DWORD;
+    RegData$RegType_enum_values[2] = RegData$RegType_REG_EXPAND_SZ;
+    RegData$RegType_enum_values[3] = RegData$RegType_REG_LINK;
+    RegData$RegType_enum_values[4] = RegData$RegType_REG_MULTI_SZ;
+    RegData$RegType_enum_values[5] = RegData$RegType_REG_NONE;
+    RegData$RegType_enum_values[6] = RegData$RegType_REG_QWORD;
+    RegData$RegType_enum_values[7] = RegData$RegType_REG_SZ;
+    RegData$RegType_C_0 = (*env) -> GetMethodID(env, RegData$RegType, "<init>", "(Ljava/lang/String;I)V");
+    if (RegData$RegType_C_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType.<init>(Ljava/lang/String;I)V");
+        return JNI_FALSE;
+    }
+
+    RegEnumKeyExResult_name = (*env) -> GetFieldID(env, RegEnumKeyExResult, "name", "Ljava/lang/String;");
+    if (RegEnumKeyExResult_name == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegEnumKeyExResult_name_Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    RegEnumKeyExResult_className = (*env) -> GetFieldID(env, RegEnumKeyExResult, "className", "Ljava/lang/String;");
+    if (RegEnumKeyExResult_className == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegEnumKeyExResult_className_Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    RegEnumKeyExResult_lastWriteTime = (*env) -> GetFieldID(env, RegEnumKeyExResult, "lastWriteTime", "J");
+    if (RegEnumKeyExResult_lastWriteTime == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegEnumKeyExResult_lastWriteTime_J");
+        return JNI_FALSE;
+    }
+
+    RegEnumKeyExResult_C_0 = (*env) -> GetMethodID(env, RegEnumKeyExResult, "<init>", "()V");
+    if (RegEnumKeyExResult_C_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegEnumKeyExResult.<init>()V");
+        return JNI_FALSE;
+    }
+
+    RegEnumKeyExResult_M_equals_0 = (*env) -> GetMethodID(env, RegEnumKeyExResult, "equals", "(Ljava/lang/Object;)Z");
+    if (RegEnumKeyExResult_M_equals_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegEnumKeyExResult.equals(Ljava/lang/Object;)Z");
+        return JNI_FALSE;
+    }
+
+    RegEnumKeyExResult_M_getClassName_0 = (*env) -> GetMethodID(env, RegEnumKeyExResult, "getClassName", "()Ljava/lang/String;");
+    if (RegEnumKeyExResult_M_getClassName_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegEnumKeyExResult.getClassName()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    RegEnumKeyExResult_M_getLastWriteTime_0 = (*env) -> GetMethodID(env, RegEnumKeyExResult, "getLastWriteTime", "()J");
+    if (RegEnumKeyExResult_M_getLastWriteTime_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegEnumKeyExResult.getLastWriteTime()J");
+        return JNI_FALSE;
+    }
+
+    RegEnumKeyExResult_M_getName_0 = (*env) -> GetMethodID(env, RegEnumKeyExResult, "getName", "()Ljava/lang/String;");
+    if (RegEnumKeyExResult_M_getName_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegEnumKeyExResult.getName()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    RegEnumKeyExResult_M_hashCode_0 = (*env) -> GetMethodID(env, RegEnumKeyExResult, "hashCode", "()I");
+    if (RegEnumKeyExResult_M_hashCode_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegEnumKeyExResult.hashCode()I");
+        return JNI_FALSE;
+    }
+
+    RegEnumKeyExResult_M_toString_0 = (*env) -> GetMethodID(env, RegEnumKeyExResult, "toString", "()Ljava/lang/String;");
+    if (RegEnumKeyExResult_M_toString_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegEnumKeyExResult.toString()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    RegQueryInfoKeyResult_keyClass = (*env) -> GetFieldID(env, RegQueryInfoKeyResult, "keyClass", "Ljava/lang/String;");
+    if (RegQueryInfoKeyResult_keyClass == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult_keyClass_Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    RegQueryInfoKeyResult_subKeys = (*env) -> GetFieldID(env, RegQueryInfoKeyResult, "subKeys", "I");
+    if (RegQueryInfoKeyResult_subKeys == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult_subKeys_I");
+        return JNI_FALSE;
+    }
+
+    RegQueryInfoKeyResult_maxSubKeyLen = (*env) -> GetFieldID(env, RegQueryInfoKeyResult, "maxSubKeyLen", "I");
+    if (RegQueryInfoKeyResult_maxSubKeyLen == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult_maxSubKeyLen_I");
+        return JNI_FALSE;
+    }
+
+    RegQueryInfoKeyResult_maxClassLen = (*env) -> GetFieldID(env, RegQueryInfoKeyResult, "maxClassLen", "I");
+    if (RegQueryInfoKeyResult_maxClassLen == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult_maxClassLen_I");
+        return JNI_FALSE;
+    }
+
+    RegQueryInfoKeyResult_values = (*env) -> GetFieldID(env, RegQueryInfoKeyResult, "values", "I");
+    if (RegQueryInfoKeyResult_values == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult_values_I");
+        return JNI_FALSE;
+    }
+
+    RegQueryInfoKeyResult_maxValueNameLen = (*env) -> GetFieldID(env, RegQueryInfoKeyResult, "maxValueNameLen", "I");
+    if (RegQueryInfoKeyResult_maxValueNameLen == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult_maxValueNameLen_I");
+        return JNI_FALSE;
+    }
+
+    RegQueryInfoKeyResult_maxValueLen = (*env) -> GetFieldID(env, RegQueryInfoKeyResult, "maxValueLen", "I");
+    if (RegQueryInfoKeyResult_maxValueLen == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult_maxValueLen_I");
+        return JNI_FALSE;
+    }
+
+    RegQueryInfoKeyResult_securityDescriptorSize = (*env) -> GetFieldID(env, RegQueryInfoKeyResult, "securityDescriptorSize", "I");
+    if (RegQueryInfoKeyResult_securityDescriptorSize == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult_securityDescriptorSize_I");
+        return JNI_FALSE;
+    }
+
+    RegQueryInfoKeyResult_lastWriteTime = (*env) -> GetFieldID(env, RegQueryInfoKeyResult, "lastWriteTime", "J");
+    if (RegQueryInfoKeyResult_lastWriteTime == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult_lastWriteTime_J");
+        return JNI_FALSE;
+    }
+
+    RegQueryInfoKeyResult_C_0 = (*env) -> GetMethodID(env, RegQueryInfoKeyResult, "<init>", "()V");
+    if (RegQueryInfoKeyResult_C_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.<init>()V");
+        return JNI_FALSE;
+    }
+
+    RegQueryInfoKeyResult_M_equals_0 = (*env) -> GetMethodID(env, RegQueryInfoKeyResult, "equals", "(Ljava/lang/Object;)Z");
+    if (RegQueryInfoKeyResult_M_equals_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.equals(Ljava/lang/Object;)Z");
+        return JNI_FALSE;
+    }
+
+    RegQueryInfoKeyResult_M_getKeyClass_0 = (*env) -> GetMethodID(env, RegQueryInfoKeyResult, "getKeyClass", "()Ljava/lang/String;");
+    if (RegQueryInfoKeyResult_M_getKeyClass_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.getKeyClass()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    RegQueryInfoKeyResult_M_getLastWriteTime_0 = (*env) -> GetMethodID(env, RegQueryInfoKeyResult, "getLastWriteTime", "()J");
+    if (RegQueryInfoKeyResult_M_getLastWriteTime_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.getLastWriteTime()J");
+        return JNI_FALSE;
+    }
+
+    RegQueryInfoKeyResult_M_getMaxClassLen_0 = (*env) -> GetMethodID(env, RegQueryInfoKeyResult, "getMaxClassLen", "()I");
+    if (RegQueryInfoKeyResult_M_getMaxClassLen_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.getMaxClassLen()I");
+        return JNI_FALSE;
+    }
+
+    RegQueryInfoKeyResult_M_getMaxSubKeyLen_0 = (*env) -> GetMethodID(env, RegQueryInfoKeyResult, "getMaxSubKeyLen", "()I");
+    if (RegQueryInfoKeyResult_M_getMaxSubKeyLen_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.getMaxSubKeyLen()I");
+        return JNI_FALSE;
+    }
+
+    RegQueryInfoKeyResult_M_getMaxValueLen_0 = (*env) -> GetMethodID(env, RegQueryInfoKeyResult, "getMaxValueLen", "()I");
+    if (RegQueryInfoKeyResult_M_getMaxValueLen_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.getMaxValueLen()I");
+        return JNI_FALSE;
+    }
+
+    RegQueryInfoKeyResult_M_getMaxValueNameLen_0 = (*env) -> GetMethodID(env, RegQueryInfoKeyResult, "getMaxValueNameLen", "()I");
+    if (RegQueryInfoKeyResult_M_getMaxValueNameLen_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.getMaxValueNameLen()I");
+        return JNI_FALSE;
+    }
+
+    RegQueryInfoKeyResult_M_getSecurityDescriptorSize_0 = (*env) -> GetMethodID(env, RegQueryInfoKeyResult, "getSecurityDescriptorSize", "()I");
+    if (RegQueryInfoKeyResult_M_getSecurityDescriptorSize_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.getSecurityDescriptorSize()I");
+        return JNI_FALSE;
+    }
+
+    RegQueryInfoKeyResult_M_getSubKeys_0 = (*env) -> GetMethodID(env, RegQueryInfoKeyResult, "getSubKeys", "()I");
+    if (RegQueryInfoKeyResult_M_getSubKeys_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.getSubKeys()I");
+        return JNI_FALSE;
+    }
+
+    RegQueryInfoKeyResult_M_getValues_0 = (*env) -> GetMethodID(env, RegQueryInfoKeyResult, "getValues", "()I");
+    if (RegQueryInfoKeyResult_M_getValues_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.getValues()I");
+        return JNI_FALSE;
+    }
+
+    RegQueryInfoKeyResult_M_hashCode_0 = (*env) -> GetMethodID(env, RegQueryInfoKeyResult, "hashCode", "()I");
+    if (RegQueryInfoKeyResult_M_hashCode_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.hashCode()I");
+        return JNI_FALSE;
+    }
+
+    RegQueryInfoKeyResult_M_toString_0 = (*env) -> GetMethodID(env, RegQueryInfoKeyResult, "toString", "()Ljava/lang/String;");
+    if (RegQueryInfoKeyResult_M_toString_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.toString()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
     Sockaddr_EMPTY = (*env) -> GetStaticFieldID(env, Sockaddr, "EMPTY", "[B");
     if (Sockaddr_EMPTY == 0) {
         (*env) -> ExceptionClear(env);
@@ -8352,6 +10733,174 @@ jboolean jnigenerator_init(JNIEnv * env) {
     if (Sockaddr_M_hashCode_0 == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr.hashCode()I");
+        return JNI_FALSE;
+    }
+
+    Sockaddr_M_parseWin32_SOCKADDR_INET_0 = (*env) -> GetMethodID(env, Sockaddr, "parseWin32_SOCKADDR_INET", "()Ljava/net/InetSocketAddress;");
+    if (Sockaddr_M_parseWin32_SOCKADDR_INET_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr.parseWin32_SOCKADDR_INET()Ljava/net/InetSocketAddress;");
+        return JNI_FALSE;
+    }
+
+    Sockaddr_M_toString_0 = (*env) -> GetMethodID(env, Sockaddr, "toString", "()Ljava/lang/String;");
+    if (Sockaddr_M_toString_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Sockaddr.toString()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    SpDeviceInfoData_cbSize = (*env) -> GetFieldID(env, SpDeviceInfoData, "cbSize", "I");
+    if (SpDeviceInfoData_cbSize == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData_cbSize_I");
+        return JNI_FALSE;
+    }
+
+    SpDeviceInfoData_InterfaceClassGuid = (*env) -> GetFieldID(env, SpDeviceInfoData, "InterfaceClassGuid", "Lio/github/alexanderschuetz97/nativeutils/api/structs/GUID;");
+    if (SpDeviceInfoData_InterfaceClassGuid == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData_InterfaceClassGuid_Lio/github/alexanderschuetz97/nativeutils/api/structs/GUID;");
+        return JNI_FALSE;
+    }
+
+    SpDeviceInfoData_DevInst = (*env) -> GetFieldID(env, SpDeviceInfoData, "DevInst", "I");
+    if (SpDeviceInfoData_DevInst == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData_DevInst_I");
+        return JNI_FALSE;
+    }
+
+    SpDeviceInfoData_ptr = (*env) -> GetFieldID(env, SpDeviceInfoData, "ptr", "J");
+    if (SpDeviceInfoData_ptr == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData_ptr_J");
+        return JNI_FALSE;
+    }
+
+    SpDeviceInfoData_C_0 = (*env) -> GetMethodID(env, SpDeviceInfoData, "<init>", "()V");
+    if (SpDeviceInfoData_C_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData.<init>()V");
+        return JNI_FALSE;
+    }
+
+    SpDeviceInfoData_C_1 = (*env) -> GetMethodID(env, SpDeviceInfoData, "<init>", "(ILio/github/alexanderschuetz97/nativeutils/api/structs/GUID;IJ)V");
+    if (SpDeviceInfoData_C_1 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData.<init>(ILio/github/alexanderschuetz97/nativeutils/api/structs/GUID;IJ)V");
+        return JNI_FALSE;
+    }
+
+    SpDeviceInfoData_M_getCbSize_0 = (*env) -> GetMethodID(env, SpDeviceInfoData, "getCbSize", "()I");
+    if (SpDeviceInfoData_M_getCbSize_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData.getCbSize()I");
+        return JNI_FALSE;
+    }
+
+    SpDeviceInfoData_M_getDevInst_0 = (*env) -> GetMethodID(env, SpDeviceInfoData, "getDevInst", "()I");
+    if (SpDeviceInfoData_M_getDevInst_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData.getDevInst()I");
+        return JNI_FALSE;
+    }
+
+    SpDeviceInfoData_M_getInterfaceClassGuid_0 = (*env) -> GetMethodID(env, SpDeviceInfoData, "getInterfaceClassGuid", "()Lio/github/alexanderschuetz97/nativeutils/api/structs/GUID;");
+    if (SpDeviceInfoData_M_getInterfaceClassGuid_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData.getInterfaceClassGuid()Lio/github/alexanderschuetz97/nativeutils/api/structs/GUID;");
+        return JNI_FALSE;
+    }
+
+    SpDeviceInfoData_M_getPtr_0 = (*env) -> GetMethodID(env, SpDeviceInfoData, "getPtr", "()J");
+    if (SpDeviceInfoData_M_getPtr_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData.getPtr()J");
+        return JNI_FALSE;
+    }
+
+    SpDeviceInfoData_M_toString_0 = (*env) -> GetMethodID(env, SpDeviceInfoData, "toString", "()Ljava/lang/String;");
+    if (SpDeviceInfoData_M_toString_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData.toString()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    SpDeviceInterfaceData_cbSize = (*env) -> GetFieldID(env, SpDeviceInterfaceData, "cbSize", "I");
+    if (SpDeviceInterfaceData_cbSize == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData_cbSize_I");
+        return JNI_FALSE;
+    }
+
+    SpDeviceInterfaceData_InterfaceClassGuid = (*env) -> GetFieldID(env, SpDeviceInterfaceData, "InterfaceClassGuid", "Lio/github/alexanderschuetz97/nativeutils/api/structs/GUID;");
+    if (SpDeviceInterfaceData_InterfaceClassGuid == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData_InterfaceClassGuid_Lio/github/alexanderschuetz97/nativeutils/api/structs/GUID;");
+        return JNI_FALSE;
+    }
+
+    SpDeviceInterfaceData_flags = (*env) -> GetFieldID(env, SpDeviceInterfaceData, "flags", "I");
+    if (SpDeviceInterfaceData_flags == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData_flags_I");
+        return JNI_FALSE;
+    }
+
+    SpDeviceInterfaceData_ptr = (*env) -> GetFieldID(env, SpDeviceInterfaceData, "ptr", "J");
+    if (SpDeviceInterfaceData_ptr == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData_ptr_J");
+        return JNI_FALSE;
+    }
+
+    SpDeviceInterfaceData_C_0 = (*env) -> GetMethodID(env, SpDeviceInterfaceData, "<init>", "()V");
+    if (SpDeviceInterfaceData_C_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData.<init>()V");
+        return JNI_FALSE;
+    }
+
+    SpDeviceInterfaceData_C_1 = (*env) -> GetMethodID(env, SpDeviceInterfaceData, "<init>", "(ILio/github/alexanderschuetz97/nativeutils/api/structs/GUID;I)V");
+    if (SpDeviceInterfaceData_C_1 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData.<init>(ILio/github/alexanderschuetz97/nativeutils/api/structs/GUID;I)V");
+        return JNI_FALSE;
+    }
+
+    SpDeviceInterfaceData_M_getCbSize_0 = (*env) -> GetMethodID(env, SpDeviceInterfaceData, "getCbSize", "()I");
+    if (SpDeviceInterfaceData_M_getCbSize_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData.getCbSize()I");
+        return JNI_FALSE;
+    }
+
+    SpDeviceInterfaceData_M_getFlags_0 = (*env) -> GetMethodID(env, SpDeviceInterfaceData, "getFlags", "()I");
+    if (SpDeviceInterfaceData_M_getFlags_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData.getFlags()I");
+        return JNI_FALSE;
+    }
+
+    SpDeviceInterfaceData_M_getInterfaceClassGuid_0 = (*env) -> GetMethodID(env, SpDeviceInterfaceData, "getInterfaceClassGuid", "()Lio/github/alexanderschuetz97/nativeutils/api/structs/GUID;");
+    if (SpDeviceInterfaceData_M_getInterfaceClassGuid_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData.getInterfaceClassGuid()Lio/github/alexanderschuetz97/nativeutils/api/structs/GUID;");
+        return JNI_FALSE;
+    }
+
+    SpDeviceInterfaceData_M_getPtr_0 = (*env) -> GetMethodID(env, SpDeviceInterfaceData, "getPtr", "()J");
+    if (SpDeviceInterfaceData_M_getPtr_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData.getPtr()J");
+        return JNI_FALSE;
+    }
+
+    SpDeviceInterfaceData_M_toString_0 = (*env) -> GetMethodID(env, SpDeviceInterfaceData, "toString", "()Ljava/lang/String;");
+    if (SpDeviceInterfaceData_M_toString_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData.toString()Ljava/lang/String;");
         return JNI_FALSE;
     }
 
@@ -8730,6 +11279,251 @@ jboolean jnigenerator_init(JNIEnv * env) {
     if (Stat_M_toString_0 == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Stat.toString()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    Statvfs_f_bsize = (*env) -> GetFieldID(env, Statvfs, "f_bsize", "J");
+    if (Statvfs_f_bsize == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs_f_bsize_J");
+        return JNI_FALSE;
+    }
+
+    Statvfs_f_frsize = (*env) -> GetFieldID(env, Statvfs, "f_frsize", "J");
+    if (Statvfs_f_frsize == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs_f_frsize_J");
+        return JNI_FALSE;
+    }
+
+    Statvfs_f_blocks = (*env) -> GetFieldID(env, Statvfs, "f_blocks", "J");
+    if (Statvfs_f_blocks == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs_f_blocks_J");
+        return JNI_FALSE;
+    }
+
+    Statvfs_f_bfree = (*env) -> GetFieldID(env, Statvfs, "f_bfree", "J");
+    if (Statvfs_f_bfree == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs_f_bfree_J");
+        return JNI_FALSE;
+    }
+
+    Statvfs_f_bavail = (*env) -> GetFieldID(env, Statvfs, "f_bavail", "J");
+    if (Statvfs_f_bavail == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs_f_bavail_J");
+        return JNI_FALSE;
+    }
+
+    Statvfs_f_files = (*env) -> GetFieldID(env, Statvfs, "f_files", "J");
+    if (Statvfs_f_files == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs_f_files_J");
+        return JNI_FALSE;
+    }
+
+    Statvfs_f_ffree = (*env) -> GetFieldID(env, Statvfs, "f_ffree", "J");
+    if (Statvfs_f_ffree == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs_f_ffree_J");
+        return JNI_FALSE;
+    }
+
+    Statvfs_f_favail = (*env) -> GetFieldID(env, Statvfs, "f_favail", "J");
+    if (Statvfs_f_favail == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs_f_favail_J");
+        return JNI_FALSE;
+    }
+
+    Statvfs_f_fsid = (*env) -> GetFieldID(env, Statvfs, "f_fsid", "J");
+    if (Statvfs_f_fsid == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs_f_fsid_J");
+        return JNI_FALSE;
+    }
+
+    Statvfs_f_flag = (*env) -> GetFieldID(env, Statvfs, "f_flag", "J");
+    if (Statvfs_f_flag == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs_f_flag_J");
+        return JNI_FALSE;
+    }
+
+    Statvfs_f_namemax = (*env) -> GetFieldID(env, Statvfs, "f_namemax", "J");
+    if (Statvfs_f_namemax == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs_f_namemax_J");
+        return JNI_FALSE;
+    }
+
+    Statvfs_C_0 = (*env) -> GetMethodID(env, Statvfs, "<init>", "()V");
+    if (Statvfs_C_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs.<init>()V");
+        return JNI_FALSE;
+    }
+
+    Statvfs_M_getF_bavail_0 = (*env) -> GetMethodID(env, Statvfs, "getF_bavail", "()J");
+    if (Statvfs_M_getF_bavail_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs.getF_bavail()J");
+        return JNI_FALSE;
+    }
+
+    Statvfs_M_getF_bfree_0 = (*env) -> GetMethodID(env, Statvfs, "getF_bfree", "()J");
+    if (Statvfs_M_getF_bfree_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs.getF_bfree()J");
+        return JNI_FALSE;
+    }
+
+    Statvfs_M_getF_blocks_0 = (*env) -> GetMethodID(env, Statvfs, "getF_blocks", "()J");
+    if (Statvfs_M_getF_blocks_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs.getF_blocks()J");
+        return JNI_FALSE;
+    }
+
+    Statvfs_M_getF_bsize_0 = (*env) -> GetMethodID(env, Statvfs, "getF_bsize", "()J");
+    if (Statvfs_M_getF_bsize_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs.getF_bsize()J");
+        return JNI_FALSE;
+    }
+
+    Statvfs_M_getF_favail_0 = (*env) -> GetMethodID(env, Statvfs, "getF_favail", "()J");
+    if (Statvfs_M_getF_favail_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs.getF_favail()J");
+        return JNI_FALSE;
+    }
+
+    Statvfs_M_getF_ffree_0 = (*env) -> GetMethodID(env, Statvfs, "getF_ffree", "()J");
+    if (Statvfs_M_getF_ffree_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs.getF_ffree()J");
+        return JNI_FALSE;
+    }
+
+    Statvfs_M_getF_files_0 = (*env) -> GetMethodID(env, Statvfs, "getF_files", "()J");
+    if (Statvfs_M_getF_files_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs.getF_files()J");
+        return JNI_FALSE;
+    }
+
+    Statvfs_M_getF_flag_0 = (*env) -> GetMethodID(env, Statvfs, "getF_flag", "()J");
+    if (Statvfs_M_getF_flag_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs.getF_flag()J");
+        return JNI_FALSE;
+    }
+
+    Statvfs_M_getF_frsize_0 = (*env) -> GetMethodID(env, Statvfs, "getF_frsize", "()J");
+    if (Statvfs_M_getF_frsize_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs.getF_frsize()J");
+        return JNI_FALSE;
+    }
+
+    Statvfs_M_getF_fsid_0 = (*env) -> GetMethodID(env, Statvfs, "getF_fsid", "()J");
+    if (Statvfs_M_getF_fsid_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs.getF_fsid()J");
+        return JNI_FALSE;
+    }
+
+    Statvfs_M_getF_namemax_0 = (*env) -> GetMethodID(env, Statvfs, "getF_namemax", "()J");
+    if (Statvfs_M_getF_namemax_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs.getF_namemax()J");
+        return JNI_FALSE;
+    }
+
+    Statvfs_M_setF_bavail_0 = (*env) -> GetMethodID(env, Statvfs, "setF_bavail", "(J)V");
+    if (Statvfs_M_setF_bavail_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs.setF_bavail(J)V");
+        return JNI_FALSE;
+    }
+
+    Statvfs_M_setF_bfree_0 = (*env) -> GetMethodID(env, Statvfs, "setF_bfree", "(J)V");
+    if (Statvfs_M_setF_bfree_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs.setF_bfree(J)V");
+        return JNI_FALSE;
+    }
+
+    Statvfs_M_setF_blocks_0 = (*env) -> GetMethodID(env, Statvfs, "setF_blocks", "(J)V");
+    if (Statvfs_M_setF_blocks_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs.setF_blocks(J)V");
+        return JNI_FALSE;
+    }
+
+    Statvfs_M_setF_bsize_0 = (*env) -> GetMethodID(env, Statvfs, "setF_bsize", "(J)V");
+    if (Statvfs_M_setF_bsize_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs.setF_bsize(J)V");
+        return JNI_FALSE;
+    }
+
+    Statvfs_M_setF_favail_0 = (*env) -> GetMethodID(env, Statvfs, "setF_favail", "(J)V");
+    if (Statvfs_M_setF_favail_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs.setF_favail(J)V");
+        return JNI_FALSE;
+    }
+
+    Statvfs_M_setF_ffree_0 = (*env) -> GetMethodID(env, Statvfs, "setF_ffree", "(J)V");
+    if (Statvfs_M_setF_ffree_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs.setF_ffree(J)V");
+        return JNI_FALSE;
+    }
+
+    Statvfs_M_setF_files_0 = (*env) -> GetMethodID(env, Statvfs, "setF_files", "(J)V");
+    if (Statvfs_M_setF_files_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs.setF_files(J)V");
+        return JNI_FALSE;
+    }
+
+    Statvfs_M_setF_flag_0 = (*env) -> GetMethodID(env, Statvfs, "setF_flag", "(J)V");
+    if (Statvfs_M_setF_flag_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs.setF_flag(J)V");
+        return JNI_FALSE;
+    }
+
+    Statvfs_M_setF_frsize_0 = (*env) -> GetMethodID(env, Statvfs, "setF_frsize", "(J)V");
+    if (Statvfs_M_setF_frsize_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs.setF_frsize(J)V");
+        return JNI_FALSE;
+    }
+
+    Statvfs_M_setF_fsid_0 = (*env) -> GetMethodID(env, Statvfs, "setF_fsid", "(J)V");
+    if (Statvfs_M_setF_fsid_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs.setF_fsid(J)V");
+        return JNI_FALSE;
+    }
+
+    Statvfs_M_setF_namemax_0 = (*env) -> GetMethodID(env, Statvfs, "setF_namemax", "(J)V");
+    if (Statvfs_M_setF_namemax_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs.setF_namemax(J)V");
+        return JNI_FALSE;
+    }
+
+    Statvfs_M_toString_0 = (*env) -> GetMethodID(env, Statvfs, "toString", "()Ljava/lang/String;");
+    if (Statvfs_M_toString_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Statvfs.toString()Ljava/lang/String;");
         return JNI_FALSE;
     }
 
@@ -9552,6 +12346,13 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
+    FileIsDirectoryException_EC_0 = (*env) -> GetMethodID(env, FileIsDirectoryException, "<init>", "(Ljava/lang/String;)V");
+    if (FileIsDirectoryException_EC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/FileIsDirectoryException.<init>(Ljava/lang/String;)V");
+        return JNI_FALSE;
+    }
+
     InvalidFileDescriptorException_EC_0 = (*env) -> GetMethodID(env, InvalidFileDescriptorException, "<init>", "()V");
     if (InvalidFileDescriptorException_EC_0 == 0) {
         (*env) -> ExceptionClear(env);
@@ -9930,6 +12731,20 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
+    NoSuchElementException_EC_0 = (*env) -> GetMethodID(env, NoSuchElementException, "<init>", "()V");
+    if (NoSuchElementException_EC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find java/util/NoSuchElementException.<init>()V");
+        return JNI_FALSE;
+    }
+
+    NoSuchElementException_EC_1 = (*env) -> GetMethodID(env, NoSuchElementException, "<init>", "(Ljava/lang/String;)V");
+    if (NoSuchElementException_EC_1 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find java/util/NoSuchElementException.<init>(Ljava/lang/String;)V");
+        return JNI_FALSE;
+    }
+
 
     return JNI_TRUE;
 }
@@ -9973,19 +12788,9 @@ void jnigenerator_destroy(JNIEnv * env) {
         Win32FileAttributeData = 0;
     }
 
-    if (Passwd != 0) {
-        (*env) -> DeleteGlobalRef(env, Passwd);
-        Passwd = 0;
-    }
-
     if (IpAdapterAddresses$IpAdapterUnicastAddress != 0) {
         (*env) -> DeleteGlobalRef(env, IpAdapterAddresses$IpAdapterUnicastAddress);
         IpAdapterAddresses$IpAdapterUnicastAddress = 0;
-    }
-
-    if (OperationInProgressException != 0) {
-        (*env) -> DeleteGlobalRef(env, OperationInProgressException);
-        OperationInProgressException = 0;
     }
 
     if (PermissionDeniedException != 0) {
@@ -9993,24 +12798,9 @@ void jnigenerator_destroy(JNIEnv * env) {
         PermissionDeniedException = 0;
     }
 
-    if (ShellExecuteException != 0) {
-        (*env) -> DeleteGlobalRef(env, ShellExecuteException);
-        ShellExecuteException = 0;
-    }
-
     if (GUID != 0) {
         (*env) -> DeleteGlobalRef(env, GUID);
         GUID = 0;
-    }
-
-    if (BindException != 0) {
-        (*env) -> DeleteGlobalRef(env, BindException);
-        BindException = 0;
-    }
-
-    if (Iterable != 0) {
-        (*env) -> DeleteGlobalRef(env, Iterable);
-        Iterable = 0;
     }
 
     if (NullPointerException != 0) {
@@ -10023,39 +12813,9 @@ void jnigenerator_destroy(JNIEnv * env) {
         Utsname = 0;
     }
 
-    if (ArrayList != 0) {
-        (*env) -> DeleteGlobalRef(env, ArrayList);
-        ArrayList = 0;
-    }
-
     if (InetAddress != 0) {
         (*env) -> DeleteGlobalRef(env, InetAddress);
         InetAddress = 0;
-    }
-
-    if (Cmsghdr != 0) {
-        (*env) -> DeleteGlobalRef(env, Cmsghdr);
-        Cmsghdr = 0;
-    }
-
-    if (InvalidPathException != 0) {
-        (*env) -> DeleteGlobalRef(env, InvalidPathException);
-        InvalidPathException = 0;
-    }
-
-    if (FileSystemLoopException != 0) {
-        (*env) -> DeleteGlobalRef(env, FileSystemLoopException);
-        FileSystemLoopException = 0;
-    }
-
-    if (UnknownNativeErrorException != 0) {
-        (*env) -> DeleteGlobalRef(env, UnknownNativeErrorException);
-        UnknownNativeErrorException = 0;
-    }
-
-    if (ConnectException != 0) {
-        (*env) -> DeleteGlobalRef(env, ConnectException);
-        ConnectException = 0;
     }
 
     if (PollFD != 0) {
@@ -10063,24 +12823,19 @@ void jnigenerator_destroy(JNIEnv * env) {
         PollFD = 0;
     }
 
-    if (UnsupportedOperationException != 0) {
-        (*env) -> DeleteGlobalRef(env, UnsupportedOperationException);
-        UnsupportedOperationException = 0;
+    if (RegEnumKeyExResult != 0) {
+        (*env) -> DeleteGlobalRef(env, RegEnumKeyExResult);
+        RegEnumKeyExResult = 0;
     }
 
-    if (Stat != 0) {
-        (*env) -> DeleteGlobalRef(env, Stat);
-        Stat = 0;
+    if (RegData$RegType != 0) {
+        (*env) -> DeleteGlobalRef(env, RegData$RegType);
+        RegData$RegType = 0;
     }
 
-    if (Iterator != 0) {
-        (*env) -> DeleteGlobalRef(env, Iterator);
-        Iterator = 0;
-    }
-
-    if (NotDirectoryException != 0) {
-        (*env) -> DeleteGlobalRef(env, NotDirectoryException);
-        NotDirectoryException = 0;
+    if (RegData != 0) {
+        (*env) -> DeleteGlobalRef(env, RegData);
+        RegData = 0;
     }
 
     if (Collection != 0) {
@@ -10088,34 +12843,24 @@ void jnigenerator_destroy(JNIEnv * env) {
         Collection = 0;
     }
 
+    if (SpDeviceInterfaceData != 0) {
+        (*env) -> DeleteGlobalRef(env, SpDeviceInterfaceData);
+        SpDeviceInterfaceData = 0;
+    }
+
     if (NotLinkException != 0) {
         (*env) -> DeleteGlobalRef(env, NotLinkException);
         NotLinkException = 0;
     }
 
+    if (MibIpForwardRow2 != 0) {
+        (*env) -> DeleteGlobalRef(env, MibIpForwardRow2);
+        MibIpForwardRow2 = 0;
+    }
+
     if (Msghdr != 0) {
         (*env) -> DeleteGlobalRef(env, Msghdr);
         Msghdr = 0;
-    }
-
-    if (IOException != 0) {
-        (*env) -> DeleteGlobalRef(env, IOException);
-        IOException = 0;
-    }
-
-    if (Group != 0) {
-        (*env) -> DeleteGlobalRef(env, Group);
-        Group = 0;
-    }
-
-    if (IllegalArgumentException != 0) {
-        (*env) -> DeleteGlobalRef(env, IllegalArgumentException);
-        IllegalArgumentException = 0;
-    }
-
-    if (FileAlreadyExistsException != 0) {
-        (*env) -> DeleteGlobalRef(env, FileAlreadyExistsException);
-        FileAlreadyExistsException = 0;
     }
 
     if (MibIpForwardRow != 0) {
@@ -10143,11 +12888,6 @@ void jnigenerator_destroy(JNIEnv * env) {
         Exception = 0;
     }
 
-    if (QuotaExceededException != 0) {
-        (*env) -> DeleteGlobalRef(env, QuotaExceededException);
-        QuotaExceededException = 0;
-    }
-
     if (InvalidFileDescriptorException != 0) {
         (*env) -> DeleteGlobalRef(env, InvalidFileDescriptorException);
         InvalidFileDescriptorException = 0;
@@ -10173,11 +12913,6 @@ void jnigenerator_destroy(JNIEnv * env) {
         Sockaddr = 0;
     }
 
-    if (MutexAbandonedException != 0) {
-        (*env) -> DeleteGlobalRef(env, MutexAbandonedException);
-        MutexAbandonedException = 0;
-    }
-
     if (AccessDeniedException != 0) {
         (*env) -> DeleteGlobalRef(env, AccessDeniedException);
         AccessDeniedException = 0;
@@ -10186,6 +12921,141 @@ void jnigenerator_destroy(JNIEnv * env) {
     if (ReadOnlyFileSystemException != 0) {
         (*env) -> DeleteGlobalRef(env, ReadOnlyFileSystemException);
         ReadOnlyFileSystemException = 0;
+    }
+
+    if (FileIsDirectoryException != 0) {
+        (*env) -> DeleteGlobalRef(env, FileIsDirectoryException);
+        FileIsDirectoryException = 0;
+    }
+
+    if (Passwd != 0) {
+        (*env) -> DeleteGlobalRef(env, Passwd);
+        Passwd = 0;
+    }
+
+    if (OperationInProgressException != 0) {
+        (*env) -> DeleteGlobalRef(env, OperationInProgressException);
+        OperationInProgressException = 0;
+    }
+
+    if (ShellExecuteException != 0) {
+        (*env) -> DeleteGlobalRef(env, ShellExecuteException);
+        ShellExecuteException = 0;
+    }
+
+    if (SpDeviceInfoData != 0) {
+        (*env) -> DeleteGlobalRef(env, SpDeviceInfoData);
+        SpDeviceInfoData = 0;
+    }
+
+    if (BindException != 0) {
+        (*env) -> DeleteGlobalRef(env, BindException);
+        BindException = 0;
+    }
+
+    if (Iterable != 0) {
+        (*env) -> DeleteGlobalRef(env, Iterable);
+        Iterable = 0;
+    }
+
+    if (ArrayList != 0) {
+        (*env) -> DeleteGlobalRef(env, ArrayList);
+        ArrayList = 0;
+    }
+
+    if (IfNameIndex != 0) {
+        (*env) -> DeleteGlobalRef(env, IfNameIndex);
+        IfNameIndex = 0;
+    }
+
+    if (Cmsghdr != 0) {
+        (*env) -> DeleteGlobalRef(env, Cmsghdr);
+        Cmsghdr = 0;
+    }
+
+    if (InvalidPathException != 0) {
+        (*env) -> DeleteGlobalRef(env, InvalidPathException);
+        InvalidPathException = 0;
+    }
+
+    if (FileSystemLoopException != 0) {
+        (*env) -> DeleteGlobalRef(env, FileSystemLoopException);
+        FileSystemLoopException = 0;
+    }
+
+    if (UnknownNativeErrorException != 0) {
+        (*env) -> DeleteGlobalRef(env, UnknownNativeErrorException);
+        UnknownNativeErrorException = 0;
+    }
+
+    if (ConnectException != 0) {
+        (*env) -> DeleteGlobalRef(env, ConnectException);
+        ConnectException = 0;
+    }
+
+    if (NoSuchElementException != 0) {
+        (*env) -> DeleteGlobalRef(env, NoSuchElementException);
+        NoSuchElementException = 0;
+    }
+
+    if (UnsupportedOperationException != 0) {
+        (*env) -> DeleteGlobalRef(env, UnsupportedOperationException);
+        UnsupportedOperationException = 0;
+    }
+
+    if (Stat != 0) {
+        (*env) -> DeleteGlobalRef(env, Stat);
+        Stat = 0;
+    }
+
+    if (Iterator != 0) {
+        (*env) -> DeleteGlobalRef(env, Iterator);
+        Iterator = 0;
+    }
+
+    if (NotDirectoryException != 0) {
+        (*env) -> DeleteGlobalRef(env, NotDirectoryException);
+        NotDirectoryException = 0;
+    }
+
+    if (IOException != 0) {
+        (*env) -> DeleteGlobalRef(env, IOException);
+        IOException = 0;
+    }
+
+    if (Group != 0) {
+        (*env) -> DeleteGlobalRef(env, Group);
+        Group = 0;
+    }
+
+    if (IllegalArgumentException != 0) {
+        (*env) -> DeleteGlobalRef(env, IllegalArgumentException);
+        IllegalArgumentException = 0;
+    }
+
+    if (FileAlreadyExistsException != 0) {
+        (*env) -> DeleteGlobalRef(env, FileAlreadyExistsException);
+        FileAlreadyExistsException = 0;
+    }
+
+    if (QuotaExceededException != 0) {
+        (*env) -> DeleteGlobalRef(env, QuotaExceededException);
+        QuotaExceededException = 0;
+    }
+
+    if (Statvfs != 0) {
+        (*env) -> DeleteGlobalRef(env, Statvfs);
+        Statvfs = 0;
+    }
+
+    if (RegQueryInfoKeyResult != 0) {
+        (*env) -> DeleteGlobalRef(env, RegQueryInfoKeyResult);
+        RegQueryInfoKeyResult = 0;
+    }
+
+    if (MutexAbandonedException != 0) {
+        (*env) -> DeleteGlobalRef(env, MutexAbandonedException);
+        MutexAbandonedException = 0;
     }
 
     if (OutOfMemoryError != 0) {
@@ -10238,6 +13108,13 @@ void jnigenerator_destroy(JNIEnv * env) {
     Group_M_setGr_name_0 = 0;
     Group_M_setGr_passwd_0 = 0;
     Group_M_toString_0 = 0;
+    IfNameIndex_index = 0;
+    IfNameIndex_name = 0;
+    IfNameIndex_C_0 = 0;
+    IfNameIndex_M_equals_0 = 0;
+    IfNameIndex_M_getIndex_0 = 0;
+    IfNameIndex_M_getName_0 = 0;
+    IfNameIndex_M_hashCode_0 = 0;
     Iovec_payload = 0;
     Iovec_off = 0;
     Iovec_len = 0;
@@ -10476,6 +13353,56 @@ void jnigenerator_destroy(JNIEnv * env) {
     MibIpForwardRow$MIB_IPFORWARD_TYPE_C_0 = 0;
     MibIpForwardRow$MIB_IPFORWARD_TYPE_M_getDwForwardType_0 = 0;
     MibIpForwardRow$MIB_IPFORWARD_TYPE_M_getForDwForwardType_0 = 0;
+    MibIpForwardRow2_InterfaceLuid = 0;
+    MibIpForwardRow2_InterfaceIndex = 0;
+    MibIpForwardRow2_DestinationPrefixAddress = 0;
+    MibIpForwardRow2_DestinationPrefixLength = 0;
+    MibIpForwardRow2_NextHop = 0;
+    MibIpForwardRow2_SitePrefixLength = 0;
+    MibIpForwardRow2_ValidLifetime = 0;
+    MibIpForwardRow2_PreferredLifetime = 0;
+    MibIpForwardRow2_Metric = 0;
+    MibIpForwardRow2_Protocol = 0;
+    MibIpForwardRow2_Loopback = 0;
+    MibIpForwardRow2_AutoconfigureAddress = 0;
+    MibIpForwardRow2_Publish = 0;
+    MibIpForwardRow2_Immortal = 0;
+    MibIpForwardRow2_Age = 0;
+    MibIpForwardRow2_Origin = 0;
+    MibIpForwardRow2_C_0 = 0;
+    MibIpForwardRow2_M_getAge_0 = 0;
+    MibIpForwardRow2_M_getDestinationPrefixAddress_0 = 0;
+    MibIpForwardRow2_M_getDestinationPrefixLength_0 = 0;
+    MibIpForwardRow2_M_getInterfaceIndex_0 = 0;
+    MibIpForwardRow2_M_getInterfaceLuid_0 = 0;
+    MibIpForwardRow2_M_getMetric_0 = 0;
+    MibIpForwardRow2_M_getNextHop_0 = 0;
+    MibIpForwardRow2_M_getOrigin_0 = 0;
+    MibIpForwardRow2_M_getPreferredLifetime_0 = 0;
+    MibIpForwardRow2_M_getProtocol_0 = 0;
+    MibIpForwardRow2_M_getSitePrefixLength_0 = 0;
+    MibIpForwardRow2_M_getValidLifetime_0 = 0;
+    MibIpForwardRow2_M_isAutoconfigureAddress_0 = 0;
+    MibIpForwardRow2_M_isImmortal_0 = 0;
+    MibIpForwardRow2_M_isLoopback_0 = 0;
+    MibIpForwardRow2_M_isPublish_0 = 0;
+    MibIpForwardRow2_M_setAge_0 = 0;
+    MibIpForwardRow2_M_setAutoconfigureAddress_0 = 0;
+    MibIpForwardRow2_M_setDestinationPrefixAddress_0 = 0;
+    MibIpForwardRow2_M_setDestinationPrefixLength_0 = 0;
+    MibIpForwardRow2_M_setImmortal_0 = 0;
+    MibIpForwardRow2_M_setInterfaceIndex_0 = 0;
+    MibIpForwardRow2_M_setInterfaceLuid_0 = 0;
+    MibIpForwardRow2_M_setLoopback_0 = 0;
+    MibIpForwardRow2_M_setMetric_0 = 0;
+    MibIpForwardRow2_M_setNextHop_0 = 0;
+    MibIpForwardRow2_M_setOrigin_0 = 0;
+    MibIpForwardRow2_M_setPreferredLifetime_0 = 0;
+    MibIpForwardRow2_M_setProtocol_0 = 0;
+    MibIpForwardRow2_M_setPublish_0 = 0;
+    MibIpForwardRow2_M_setSitePrefixLength_0 = 0;
+    MibIpForwardRow2_M_setValidLifetime_0 = 0;
+    MibIpForwardRow2_M_toString_0 = 0;
     Msghdr_msg_iov = 0;
     Msghdr_msg_control = 0;
     Msghdr_msg_name = 0;
@@ -10592,6 +13519,90 @@ void jnigenerator_destroy(JNIEnv * env) {
     }
 
     PollFD$PollEvent_C_0 = 0;
+    RegData_type = 0;
+    RegData_value = 0;
+    RegData_C_0 = 0;
+    RegData_C_1 = 0;
+    RegData_C_2 = 0;
+    RegData_M_asInt_0 = 0;
+    RegData_M_asLong_0 = 0;
+    RegData_M_binary_0 = 0;
+    RegData_M_number_0 = 0;
+    RegData_M_string_0 = 0;
+    RegData_M_strings_0 = 0;
+    RegData_M_toString_0 = 0;
+    RegData_M_type_0 = 0;
+    RegData_M_value_0 = 0;
+    if (RegData$RegType_REG_BINARY != 0) {
+        (*env)->DeleteGlobalRef(env, RegData$RegType_REG_BINARY);
+    }
+    RegData$RegType_REG_BINARY = 0;
+    if (RegData$RegType_REG_DWORD != 0) {
+        (*env)->DeleteGlobalRef(env, RegData$RegType_REG_DWORD);
+    }
+    RegData$RegType_REG_DWORD = 0;
+    if (RegData$RegType_REG_EXPAND_SZ != 0) {
+        (*env)->DeleteGlobalRef(env, RegData$RegType_REG_EXPAND_SZ);
+    }
+    RegData$RegType_REG_EXPAND_SZ = 0;
+    if (RegData$RegType_REG_LINK != 0) {
+        (*env)->DeleteGlobalRef(env, RegData$RegType_REG_LINK);
+    }
+    RegData$RegType_REG_LINK = 0;
+    if (RegData$RegType_REG_MULTI_SZ != 0) {
+        (*env)->DeleteGlobalRef(env, RegData$RegType_REG_MULTI_SZ);
+    }
+    RegData$RegType_REG_MULTI_SZ = 0;
+    if (RegData$RegType_REG_NONE != 0) {
+        (*env)->DeleteGlobalRef(env, RegData$RegType_REG_NONE);
+    }
+    RegData$RegType_REG_NONE = 0;
+    if (RegData$RegType_REG_QWORD != 0) {
+        (*env)->DeleteGlobalRef(env, RegData$RegType_REG_QWORD);
+    }
+    RegData$RegType_REG_QWORD = 0;
+    if (RegData$RegType_REG_SZ != 0) {
+        (*env)->DeleteGlobalRef(env, RegData$RegType_REG_SZ);
+    }
+    RegData$RegType_REG_SZ = 0;
+    RegData$RegType_$VALUES = 0;
+    for (int i = 0; i < 8; i++) {
+        RegData$RegType_enum_values[i] = 0;
+    }
+
+    RegData$RegType_C_0 = 0;
+    RegEnumKeyExResult_name = 0;
+    RegEnumKeyExResult_className = 0;
+    RegEnumKeyExResult_lastWriteTime = 0;
+    RegEnumKeyExResult_C_0 = 0;
+    RegEnumKeyExResult_M_equals_0 = 0;
+    RegEnumKeyExResult_M_getClassName_0 = 0;
+    RegEnumKeyExResult_M_getLastWriteTime_0 = 0;
+    RegEnumKeyExResult_M_getName_0 = 0;
+    RegEnumKeyExResult_M_hashCode_0 = 0;
+    RegEnumKeyExResult_M_toString_0 = 0;
+    RegQueryInfoKeyResult_keyClass = 0;
+    RegQueryInfoKeyResult_subKeys = 0;
+    RegQueryInfoKeyResult_maxSubKeyLen = 0;
+    RegQueryInfoKeyResult_maxClassLen = 0;
+    RegQueryInfoKeyResult_values = 0;
+    RegQueryInfoKeyResult_maxValueNameLen = 0;
+    RegQueryInfoKeyResult_maxValueLen = 0;
+    RegQueryInfoKeyResult_securityDescriptorSize = 0;
+    RegQueryInfoKeyResult_lastWriteTime = 0;
+    RegQueryInfoKeyResult_C_0 = 0;
+    RegQueryInfoKeyResult_M_equals_0 = 0;
+    RegQueryInfoKeyResult_M_getKeyClass_0 = 0;
+    RegQueryInfoKeyResult_M_getLastWriteTime_0 = 0;
+    RegQueryInfoKeyResult_M_getMaxClassLen_0 = 0;
+    RegQueryInfoKeyResult_M_getMaxSubKeyLen_0 = 0;
+    RegQueryInfoKeyResult_M_getMaxValueLen_0 = 0;
+    RegQueryInfoKeyResult_M_getMaxValueNameLen_0 = 0;
+    RegQueryInfoKeyResult_M_getSecurityDescriptorSize_0 = 0;
+    RegQueryInfoKeyResult_M_getSubKeys_0 = 0;
+    RegQueryInfoKeyResult_M_getValues_0 = 0;
+    RegQueryInfoKeyResult_M_hashCode_0 = 0;
+    RegQueryInfoKeyResult_M_toString_0 = 0;
     Sockaddr_EMPTY = 0;
     Sockaddr_addressFamily = 0;
     Sockaddr_address = 0;
@@ -10604,6 +13615,30 @@ void jnigenerator_destroy(JNIEnv * env) {
     Sockaddr_M_getAddress_0 = 0;
     Sockaddr_M_getAddressFamily_0 = 0;
     Sockaddr_M_hashCode_0 = 0;
+    Sockaddr_M_parseWin32_SOCKADDR_INET_0 = 0;
+    Sockaddr_M_toString_0 = 0;
+    SpDeviceInfoData_cbSize = 0;
+    SpDeviceInfoData_InterfaceClassGuid = 0;
+    SpDeviceInfoData_DevInst = 0;
+    SpDeviceInfoData_ptr = 0;
+    SpDeviceInfoData_C_0 = 0;
+    SpDeviceInfoData_C_1 = 0;
+    SpDeviceInfoData_M_getCbSize_0 = 0;
+    SpDeviceInfoData_M_getDevInst_0 = 0;
+    SpDeviceInfoData_M_getInterfaceClassGuid_0 = 0;
+    SpDeviceInfoData_M_getPtr_0 = 0;
+    SpDeviceInfoData_M_toString_0 = 0;
+    SpDeviceInterfaceData_cbSize = 0;
+    SpDeviceInterfaceData_InterfaceClassGuid = 0;
+    SpDeviceInterfaceData_flags = 0;
+    SpDeviceInterfaceData_ptr = 0;
+    SpDeviceInterfaceData_C_0 = 0;
+    SpDeviceInterfaceData_C_1 = 0;
+    SpDeviceInterfaceData_M_getCbSize_0 = 0;
+    SpDeviceInterfaceData_M_getFlags_0 = 0;
+    SpDeviceInterfaceData_M_getInterfaceClassGuid_0 = 0;
+    SpDeviceInterfaceData_M_getPtr_0 = 0;
+    SpDeviceInterfaceData_M_toString_0 = 0;
     Stat_dev = 0;
     Stat_ino = 0;
     Stat_mode = 0;
@@ -10658,6 +13693,41 @@ void jnigenerator_destroy(JNIEnv * env) {
     Stat_M_isSocket_0 = 0;
     Stat_M_isSymbolicLink_0 = 0;
     Stat_M_toString_0 = 0;
+    Statvfs_f_bsize = 0;
+    Statvfs_f_frsize = 0;
+    Statvfs_f_blocks = 0;
+    Statvfs_f_bfree = 0;
+    Statvfs_f_bavail = 0;
+    Statvfs_f_files = 0;
+    Statvfs_f_ffree = 0;
+    Statvfs_f_favail = 0;
+    Statvfs_f_fsid = 0;
+    Statvfs_f_flag = 0;
+    Statvfs_f_namemax = 0;
+    Statvfs_C_0 = 0;
+    Statvfs_M_getF_bavail_0 = 0;
+    Statvfs_M_getF_bfree_0 = 0;
+    Statvfs_M_getF_blocks_0 = 0;
+    Statvfs_M_getF_bsize_0 = 0;
+    Statvfs_M_getF_favail_0 = 0;
+    Statvfs_M_getF_ffree_0 = 0;
+    Statvfs_M_getF_files_0 = 0;
+    Statvfs_M_getF_flag_0 = 0;
+    Statvfs_M_getF_frsize_0 = 0;
+    Statvfs_M_getF_fsid_0 = 0;
+    Statvfs_M_getF_namemax_0 = 0;
+    Statvfs_M_setF_bavail_0 = 0;
+    Statvfs_M_setF_bfree_0 = 0;
+    Statvfs_M_setF_blocks_0 = 0;
+    Statvfs_M_setF_bsize_0 = 0;
+    Statvfs_M_setF_favail_0 = 0;
+    Statvfs_M_setF_ffree_0 = 0;
+    Statvfs_M_setF_files_0 = 0;
+    Statvfs_M_setF_flag_0 = 0;
+    Statvfs_M_setF_frsize_0 = 0;
+    Statvfs_M_setF_fsid_0 = 0;
+    Statvfs_M_setF_namemax_0 = 0;
+    Statvfs_M_toString_0 = 0;
     Utsname_sysname = 0;
     Utsname_nodename = 0;
     Utsname_release = 0;
@@ -10775,6 +13845,7 @@ void jnigenerator_destroy(JNIEnv * env) {
     Iterator_M_hasNext_0 = 0;
     Iterator_M_next_0 = 0;
     Iterator_M_remove_0 = 0;
+    FileIsDirectoryException_EC_0 = 0;
     InvalidFileDescriptorException_EC_0 = 0;
     MutexAbandonedException_EC_0 = 0;
     OperationInProgressException_EC_0 = 0;
@@ -10829,5 +13900,7 @@ void jnigenerator_destroy(JNIEnv * env) {
     NotLinkException_EC_0 = 0;
     NotLinkException_EC_1 = 0;
     ReadOnlyFileSystemException_EC_0 = 0;
+    NoSuchElementException_EC_0 = 0;
+    NoSuchElementException_EC_1 = 0;
 
 }

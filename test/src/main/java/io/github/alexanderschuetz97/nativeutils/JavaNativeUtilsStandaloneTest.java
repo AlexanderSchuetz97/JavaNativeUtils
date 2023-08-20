@@ -26,13 +26,12 @@ import io.github.alexanderschuetz97.nativeutils.api.WindowsNativeUtil;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.InvalidFileDescriptorException;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.ShellExecuteException;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
-import io.github.alexanderschuetz97.nativeutils.api.structs.GUID;
-import io.github.alexanderschuetz97.nativeutils.api.structs.RegData;
-import io.github.alexanderschuetz97.nativeutils.api.structs.RegEnumKeyExResult;
-import io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInfoData;
-import io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInterfaceData;
+import io.github.alexanderschuetz97.nativeutils.api.structs.*;
 
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class JavaNativeUtilsStandaloneTest {
 
@@ -45,6 +44,10 @@ public class JavaNativeUtilsStandaloneTest {
         }
 
         switch (args[0]) {
+            case("osenv"):
+                System.out.println("os.arch: " + System.getProperty("os.arch"));
+                System.out.println("os.name: " + System.getProperty("os.name"));
+                return;
             case("lsivshmem"):
                lsivshmem();
                return;
@@ -83,11 +86,23 @@ public class JavaNativeUtilsStandaloneTest {
             case("createEvent"):
                 createEvent();
                 return;
+            case("mmapWinW"):
+                mmapWinW(args[1]);
+                return;
+            case("mmapWinR"):
+                mmapWinR(args[1]);
+                return;
             case("openEvent"):
                 openEvent();
                 return;
             case("checkLinux"):
+                if (args.length == 2) {
+                    System.load(args[1]);
+                }
                 checkLinux();
+                return;
+            case("GetIpForwardTable2"):
+                GetIpForwardTable2();
                 return;
             default:
                 System.out.println("no such test " + args[0]);
@@ -96,8 +111,82 @@ public class JavaNativeUtilsStandaloneTest {
         }
     }
 
+    private static void mmapWinW(String name) {
+        WindowsNativeUtil wnu = NativeUtils.getWindowsUtil();
+        try {
+            System.out.println(wnu.INVALID_HANDLE_VALUE());
+            long hmap = wnu.CreateFileMappingA(wnu.INVALID_HANDLE_VALUE(), 0, WinConst.PAGE_READWRITE, 0, 4096, name);
+            System.out.println(hmap);
+            NativeMemory mem = wnu.MapViewOfFileEx(hmap, WinConst.FILE_MAP_ALL_ACCESS, 0, 0, 4096, 0);
+            long l = new Random().nextLong();
+            mem.writeLong(0, l);
+            System.out.println("WROTE " + l);
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            mem.close();
+            wnu.CloseHandle(hmap);
+            System.out.println("DONE");
+        } catch (UnknownNativeErrorException e) {
+            System.out.println(wnu.FormatMessageA(e.intCode()));
+            e.printStackTrace();
+        } catch (InvalidFileDescriptorException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void mmapWinR(String name) {
+        WindowsNativeUtil wnu = NativeUtils.getWindowsUtil();
+        try {
+            long hmap = wnu.OpenFileMappingA(WinConst.FILE_MAP_ALL_ACCESS, false, name);
+            NativeMemory mem = wnu.MapViewOfFileEx(hmap, WinConst.FILE_MAP_ALL_ACCESS, 0, 0, 4096, 0);
+
+            long l = mem.readLong(0);
+            System.out.println("READ " + l);
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            l = mem.readLong(0);
+            System.out.println("READ " + l);
+
+            mem.close();
+            wnu.CloseHandle(hmap);
+        } catch (UnknownNativeErrorException e) {
+            System.out.println(wnu.FormatMessageA(e.intCode()));
+            e.printStackTrace();
+        } catch (InvalidFileDescriptorException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private static void GetIpForwardTable2() {
+        WindowsNativeUtil wnu = NativeUtils.getWindowsUtil();
+        try {
+            List<MibIpForwardRow2> mib = wnu.GetIpForwardTable2(WinConst.AF_INET);
+            System.out.println("MIB_TABLE");
+            System.out.println(mib);
+        } catch (UnknownNativeErrorException e) {
+            System.out.println(wnu.FormatMessageA(e.intCode()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public static void checkLinux() {
-        NativeUtils.getLinuxUtil();
+        try {
+            System.out.println(NativeUtils.getLinuxUtil().stat("/tmp"));
+        } catch (UnknownNativeErrorException e) {
+            e.printStackTrace();
+            System.out.println(NativeUtils.getLinuxUtil().strerror_r(e.intCode()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public static void openEvent() {
         WindowsNativeUtil wnu = NativeUtils.getWindowsUtil();

@@ -130,7 +130,9 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 			return NULL;
 		}
 
-		jobject jval = (*env)->NewObject(env, IfNameIndex_Class, IfNameIndex_Constructor, ptr[i].if_index, str);
+
+
+		jobject jval = jnew_IfNameIndex(env, ptr[i].if_index, str);
 		if (jval == NULL) {
 			if_freenameindex(ptr);
 			return NULL;

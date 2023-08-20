@@ -20,8 +20,10 @@
 #include "../common/jni/io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil.h"
 #include "../common/common.h"
 
-
+#include <ws2ipdef.h>
 #include <iphlpapi.h>
+//#define _WS2IPDEF_
+#include <netioapi.h>
 #include <errhandlingapi.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -383,4 +385,272 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 	}
 
 	return (jlong) DeleteIpForwardEntry(&caddr);
+}
+
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    GetIpForwardTable2
+ * Signature: (I)Ljava/util/List;
+ */
+JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_GetIpForwardTable2
+  (JNIEnv * env, jobject inst, jint Family) {
+
+	PMIB_IPFORWARD_TABLE2 mibTable = NULL;
+
+	DWORD result = GetIpForwardTable2(Family, &mibTable);
+
+	if (result != NO_ERROR) {
+		switch(result) {
+		case(ERROR_INVALID_PARAMETER):
+				jthrowCC_IllegalArgumentException_1(env, "Invalid address family");
+				return NULL;
+		case(ERROR_NOT_ENOUGH_MEMORY):
+				jthrowCC_OutOfMemoryError_1(env, "Not enough memory to allocate MIB_IPFORWARD_TABLE2");
+				return NULL;
+		case(ERROR_NOT_FOUND):
+				return jnew_ArrayList(env);
+		case(ERROR_NOT_SUPPORTED):
+				jthrowCC_UnsupportedOperationException_1(env, "Address family not supported on this computer because windows is missing the network stack for the desired address family.");
+				return NULL;
+		default:
+			jthrow_UnknownNativeErrorException_1(env, (jlong) result);
+			return NULL;
+		}
+	}
+
+	if (mibTable == NULL) {
+		jthrowC_NullPointerException_1(env, "GetIpForwardTable2 failed fill MIB_IPFORWARD_TABLE2 with a valid value.");
+		return NULL;
+	}
+
+	jobject theList = jnew_ArrayList(env);
+	if (jerr(env)) {
+		goto cleanup;
+	}
+
+
+	for (ULONG idx = 0; idx < mibTable->NumEntries; idx++) {
+		PMIB_IPFORWARD_ROW2 mibRow = &mibTable->Table[idx];
+		jbyteArray array;
+
+		if (mibRow->DestinationPrefix.Prefix.si_family == AF_INET) {
+			array = jarrayB(env, (jbyte*) &mibRow->DestinationPrefix.Prefix.Ipv4, sizeof(SOCKADDR_IN));
+		} else if (mibRow->DestinationPrefix.Prefix.si_family == AF_INET6) {
+			array = jarrayB(env, (jbyte*) &mibRow->DestinationPrefix.Prefix.Ipv6, sizeof(SOCKADDR_IN6));
+		} else {
+			jthrowCC_IllegalStateException_1(env, "MIB_IPFORWARD_ROW2 contains invalid address family");
+			goto cleanup;
+		}
+
+		if (jerr(env)) {
+			goto cleanup;
+		}
+
+
+		jobject jDestinationPrefixAddress = jnew_Sockaddr_1(env, mibRow->DestinationPrefix.Prefix.si_family, array);
+		if (jerr(env)) {
+			goto cleanup;
+		}
+
+
+		(*env)->DeleteLocalRef(env, array);
+
+		if (mibRow->NextHop.si_family == AF_INET) {
+			array = jarrayB(env, (jbyte*) &mibRow->NextHop.Ipv4, sizeof(SOCKADDR_IN));
+		} else if (mibRow->DestinationPrefix.Prefix.si_family == AF_INET6) {
+			array = jarrayB(env, (jbyte*) &mibRow->NextHop.Ipv6, sizeof(SOCKADDR_IN6));
+		} else {
+			jthrowCC_IllegalStateException_1(env, "MIB_IPFORWARD_ROW2 contains invalid address family");
+			goto cleanup;
+		}
+
+		jobject jNextHop = jnew_Sockaddr_1(env, mibRow->NextHop.si_family, array);
+		if (jerr(env)) {
+			goto cleanup;
+		}
+
+
+		jobject jmib = jnew_MibIpForwardRow2(env);
+		if (jerr(env)) {
+			goto cleanup;
+		}
+
+		jcall_ArrayList_add_1(env, theList, jmib);
+		if (jerr(env)) {
+			goto cleanup;
+		}
+
+		jset_MibIpForwardRow2_InterfaceLuid(env, jmib, mibRow->InterfaceLuid.Value);
+		jset_MibIpForwardRow2_InterfaceIndex(env, jmib, mibRow->InterfaceIndex);
+		jset_MibIpForwardRow2_DestinationPrefixLength(env, jmib, mibRow->DestinationPrefix.PrefixLength);
+		jset_MibIpForwardRow2_DestinationPrefixAddress(env, jmib, jDestinationPrefixAddress);
+		jset_MibIpForwardRow2_NextHop(env, jmib, jNextHop);
+		jset_MibIpForwardRow2_SitePrefixLength(env, jmib, mibRow->SitePrefixLength);
+		jset_MibIpForwardRow2_ValidLifetime(env, jmib, mibRow->ValidLifetime);
+		jset_MibIpForwardRow2_PreferredLifetime(env, jmib, mibRow->PreferredLifetime);
+		jset_MibIpForwardRow2_Metric(env, jmib, mibRow->Metric);
+		jset_MibIpForwardRow2_Protocol(env, jmib, mibRow->Protocol);
+		jset_MibIpForwardRow2_Loopback(env, jmib, mibRow->Loopback);
+		jset_MibIpForwardRow2_AutoconfigureAddress(env, jmib, mibRow->AutoconfigureAddress);
+		jset_MibIpForwardRow2_Publish(env, jmib, mibRow->Publish);
+		jset_MibIpForwardRow2_Immortal(env, jmib, mibRow->Immortal);
+		jset_MibIpForwardRow2_Age(env, jmib, mibRow->Age);
+		jset_MibIpForwardRow2_Origin(env, jmib, mibRow->Origin);
+
+		(*env)->DeleteLocalRef(env, jmib);
+		(*env)->DeleteLocalRef(env, array);
+		(*env)->DeleteLocalRef(env, jNextHop);
+		(*env)->DeleteLocalRef(env, jDestinationPrefixAddress);
+	}
+
+
+	FreeMibTable(mibTable);
+	return theList;
+
+	cleanup:
+	FreeMibTable(mibTable);
+	return NULL;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    CreateIpForwardEntry2
+ * Signature: (Lio/github/alexanderschuetz97/nativeutils/api/structs/MibIpForwardRow2;)V
+ */
+JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_CreateIpForwardEntry2
+  (JNIEnv * env, jobject inst, jobject jmib) {
+	if (jmib == NULL) {
+		jthrowCC_NullPointerException_1(env, "MibIpForwardRow2 is null");
+		return false;
+	}
+
+	jobject jDestinationPrefix = jget_MibIpForwardRow2_DestinationPrefixAddress(env, jmib);
+	if (jDestinationPrefix == NULL) {
+		jthrowCC_NullPointerException_1(env, "MibIpForwardRow2.DestinationPrefixAddress is null");
+		return false;
+	}
+
+	jbyteArray jDestinationPrefixBytes = jget_Sockaddr_address(env, jDestinationPrefix);
+	if (jDestinationPrefixBytes == NULL) {
+		jthrowCC_NullPointerException_1(env, "MibIpForwardRow2.DestinationPrefixAddress.address is null");
+		return false;
+	}
+
+
+	if ((*env)->GetArrayLength(env, jDestinationPrefixBytes) != sizeof(SOCKADDR_INET)) {
+		jthrowCC_IllegalArgumentException_1(env, "MibIpForwardRow2.DestinationPrefixAddress.address does not have the same size as SOCKADDR_INET");
+		return false;
+	}
+
+
+	jobject jNextHop = jget_MibIpForwardRow2_NextHop(env, jmib);
+	if (jNextHop == NULL) {
+		jthrowCC_NullPointerException_1(env, "MibIpForwardRow2.NextHop is null");
+		return false;
+	}
+
+	jbyteArray jNextHopBytes = jget_Sockaddr_address(env, jNextHop);
+	if (jDestinationPrefixBytes == NULL) {
+		jthrowCC_NullPointerException_1(env, "MibIpForwardRow2.NextHop.address is null");
+		return false;
+	}
+
+	if ((*env)->GetArrayLength(env, jNextHopBytes) != sizeof(SOCKADDR_INET)) {
+		jthrowCC_IllegalArgumentException_1(env, "MibIpForwardRow2.NextHop.address does not have the same size as SOCKADDR_INET");
+		return false;
+	}
+
+
+	MIB_IPFORWARD_ROW2 mibRow;
+	memset((void*) &mibRow, 0, sizeof(MIB_IPFORWARD_ROW2));
+
+	(*env)->GetByteArrayRegion(env, jDestinationPrefixBytes, 0, sizeof(SOCKADDR_INET), (jbyte*) &mibRow.DestinationPrefix.Prefix);
+	(*env)->GetByteArrayRegion(env, jNextHopBytes, 0, sizeof(SOCKADDR_INET), (jbyte*) &mibRow.NextHop);
+
+	mibRow.InterfaceLuid.Value = jget_MibIpForwardRow2_InterfaceLuid(env, jmib);
+	mibRow.InterfaceIndex = jget_MibIpForwardRow2_InterfaceIndex(env, jmib);
+	mibRow.DestinationPrefix.PrefixLength = jget_MibIpForwardRow2_DestinationPrefixLength(env, jmib);
+	mibRow.SitePrefixLength = jget_MibIpForwardRow2_SitePrefixLength(env, jmib);
+	mibRow.ValidLifetime = jget_MibIpForwardRow2_ValidLifetime(env, jmib);
+	mibRow.PreferredLifetime = jget_MibIpForwardRow2_PreferredLifetime(env, jmib);
+	mibRow.Metric = jget_MibIpForwardRow2_Metric(env, jmib);
+	mibRow.Protocol = jget_MibIpForwardRow2_Protocol(env, jmib);
+	mibRow.Loopback = jget_MibIpForwardRow2_Loopback(env, jmib);
+	mibRow.AutoconfigureAddress = jget_MibIpForwardRow2_AutoconfigureAddress(env, jmib);
+	mibRow.Publish = jget_MibIpForwardRow2_Publish(env, jmib);
+	mibRow.Immortal = jget_MibIpForwardRow2_Immortal(env, jmib);
+	mibRow.Age = jget_MibIpForwardRow2_Age(env, jmib);
+	mibRow.Origin = jget_MibIpForwardRow2_Origin(env, jmib);
+
+	DWORD result = CreateIpForwardEntry2((const MIB_IPFORWARD_ROW2*) &mibRow);
+
+	switch(result) {
+	case(NO_ERROR):
+		return true;
+	case(ERROR_ACCESS_DENIED):
+		jthrowCC_AccessDeniedException(env, "Access Denied");
+		return false;
+	case(ERROR_INVALID_PARAMETER):
+		jthrowCC_IllegalArgumentException_1(env, "MibIpForwardRow2 contains invalid data");
+		return false;
+	case(ERROR_NOT_FOUND):
+		jthrowCC_NoSuchElementException_1(env, "Network interface not found");
+		return false;
+	case(ERROR_NOT_SUPPORTED):
+		jthrowCC_UnsupportedOperationException_1(env, "Windows is missing the network stack to perform the request");
+		return false;
+	case(ERROR_OBJECT_ALREADY_EXISTS):
+		return false;
+	default:
+		jthrow_UnknownNativeErrorException_1(env, result);
+		return false;
+	}
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    ConvertInterfaceIndexToLuid
+ * Signature: (I)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_ConvertInterfaceIndexToLuid
+  (JNIEnv * env, jobject inst, jint idx) {
+	NET_LUID luid;
+	NETIO_STATUS status = ConvertInterfaceIndexToLuid((NET_IFINDEX) idx, &luid);
+	switch(status) {
+	case(NO_ERROR):
+		return (jlong) luid.Value;
+	case(ERROR_FILE_NOT_FOUND):
+		jthrowCC_NoSuchElementException_1(env, "interface not found");
+		return 0;
+	case(ERROR_INVALID_PARAMETER):
+		jthrowCC_IllegalArgumentException_1(env, "interface index is invalid");
+		return 0;
+	default:
+		jthrow_UnknownNativeErrorException_1(env, (jlong) status);
+		return 0;
+	}
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    ConvertInterfaceLuidToIndex
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_ConvertInterfaceLuidToIndex
+  (JNIEnv * env, jobject inst, jlong luid) {
+	NET_LUID cluid;
+	cluid.Value = (ULONG64) luid;
+	NET_IFINDEX index;
+	NETIO_STATUS status = ConvertInterfaceLuidToIndex((CONST NET_LUID*) &cluid, &index);
+	switch(status) {
+	case(NO_ERROR):
+		return (jint) index;
+	case(ERROR_INVALID_PARAMETER):
+		jthrowCC_IllegalArgumentException_1(env, "interface luid is invalid");
+		return 0;
+	default:
+		jthrow_UnknownNativeErrorException_1(env, (jlong) status);
+		return 0;
+	}
 }

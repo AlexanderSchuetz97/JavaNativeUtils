@@ -107,6 +107,12 @@ jfieldID Float_value = NULL;
 jclass Character = NULL;
 jfieldID Character_value = NULL;
 
+jclass String_Class;
+
+jclass JNINativeMemory;
+jfieldID JNINativeMemory_ptr;
+
+
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_NativeLibraryLoaderHelper
@@ -115,7 +121,7 @@ jfieldID Character_value = NULL;
  */
 JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_NativeLibraryLoaderHelper_getNativeLibVersion
   (JNIEnv * env, jclass clazz) {
-	return 4;
+	return 6;
 }
 
 
@@ -193,30 +199,8 @@ void delRefs(JNIEnv * env) {
 		(*env) -> DeleteGlobalRef(env, Iterator);
 	}
 
-	if (RegData_types != NULL) {
-		for (int i = 0; i < RegData_types_size; i++) {
-			(*env) -> DeleteGlobalRef(env, RegData_types[i]);
-		}
-
-		free(RegData_types);
-	}
-
-	RegData_types = NULL;
-
 	if (InetSocketAddress != NULL) {
 		(*env)->DeleteGlobalRef(env, InetSocketAddress);
-	}
-
-	if (Cmsghdr != NULL) {
-		(*env)->DeleteGlobalRef(env, Cmsghdr);
-	}
-
-	if (SpDeviceInfoData != NULL) {
-		(*env)->DeleteGlobalRef(env, SpDeviceInfoData);
-	}
-
-	if (SpDeviceInterfaceData != NULL) {
-		(*env)->DeleteGlobalRef(env, SpDeviceInterfaceData);
 	}
 
 	if (JNINativeMemory != NULL) {
@@ -255,48 +239,7 @@ void delRefs(JNIEnv * env) {
 		(*env)->DeleteGlobalRef(env, Character);
 	}
 
-	if (RegData != NULL) {
-		(*env)->DeleteGlobalRef(env, RegData);
-	}
 
-	if (RegQueryInfoKeyResult_Class != NULL) {
-		(*env)->DeleteGlobalRef(env, RegQueryInfoKeyResult_Class);
-	}
-
-	if (RegEnumKeyExResult_Class != NULL) {
-		(*env)->DeleteGlobalRef(env, RegEnumKeyExResult_Class);
-	}
-
-	if (IfNameIndex_Class != NULL) {
-		(*env)->DeleteGlobalRef(env, IfNameIndex_Class);
-	}
-
-	IfNameIndex_Class = NULL;
-	IfNameIndex_Constructor = NULL;
-
-	RegEnumKeyExResult_Class = NULL;
-	RegEnumKeyExResult_Constructor = NULL;
-	RegEnumKeyExResult_name = NULL;
-	RegEnumKeyExResult_className = NULL;
-	RegEnumKeyExResult_lastWriteTime = NULL;
-
-	RegQueryInfoKeyResult_Class = NULL;
-	RegQueryInfoKeyResult_Constructor = NULL;
-	RegQueryInfoKeyResult_keyClass = NULL;
-	RegQueryInfoKeyResult_subKeys = NULL;
-	RegQueryInfoKeyResult_maxSubKeyLen = NULL;
-	RegQueryInfoKeyResult_maxClassLen = NULL;
-	RegQueryInfoKeyResult_values = NULL;
-	RegQueryInfoKeyResult_maxValueNameLen = NULL;
-	RegQueryInfoKeyResult_maxValueLen = NULL;
-	RegQueryInfoKeyResult_securityDescriptorSize = NULL;
-	RegQueryInfoKeyResult_lastWriteTime = NULL;
-
-
-	RegData = NULL;
-	RegData_Object = NULL;
-	RegData_Long = NULL;
-	RegData_Int = NULL;
 	String_Class = NULL;
 
 	Integer = NULL;
@@ -316,30 +259,8 @@ void delRefs(JNIEnv * env) {
 	Character = NULL;
 	Character_value = NULL;
 
-	SpDeviceInfoData = NULL;
-	SpDeviceInfoData_cbSize = NULL;
-	SpDeviceInfoData_InterfaceClassGuid = NULL;
-	SpDeviceInfoData_DevInst = NULL;
-	SpDeviceInfoData_InterfaceClassGuid = NULL;
-	SpDeviceInfoData_ptr = NULL;
-
-	SpDeviceInterfaceData = NULL;
-	SpDeviceInterfaceData_constructor = NULL;
-	SpDeviceInterfaceData_cbSize = NULL;
-	SpDeviceInterfaceData_InterfaceClassGuid = NULL;
-	SpDeviceInterfaceData_flags = NULL;
-	SpDeviceInterfaceData_InterfaceClassGuid = NULL;
-	SpDeviceInterfaceData_ptr = NULL;
-
 	MutexAbandonedException = NULL;
 	MutexAbandonedExceptionConstructor = NULL;
-
-
-	Cmsghdr = NULL;
-	CmsghdrConstructor = NULL;
-	Cmsghdr_payload = NULL;
-	Cmsghdr_cmsg_type = NULL;
-	Cmsghdr_cmsg_level = NULL;
 
 	InetSocketAddress = NULL;
 	InetSocketAddress_getPort = NULL;
@@ -467,136 +388,6 @@ bool makeRefs(JNIEnv * env) {
 		return false;
 	}
 
-	IfNameIndex_Class = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/IfNameIndex");
-	if (IfNameIndex_Class == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, String_Class, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/IfNameIndex");
-		return false;
-	}
-
-
-	IfNameIndex_Constructor = (*env) ->GetMethodID(env, IfNameIndex_Class, "<init>", "(ILjava/lang/String;)V");
-	if (IfNameIndex_Constructor == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/IfNameIndex.<init>(ILjava/lang/String;)V");
-		return false;
-	}
-
-
-	RegEnumKeyExResult_Class = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/RegEnumKeyExResult");
-	if (RegEnumKeyExResult_Class == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, String_Class, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegEnumKeyExResult");
-		return false;
-	}
-
-	RegEnumKeyExResult_Constructor = (*env)->GetMethodID(env, RegEnumKeyExResult_Class, "<init>", "()V");
-	if (RegEnumKeyExResult_Constructor == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegEnumKeyExResult.<init>()V");
-		return false;
-	}
-
-	RegEnumKeyExResult_name = (*env)->GetFieldID(env, RegEnumKeyExResult_Class, "name", "Ljava/lang/String;");
-	if (RegEnumKeyExResult_name == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.name");
-		return false;
-	}
-
-	RegEnumKeyExResult_className = (*env)->GetFieldID(env, RegEnumKeyExResult_Class, "className", "Ljava/lang/String;");
-	if (RegEnumKeyExResult_className == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.className");
-		return false;
-	}
-
-	RegEnumKeyExResult_lastWriteTime = (*env)->GetFieldID(env, RegEnumKeyExResult_Class, "lastWriteTime", "J");
-	if (RegEnumKeyExResult_lastWriteTime == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.lastWriteTime");
-		return false;
-	}
-
-	RegQueryInfoKeyResult_Class = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult");
-	if (RegQueryInfoKeyResult_Class == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, String_Class, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult");
-		return false;
-	}
-
-	RegQueryInfoKeyResult_Constructor = (*env)->GetMethodID(env, RegQueryInfoKeyResult_Class, "<init>", "()V");
-	if (RegQueryInfoKeyResult_Constructor == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.<init>()V");
-		return false;
-	}
-
-
-	RegQueryInfoKeyResult_keyClass = (*env)->GetFieldID(env, RegQueryInfoKeyResult_Class, "keyClass", "Ljava/lang/String;");
-	if (RegQueryInfoKeyResult_keyClass == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.keyClass");
-		return false;
-	}
-
-
-	RegQueryInfoKeyResult_subKeys = (*env)->GetFieldID(env, RegQueryInfoKeyResult_Class, "subKeys", "I");
-	if (RegQueryInfoKeyResult_subKeys == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.subKeys");
-		return false;
-	}
-
-	RegQueryInfoKeyResult_maxSubKeyLen = (*env)->GetFieldID(env, RegQueryInfoKeyResult_Class, "maxSubKeyLen", "I");
-	if (RegQueryInfoKeyResult_maxSubKeyLen == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.maxSubKeyLen");
-		return false;
-	}
-
-	RegQueryInfoKeyResult_maxClassLen = (*env)->GetFieldID(env, RegQueryInfoKeyResult_Class, "maxClassLen", "I");
-	if (RegQueryInfoKeyResult_maxClassLen == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.maxClassLen");
-		return false;
-	}
-
-	RegQueryInfoKeyResult_values = (*env)->GetFieldID(env, RegQueryInfoKeyResult_Class, "values", "I");
-	if (RegQueryInfoKeyResult_values == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.values");
-		return false;
-	}
-
-	RegQueryInfoKeyResult_maxValueNameLen = (*env)->GetFieldID(env, RegQueryInfoKeyResult_Class, "maxValueNameLen", "I");
-	if (RegQueryInfoKeyResult_maxValueNameLen == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.maxValueNameLen");
-		return false;
-	}
-
-	RegQueryInfoKeyResult_maxValueLen = (*env)->GetFieldID(env, RegQueryInfoKeyResult_Class, "maxValueLen", "I");
-	if (RegQueryInfoKeyResult_maxValueLen == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.maxValueLen");
-		return false;
-	}
-
-	RegQueryInfoKeyResult_securityDescriptorSize = (*env)->GetFieldID(env, RegQueryInfoKeyResult_Class, "securityDescriptorSize", "I");
-	if (RegQueryInfoKeyResult_securityDescriptorSize == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.securityDescriptorSize");
-		return false;
-	}
-
-	RegQueryInfoKeyResult_lastWriteTime = (*env)->GetFieldID(env, RegQueryInfoKeyResult_Class, "lastWriteTime", "J");
-	if (RegQueryInfoKeyResult_lastWriteTime == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegQueryInfoKeyResult.lastWriteTime");
-		return false;
-	}
-
 	Integer = makeGlobalClassRef(env, "java/lang/Integer");
 	if (Integer == NULL) {
 		(*env) -> ExceptionClear(env);
@@ -720,118 +511,6 @@ bool makeRefs(JNIEnv * env) {
 	if (JNINativeMemory_ptr == NULL) {
 		(*env) -> ExceptionClear(env);
 		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/impl/JNINativeMemory.ptr");
-		return false;
-	}
-
-	SpDeviceInfoData = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData");
-	if (SpDeviceInfoData == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData");
-		return false;
-	}
-
-	SpDeviceInfoData_cbSize = (*env)->GetFieldID(env, SpDeviceInfoData, "cbSize", "I");
-	if (SpDeviceInfoData_cbSize == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData.cbSize");
-		return false;
-	}
-
-	SpDeviceInfoData_InterfaceClassGuid = (*env)->GetFieldID(env, SpDeviceInfoData, "InterfaceClassGuid", "Lio/github/alexanderschuetz97/nativeutils/api/structs/GUID;");
-	if (SpDeviceInfoData_InterfaceClassGuid == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData.InterfaceClassGuid");
-		return false;
-	}
-
-	SpDeviceInfoData_DevInst = (*env)->GetFieldID(env, SpDeviceInfoData, "DevInst", "I");
-	if (SpDeviceInfoData_cbSize == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData.DevInst");
-		return false;
-	}
-
-	SpDeviceInfoData_ptr = (*env)->GetFieldID(env, SpDeviceInfoData, "ptr", "J");
-	if (SpDeviceInfoData_cbSize == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInfoData.ptr");
-		return false;
-	}
-
-	SpDeviceInterfaceData = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData");
-	if (SpDeviceInterfaceData == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData");
-		return false;
-	}
-
-	SpDeviceInterfaceData_constructor = (*env)->GetMethodID(env, SpDeviceInterfaceData, "<init>", "()V");
-	if (SpDeviceInterfaceData_constructor == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData.<init>()V");
-		return false;
-	}
-
-	SpDeviceInterfaceData_cbSize = (*env)->GetFieldID(env, SpDeviceInterfaceData, "cbSize", "I");
-	if (SpDeviceInterfaceData_cbSize == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData.cbSize");
-		return false;
-	}
-
-	SpDeviceInterfaceData_InterfaceClassGuid = (*env)->GetFieldID(env, SpDeviceInterfaceData, "InterfaceClassGuid", "Lio/github/alexanderschuetz97/nativeutils/api/structs/GUID;");
-	if (SpDeviceInterfaceData_InterfaceClassGuid == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData.InterfaceClassGuid");
-		return false;
-	}
-
-	SpDeviceInterfaceData_flags = (*env)->GetFieldID(env, SpDeviceInterfaceData, "flags", "I");
-	if (SpDeviceInterfaceData_flags == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData.flags");
-		return false;
-	}
-
-
-	SpDeviceInterfaceData_ptr = (*env)->GetFieldID(env, SpDeviceInterfaceData, "ptr", "J");
-	if (SpDeviceInterfaceData_ptr == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/SpDeviceInterfaceData.ptr");
-		return false;
-	}
-
-	Cmsghdr = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/Cmsghdr");
-	if (Cmsghdr == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Cmsghdr");
-	}
-
-	CmsghdrConstructor = (*env)->GetMethodID(env, Cmsghdr, "<init>", "()V");
-	if (CmsghdrConstructor == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Cmsghdr.<init>()V");
-		return false;
-	}
-
-	Cmsghdr_payload = (*env)->GetFieldID(env, Cmsghdr, "payload", "[B");
-	if (Cmsghdr_payload == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Cmsghdr.payload");
-		return false;
-	}
-
-	Cmsghdr_cmsg_type = (*env)->GetFieldID(env, Cmsghdr, "cmsg_type", "I");
-	if (Cmsghdr_cmsg_type == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Cmsghdr.cmsg_type");
-		return false;
-	}
-
-	Cmsghdr_cmsg_level = (*env)->GetFieldID(env, Cmsghdr, "cmsg_level", "I");
-	if (Cmsghdr_cmsg_level == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/Cmsghdr.cmsg_level");
 		return false;
 	}
 
@@ -1075,38 +754,6 @@ bool makeRefs(JNIEnv * env) {
 		return false;
 	}
 
-	RegData = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/structs/RegData");
-	if (RegData == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData");
-		return false;
-	}
-	RegData_Object = (*env)->GetMethodID(env, RegData, "<init>", "(Ljava/lang/Object;Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;)V");
-	if (RegData_Object == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData.<init>(Ljava/lang/Object;Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;)V");
-		return false;
-	}
-	RegData_Long = (*env)->GetMethodID(env, RegData, "<init>", "(J)V");
-	if (RegData_Long == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData.<init>(J)V");
-		return false;
-	}
-	RegData_Int = (*env)->GetMethodID(env, RegData, "<init>", "(I)V");
-	if (RegData_Int == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/RegData.<init>(I)V");
-		return false;
-	}
-
-	RegData_types = enumerateEnum(env, "io/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType", "()[Lio/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType;", &RegData_types_size);
-	if (RegData_types == NULL) {
-		(*env) -> ExceptionClear(env);
-		(*env) -> ThrowNew(env, Exception, "cant enumerate io/github/alexanderschuetz97/nativeutils/api/structs/RegData$RegType");
-		return false;
-	}
-
 
 	return true;
 }
@@ -1186,6 +833,20 @@ jstring toJString(JNIEnv * env, const char* data) {
 	}
 	return str;
 }
+
+jobjectArray jStringArray(JNIEnv * env, jsize size) {
+	jobjectArray arr = (*env)->NewObjectArray(env, size, String_Class, NULL);
+	if (arr == NULL) {
+		jthrowC_OutOfMemoryError_1(env, "jStringArray->NewObjectArray");
+	}
+
+	return arr;
+}
+
+jlong jget_JNINativeMemory_ptr(JNIEnv * env, jobject inst) {
+	return (*env)->GetLongField(env, inst, JNINativeMemory_ptr);
+}
+
 
 int getFD(JNIEnv * env, jobject fd) {
 	if (fd == NULL) {

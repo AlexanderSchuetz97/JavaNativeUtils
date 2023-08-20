@@ -20,6 +20,7 @@
 package io.github.alexanderschuetz97.nativeutils.impl;
 
 import io.github.alexanderschuetz97.nativeutils.api.NativeMemory;
+import io.github.alexanderschuetz97.nativeutils.api.WinConst;
 import io.github.alexanderschuetz97.nativeutils.api.WindowsNativeUtil;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.InvalidFileDescriptorException;
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.SharingViolationException;
@@ -32,6 +33,7 @@ import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements WindowsNativeUtil {
@@ -68,6 +70,29 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
 
     @Override
     public native long CreateFileW(String lpFileName, int access, boolean allowDelete, boolean allowRead, boolean allowWrite, CreateFileA_createMode openMode, int attributes) throws FileAlreadyExistsException, SharingViolationException, UnknownNativeErrorException;
+
+    @Override
+    public native long CreateFileMappingA(long hFile, long lpFileMappingAttributes, int flProtect, int dwMaximumSizeHigh, int dwMaximumSizeLow, String lpName) throws UnknownNativeErrorException;
+
+    @Override
+    public native long OpenFileMappingA(int dwDesiredAccess, boolean bInheritHandle, String lpName) throws UnknownNativeErrorException;
+
+    @Override
+    public NativeMemory MapViewOfFileEx(long hFileMappingObject, int dwDesiredAccess, int dwFileOffsetHigh, int dwFileOffsetLow, int dwNumberOfBytesToMap, long lpBaseAddress) throws UnknownNativeErrorException {
+        long ptr = _MapViewOfFileEx(hFileMappingObject, dwDesiredAccess, dwFileOffsetHigh, dwFileOffsetLow, dwNumberOfBytesToMap, lpBaseAddress);
+        boolean read = (dwDesiredAccess & WinConst.FILE_MAP_READ) != 0;
+        boolean write = (dwDesiredAccess & WinConst.FILE_MAP_WRITE) != 0;
+        return new JNINativeMemory(ptr, dwNumberOfBytesToMap, read, write, MapViewOfFilePointerHandler.INSTANCE);
+    }
+
+    static native long _MapViewOfFileEx(long hFileMappingObject, int dwDesiredAccess, int dwFileOffsetHigh, int dwFileOffsetLow, int dwNumberOfBytesToMap, long lpBaseAddress);
+
+    @Override
+    public void UnmapViewOfFile(long address) throws UnknownNativeErrorException {
+        _UnmapViewOfFile(address);
+    }
+
+    static native void _UnmapViewOfFile(long address) throws UnknownNativeErrorException;
 
     @Override
     public native void CloseHandle(long handle) throws UnknownNativeErrorException;
@@ -466,6 +491,23 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
 
     @Override
     public native long ShellExecuteA(long hwnd, String lpOperation, String lpFile, String lpParameters, String lpDirectory, int nShowCmd);
+
+    @Override
+    public native long INVALID_HANDLE_VALUE();
+
+    @Override
+    public native List<MibIpForwardRow2> GetIpForwardTable2(int Family) throws UnknownNativeErrorException;
+
+    @Override
+    public native boolean CreateIpForwardEntry2(MibIpForwardRow2 entry) throws UnknownNativeErrorException;
+
+    @Override
+    public native boolean DeleteIpForwardEntry2(MibIpForwardRow2 entry) throws UnknownNativeErrorException;
+    @Override
+    public native long ConvertInterfaceIndexToLuid(int idx) throws UnknownNativeErrorException;
+
+    @Override
+    public native int ConvertInterfaceLuidToIndex(long luid) throws UnknownNativeErrorException;
 
     //@Override
     public native long CreateIpForwardEntry(MibIpForwardRow pRoute) throws UnknownNativeErrorException;

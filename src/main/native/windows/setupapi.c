@@ -153,10 +153,12 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	SP_DEVINFO_DATA cInfo;
 	if (jdevInfo != NULL) {
 		cInfoPtr = &cInfo;
-		cInfo.cbSize = (*env)->GetIntField(env, jdevInfo, SpDeviceInfoData_cbSize);
-		cInfo.DevInst = (*env)->GetIntField(env, jdevInfo, SpDeviceInfoData_DevInst);
-		cInfo.Reserved = (*env)->GetLongField(env, jdevInfo, SpDeviceInfoData_ptr);
-		if (!GUID_to_c(env, &cInfo.ClassGuid, (*env)->GetObjectField(env, jdevInfo, SpDeviceInfoData_InterfaceClassGuid))) {
+
+		cInfo.cbSize = jget_SpDeviceInfoData_cbSize(env, jdevInfo);
+		cInfo.DevInst = jget_SpDeviceInfoData_DevInst(env, jdevInfo);
+		cInfo.Reserved = jget_SpDeviceInfoData_ptr(env, jdevInfo);
+
+		if (!GUID_to_c(env, &cInfo.ClassGuid, jget_SpDeviceInfoData_InterfaceClassGuid(env, jdevInfo))) {
 			return NULL;
 		}
 	}
@@ -177,14 +179,13 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		return NULL;
 	}
 
-	jobject did = (*env)->NewObject(env, SpDeviceInterfaceData , SpDeviceInterfaceData_constructor);
+	jobject did = jnew_SpDeviceInfoData(env);
 	if (did == NULL) {
-		jthrowCC_OutOfMemoryError_1(env, "NewObject");
 		return NULL;
 	}
 
 
-	jobject nguid = (*env)->GetObjectField(env, did, SpDeviceInterfaceData_InterfaceClassGuid);
+	jobject nguid = jget_SpDeviceInfoData_InterfaceClassGuid(env, jdevInfo);
 	if (nguid == NULL) {
 		//Shouldnt be possible
 		jthrowCC_NullPointerException_1(env, "SpDeviceInfoData.InterfaceClassGuid");
@@ -193,9 +194,9 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 
 	GUID_to_java(env, &DeviceInterfaceData.InterfaceClassGuid, nguid);
 
-	(*env)->SetIntField(env, did, SpDeviceInterfaceData_cbSize, DeviceInterfaceData.cbSize);
-	(*env)->SetIntField(env, did, SpDeviceInterfaceData_flags, DeviceInterfaceData.Flags);
-	(*env)->SetLongField(env, did, SpDeviceInterfaceData_ptr, DeviceInterfaceData.Reserved);
+	jset_SpDeviceInterfaceData_cbSize(env, did, DeviceInterfaceData.cbSize);
+	jset_SpDeviceInterfaceData_flags(env, did, DeviceInterfaceData.Flags);
+	jset_SpDeviceInterfaceData_ptr(env, did, DeviceInterfaceData.Reserved);
 
 	return did;
 }
@@ -211,10 +212,11 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	jstring res = NULL;
 	SP_DEVICE_INTERFACE_DATA DeviceInterfaceData;
 
-	DeviceInterfaceData.cbSize = (*env)->GetIntField(env, jdifd, SpDeviceInterfaceData_cbSize);
-	DeviceInterfaceData.Flags = (*env)->GetIntField(env, jdifd, SpDeviceInterfaceData_flags);
-	DeviceInterfaceData.Reserved = (*env)->GetLongField(env, jdifd, SpDeviceInterfaceData_ptr);
-	if (!GUID_to_c(env, &DeviceInterfaceData.InterfaceClassGuid, (*env)->GetObjectField(env, jdifd, SpDeviceInterfaceData_InterfaceClassGuid))) {
+	DeviceInterfaceData.cbSize = jget_SpDeviceInterfaceData_cbSize(env, jdifd);
+	DeviceInterfaceData.Flags = jget_SpDeviceInterfaceData_flags(env, jdifd);
+	DeviceInterfaceData.Reserved = jget_SpDeviceInterfaceData_ptr(env, jdifd);
+
+	if (!GUID_to_c(env, &DeviceInterfaceData.InterfaceClassGuid, jget_SpDeviceInterfaceData_InterfaceClassGuid(env, jdifd))) {
 		return NULL;
 	}
 
@@ -285,10 +287,10 @@ JNIEXPORT jstring JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	}
 
 	if (devinfoPtr != NULL) {
-		(*env)->SetIntField(env, jdid, SpDeviceInfoData_cbSize, devInfo.cbSize);
-		(*env)->SetIntField(env, jdid, SpDeviceInfoData_DevInst, devInfo.DevInst);
-		(*env)->SetLongField(env, jdid, SpDeviceInfoData_ptr, devInfo.Reserved);
-		(*env)->SetObjectField(env, jdid, SpDeviceInfoData_InterfaceClassGuid, GUID_to_java(env, &devInfo.ClassGuid, NULL));
+		jset_SpDeviceInfoData_cbSize(env, jdid, devInfo.cbSize);
+		jset_SpDeviceInfoData_DevInst(env, jdid, devInfo.DevInst);
+		jset_SpDeviceInfoData_ptr(env, jdid, devInfo.Reserved);
+		jset_SpDeviceInfoData_InterfaceClassGuid(env, jdid, GUID_to_java(env, &devInfo.ClassGuid, NULL));
 	}
 
 	return res;

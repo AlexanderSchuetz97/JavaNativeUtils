@@ -26,9 +26,7 @@ import io.github.alexanderschuetz97.nativeutils.api.exceptions.QuotaExceededExce
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
 import io.github.alexanderschuetz97.nativeutils.api.structs.*;
 
-import java.io.FileDescriptor;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
@@ -45,6 +43,7 @@ import java.util.Collection;
 public interface LinuxNativeUtil extends NativeUtil {
 
 
+    @Deprecated
     enum fnctl_F_SETLK_Mode {
         F_RDLCK, // read lock
         F_WRLCK, // write lock
@@ -58,6 +57,22 @@ public interface LinuxNativeUtil extends NativeUtil {
      * The returned value is constant.
      */
     int getPointerSize();
+
+    /**
+     * Returns a input stream that will read bytes from the filedescriptor by calling the read method.
+     * This method exists for convinience.
+     * Closing the returned InputStream will only call the close() method if the close flag is set to true.
+     * Otherwise, closeing the stream is a noop.
+     */
+    InputStream inputStreamFromFD(int fd, boolean close);
+
+    /**
+     * Returns a output stream that will write bytes to the filedescriptor by calling the write method.
+     * This method exists for convinience.
+     * Closing the returned OutputStream will only call the close() method if the close flag is set to true.
+     * Otherwise, closeing the stream is a noop.
+     */
+    OutputStream outputStreamFromFD(int fd, boolean close);
 
     /**
      * queries the cpu for info.<br>
@@ -190,6 +205,9 @@ public interface LinuxNativeUtil extends NativeUtil {
      * May return 0 for non blocking file descriptors that do not have data available.
      */
     int read(int fd, ByteBuffer buf, int len) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException;
+
+
+    void fsync(int fd) throws InvalidFileDescriptorException, IOException, ReadOnlyFileSystemException;
 
     /**
      * Write to a file descriptor
@@ -372,12 +390,14 @@ public interface LinuxNativeUtil extends NativeUtil {
      * <p>
      * NOTE: If the current process already holds a lock in the desired area the "conflicting" lock is released and replaced with the new lock.
      */
+    @Deprecated
     boolean fnctl_F_SETLK(int fd, fnctl_F_SETLK_Mode mode, long start, long len) throws InvalidFileDescriptorException, UnknownNativeErrorException;
 
     /**
      * This call will block until the desired lock on the file can be obtained.
      * This CANNOT be interrupted. Use with care.
      */
+    @Deprecated
     void fnctl_F_SETLKW(int fd, fnctl_F_SETLK_Mode mode, long start, long len) throws InvalidFileDescriptorException, UnknownNativeErrorException;
 
     /**
@@ -387,6 +407,7 @@ public interface LinuxNativeUtil extends NativeUtil {
      *
      * Note: This method cannot be used to determine if the current process has the lock.
      */
+    @Deprecated
     int fnctl_F_GETLK(int fd, boolean exclusive, long start, long len) throws InvalidFileDescriptorException, UnknownNativeErrorException;
 
     /**
@@ -451,6 +472,7 @@ public interface LinuxNativeUtil extends NativeUtil {
      */
     Stat stat(String path) throws FileNotFoundException, InvalidPathException, FileSystemLoopException, AccessDeniedException, UnknownNativeErrorException, IOException;
 
+    Statvfs statvfs(String path) throws AccessDeniedException, IOException, FileSystemLoopException, FileNotFoundException, UnknownNativeErrorException;
 
     /**
      * Identical to stat.
@@ -632,6 +654,14 @@ public interface LinuxNativeUtil extends NativeUtil {
      */
     void chmod(String path, int mode) throws AccessDeniedException, PermissionDeniedException, IOException, FileSystemLoopException, InvalidPathException, FileNotFoundException, NotDirectoryException;
 
+    void fchmod(int fd, int mode);
+
+    void chown(String path, int uid, int gid);
+
+    void fchown(int fd, int uid, int gid);
+
+    void lchown(String path, int uid, int gid);
+
     /**
      * trigger an ioctl with a device.
      *
@@ -680,5 +710,57 @@ public interface LinuxNativeUtil extends NativeUtil {
     int fcntl(int fd, int code, byte[] param, int off) throws InvalidFileDescriptorException, UnknownNativeErrorException;
 
     int fcntl(int fd, int code, NativeMemory param, long off) throws InvalidFileDescriptorException, UnknownNativeErrorException;
+
+    long sem_open(String name, int oflags) throws AccessDeniedException, QuotaExceededException, FileNotFoundException, FileAlreadyExistsException, UnknownNativeErrorException;
+
+    long sem_open(String name, int oflags, int mode, int value) throws AccessDeniedException, QuotaExceededException, FileNotFoundException, FileAlreadyExistsException, UnknownNativeErrorException;
+
+    void sem_close(long sem) throws UnknownNativeErrorException;
+
+    void sem_unlink(String name) throws AccessDeniedException, FileNotFoundException, UnknownNativeErrorException;
+
+    /**
+     * Returns the size of sem_t in bytes.
+     * This value changes depending on CPU and JVM architecture.
+     */
+    int sem_t_size();
+
+    /**
+     * Initializes an unnamed semaphore.
+     *
+     * @param sem ptr to allocated memory. This memory must be able to hold sem_t_size bytes.
+     * @param interprocess should the semaphore be interprocess? (ptr must reside in shared memory)
+     * @param value initial value of the semaphore.
+     */
+    void sem_init(long sem, boolean interprocess, int value) throws UnknownNativeErrorException;
+
+    void sem_destroy(long sem) throws UnknownNativeErrorException;
+
+    void sem_post(long sem) throws UnknownNativeErrorException;
+
+    void sem_wait(long sem) throws UnknownNativeErrorException;
+
+    int sem_getvalue(long sem) throws UnknownNativeErrorException;
+
+    boolean sem_trywait(long sem) throws UnknownNativeErrorException;
+
+    boolean sem_timedwait(long sem, long timeoutInMillis) throws UnknownNativeErrorException;
+
+    int shm_open(String name, int oflag, int mode) throws FileAlreadyExistsException, FileNotFoundException, UnknownNativeErrorException, AccessDeniedException, QuotaExceededException;
+
+    void shm_unlink(String name) throws FileNotFoundException, AccessDeniedException, UnknownNativeErrorException;
+
+    void ftruncate(int fd, long len);
+
+    void truncate(String name, long len);
+
+    void mkfifo(String name, int mode) throws AccessDeniedException, QuotaExceededException, FileAlreadyExistsException, FileNotFoundException, NotDirectoryException, ReadOnlyFileSystemException;
+
+
+
+
+
+
+
 
 }

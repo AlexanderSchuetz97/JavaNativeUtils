@@ -191,6 +191,7 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 	}
 
 	jthrow_ShellExecuteException(env, GetLastError(), (jlong) (uintptr_t) result);
+	return 0;
 }
 
 

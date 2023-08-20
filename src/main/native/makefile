@@ -29,14 +29,32 @@ WINDOWS_BUILD_DIR_I386_COMMON=$(WINDOWS_BUILD_DIR_I386)/common
 LINUX_BUILD_DIR_AMD64=$(BUILD_BASE_DIR)/linux_amd64
 LINUX_BUILD_DIR_AMD64_COMMON=$(LINUX_BUILD_DIR_AMD64)/common
 
+LINUX_BUILD_DIR_AMD64_MUSL=$(BUILD_BASE_DIR)/linux_amd64_musl
+LINUX_BUILD_DIR_AMD64_MUSL_COMMON=$(LINUX_BUILD_DIR_AMD64_MUSL)/common
+
 LINUX_BUILD_DIR_I386=$(BUILD_BASE_DIR)/linux_i386
 LINUX_BUILD_DIR_I386_COMMON=$(LINUX_BUILD_DIR_I386)/common
 
 LINUX_BUILD_DIR_ARMHF=$(BUILD_BASE_DIR)/linux_armhf
 LINUX_BUILD_DIR_ARMHF_COMMON=$(LINUX_BUILD_DIR_ARMHF)/common
 
+LINUX_BUILD_DIR_ARMEL=$(BUILD_BASE_DIR)/linux_armel
+LINUX_BUILD_DIR_ARMEL_COMMON=$(LINUX_BUILD_DIR_ARMEL)/common
+
 LINUX_BUILD_DIR_AARCH64=$(BUILD_BASE_DIR)/linux_aarch64
 LINUX_BUILD_DIR_AARCH64_COMMON=$(LINUX_BUILD_DIR_AARCH64)/common
+
+LINUX_BUILD_DIR_RISCV64=$(BUILD_BASE_DIR)/linux_riscv64
+LINUX_BUILD_DIR_RISCV64_COMMON=$(LINUX_BUILD_DIR_RISCV64)/common
+
+LINUX_BUILD_DIR_MIPS64EL=$(BUILD_BASE_DIR)/linux_mips64el
+LINUX_BUILD_DIR_MIPS64EL_COMMON=$(LINUX_BUILD_DIR_MIPS64EL)/common
+
+LINUX_BUILD_DIR_PPC64LE=$(BUILD_BASE_DIR)/linux_ppc64le
+LINUX_BUILD_DIR_PPC64LE_COMMON=$(LINUX_BUILD_DIR_PPC64LE)/common
+
+LINUX_BUILD_DIR_S390X=$(BUILD_BASE_DIR)/linux_s390x
+LINUX_BUILD_DIR_S390X_COMMON=$(LINUX_BUILD_DIR_S390X)/common
 
 TARGET_DIR=../resources
 
@@ -58,9 +76,15 @@ WINDOWS_OBJECTS_AMD64=$(addprefix $(WINDOWS_BUILD_DIR_AMD64)/,$(patsubst %.c,%.o
 WINDOWS_OBJECTS_I386=$(addprefix $(WINDOWS_BUILD_DIR_I386)/,$(patsubst %.c,%.o,$(notdir $(WINDOWS_SOURCES)))) $(addprefix $(WINDOWS_BUILD_DIR_I386_COMMON)/,$(patsubst %.c,%.o,$(notdir $(COMMON_SOURCES))))
 
 LINUX_OBJECTS_AMD64=$(addprefix $(LINUX_BUILD_DIR_AMD64)/,$(patsubst %.c,%.o,$(notdir $(LINUX_SOURCES)))) $(addprefix $(LINUX_BUILD_DIR_AMD64_COMMON)/,$(patsubst %.c,%.o,$(notdir $(COMMON_SOURCES))))
+LINUX_OBJECTS_AMD64_MUSL=$(addprefix $(LINUX_BUILD_DIR_AMD64_MUSL)/,$(patsubst %.c,%.o,$(notdir $(LINUX_SOURCES)))) $(addprefix $(LINUX_BUILD_DIR_AMD64_MUSL_COMMON)/,$(patsubst %.c,%.o,$(notdir $(COMMON_SOURCES))))
 LINUX_OBJECTS_I386=$(addprefix $(LINUX_BUILD_DIR_I386)/,$(patsubst %.c,%.o,$(notdir $(LINUX_SOURCES)))) $(addprefix $(LINUX_BUILD_DIR_I386_COMMON)/,$(patsubst %.c,%.o,$(notdir $(COMMON_SOURCES))))
 LINUX_OBJECTS_ARMHF=$(addprefix $(LINUX_BUILD_DIR_ARMHF)/,$(patsubst %.c,%.o,$(notdir $(LINUX_SOURCES)))) $(addprefix $(LINUX_BUILD_DIR_ARMHF_COMMON)/,$(patsubst %.c,%.o,$(notdir $(COMMON_SOURCES))))
+LINUX_OBJECTS_ARMEL=$(addprefix $(LINUX_BUILD_DIR_ARMEL)/,$(patsubst %.c,%.o,$(notdir $(LINUX_SOURCES)))) $(addprefix $(LINUX_BUILD_DIR_ARMEL_COMMON)/,$(patsubst %.c,%.o,$(notdir $(COMMON_SOURCES))))
 LINUX_OBJECTS_AARCH64=$(addprefix $(LINUX_BUILD_DIR_AARCH64)/,$(patsubst %.c,%.o,$(notdir $(LINUX_SOURCES)))) $(addprefix $(LINUX_BUILD_DIR_AARCH64_COMMON)/,$(patsubst %.c,%.o,$(notdir $(COMMON_SOURCES))))
+LINUX_OBJECTS_RISCV64=$(addprefix $(LINUX_BUILD_DIR_RISCV64)/,$(patsubst %.c,%.o,$(notdir $(LINUX_SOURCES)))) $(addprefix $(LINUX_BUILD_DIR_RISCV64_COMMON)/,$(patsubst %.c,%.o,$(notdir $(COMMON_SOURCES))))
+LINUX_OBJECTS_MIPS64EL=$(addprefix $(LINUX_BUILD_DIR_MIPS64EL)/,$(patsubst %.c,%.o,$(notdir $(LINUX_SOURCES)))) $(addprefix $(LINUX_BUILD_DIR_MIPS64EL_COMMON)/,$(patsubst %.c,%.o,$(notdir $(COMMON_SOURCES))))
+LINUX_OBJECTS_PPC64LE=$(addprefix $(LINUX_BUILD_DIR_PPC64LE)/,$(patsubst %.c,%.o,$(notdir $(LINUX_SOURCES)))) $(addprefix $(LINUX_BUILD_DIR_PPC64LE_COMMON)/,$(patsubst %.c,%.o,$(notdir $(COMMON_SOURCES))))
+LINUX_OBJECTS_S390X=$(addprefix $(LINUX_BUILD_DIR_S390X)/,$(patsubst %.c,%.o,$(notdir $(LINUX_SOURCES)))) $(addprefix $(LINUX_BUILD_DIR_S390X_COMMON)/,$(patsubst %.c,%.o,$(notdir $(COMMON_SOURCES))))
 
 #######################################################################################################################
 # WINDOWS AMD 64
@@ -137,6 +161,30 @@ $(LINUX_BUILD_DIR_AMD64)/%.o: linux/**/%.c $(COMMON_HEADERS) $(LINUX_HEADERS)
 	$(LINUX_CC_AMD64) -O3 -c -o $@ $< $(LINUX_CFLAGS)
 
 #######################################################################################################################
+# LINUX AMD 64 musl
+#######################################################################################################################
+
+$(LINUX_BUILD_DIR_AMD64_MUSL_COMMON)/%.o: common/%.c $(COMMON_HEADERS)
+	@echo "Compiling common file $@ for linux amd64 musl"
+	@mkdir -p $(LINUX_BUILD_DIR_AMD64_MUSL_COMMON)
+	$(LINUX_CC_AMD64_MUSL) -O3 -c -o $@ $< $(LINUX_CFLAGS)
+
+$(LINUX_BUILD_DIR_AMD64_MUSL_COMMON)/%.o: common/**/%.c $(COMMON_HEADERS)
+	@echo "Compiling common file $@ for linux amd64 musl"
+	@mkdir -p $(LINUX_BUILD_DIR_AMD64_MUSL_COMMON)
+	$(LINUX_CC_AMD64_MUSL) -O3 -c -o $@ $< $(LINUX_CFLAGS)
+
+$(LINUX_BUILD_DIR_AMD64_MUSL)/%.o: linux/%.c $(COMMON_HEADERS) $(LINUX_HEADERS)
+	@echo "Compiling linux file $@ for amd64 musl"
+	@mkdir -p $(LINUX_BUILD_DIR_AMD64_MUSL)
+	$(LINUX_CC_AMD64_MUSL) -O3 -c -o $@ $< $(LINUX_CFLAGS)
+
+$(LINUX_BUILD_DIR_AMD64_MUSL)/%.o: linux/**/%.c $(COMMON_HEADERS) $(LINUX_HEADERS)
+	@echo "Compiling linux file $@ for amd64 musl"
+	@mkdir -p $(LINUX_BUILD_DIR_AMD64_MUSL)
+	$(LINUX_CC_AMD64_MUSL) -O3 -c -o $@ $< $(LINUX_CFLAGS)
+
+#######################################################################################################################
 # LINUX I386
 #######################################################################################################################
 
@@ -185,6 +233,31 @@ $(LINUX_BUILD_DIR_ARMHF)/%.o: linux/**/%.c $(COMMON_HEADERS) $(LINUX_HEADERS)
 	$(LINUX_CC_ARMHF) -O3 -c -o $@ $< $(LINUX_CFLAGS)
 
 #######################################################################################################################
+# LINUX ARMEL
+#######################################################################################################################
+
+$(LINUX_BUILD_DIR_ARMEL_COMMON)/%.o: common/%.c $(COMMON_HEADERS)
+	@echo "Compiling common file $@ for linux armel"
+	@mkdir -p $(LINUX_BUILD_DIR_ARMEL_COMMON)
+	$(LINUX_CC_ARMEL) -O3 -c -o $@ $< $(LINUX_CFLAGS)
+
+$(LINUX_BUILD_DIR_ARMEL_COMMON)/%.o: common/**/%.c $(COMMON_HEADERS)
+	@echo "Compiling common file $@ for linux armel"
+	@mkdir -p $(LINUX_BUILD_DIR_ARMEL_COMMON)
+	$(LINUX_CC_ARMEL) -O3 -c -o $@ $< $(LINUX_CFLAGS)
+
+$(LINUX_BUILD_DIR_ARMEL)/%.o: linux/%.c $(COMMON_HEADERS) $(LINUX_HEADERS)
+	@echo "Compiling linux file $@ for armel"
+	@mkdir -p $(LINUX_BUILD_DIR_ARMEL)
+	$(LINUX_CC_ARMEL) -O3 -c -o $@ $< $(LINUX_CFLAGS)
+
+$(LINUX_BUILD_DIR_ARMEL)/%.o: linux/**/%.c $(COMMON_HEADERS) $(LINUX_HEADERS)
+	@echo "Compiling linux file $@ for armel"
+	@mkdir -p $(LINUX_BUILD_DIR_ARMEL)
+	$(LINUX_CC_ARMEL) -O3 -c -o $@ $< $(LINUX_CFLAGS)
+
+
+#######################################################################################################################
 # LINUX AARCH64
 #######################################################################################################################
 
@@ -209,10 +282,106 @@ $(LINUX_BUILD_DIR_AARCH64)/%.o: linux/**/%.c $(COMMON_HEADERS) $(LINUX_HEADERS)
 	$(LINUX_CC_AARCH64) -O3 -c -o $@ $< $(LINUX_CFLAGS)
 
 #######################################################################################################################
+# LINUX RISCV64
+#######################################################################################################################
+
+$(LINUX_BUILD_DIR_RISCV64_COMMON)/%.o: common/%.c $(COMMON_HEADERS)
+	@echo "Compiling common file $@ for linux riscv64"
+	@mkdir -p $(LINUX_BUILD_DIR_RISCV64_COMMON)
+	$(LINUX_CC_RISCV64) -O3 -c -o $@ $< $(LINUX_CFLAGS)
+
+$(LINUX_BUILD_DIR_RISCV64_COMMON)/%.o: common/**/%.c $(COMMON_HEADERS)
+	@echo "Compiling common file $@ for linux riscv64"
+	@mkdir -p $(LINUX_BUILD_DIR_RISCV64_COMMON)
+	$(LINUX_CC_RISCV64) -O3 -c -o $@ $< $(LINUX_CFLAGS)
+
+$(LINUX_BUILD_DIR_RISCV64)/%.o: linux/%.c $(COMMON_HEADERS) $(LINUX_HEADERS)
+	@echo "Compiling linux file $@ for riscv64"
+	@mkdir -p $(LINUX_BUILD_DIR_RISCV64)
+	$(LINUX_CC_RISCV64) -O3 -c -o $@ $< $(LINUX_CFLAGS)
+
+$(LINUX_BUILD_DIR_RISCV64)/%.o: linux/**/%.c $(COMMON_HEADERS) $(LINUX_HEADERS)
+	@echo "Compiling linux file $@ for riscv64"
+	@mkdir -p $(LINUX_BUILD_DIR_RISCV64)
+	$(LINUX_CC_RISCV64) -O3 -c -o $@ $< $(LINUX_CFLAGS)
+
+#######################################################################################################################
+# LINUX MIPS64EL
+#######################################################################################################################
+
+$(LINUX_BUILD_DIR_MIPS64EL_COMMON)/%.o: common/%.c $(COMMON_HEADERS)
+	@echo "Compiling common file $@ for linux mips64el"
+	@mkdir -p $(LINUX_BUILD_DIR_MIPS64EL_COMMON)
+	$(LINUX_CC_MIPS64EL) -O3 -c -o $@ $< $(LINUX_CFLAGS)
+
+$(LINUX_BUILD_DIR_MIPS64EL_COMMON)/%.o: common/**/%.c $(COMMON_HEADERS)
+	@echo "Compiling common file $@ for linux mips64el"
+	@mkdir -p $(LINUX_BUILD_DIR_MIPS64EL_COMMON)
+	$(LINUX_CC_MIPS64EL) -O3 -c -o $@ $< $(LINUX_CFLAGS)
+
+$(LINUX_BUILD_DIR_MIPS64EL)/%.o: linux/%.c $(COMMON_HEADERS) $(LINUX_HEADERS)
+	@echo "Compiling linux file $@ for mips64el"
+	@mkdir -p $(LINUX_BUILD_DIR_MIPS64EL)
+	$(LINUX_CC_MIPS64EL) -O3 -c -o $@ $< $(LINUX_CFLAGS)
+
+$(LINUX_BUILD_DIR_MIPS64EL)/%.o: linux/**/%.c $(COMMON_HEADERS) $(LINUX_HEADERS)
+	@echo "Compiling linux file $@ for mips64el"
+	@mkdir -p $(LINUX_BUILD_DIR_MIPS64EL)
+	$(LINUX_CC_MIPS64EL) -O3 -c -o $@ $< $(LINUX_CFLAGS)
+
+#######################################################################################################################
+# LINUX PPC64LE
+#######################################################################################################################
+
+$(LINUX_BUILD_DIR_PPC64LE_COMMON)/%.o: common/%.c $(COMMON_HEADERS)
+	@echo "Compiling common file $@ for linux ppc64le"
+	@mkdir -p $(LINUX_BUILD_DIR_PPC64LE_COMMON)
+	$(LINUX_CC_PPC64LE) -O3 -c -o $@ $< $(LINUX_CFLAGS)
+
+$(LINUX_BUILD_DIR_PPC64LE_COMMON)/%.o: common/**/%.c $(COMMON_HEADERS)
+	@echo "Compiling common file $@ for linux ppc64le"
+	@mkdir -p $(LINUX_BUILD_DIR_PPC64LE_COMMON)
+	$(LINUX_CC_PPC64LE) -O3 -c -o $@ $< $(LINUX_CFLAGS)
+
+$(LINUX_BUILD_DIR_PPC64LE)/%.o: linux/%.c $(COMMON_HEADERS) $(LINUX_HEADERS)
+	@echo "Compiling linux file $@ for ppc64le"
+	@mkdir -p $(LINUX_BUILD_DIR_PPC64LE)
+	$(LINUX_CC_PPC64LE) -O3 -c -o $@ $< $(LINUX_CFLAGS)
+
+$(LINUX_BUILD_DIR_PPC64LE)/%.o: linux/**/%.c $(COMMON_HEADERS) $(LINUX_HEADERS)
+	@echo "Compiling linux file $@ for ppc64le"
+	@mkdir -p $(LINUX_BUILD_DIR_PPC64LE)
+	$(LINUX_CC_PPC64LE) -O3 -c -o $@ $< $(LINUX_CFLAGS)
+
+#######################################################################################################################
+# LINUX S390X
+#######################################################################################################################
+
+$(LINUX_BUILD_DIR_S390X_COMMON)/%.o: common/%.c $(COMMON_HEADERS)
+	@echo "Compiling common file $@ for linux s390x"
+	@mkdir -p $(LINUX_BUILD_DIR_S390X_COMMON)
+	$(LINUX_CC_S390X) -O3 -c -o $@ $< $(LINUX_CFLAGS)
+
+$(LINUX_BUILD_DIR_S390X_COMMON)/%.o: common/**/%.c $(COMMON_HEADERS)
+	@echo "Compiling common file $@ for linux s390x"
+	@mkdir -p $(LINUX_BUILD_DIR_S390X_COMMON)
+	$(LINUX_CC_S390X) -O3 -c -o $@ $< $(LINUX_CFLAGS)
+
+$(LINUX_BUILD_DIR_S390X)/%.o: linux/%.c $(COMMON_HEADERS) $(LINUX_HEADERS)
+	@echo "Compiling linux file $@ for s390x"
+	@mkdir -p $(LINUX_BUILD_DIR_S390X)
+	$(LINUX_CC_S390X) -O3 -c -o $@ $< $(LINUX_CFLAGS)
+
+$(LINUX_BUILD_DIR_S390X)/%.o: linux/**/%.c $(COMMON_HEADERS) $(LINUX_HEADERS)
+	@echo "Compiling linux file $@ for s390x"
+	@mkdir -p $(LINUX_BUILD_DIR_S390X)
+	$(LINUX_CC_S390X) -O3 -c -o $@ $< $(LINUX_CFLAGS)
+
+#######################################################################################################################
 # Targets
 #######################################################################################################################
 
-all: windows_amd64 windows_i386 linux_amd64 linux_i386 linux_armhf linux_aarch64
+all: windows_amd64 windows_i386 linux_amd64 linux_amd64_musl linux_i386 linux_armhf linux_armel linux_aarch64 linux_riscv64 linux_mips64el linux_ppc64le linux_s390x
 	rm -rf $(BUILD_BASE_DIR)
 	@echo "DONE"
 
@@ -237,6 +406,13 @@ linux_amd64: $(LINUX_OBJECTS_AMD64)
 	$(LINUX_CC_AMD64) -shared -o $(TARGET_DIR)/java_native_utils_amd64.so $(LINUX_OBJECTS_AMD64)
 	@echo ""
 
+linux_amd64_musl: $(LINUX_OBJECTS_AMD64_MUSL)
+	@echo ""
+	@echo "Linking linux shared object for amd64 musl"
+	@mkdir -p $(TARGET_DIR)
+	$(LINUX_CC_AMD64_MUSL) -shared -o $(TARGET_DIR)/java_native_utils_amd64_musl.so $(LINUX_OBJECTS_AMD64_MUSL)
+	@echo ""
+
 linux_i386: $(LINUX_OBJECTS_I386)
 	@echo ""
 	@echo "Linking linux shared object for i386"
@@ -251,6 +427,13 @@ linux_armhf: $(LINUX_OBJECTS_ARMHF)
 	$(LINUX_CC_ARMHF) -shared -o $(TARGET_DIR)/java_native_utils_armhf.so $(LINUX_OBJECTS_ARMHF)
 	@echo ""
 
+linux_armel: $(LINUX_OBJECTS_ARMEL)
+	@echo ""
+	@echo "Linking linux shared object for armel"
+	@mkdir -p $(TARGET_DIR)
+	$(LINUX_CC_ARMEL) -shared -o $(TARGET_DIR)/java_native_utils_armel.so $(LINUX_OBJECTS_ARMEL)
+	@echo ""
+
 linux_aarch64: $(LINUX_OBJECTS_AARCH64)
 	@echo ""
 	@echo "Linking linux shared object for aarch64"
@@ -258,14 +441,47 @@ linux_aarch64: $(LINUX_OBJECTS_AARCH64)
 	$(LINUX_CC_AARCH64) -shared -o $(TARGET_DIR)/java_native_utils_aarch64.so $(LINUX_OBJECTS_AARCH64)
 	@echo ""
 
+linux_riscv64: $(LINUX_OBJECTS_RISCV64)
+	@echo ""
+	@echo "Linking linux shared object for riscv64"
+	@mkdir -p $(TARGET_DIR)
+	$(LINUX_CC_RISCV64) -shared -o $(TARGET_DIR)/java_native_utils_riscv64.so $(LINUX_OBJECTS_RISCV64)
+	@echo ""
+
+linux_mips64el: $(LINUX_OBJECTS_MIPS64EL)
+	@echo ""
+	@echo "Linking linux shared object for mips64el"
+	@mkdir -p $(TARGET_DIR)
+	$(LINUX_CC_MIPS64EL) -shared -o $(TARGET_DIR)/java_native_utils_mips64el.so $(LINUX_OBJECTS_MIPS64EL)
+	@echo ""
+
+linux_ppc64le: $(LINUX_OBJECTS_PPC64LE)
+	@echo ""
+	@echo "Linking linux shared object for ppc64le"
+	@mkdir -p $(TARGET_DIR)
+	$(LINUX_CC_PPC64LE) -shared -o $(TARGET_DIR)/java_native_utils_ppc64le.so $(LINUX_OBJECTS_PPC64LE)
+	@echo ""
+
+linux_s390x: $(LINUX_OBJECTS_S390X)
+	@echo ""
+	@echo "Linking linux shared object for s390x"
+	@mkdir -p $(TARGET_DIR)
+	$(LINUX_CC_S390X) -shared -o $(TARGET_DIR)/java_native_utils_s390x.so $(LINUX_OBJECTS_S390X)
+	@echo ""
 
 clean:
 	rm -rf $(TARGET_DIR)/java_native_utils_i386.dll
 	rm -rf $(TARGET_DIR)/java_native_utils_amd64.dll
 	rm -rf $(TARGET_DIR)/java_native_utils_amd64.so
+	rm -rf $(TARGET_DIR)/java_native_utils_amd64_musl.so
 	rm -rf $(TARGET_DIR)/java_native_utils_i386.so
 	rm -rf $(TARGET_DIR)/java_native_utils_armhf.so
+	rm -rf $(TARGET_DIR)/java_native_utils_armel.so
 	rm -rf $(TARGET_DIR)/java_native_utils_aarch64.so
+	rm -rf $(TARGET_DIR)/java_native_utils_riscv64.so
+	rm -rf $(TARGET_DIR)/java_native_utils_mips64el.so
+	rm -rf $(TARGET_DIR)/java_native_utils_ppc64le.so
+	rm -rf $(TARGET_DIR)/java_native_utils_s390x.so
 	rm -rf $(BUILD_BASE_DIR)
 	@echo "DONE"
 

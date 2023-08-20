@@ -152,7 +152,7 @@ JNIEXPORT jlongArray JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_
 			return (*env)->NewIntArray(env, 0);
 		}
 
-		__gid_t* ptr = (__gid_t*) malloc(ngrp*sizeof(__gid_t));
+		gid_t* ptr = (gid_t*) malloc(ngrp*sizeof(gid_t));
 		if (ptr == NULL) {
 			(*env)->ReleaseStringUTFChars(env, user, cuser);
 			jthrowCC_OutOfMemoryError_1(env, "malloc");

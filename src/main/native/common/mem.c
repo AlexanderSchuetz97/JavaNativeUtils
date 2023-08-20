@@ -656,7 +656,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 
 //UTIL FOR SPIN
 jboolean checkClosed(JNIEnv * env, jobject inst) {
-	return (*env)->GetLongField(env, inst, JNINativeMemory_ptr) == 0;
+	return jget_JNINativeMemory_ptr(env, inst) == 0;
 }
 
 /*

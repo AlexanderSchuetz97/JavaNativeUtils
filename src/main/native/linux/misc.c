@@ -182,7 +182,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 		ptr->sin6_scope_id = 0;
 		ptr->sin6_port = htons((uint16_t) port);
 
-		uint8_t* sock_addr_ptr = ptr->sin6_addr.__in6_u.__u6_addr8;
+		uint8_t* sock_addr_ptr = (uint8_t*) &ptr->sin6_addr;
 
 		jbyte* bytes = (*env)->GetByteArrayElements(env, jInetAddrBytes, NULL);
 		if (bytes == NULL) {
@@ -319,7 +319,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 			return NULL;
 		}
 
-		uint8_t* sock_addr_ptr = inetPtr->sin6_addr.__in6_u.__u6_addr8;
+		uint8_t* sock_addr_ptr = (uint8_t*) &inetPtr->sin6_addr;
 
 		for (int i = 0; i < 16;i++) {
 			bytePtr[i] = sock_addr_ptr[i];
@@ -471,6 +471,10 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	return (jint) getpagesize();
 }
 
+#ifndef _UTSNAME_LENGTH
+#define _UTSNAME_LENGTH 65
+#endif
+
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
  * Method:    uname
@@ -482,11 +486,11 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	struct utsname uts;
 	memset(&uts, 0, sizeof(struct utsname));
 	uname(&uts);
-	uts.machine[_UTSNAME_MACHINE_LENGTH-1] = 0;
-	uts.nodename[_UTSNAME_NODENAME_LENGTH-1] = 0;
-	uts.release[_UTSNAME_RELEASE_LENGTH-1] = 0;
-	uts.sysname[_UTSNAME_SYSNAME_LENGTH-1] = 0;
-	uts.version[_UTSNAME_VERSION_LENGTH-1] = 0;
+	uts.machine[_UTSNAME_LENGTH-1] = 0;
+	uts.nodename[_UTSNAME_LENGTH-1] = 0;
+	uts.release[_UTSNAME_LENGTH-1] = 0;
+	uts.sysname[_UTSNAME_LENGTH-1] = 0;
+	uts.version[_UTSNAME_LENGTH-1] = 0;
 
 	jobject utsname = jnew_Utsname(env);
 	if (utsname == NULL) {
@@ -515,6 +519,8 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 
 	return utsname;
 }
+
+
 
 
 

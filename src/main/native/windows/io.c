@@ -641,7 +641,121 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 
 	jthrow_UnknownNativeErrorException_1(env, err);
 	return -1;
+}
 
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    CreateFileMappingA
+ * Signature: (JJIIILjava/lang/String;)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_CreateFileMappingA
+  (JNIEnv * env, jobject inst, jlong handle, jlong sec, jint flprot, jint maxSizeHigh, jint maxSizeLow, jstring name) {
+
+	LPCSTR lpName = NULL;
+	if (name != NULL) {
+		lpName = (*env)->GetStringUTFChars(env, name, NULL);
+		if (lpName == NULL) {
+			jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
+			return (jlong) (uintptr_t) INVALID_HANDLE_VALUE;
+		}
+	}
+
+	HANDLE result = CreateFileMappingA((HANDLE) (uintptr_t) handle, (LPSECURITY_ATTRIBUTES) (uintptr_t) sec, (DWORD) flprot, (DWORD) maxSizeHigh, (DWORD) maxSizeLow, lpName);
+
+	if (name != NULL) {
+		(*env)->ReleaseStringUTFChars(env, name, lpName);
+	}
+
+	if (result != 0 && result != INVALID_HANDLE_VALUE) {
+		if (GetLastError() == ERROR_ALREADY_EXISTS) {
+			//TODO
+		}
+		return (jlong) (uintptr_t) result;
+	}
+
+	jthrow_UnknownNativeErrorException_1(env, GetLastError());
+
+	return (jlong) (uintptr_t) INVALID_HANDLE_VALUE;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    OpenFileMappingA
+ * Signature: (IZLjava/lang/String;)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_OpenFileMappingA
+  (JNIEnv * env, jobject inst, jint acc, jboolean inherit, jstring name) {
+	if (name == NULL) {
+		jthrowCC_NullPointerException_1(env, "name is null");
+		return (jlong) (uintptr_t) INVALID_HANDLE_VALUE;
+	}
+
+	LPCSTR lpName = (*env)->GetStringUTFChars(env, name, NULL);
+	if (lpName == NULL) {
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
+		return (jlong) (uintptr_t) INVALID_HANDLE_VALUE;
+	}
+
+	HANDLE result = OpenFileMappingA((DWORD) acc, (BOOL) inherit, lpName);
+
+	(*env)->ReleaseStringUTFChars(env, name, lpName);
+
+	if (result != 0 && result != INVALID_HANDLE_VALUE) {
+		if (GetLastError() == ERROR_ALREADY_EXISTS) {
+			//TODO
+		}
+		return (jlong) (uintptr_t) result;
+	}
+
+	jthrow_UnknownNativeErrorException_1(env, GetLastError());
+
+	return (jlong) (uintptr_t) INVALID_HANDLE_VALUE;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    _MapViewOfFileEx
+ * Signature: (JIIIIJ)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil__1MapViewOfFileEx
+  (JNIEnv * env, jclass inst, jlong handle, jint acc, jint offHigh, jint offLow, jint numOfBytes, jlong baseAddr) {
+	HANDLE h = (HANDLE) (uintptr_t) handle;
+	if (h == INVALID_HANDLE_VALUE) {
+		jthrow_InvalidFileDescriptorException(env);
+		return 0;
+	}
+
+	if (numOfBytes <= 0) {
+		jthrowCC_IllegalArgumentException_1(env, "num bytes to map <= 0");
+		return 0;
+	}
+
+
+	LPVOID ptr = MapViewOfFileEx(h, (DWORD) acc, (DWORD) offHigh, (DWORD) offLow, (DWORD) numOfBytes, (LPVOID) (uintptr_t) baseAddr);
+	if (ptr == NULL) {
+		jthrow_UnknownNativeErrorException_1(env, GetLastError());
+		return 0;
+	}
+
+	return (jlong) (uintptr_t) ptr;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    UnmapViewOfFile
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil__1UnmapViewOfFile
+  (JNIEnv * env, jclass inst, jlong addr) {
+	LPVOID lpv = (LPVOID) (uintptr_t) addr;
+	if (lpv == NULL) {
+		jthrowCC_NullPointerException_1(env, "addr is null");
+		return;
+	}
+
+	if (!UnmapViewOfFile(lpv)) {
+		jthrow_UnknownNativeErrorException_1(env, GetLastError());
+	}
 }
 
 

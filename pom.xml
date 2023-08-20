@@ -6,7 +6,7 @@
 
     <groupId>io.github.alexanderschuetz97</groupId>
     <artifactId>JavaNativeUtils</artifactId>
-    <version>2.2</version>
+    <version>3.0</version>
     <packaging>bundle</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -73,7 +73,7 @@
             <plugin>
                 <groupId>io.github.alexanderschuetz97</groupId>
                 <artifactId>jnigenerator</artifactId>
-                <version>1.0</version>
+                <version>1.1</version>
                 <executions>
                     <execution>
                         <id>stub</id>
@@ -81,7 +81,34 @@
                         <configuration>
                             <structs>
                                 <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.RegEnumKeyExResult</classname>
+                                </struct>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.IfNameIndex</classname>
+                                </struct>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.RegQueryInfoKeyResult</classname>
+                                </struct>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.RegData</classname>
+                                </struct>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.RegData$RegType</classname>
+                                </struct>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.Cmsghdr</classname>
+                                </struct>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInfoData</classname>
+                                </struct>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.SpDeviceInterfaceData</classname>
+                                </struct>
+                                <struct>
                                     <classname>io.github.alexanderschuetz97.nativeutils.api.structs.MibIpForwardRow</classname>
+                                </struct>
+                                <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.MibIpForwardRow2</classname>
                                 </struct>
                                 <struct>
                                     <classname>io.github.alexanderschuetz97.nativeutils.api.structs.MibIpForwardRow$MIB_IPFORWARD_TYPE</classname>
@@ -173,6 +200,9 @@
                                     <classname>io.github.alexanderschuetz97.nativeutils.api.structs.Stat</classname>
                                 </struct>
                                 <struct>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.structs.Statvfs</classname>
+                                </struct>
+                                <struct>
                                     <classname>io.github.alexanderschuetz97.nativeutils.api.structs.GUID</classname>
                                 </struct>
                                 <struct>
@@ -197,6 +227,10 @@
                                 </exception>
                                 <exception>
                                     <classname>java.lang.NullPointerException</classname>
+                                    <onlyPublic>true</onlyPublic>
+                                </exception>
+                                <exception>
+                                    <classname>java.util.NoSuchElementException</classname>
                                     <onlyPublic>true</onlyPublic>
                                 </exception>
                                 <exception>
@@ -229,6 +263,9 @@
                                 </exception>
                                 <exception>
                                     <classname>io.github.alexanderschuetz97.nativeutils.api.exceptions.PermissionDeniedException</classname>
+                                </exception>
+                                <exception>
+                                    <classname>io.github.alexanderschuetz97.nativeutils.api.exceptions.FileIsDirectoryException</classname>
                                 </exception>
                                 <exception>
                                     <classname>io.github.alexanderschuetz97.nativeutils.api.exceptions.SharingViolationException</classname>

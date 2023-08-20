@@ -4,6 +4,9 @@ package io.github.alexanderschuetz97.nativeutils.api.structs;
  * Struct for CreateIpForwardEntry
  */
 public class MibIpForwardRow {
+
+
+
     /**
      * Note: this is in Big Endian (Network order)
      * so 1.2.3.4 would be 0x04030201

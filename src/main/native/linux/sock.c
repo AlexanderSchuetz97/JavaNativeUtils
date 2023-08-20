@@ -27,6 +27,7 @@
 #include <sys/socket.h>
 #include <endian.h>
 #include <stdlib.h>
+#include <string.h>
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
@@ -990,10 +991,9 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 			continue;
 		}
 
-		jobject jhdr = (*env)->NewObject(env, Cmsghdr, CmsghdrConstructor);
+		jobject jhdr = jnew_Cmsghdr(env);
 
-		if (jhdr == NULL) {
-			jthrowCC_OutOfMemoryError_1(env, "NewObject");
+		if (jerr(env)) {
 			(*env)->DeleteLocalRef(env, resultList);
 			return NULL;
 		}
@@ -1021,10 +1021,10 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 
 		(*env)->ReleaseByteArrayElements(env, bytes, nbuf, JNI_OK);
 
-		(*env)->SetObjectField(env, jhdr, Cmsghdr_payload, bytes);
+		jset_Cmsghdr_payload(env, jhdr, bytes);
 		(*env)->DeleteLocalRef(env, bytes);
-		(*env)->SetIntField(env, jhdr, Cmsghdr_cmsg_level, cmsg->cmsg_level);
-		(*env)->SetIntField(env, jhdr, Cmsghdr_cmsg_type, cmsg->cmsg_type);
+		jset_Cmsghdr_cmsg_level(env, jhdr, cmsg->cmsg_level);
+		jset_Cmsghdr_cmsg_type(env, jhdr, cmsg->cmsg_type);
 		jcall_Collection_add(env, resultList, jhdr);
 		(*env)->DeleteLocalRef(env, jhdr);
 	}

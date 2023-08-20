@@ -20,6 +20,12 @@
 package io.github.alexanderschuetz97.nativeutils.api.structs;
 
 
+import io.github.alexanderschuetz97.nativeutils.api.StructHelper;
+import io.github.alexanderschuetz97.nativeutils.api.WinConst;
+
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -118,5 +124,48 @@ public class Sockaddr {
         int result = Objects.hash(addressFamily);
         result = 31 * result + Arrays.hashCode(address);
         return result;
+    }
+
+    /**
+     * Parses the Sockaddr as a Win32 SOCKADDR_INET.
+     * Returns null if the Sockaddr is not parsable.
+     */
+    public InetSocketAddress parseWin32_SOCKADDR_INET() {
+        if (address == null) {
+            return null;
+        }
+
+        if (addressFamily == WinConst.AF_INET && address.length >= 8) {
+            int port = StructHelper.readUShort(address, 2);
+            try {
+                return new InetSocketAddress(InetAddress.getByAddress(new byte[]{address[4], address[5], address[6], address[7]}), port);
+            } catch (UnknownHostException e) {
+                //WONT HAPPEN
+                return null;
+            }
+        }
+
+        //TODO verify this shit
+        if (addressFamily == WinConst.AF_INET6 && address.length >= 24) {
+            int port = StructHelper.readUShort(address, 2);
+            byte[] addr = new byte[16];
+            System.arraycopy(address, 8, addr, 0, 16);
+            try {
+                return new InetSocketAddress(InetAddress.getByAddress(addr), port);
+            } catch (UnknownHostException e) {
+                //WONT Happen
+                return null;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return "Sockaddr{" +
+                "addressFamily=" + addressFamily +
+                ", address=" + Arrays.toString(address) +
+                '}';
     }
 }

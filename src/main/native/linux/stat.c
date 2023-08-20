@@ -27,6 +27,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <assert.h>
+#include <sys/statvfs.h>
 
 jobject fillStat(JNIEnv * env, struct stat* theStat) {
 	jobject myStat = jnew_Stat(env);
@@ -241,6 +242,306 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 		return;
 	default:
 		(*env)->ReleaseStringUTFChars(env, path, thePath);
+		jthrow_UnknownNativeErrorException_1(env, err);
+		return;
+	}
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    fchmod
+ * Signature: (II)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_fchmod
+  (JNIEnv * env, jobject inst, jint fd, jint mode) {
+
+	if (fd < 0) {
+		jthrow_InvalidFileDescriptorException(env);
+		return;
+	}
+
+	if (fchmod((int)fd,(int) mode) == 0) {
+		return;
+	}
+
+	int err = errno;
+
+	switch(err) {
+	case(EBADF):
+		jthrow_InvalidFileDescriptorException(env);
+		return;
+	case(EACCES):
+		jthrowCC_AccessDeniedException_1(env, "fd", NULL, "Search permission is denied on a component of the path prefix.");
+		return;
+	case(EIO):
+		jthrowC_IOException_1(env, "An I/O error occurred");
+		return;
+	case(ENOMEM):
+		jthrowCC_OutOfMemoryError_1(env, "Insufficient kernel memory was available");
+		return;
+	case(EPERM):
+		jthrowCC_PermissionDeniedException_1(env, "fd", "The process does not have permission to change the file mode or the file is marked immuatable.");
+		return;
+	case(EROFS):
+		jthrow_ReadOnlyFileSystemException(env);
+		return;
+	default:
+		jthrow_UnknownNativeErrorException_1(env, err);
+		return;
+	}
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    chown
+ * Signature: (Ljava/lang/String;II)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_chown
+  (JNIEnv * env, jobject inst, jstring path, jint owner, jint group) {
+	if (path == NULL) {
+		jthrowCC_IllegalArgumentException_1(env, "path is null");
+		return;
+	}
+
+	const char* thePath = (*env) ->GetStringUTFChars(env, path, NULL);
+	if (thePath == NULL) {
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
+		return;
+	}
+
+	int res = chown(thePath, (uid_t) owner, (gid_t) group);
+
+	if (res == 0) {
+		(*env)->ReleaseStringUTFChars(env, path, thePath);
+		return;
+	}
+
+	int err = errno;
+
+	switch(err) {
+	case(EACCES):
+		jthrowCC_AccessDeniedException_1(env, thePath, NULL, "Search permission is denied on a component of the path prefix.");
+		(*env)->ReleaseStringUTFChars(env, path, thePath);
+		return;
+	case(EIO):
+		(*env)->ReleaseStringUTFChars(env, path, thePath);
+		jthrowC_IOException_1(env, "An I/O error occurred");
+		return;
+	case(ELOOP):
+		jthrowCC_FileSystemLoopException(env, thePath);
+		(*env)->ReleaseStringUTFChars(env, path, thePath);
+		return;
+	case(ENAMETOOLONG):
+		jthrowCC_InvalidPathException(env, thePath, "path is too long");
+		(*env)->ReleaseStringUTFChars(env, path, thePath);
+		return;
+	case(ENOENT):
+		jthrowCC_FileNotFoundException_1(env, thePath);
+		(*env)->ReleaseStringUTFChars(env, path, thePath);
+		return;
+	case(ENOMEM):
+		(*env)->ReleaseStringUTFChars(env, path, thePath);
+		jthrowCC_OutOfMemoryError_1(env, "Insufficient kernel memory was available");
+		return;
+	case(ENOTDIR):
+		jthrowCC_NotDirectoryException(env, thePath);
+		(*env)->ReleaseStringUTFChars(env, path, thePath);
+		return;
+	case(EPERM):
+		jthrowCC_PermissionDeniedException_1(env, thePath, "The process does not have permission to change the file owner or the file is marked immutable.");
+		(*env)->ReleaseStringUTFChars(env, path, thePath);
+		return;
+	case(EROFS):
+		(*env)->ReleaseStringUTFChars(env, path, thePath);
+		jthrow_ReadOnlyFileSystemException(env);
+		return;
+	default:
+		(*env)->ReleaseStringUTFChars(env, path, thePath);
+		jthrow_UnknownNativeErrorException_1(env, err);
+		return;
+	}
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    fchown
+ * Signature: (III)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_fchown
+  (JNIEnv * env, jobject inst, jint fd, jint owner, jint group) {
+	if (fd < 0) {
+		jthrow_InvalidFileDescriptorException(env);
+		return;
+	}
+
+	if (fchown((int)fd, (uid_t) owner, (gid_t) group) == 0) {
+		return;
+	}
+
+	int err = errno;
+
+	switch(err) {
+	case(EBADF):
+		jthrow_InvalidFileDescriptorException(env);
+		return;
+	case(EACCES):
+		jthrowCC_AccessDeniedException_1(env, "fd", NULL, "Search permission is denied on a component of the path prefix.");
+		return;
+	case(EIO):
+		jthrowC_IOException_1(env, "An I/O error occurred");
+		return;
+	case(ENOMEM):
+		jthrowCC_OutOfMemoryError_1(env, "Insufficient kernel memory was available");
+		return;
+	case(EPERM):
+		jthrowCC_PermissionDeniedException_1(env, "fd", "The process does not have permission to change the file owner or the file is marked immutable.");
+		return;
+	case(EROFS):
+		jthrow_ReadOnlyFileSystemException(env);
+		return;
+	default:
+		jthrow_UnknownNativeErrorException_1(env, err);
+		return;
+	}
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    statvfs
+ * Signature: (Ljava/lang/String;)Lio/github/alexanderschuetz97/nativeutils/api/structs/Statvfs;
+ */
+JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_statvfs
+  (JNIEnv * env, jobject inst, jstring path) {
+	if (path == NULL) {
+		jthrowCC_NullPointerException_1(env, "path");
+		return NULL;
+	}
+	struct statvfs theStat;
+	memset((void*) &theStat, 0, sizeof(struct statvfs));
+
+	const char* chars = (*env)->GetStringUTFChars(env, path, NULL);
+	if (chars == NULL) {
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
+		return NULL;
+	}
+
+	jobject result = NULL;
+	while(statvfs(chars, &theStat) != 0) {
+		int err = errno;
+		switch(err) {
+			case(ENAMETOOLONG):
+				jthrowCC_IllegalArgumentException_1(env, "Path parameter is too long");
+				goto cleanup;
+			case(ENOENT):
+				jthrowCC_FileNotFoundException_1(env, chars);
+				goto cleanup;
+			case (EOVERFLOW):
+				goto mapResult;
+			case(EINTR):
+				continue;
+			case(EACCES):
+				jthrowCC_AccessDeniedException_1(env, "fd", NULL, "Search permission is denied on a component of the path prefix.");
+				goto cleanup;
+			case(EIO):
+				jthrowC_IOException_1(env, "An I/O error occurred while reading from the filesystem.");
+				goto cleanup;
+			case(ENOMEM):
+				jthrowCC_OutOfMemoryError_1(env, "Insufficient kernel memory was available");
+				goto cleanup;
+			case(EPERM):
+				jthrowCC_PermissionDeniedException_1(env, "fd", "The process does not have permission to change the file owner or the file is marked immutable.");
+				goto cleanup;
+			case(ENOSYS):
+				jthrowCC_IOException_1(env, "The filesystem does not support this call.");
+				goto cleanup;
+			case(ENOTDIR):
+				jthrowCC_NotDirectoryException(env, "A component of the path was not a directory");
+				goto cleanup;
+			default:
+				jthrow_UnknownNativeErrorException_1(env, err);
+				goto cleanup;
+		}
+	}
+
+	mapResult:
+	result = jnew_Statvfs(env);
+	if (result == NULL) {
+		goto cleanup;
+	}
+
+	jset_Statvfs_f_bsize(env, result, theStat.f_bsize);
+	jset_Statvfs_f_frsize(env, result, theStat.f_frsize);
+	jset_Statvfs_f_blocks(env, result, theStat.f_blocks);
+	jset_Statvfs_f_bfree(env, result, theStat.f_bfree);
+	jset_Statvfs_f_bavail(env, result, theStat.f_bavail);
+	jset_Statvfs_f_files(env, result, theStat.f_files);
+	jset_Statvfs_f_ffree(env, result, theStat.f_ffree);
+	jset_Statvfs_f_favail(env, result, theStat.f_favail);
+	jset_Statvfs_f_fsid(env, result, theStat.f_fsid);
+	jset_Statvfs_f_flag(env, result, theStat.f_flag);
+	jset_Statvfs_f_namemax(env, result, theStat.f_namemax);
+
+	goto cleanup;
+
+	cleanup:
+	(*env)->ReleaseStringUTFChars(env, path, chars);
+	return result;
+
+
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    mkfifo
+ * Signature: (Ljava/lang/String;I)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_mkfifo
+  (JNIEnv * env, jobject inst, jstring path, jint mode) {
+	if (path == NULL) {
+		jthrowCC_NullPointerException_1(env, "path");
+		return;
+	}
+
+	const char * ptr = (*env)->GetStringUTFChars(env, path, NULL);
+	if (ptr == NULL) {
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
+		return;
+	}
+
+
+	if (mkfifo(ptr, (mode_t) mode) == 0) {
+		(*env)->ReleaseStringUTFChars(env, path, ptr);
+		return;
+	}
+
+	int err = errno;
+	(*env)->ReleaseStringUTFChars(env, path, ptr);
+	switch(err) {
+	case(EACCES):
+		jthrow_AccessDeniedException(env, path);
+		return;
+	case(EDQUOT):
+		jthrowCC_QuotaExceededException(env, "The user's quota of disk blocks or inodes on the filesystem has been exhausted.");
+		return;
+	case(EEXIST):
+		jthrow_FileAlreadyExistsException(env, path);
+		return;
+	case(ENAMETOOLONG):
+		jthrowCC_IllegalArgumentException_1(env, "Path argument is too long");
+		return;
+	case(ENOENT):
+		jthrowCC_FileNotFoundException_1(env, "A directory component in pathname does not exist or is a dangling symbolic link.");
+		return;
+	case(ENOSPC):
+		jthrowCC_IOException_1(env, "The directory or filesystem has no room for a new file.");
+		return;
+	case(ENOTDIR):
+		jthrowC_NotDirectoryException(env, "A component used as a directory in pathname is not, in fact, a directory.");
+		return;
+	case(EROFS):
+		jthrow_ReadOnlyFileSystemException(env);
+		return;
+	default:
 		jthrow_UnknownNativeErrorException_1(env, err);
 		return;
 	}

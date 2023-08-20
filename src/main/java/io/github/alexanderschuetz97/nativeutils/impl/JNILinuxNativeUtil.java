@@ -26,9 +26,7 @@ import io.github.alexanderschuetz97.nativeutils.api.exceptions.QuotaExceededExce
 import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
 import io.github.alexanderschuetz97.nativeutils.api.structs.*;
 
-import java.io.FileDescriptor;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
@@ -56,6 +54,16 @@ public class JNILinuxNativeUtil extends JNICommonNativeUtil implements LinuxNati
 
     @Override
     public native int getFD(FileDescriptor fd);
+
+    @Override
+    public InputStream inputStreamFromFD(int fd, boolean close) {
+        return new LinuxInputStream(this, fd, close);
+    }
+
+    @Override
+    public OutputStream outputStreamFromFD(int fd, boolean close) {
+        return new LinuxOutputStream(this, fd, close);
+    }
 
     @Override
     public native int if_nametoindex(String name) throws UnknownNativeErrorException;
@@ -169,6 +177,9 @@ public class JNILinuxNativeUtil extends JNICommonNativeUtil implements LinuxNati
         }
         return r;
     }
+
+    @Override
+    public native void fsync(int fd) throws InvalidFileDescriptorException, IOException, ReadOnlyFileSystemException;
 
     @Override
     public native int write(int fd, byte[] buffer, int off, int len) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException;
@@ -310,12 +321,15 @@ public class JNILinuxNativeUtil extends JNICommonNativeUtil implements LinuxNati
     public native void close(int fd);
 
     @Override
+    @Deprecated
     public native boolean fnctl_F_SETLK(int fd, fnctl_F_SETLK_Mode mode, long start, long end) throws InvalidFileDescriptorException, UnknownNativeErrorException;;
 
     @Override
+    @Deprecated
     public native void fnctl_F_SETLKW(int fd, fnctl_F_SETLK_Mode mode, long start, long end) throws InvalidFileDescriptorException, UnknownNativeErrorException;;
 
     @Override
+    @Deprecated
     public native int fnctl_F_GETLK(int fd, boolean exclusive, long start, long end) throws InvalidFileDescriptorException, UnknownNativeErrorException;
 
     @Override
@@ -329,6 +343,9 @@ public class JNILinuxNativeUtil extends JNICommonNativeUtil implements LinuxNati
 
     @Override
     public native Stat stat(String path);
+
+    @Override
+    public native Statvfs statvfs(String path) throws AccessDeniedException, IOException, FileSystemLoopException, FileNotFoundException, UnknownNativeErrorException;
 
     @Override
     public native Stat fstat(int descriptor) throws InvalidFileDescriptorException;
@@ -382,6 +399,18 @@ public class JNILinuxNativeUtil extends JNICommonNativeUtil implements LinuxNati
     public native void chmod(String path, int mode) throws AccessDeniedException, IOException, FileSystemLoopException, InvalidPathException, FileNotFoundException, NotDirectoryException;
 
     @Override
+    public native void fchmod(int fd, int mode);
+
+    @Override
+    public native void chown(String path, int uid, int gid);
+
+    @Override
+    public native void fchown(int fd, int uid, int gid);
+
+    @Override
+    public native void lchown(String path, int uid, int gid);
+
+    @Override
     public native int ioctl(int fd, int code);
 
     @Override
@@ -421,6 +450,57 @@ public class JNILinuxNativeUtil extends JNICommonNativeUtil implements LinuxNati
     }
 
     @Override
+    public native long sem_open(String name, int oflags) throws AccessDeniedException, QuotaExceededException, FileNotFoundException, FileAlreadyExistsException, UnknownNativeErrorException;
+
+    @Override
+    public native long sem_open(String name, int oflags, int mode, int value) throws AccessDeniedException, QuotaExceededException, FileNotFoundException, FileAlreadyExistsException, UnknownNativeErrorException;
+
+    @Override
+    public native void sem_close(long sem) throws UnknownNativeErrorException;
+
+    @Override
+    public native void sem_unlink(String name) throws AccessDeniedException, FileNotFoundException, UnknownNativeErrorException;
+    @Override
+    public native int sem_t_size();
+    @Override
+    public native void sem_init(long sem, boolean interprocess, int value) throws UnknownNativeErrorException;
+
+    @Override
+    public native void sem_destroy(long sem) throws UnknownNativeErrorException;
+
+    @Override
+    public native void sem_post(long sem) throws UnknownNativeErrorException;
+
+    @Override
+    public native void sem_wait(long sem) throws UnknownNativeErrorException;
+
+    @Override
+    public native int sem_getvalue(long sem) throws UnknownNativeErrorException;
+
+    @Override
+    public native boolean sem_trywait(long sem) throws UnknownNativeErrorException;
+
+    @Override
+    public native boolean sem_timedwait(long sem, long timeoutInMillis) throws UnknownNativeErrorException;
+
+    @Override
+    public native int shm_open(String name, int oflag, int mode);
+
+    @Override
+    public native void shm_unlink(String name);
+
+    @Override
+    public native void ftruncate(int fd, long len);
+
+    @Override
+    public native void truncate(String name, long len);
+
+    @Override
+    public native void mkfifo(String name, int mode) throws AccessDeniedException, QuotaExceededException, FileAlreadyExistsException, FileNotFoundException, NotDirectoryException, ReadOnlyFileSystemException;
+
+    @Override
     public native Stat lstat(String path) throws InvalidFileDescriptorException;
+
+
 
 }

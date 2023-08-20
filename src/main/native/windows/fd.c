@@ -106,3 +106,13 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 		jthrow_UnknownNativeErrorException_1(env, GetLastError());
 	}
 }
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    INVALID_HANDLE_VALUE
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_INVALID_1HANDLE_1VALUE
+  (JNIEnv * env, jobject inst) {
+	return (jlong) (uintptr_t) INVALID_HANDLE_VALUE;
+}

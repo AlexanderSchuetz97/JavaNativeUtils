@@ -14,7 +14,7 @@ Maven:
 <dependency>
     <groupId>io.github.alexanderschuetz97</groupId>
     <artifactId>JavaNativeUtils</artifactId>
-    <version>2.0</version>
+    <version>3.0</version>
 </dependency>
 ````
 
@@ -41,6 +41,7 @@ if (NativeUtils.isWindows()) {
 * symlink
 * link
 * stat
+* statvfs
 * fstat
 * lstat
 * chdir
@@ -49,6 +50,7 @@ if (NativeUtils.isWindows()) {
 * connect
 * read
 * write
+* fsync
 * getsockopt
 * setsockopt
 * close
@@ -58,10 +60,25 @@ if (NativeUtils.isWindows()) {
 * mmap
 * msync
 * munmap
+* mkfifo
 * getpagesize
 * __get_cpuid_count (from cpuid.h)
 * if_nametoindex
 * if_indextoname
+* sem_open
+* sem_close
+* sem_unlink
+* sem_init
+* sem_destroy
+* sem_post
+* sem_wait
+* sem_getvalue
+* sem_trywait
+* sem_timedwait
+* shm_open
+* shm_unlink
+* ftruncate
+* truncate
 
 
 #### Windows
@@ -111,6 +128,15 @@ if (NativeUtils.isWindows()) {
 * GetTokenInformation
 * OpenProcessToken
 * ShellExecuteA
+* CreateFileMappingA
+* OpenFileMappingA
+* MapViewOfFileEx
+* UnmapViewOfFile
+* GetIpForwardTable2
+* CreateIpForwardEntry2
+* ConvertInterfaceIndexToLuid
+* ConvertInterfaceLuidToIndex
+
 
 ### List of exposed JNI Functions (All OS)
 ### Reflection
@@ -151,11 +177,26 @@ Accessing sun.misc.Unsafe is also non-trivial in newer Java Versions depending o
 #### Windows (Vista or newer)
 * i386 
 * amd64
+
+Only amd64 architecture is tested regularly!
+
 #### Linux
-* i386 (GLIBC 2.17 or newer)
-* amd64 (GLIBC 2.17 or newer)
-* armhf (GLIBC 2.17 or newer)
-* aarch64 (GLIBC 2.17 or newer)
+
+GLIBC 2.17 or newer:
+* i386 
+* amd64 
+* armel 
+* armhf 
+* aarch64 
+* riscv64 
+* mips64el
+* ppc64le
+* s390x
+
+musl libc (Alpine Linux):
+* amd64
+
+Only amd64 architecture is tested regularly!
 
 If an unsupported operating system or processor architecture is used then getWindowsUtil() or getLinuxUtil() throws an exception.
 To check if the current system supports linux or windows syscalls use the isLinux() or isWindows() method.

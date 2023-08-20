@@ -143,7 +143,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 			}
 		}
 
-		jobjectArray stringArray = (*env)->NewObjectArray(env, count, String_Class, NULL);
+		jobjectArray stringArray = jStringArray(env, count);
 		if (stringArray == NULL) {
 			jthrowCC_OutOfMemoryError_1(env, "NewObjectArray");
 			goto clean;
@@ -165,7 +165,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 			(*env)->DeleteLocalRef(env, nstring);
 		}
 
-		ret = (*env)->NewObject(env, RegData, RegData_Object, stringArray, RegData_types[4]);
+		ret = jnew_RegData_2(env, stringArray, jenum_RegData$RegType_REG_MULTI_SZ());
 		goto clean;
 	}
 	case REG_EXPAND_SZ:
@@ -174,7 +174,8 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 			jthrowCC_OutOfMemoryError_1(env, "NewStringUTF");
 			goto clean;
 		}
-		ret = (*env)->NewObject(env, RegData, RegData_Object, str, RegData_types[2]);
+
+		ret = jnew_RegData_2(env, str, jenum_RegData$RegType_REG_EXPAND_SZ());
 		goto clean;
 	case REG_LINK:
 		str = (*env)->NewStringUTF(env, (const char*) data);
@@ -182,7 +183,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 			jthrowCC_OutOfMemoryError_1(env, "NewStringUTF");
 			goto clean;
 		}
-		ret = (*env)->NewObject(env, RegData, RegData_Object, str, RegData_types[3]);
+		ret = jnew_RegData_2(env, str, jenum_RegData$RegType_REG_LINK());
 		goto clean;
 	case REG_SZ:
 		str = (*env)->NewStringUTF(env, (const char*) data);
@@ -190,7 +191,8 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 			jthrowCC_OutOfMemoryError_1(env, "NewStringUTF");
 			goto clean;
 		}
-		ret = (*env)->NewObject(env, RegData, RegData_Object, str, RegData_types[7]);
+
+		ret = jnew_RegData_2(env, str, jenum_RegData$RegType_REG_SZ());
 		goto clean;
 	case REG_QWORD:
 		if (len < 8) {
@@ -198,7 +200,7 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 			goto clean;
 		}
 		jlong* lptr = (jlong*) data;
-		ret = (*env)->NewObject(env, RegData, RegData_Long, *lptr);
+		ret = jnew_RegData_1(env, *lptr);
 		goto clean;
 	case REG_DWORD:
 		if (len < 4) {
@@ -206,26 +208,24 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 			goto clean;
 		}
 		jint* iptr = (jint*) data;
-		ret = (*env)->NewObject(env, RegData, RegData_Int, *iptr);
+		ret = jnew_RegData(env, *iptr);
 		goto clean;
 	case REG_BINARY:
-		bytes = (*env)->NewByteArray(env, len);
+		bytes = jarrayB(env, (jbyte*) data, len);
 		if (bytes == NULL) {
-			jthrowCC_OutOfMemoryError_1(env, "NewByteArray");
 			goto clean;
 		}
 
-		ret = (*env)->NewObject(env, RegData, RegData_Object, bytes, RegData_types[0]);
+		ret = jnew_RegData_2(env, bytes, jenum_RegData$RegType_REG_BINARY());
 		goto clean;
 	case REG_NONE:
 	default:
-		bytes = (*env)->NewByteArray(env, len);
+		bytes = jarrayB(env, (jbyte*) data, len);
 		if (bytes == NULL) {
-			jthrowCC_OutOfMemoryError_1(env, "NewByteArray");
 			goto clean;
 		}
 
-		ret = (*env)->NewObject(env, RegData, RegData_Object, bytes, RegData_types[5]);
+		ret = jnew_RegData_2(env, bytes, jenum_RegData$RegType_REG_NONE());
 		goto clean;
 	}
 
@@ -317,30 +317,27 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	}
 
 
-	result = (*env)->NewObject(env, RegQueryInfoKeyResult_Class, RegQueryInfoKeyResult_Constructor);
+
+	result = jnew_RegQueryInfoKeyResult(env);
 	if (result == NULL) {
-		jthrowCC_OutOfMemoryError_1(env, "NewObject");
 		goto cleanup;
 	}
 
-
-	(*env)->SetObjectField(env, result, RegQueryInfoKeyResult_keyClass, jlpClass);
-	(*env)->SetIntField(env, result, RegQueryInfoKeyResult_subKeys, lpcSubKeys);
-	(*env)->SetIntField(env, result, RegQueryInfoKeyResult_maxSubKeyLen, lpcbMaxSubKeyLen);
-	(*env)->SetIntField(env, result, RegQueryInfoKeyResult_maxClassLen, lpcbMaxClassLen);
-	(*env)->SetIntField(env, result, RegQueryInfoKeyResult_values, lpcValues);
-	(*env)->SetIntField(env, result, RegQueryInfoKeyResult_maxValueNameLen, lpcbMaxValueNameLen);
-	(*env)->SetIntField(env, result, RegQueryInfoKeyResult_maxValueLen, lpcbMaxValueLen);
-	(*env)->SetIntField(env, result, RegQueryInfoKeyResult_securityDescriptorSize, lpcbSecurityDescriptor);
+	jset_RegQueryInfoKeyResult_keyClass(env, result, jlpClass);
+	jset_RegQueryInfoKeyResult_subKeys(env, result, lpcSubKeys);
+	jset_RegQueryInfoKeyResult_maxSubKeyLen(env, result, lpcbMaxSubKeyLen);
+	jset_RegQueryInfoKeyResult_maxClassLen(env, result, lpcbMaxClassLen);
+	jset_RegQueryInfoKeyResult_values(env, result, lpcValues);
+	jset_RegQueryInfoKeyResult_maxValueNameLen(env, result, lpcbMaxValueNameLen);
+	jset_RegQueryInfoKeyResult_maxValueLen(env, result, lpcbMaxValueLen);
+	jset_RegQueryInfoKeyResult_securityDescriptorSize(env, result, lpcbSecurityDescriptor);
 
 	uint64_t temp = lpftLastWriteTime.dwHighDateTime;
 	temp <<= 32;
 	temp += lpftLastWriteTime.dwLowDateTime;
 
-	(*env)->SetLongField(env, result, RegQueryInfoKeyResult_lastWriteTime, temp);
 
-
-
+	jset_RegQueryInfoKeyResult_lastWriteTime(env, result, temp);
 
 	cleanup:
 	if (lpClass != NULL) {
@@ -443,14 +440,13 @@ JNIEXPORT jobject JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNI
 	jtime <<= 32;
 	jtime += ftime.dwLowDateTime;
 
-	obj = (*env)->NewObject(env, RegEnumKeyExResult_Class, RegEnumKeyExResult_Constructor);
+	obj = jnew_RegEnumKeyExResult(env);
 	if (obj == NULL) {
-		jthrowCC_OutOfMemoryError_1(env, "NewObject");
 		goto cleanup;
 	}
-	(*env)->SetObjectField(env, obj, RegEnumKeyExResult_name, jname);
-	(*env)->SetObjectField(env, obj, RegEnumKeyExResult_className, jclass);
-	(*env)->SetLongField(env, obj, RegEnumKeyExResult_lastWriteTime, jtime);
+	jset_RegEnumKeyExResult_className(env, obj, jclass);
+	jset_RegEnumKeyExResult_name(env, obj, jname);
+	jset_RegEnumKeyExResult_lastWriteTime(env, obj, jtime);
 
 	cleanup:
 	if (cmem != NULL) {

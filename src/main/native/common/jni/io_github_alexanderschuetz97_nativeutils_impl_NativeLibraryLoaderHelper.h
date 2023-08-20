@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 #undef io_github_alexanderschuetz97_nativeutils_impl_NativeLibraryLoaderHelper_EXPECTED_NATIVE_LIB_VERSION
-#define io_github_alexanderschuetz97_nativeutils_impl_NativeLibraryLoaderHelper_EXPECTED_NATIVE_LIB_VERSION 4L
+#define io_github_alexanderschuetz97_nativeutils_impl_NativeLibraryLoaderHelper_EXPECTED_NATIVE_LIB_VERSION 6L
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_NativeLibraryLoaderHelper
  * Method:    getNativeLibVersion

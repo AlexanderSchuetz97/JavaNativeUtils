@@ -36,7 +36,7 @@ import java.util.UUID;
  */
 public class NativeLibraryLoaderHelper {
 
-    private static final int EXPECTED_NATIVE_LIB_VERSION = 4;
+    private static final int EXPECTED_NATIVE_LIB_VERSION = 6;
 
     /**
      * Flag to indicate if already loaded.
@@ -87,11 +87,18 @@ public class NativeLibraryLoaderHelper {
     public static Map<String, byte[]> getNativeLibraryBinaries() {
         Map<String, byte[]> theMap = new HashMap<>();
         theMap.put("java_native_utils_amd64.so", readLib("/java_native_utils_amd64.so"));
+        theMap.put("java_native_utils_amd64_musl.so", readLib("/java_native_utils_amd64_musl.so"));
         theMap.put("java_native_utils_i386.so", readLib("/java_native_utils_i386.so"));
         theMap.put("java_native_utils_armhf.so", readLib("/java_native_utils_armhf.so"));
+        theMap.put("java_native_utils_armel.so", readLib("/java_native_utils_armel.so"));
         theMap.put("java_native_utils_aarch64.so", readLib("/java_native_utils_aarch64.so"));
+        theMap.put("java_native_utils_riscv64.so", readLib("/java_native_utils_riscv64.so"));
+        theMap.put("java_native_utils_mips64el.so", readLib("/java_native_utils_mips64el.so"));
+        theMap.put("java_native_utils_ppc64le.so", readLib("/java_native_utils_ppc64le.so"));
+        theMap.put("java_native_utils_s390x.so", readLib("/java_native_utils_s390x.so"));
         theMap.put("java_native_utils_amd64.dll", readLib("/java_native_utils_amd64.dll"));
         theMap.put("java_native_utils_i386.dll", readLib("/java_native_utils_i386.dll"));
+
         return theMap;
     }
 
@@ -212,13 +219,51 @@ public class NativeLibraryLoaderHelper {
         tempOS = tempOS.toLowerCase();
         try {
             if (tempOS.contains("linux")) {
-                if (!"i386".equals(tempArch) && !"amd64".equals(tempArch) && !"armhf".equals(tempArch) && !"aarch64".equals(tempArch)) {
-                    throw new UnsatisfiedLinkError("Processor architecture is not i386 amd64 or armhf and thus not supported! Value: " + tempArch);
+                switch(tempArch) {
+                    case("armhf"):
+                        try {
+                            loadLib(tempFile, "java_native_utils_armhf.so");
+                        } catch (Throwable e) {
+                            //ARMEL Fallback as both architectures have same os.arch
+                            loadLib(tempFile, "java_native_utils_armel.so");
+                        }
+                        break;
+                    case("amd64"):
+                        try {
+                            //Check if we are on musl...
+                            if (new File("/lib/libc.musl-x86_64.so.1").exists()) {
+                                loadLib(tempFile, "java_native_utils_amd64_musl.so");
+                                break;
+                            }
+                        } catch (Throwable e) {
+                            //Fallback to GLIBC
+                            loadLib(tempFile, "java_native_utils_amd64.so");
+                            break;
+                        }
+
+                        try {
+                            //TRY GLIBC
+                            loadLib(tempFile, "java_native_utils_amd64.so");
+                        } catch (Throwable e) {
+                            //MUSL as fallback
+                            loadLib(tempFile, "java_native_utils_amd64_musl.so");
+                        }
+                        break;
+                    case("armel"):
+                    case("i386"):
+                    case("aarch64"):
+                    case("riscv64"):
+                    case("ppc64le"):
+                    case("mips64el"):
+                    case("s390x"):
+                        loadLib(tempFile, "java_native_utils_" + tempArch + ".so");
+                        break;
+                    default:
+                        throw new UnsatisfiedLinkError("Processor architecture is not supported on Linux! Value: " + tempArch);
                 }
-                loadLib(tempFile, "java_native_utils_" + tempArch + ".so");
             } else if (tempOS.contains("windows")) {
                 if (!"i386".equals(tempArch) && !"amd64".equals(tempArch)) {
-                    throw new UnsatisfiedLinkError("Processor architecture is not i386 amd64 and thus not supported! Value: " + tempArch);
+                    throw new UnsatisfiedLinkError("Processor architecture is not supported on Windows! Value: " + tempArch);
                 }
                 loadLib(tempFile, "java_native_utils_" + tempArch + ".dll");
             } else {
@@ -287,9 +332,11 @@ public class NativeLibraryLoaderHelper {
             }
         }
 
-
-        System.load(tempLibFile.getAbsolutePath());
-        tempLibFile.delete();
+        try {
+            System.load(tempLibFile.getAbsolutePath());
+        } finally {
+            tempLibFile.delete();
+        }
     }
 
     static native long getNativeLibVersion();

@@ -22,7 +22,9 @@ package io.github.alexanderschuetz97.nativeutils;
 import io.github.alexanderschuetz97.nativeutils.api.LinuxNativeUtil;
 import io.github.alexanderschuetz97.nativeutils.api.NativeUtil;
 import io.github.alexanderschuetz97.nativeutils.api.NativeUtils;
+import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
 import io.github.alexanderschuetz97.nativeutils.api.structs.Stat;
+import io.github.alexanderschuetz97.nativeutils.api.structs.Statvfs;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -31,6 +33,7 @@ import org.junit.Test;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Random;
 
 public class LinuxStatTest {
@@ -66,6 +69,13 @@ public class LinuxStatTest {
         } catch (FileNotFoundException exception) {
             Assert.assertEquals(path1, exception.getMessage());
         }
+    }
+
+    @Test
+    public void testvfs() throws IOException, UnknownNativeErrorException {
+        LinuxNativeUtil util = NativeUtils.getLinuxUtil();
+        Statvfs stat = util.statvfs("/dev/shm");
+        System.out.println(stat);
     }
 
     @Test

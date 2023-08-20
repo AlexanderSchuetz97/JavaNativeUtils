@@ -25,14 +25,21 @@ echo "Building the native libraries for JavaNativeUtils using Docker"
 cd /src
 export JAVAH_COMMAND="javah -encoding utf-8"
 export LINUX_CC_AMD64=/usr/bin/x86_64-linux-gnu-gcc
+export LINUX_CC_AMD64_MUSL=/x86_64-linux-musl-cross/bin/x86_64-linux-musl-gcc
 export LINUX_CC_I386=/usr/bin/i686-linux-gnu-gcc
 export LINUX_CC_ARMHF=/usr/bin/arm-linux-gnueabihf-gcc
+export LINUX_CC_ARMEL=/usr/bin/arm-linux-gnueabi-gcc
 export LINUX_CC_AARCH64=/usr/bin/aarch64-linux-gnu-gcc
+export LINUX_CC_RISCV64=/usr/bin/riscv64-linux-gnu-gcc
+export LINUX_CC_MIPS64EL=/usr/bin/mips64el-linux-gnuabi64-gcc
+export LINUX_CC_PPC64LE=/usr/bin/powerpc64le-linux-gnu-gcc
+export LINUX_CC_S390X=/usr/bin/s390x-linux-gnu-gcc
 export LINUX_JDK=/usr/lib/jvm/java-8-openjdk-amd64
 export WINDOWS_CC_AMD64=/usr/bin/x86_64-w64-mingw32-gcc-win32
 export WINDOWS_CC_I386=/usr/bin/i686-w64-mingw32-gcc
 export WINDOWS_JDK=/windowsJDK/jdk8u292-b10
 export BUILD_TARGETS="all"
+#export BUILD_TARGETS="linux_riscv64"
 #windows_amd64 windows_i386
 export LINUX_ADDITIONAL_CC_FLAGS="-D_FILE_OFFSET_BITS=64"
 #Cleanup
@@ -62,6 +69,7 @@ cd ../resources/
 #Container creates them as "root" this may cause issues...
 chmod 777 *.so
 chmod 777 *.dll
+
 
 #Confirm success
 
@@ -94,6 +102,16 @@ if [[ $BUILD_TARGETS == *"linux_amd64"* ]] || [[ $BUILD_TARGETS == "all" ]]; the
     fi
 fi
 
+if [[ $BUILD_TARGETS == *"linux_amd64_musl"* ]] || [[ $BUILD_TARGETS == "all" ]]; then
+    if [ -f java_native_utils_amd64_musl.so ]; then
+        echo "Building the linux amd64 musl so succeeded"
+    else
+        echo "Building the linux amd64 musl so failed!"
+        exit -1
+    fi
+fi
+
+
 
 if [[ $BUILD_TARGETS == *"linux_i386"* ]] || [[ $BUILD_TARGETS == "all" ]]; then
     if [ -f java_native_utils_i386.so ]; then
@@ -113,11 +131,58 @@ if [[ $BUILD_TARGETS == *"linux_armhf"* ]] || [[ $BUILD_TARGETS == "all" ]]; the
     fi
 fi
 
+if [[ $BUILD_TARGETS == *"linux_armel"* ]] || [[ $BUILD_TARGETS == "all" ]]; then
+    if [ -f java_native_utils_armel.so ]; then
+        echo "Building the linux armel so succeeded"
+    else
+        echo "Building the linux armel so failed!"
+        exit -1
+    fi
+fi
+
 if [[ $BUILD_TARGETS == *"linux_aarch64"* ]] || [[ $BUILD_TARGETS == "all" ]]; then
-    if [ -f java_native_utils_armhf.so ]; then
+    if [ -f java_native_utils_aarch64.so ]; then
         echo "Building the linux aarch64 so succeeded"
     else
         echo "Building the linux aarch64 so failed!"
+        exit -1
+    fi
+fi
+
+if [[ $BUILD_TARGETS == *"linux_riscv64"* ]] || [[ $BUILD_TARGETS == "all" ]]; then
+    if [ -f java_native_utils_riscv64.so ]; then
+        echo "Building the linux riscv64 so succeeded"
+    else
+        echo "Building the linux riscv64 so failed!"
+        exit -1
+    fi
+fi
+
+if [[ $BUILD_TARGETS == *"linux_mips64el"* ]] || [[ $BUILD_TARGETS == "all" ]]; then
+    if [ -f java_native_utils_mips64el.so ]; then
+        echo "Building the linux mips64el so succeeded"
+    else
+        echo "Building the linux mips64el so failed!"
+        exit -1
+    fi
+fi
+
+
+if [[ $BUILD_TARGETS == *"linux_ppc64le"* ]] || [[ $BUILD_TARGETS == "all" ]]; then
+    if [ -f java_native_utils_ppc64le.so ]; then
+        echo "Building the linux ppc64le so succeeded"
+    else
+        echo "Building the linux ppc64le so failed!"
+        exit -1
+    fi
+fi
+
+
+if [[ $BUILD_TARGETS == *"linux_s390x"* ]] || [[ $BUILD_TARGETS == "all" ]]; then
+    if [ -f java_native_utils_s390x.so ]; then
+        echo "Building the linux s390x so succeeded"
+    else
+        echo "Building the linux s390x so failed!"
         exit -1
     fi
 fi

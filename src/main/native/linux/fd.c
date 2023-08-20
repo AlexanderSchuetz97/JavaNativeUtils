@@ -25,10 +25,12 @@
 #include <fcntl.h>
 #include <assert.h>
 #include <sys/ioctl.h>
+#include <limits.h>
 
 #ifndef __USE_GNU
 #define __USE_GNU
 #endif
+
 
 
 #include <poll.h>
@@ -38,6 +40,9 @@
 #endif
 #ifndef __USE_LARGEFILE64
 #define __USE_LARGEFILE64
+#endif
+#ifndef _LARGEFILE64_SOURCE
+#define _LARGEFILE64_SOURCE
 #endif
 
 #include <sys/mman.h>
@@ -108,11 +113,23 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILi
  */
 JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_open__Ljava_lang_String_2I
 	(JNIEnv * env, jobject inst, jstring path, jint flags) {
+	if (path == NULL) {
+		jthrowCC_NullPointerException_1(env, "path");
+		return -1;
+	}
+
+	int cflags = (int) flags;
+	if (cflags & O_CREAT) {
+		jthrowCC_IllegalArgumentException_1(env, "O_CREAT requires mode");
+		return -1;
+	}
+
 	const char * ptr = (*env)->GetStringUTFChars(env, path, NULL);
 	if (ptr == NULL) {
 		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
 		return -1;
 	}
+
 
 	while(true) {
 		int fd = open(ptr, (int) flags);
@@ -207,6 +224,10 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
  */
 JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_open__Ljava_lang_String_2II
   (JNIEnv * env, jobject inst, jstring path, jint flags, jint mode) {
+	if (path == NULL) {
+		jthrowCC_NullPointerException_1(env, "path");
+		return -1;
+	}
 	const char * ptr = (*env)->GetStringUTFChars(env, path, NULL);
 	if (ptr == NULL) {
 		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
@@ -328,6 +349,8 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	}
 }
 
+
+
 void fromPollEvent(JNIEnv * env, jobject set, int revent) {
 	jsize count = jenum_PollFD$PollEvent_count();
 
@@ -363,9 +386,11 @@ void fromPollEvent(JNIEnv * env, jobject set, int revent) {
 		jcall_Collection_add(env, set, jenum_PollFD$PollEvent_values()[7]);
 	}
 
+# ifdef POLLREMOVE
 	if (((revent & POLLREMOVE) == POLLREMOVE) && count >= 8) {
 		jcall_Collection_add(env, set, jenum_PollFD$PollEvent_values()[8]);
 	}
+# endif
 
 	if (((revent & POLLRDHUP) == POLLRDHUP) && count >= 9) {
 		jcall_Collection_add(env, set, jenum_PollFD$PollEvent_values()[9]);
@@ -424,7 +449,9 @@ int toPollEvent(JNIEnv * env, jobject eventSet) {
 			event |= POLLMSG;
 			break;
 		case(8):
+#ifdef POLLREMOVE
 			event |= POLLREMOVE;
+#endif
 			break;
 		case(9):
 			event |= POLLRDHUP;
@@ -801,6 +828,10 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	jthrow_UnknownNativeErrorException_1(env, err);
 }
 
+#ifndef __OFF64_T_TYPE
+#define __OFF64_T_TYPE off64_t
+#endif
+
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
  * Method:    _mmap
@@ -820,7 +851,7 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILi
 		prot = PROT_NONE;
 	}
 
-	void * res = mmap64(NULL, (size_t) length, prot, flags, fd, (__off64_t) offset);
+	void * res = mmap64(NULL, (size_t) length, prot, flags, fd, (__OFF64_T_TYPE) offset);
 	if (res != MAP_FAILED) {
 		return (jlong) (uintptr_t) res;
 	}
@@ -862,6 +893,107 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILi
 		return -1;
 	}
 }
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    shm_open
+ * Signature: (Ljava/lang/String;II)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_shm_1open
+  (JNIEnv * env, jobject inst, jstring name, jint oflag, jint mode) {
+	if (name == NULL) {
+		jthrowCC_NullPointerException_1(env, "name");
+		return -1;
+	}
+
+	const char * cname = (*env)->GetStringUTFChars(env, name, NULL);
+
+	if (cname == NULL) {
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
+		return -1;
+	}
+
+	int res = shm_open(cname, (int) oflag, (mode_t) mode);
+	(*env)->ReleaseStringUTFChars(env, name, cname);
+	if (res > 0) {
+		return res;
+	}
+
+	int err = errno;
+	switch(err) {
+	case(EACCES):
+		jthrow_AccessDeniedException(env, name);
+		return -1;
+	case(EEXIST):
+		jthrow_FileAlreadyExistsException(env, name);
+		return -1;
+	case(EINVAL):
+		jthrowCC_IllegalArgumentException_1(env, "name is invalid");
+		return -1;
+	case(EMFILE):
+		jthrowCC_QuotaExceededException(env, "The per-process limit on the number of open file descriptors has been reached.");
+		return -1;
+	case(ENAMETOOLONG):
+		jthrowCC_IllegalArgumentException_1(env, "name is too long");
+		return -1;
+	case(ENFILE):
+		jthrowCC_QuotaExceededException(env, "The system-wide limit on the total number of open files has been reached.");
+		return -1;
+	case(ENOENT):
+		jthrow_FileNotFoundException_1(env, name);
+		return -1;
+	}
+
+	jthrow_UnknownNativeErrorException_1(env, err);
+	return -1;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    shm_unlink
+ * Signature: (Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_shm_1unlink
+  (JNIEnv * env, jobject inst, jstring name) {
+	if (name == NULL) {
+		jthrowCC_NullPointerException_1(env, "name");
+		return;
+	}
+
+	const char * cname = (*env)->GetStringUTFChars(env, name, NULL);
+
+	if (cname == NULL) {
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
+		return;
+	}
+
+	int res = shm_unlink(cname);
+	(*env)->ReleaseStringUTFChars(env, name, cname);
+	if (res == 0) {
+		return;
+	}
+
+	int err = errno;
+	switch(err) {
+	case(EACCES):
+		jthrow_AccessDeniedException(env, name);
+		return;
+	case(EINVAL):
+		jthrowCC_IllegalArgumentException_1(env, "name is invalid");
+		return;
+	case(ENAMETOOLONG):
+		jthrowCC_IllegalArgumentException_1(env, "name is too long");
+		return;
+	case(ENOENT):
+		jthrow_FileNotFoundException_1(env, name);
+		return;
+	}
+
+	jthrow_UnknownNativeErrorException_1(env, err);
+	return;
+}
+
+
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
@@ -1099,4 +1231,142 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	(*env)->ReleaseByteArrayElements(env, buf, nbuf, JNI_OK);
 	return res;
 }
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    ftruncate
+ * Signature: (IJ)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_ftruncate
+  (JNIEnv * env, jobject inst, jint fd, jlong off) {
+	if (fd < 0) {
+		jthrow_InvalidFileDescriptorException(env);
+		return;
+	}
+
+	if (ftruncate((int) fd, (off_t) off) == 0) {
+		return;
+	}
+
+
+	int err = errno;
+	switch(err) {
+	case(EBADF):
+		jthrow_InvalidFileDescriptorException(env);
+		return;
+	case(EINVAL):
+		jthrow_InvalidFileDescriptorException(env);
+		return;
+	}
+
+	jthrow_UnknownNativeErrorException_1(env, err);
+	return;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    truncate
+ * Signature: (Ljava/lang/String;J)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_truncate
+  (JNIEnv * env, jobject inst, jstring name, jlong off) {
+	if (name == NULL) {
+		jthrowCC_NullPointerException_1(env, "name");
+		return;
+	}
+
+	const char * cname = (*env)->GetStringUTFChars(env, name, NULL);
+
+	if (cname == NULL) {
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
+		return;
+	}
+	while(true) {
+		int res = truncate(cname, (off_t) off);
+		if (res == 0) {
+			goto cleanup;
+		}
+
+		int err = errno;
+		switch(err) {
+		case(EACCES):
+			jthrow_AccessDeniedException(env, name);
+			goto cleanup;
+		case(EFBIG):
+			jthrowCC_IllegalArgumentException_1(env, "The argument length is larger than the maximum file size.");
+			goto cleanup;
+		case(EINTR):
+			continue;
+		case(EINVAL):
+			jthrowCC_IllegalArgumentException_1(env, "The argument length is negative or larger than the maximum file size.");
+			goto cleanup;
+		case(EIO):
+			jthrowCC_IOException_1(env, "An I/O error occurred updating the inode.");
+			goto cleanup;
+		case(EISDIR):
+			jthrow_FileIsDirectoryException(env, name);
+			goto cleanup;
+		case(ELOOP):
+			jthrow_FileSystemLoopException(env, name);
+			goto cleanup;
+		case(ENAMETOOLONG):
+			jthrowCC_IllegalArgumentException_1(env, "name is too long");
+			goto cleanup;
+		case(ENOENT):
+			jthrow_FileNotFoundException(env);
+			goto cleanup;
+		case(ENOTDIR):
+			jthrowCC_NotDirectoryException(env, "Path component is not a directory");
+			goto cleanup;
+		case(EPERM):
+			jthrowCC_PermissionDeniedException(env, "The operation was either prevented by a file seal or the underlying filesystem does not support extending a file beyond its current size");
+			goto cleanup;
+		case(EROFS):
+			jthrow_ReadOnlyFileSystemException(env);
+			goto cleanup;
+		case(ETXTBSY):
+			jthrowCC_IOException_1(env, "The file is an executable file that is being executed.");
+			goto cleanup;
+		}
+
+		jthrow_UnknownNativeErrorException_1(env, err);
+		goto cleanup;
+	}
+
+
+	cleanup:
+	(*env)->ReleaseStringUTFChars(env, name, cname);
+	return;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    fsync
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_fsync
+  (JNIEnv *env, jobject inst, jint fd) {
+	if (fsync((int)fd) == 0) {
+		return;
+	}
+
+
+	int err = errno;
+	switch(err) {
+	case(EIO):
+		jthrowCC_IOException_1(env, "An I/O error occurred during synchronization.");
+		return;
+	case(EBADF):
+		jthrow_InvalidFileDescriptorException(env);
+		return;
+	case(EROFS):
+	case(EINVAL):
+		jthrow_ReadOnlyFileSystemException(env);
+		return;
+	default:
+		jthrow_UnknownNativeErrorException_1(env, err);
+		return;
+	}
+}
+
 

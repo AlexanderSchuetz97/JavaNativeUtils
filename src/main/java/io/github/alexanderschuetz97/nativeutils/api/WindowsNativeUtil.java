@@ -27,6 +27,7 @@ import java.io.FileNotFoundException;
 import java.nio.ByteBuffer;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.Collection;
+import java.util.List;
 
 public interface WindowsNativeUtil extends NativeUtil {
 
@@ -189,6 +190,34 @@ public interface WindowsNativeUtil extends NativeUtil {
      */
     long CreateFileW(String lpFileName, int access, boolean allowDelete, boolean allowRead, boolean allowWrite, CreateFileA_createMode openMode, int attributes) throws FileAlreadyExistsException, SharingViolationException, UnknownNativeErrorException;
 
+
+
+    /**
+     * Creates a file mapping.
+     *
+     * @param hFile handle from CreateFileA/W
+     * @param lpFileMappingAttributes 0 or pointer of LPSECURITY_ATTRIBUTES
+     * @param flProtect 0x4 for readwrite, 0x2 for read only, 0x40 for read write execute. For other values see microsoft documentation.
+     * @param dwMaximumSizeHigh high order 32 bit of the size of the mapping.
+     * @param dwMaximumSizeLow low order 32 bit of the size mapping.
+     * @param lpName optional global name of this mapping. If the mapping already exists then it will open that mapping instead of creating a new one.
+     * @return handle of the file mapping that can be closed with CloseHandle
+     */
+    long CreateFileMappingA(long hFile, long lpFileMappingAttributes, int flProtect, int dwMaximumSizeHigh, int dwMaximumSizeLow, String lpName) throws UnknownNativeErrorException;
+
+    /**
+     * Opens an existing file mapping.
+     *
+     * @param dwDesiredAccess desired access see {@link WinConst#FILE_MAP_ALL_ACCESS} or {@link WinConst#FILE_MAP_WRITE} among others.
+     * @param bInheritHandle can a child process that is created by this process inherit this handle?
+     * @param lpName name of the named file mapping.
+     * @return handle of the file mapping that can be closed with CloseHandle
+     */
+    long OpenFileMappingA(int dwDesiredAccess, boolean bInheritHandle, String lpName) throws UnknownNativeErrorException;
+
+    NativeMemory MapViewOfFileEx(long hFileMappingObject, int dwDesiredAccess, int dwFileOffsetHigh, int dwFileOffsetLow, int dwNumberOfBytesToMap, long lpBaseAddress) throws UnknownNativeErrorException;
+
+    void UnmapViewOfFile(long address) throws UnknownNativeErrorException;
     /**
      * Closes a windows handle. I do NOT recommend calling this with a handle that you did not create.
      * This holds especially true for a HANDLE aquired by calling #getHandle
@@ -565,8 +594,17 @@ public interface WindowsNativeUtil extends NativeUtil {
      */
     long ShellExecuteA(long hwnd, String lpOperation, String lpFile, String lpParameters, String lpDirectory, int nShowCmd) throws ShellExecuteException;
 
+    long INVALID_HANDLE_VALUE();
 
+    List<MibIpForwardRow2> GetIpForwardTable2(int Family) throws UnknownNativeErrorException;
 
+    boolean CreateIpForwardEntry2(MibIpForwardRow2 entry) throws UnknownNativeErrorException;
+
+    boolean DeleteIpForwardEntry2(MibIpForwardRow2 entry) throws UnknownNativeErrorException;
+
+    long ConvertInterfaceIndexToLuid(int idx) throws UnknownNativeErrorException;
+
+    int ConvertInterfaceLuidToIndex(long luid) throws UnknownNativeErrorException;
 
     //TODO
     //long CreateIpForwardEntry(MibIpForwardRow pRoute) throws UnknownNativeErrorException;
