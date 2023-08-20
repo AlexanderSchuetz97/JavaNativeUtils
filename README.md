@@ -211,7 +211,7 @@ Requirements:
 * docker-compose
 * jdk 8
   * Note: for various reasons you must use a JDK 8 to compile... 
-  * The compiled library will work when used by any java version between including java 7 and including java 18.
+  * The compiled library will work when used by any java version between including java 7 and including java 20.
 
 Building for the first time will build the docker image to compile the native libraries. 
 This will take a few minutes depending on your internet connection speed. You will only have to do this once
