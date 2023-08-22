@@ -426,10 +426,10 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
  * Method:    ReadFile
- * Signature: (JJIJ)J
+ * Signature: (JJIJJ)J
  */
-JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_ReadFile__JJIJ
-  (JNIEnv *, jobject, jlong, jlong, jint, jlong);
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_ReadFile__JJIJJ
+  (JNIEnv *, jobject, jlong, jlong, jint, jlong, jlong);
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
@@ -450,10 +450,10 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
  * Method:    WriteFile
- * Signature: (JJIJ)J
+ * Signature: (JJIJJ)J
  */
-JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_WriteFile__JJIJ
-  (JNIEnv *, jobject, jlong, jlong, jint, jlong);
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_WriteFile__JJIJJ
+  (JNIEnv *, jobject, jlong, jlong, jint, jlong, jlong);
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
@@ -518,6 +518,54 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
  */
 JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_INVALID_1HANDLE_1VALUE
   (JNIEnv *, jobject);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    CreateNamedPipeA
+ * Signature: (Ljava/lang/String;IIIIIIJ)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_CreateNamedPipeA
+  (JNIEnv *, jobject, jstring, jint, jint, jint, jint, jint, jint, jlong);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    ConnectNamedPipe
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_ConnectNamedPipe__J
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    ConnectNamedPipe
+ * Signature: (JJ)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_ConnectNamedPipe__JJ
+  (JNIEnv *, jobject, jlong, jlong);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    WaitNamedPipeA
+ * Signature: (Ljava/lang/String;J)Z
+ */
+JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_WaitNamedPipeA
+  (JNIEnv *, jobject, jstring, jlong);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    DisconnectNamedPipe
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_DisconnectNamedPipe
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    FlushFileBuffers
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_FlushFileBuffers
+  (JNIEnv *, jobject, jlong);
 
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil

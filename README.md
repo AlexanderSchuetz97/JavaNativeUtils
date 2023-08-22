@@ -136,6 +136,11 @@ if (NativeUtils.isWindows()) {
 * CreateIpForwardEntry2
 * ConvertInterfaceIndexToLuid
 * ConvertInterfaceLuidToIndex
+* CreateNamedPipeA
+* ConnectNamedPipe
+* WaitNamedPipeA
+* DisconnectNamedPipe
+* FlushFileBuffers
 
 
 ### List of exposed JNI Functions (All OS)

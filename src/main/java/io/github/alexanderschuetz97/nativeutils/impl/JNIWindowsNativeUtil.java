@@ -365,10 +365,10 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
         }
     }
 
-    native long ReadFile(long handle, long ptr, int len, long event) throws UnknownNativeErrorException;
+    native long ReadFile(long handle, long ptr, int len, long overlapped, long event) throws UnknownNativeErrorException;
 
     @Override
-    public long ReadFile(long handle, NativeMemory buffer, long off, int len, long event) throws UnknownNativeErrorException {
+    public long ReadFile(long handle, NativeMemory buffer, long off, int len, long overlapped, long event) throws UnknownNativeErrorException {
         ReentrantReadWriteLock.ReadLock readLock = buffer.readLock();
         readLock.lock();
         try {
@@ -376,7 +376,7 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
                 throw new IllegalArgumentException("buffer off/len out of bounds");
             }
 
-            return ReadFile(handle, buffer.getNativePointer(off), len, event);
+            return ReadFile(handle, buffer.getNativePointer(off), len, overlapped, event);
         } finally {
             readLock.unlock();
         }
@@ -454,10 +454,10 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
         }
     }
 
-    native long WriteFile(long handle, long ptr, int len, long event) throws UnknownNativeErrorException;
+    native long WriteFile(long handle, long ptr, int len , long overlapped, long event) throws UnknownNativeErrorException;
 
     @Override
-    public long WriteFile(long handle, NativeMemory buffer, long off, int len, long event) throws UnknownNativeErrorException {
+    public long WriteFile(long handle, NativeMemory buffer, long off, int len, long overlapped, long event) throws UnknownNativeErrorException {
         ReentrantReadWriteLock.ReadLock readLock = buffer.readLock();
         readLock.lock();
         try {
@@ -465,7 +465,7 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
                 throw new IllegalArgumentException("buffer off/len invalid/out of bounds");
             }
 
-            return WriteFile(handle, buffer.getNativePointer(off), len, event);
+            return WriteFile(handle, buffer.getNativePointer(off), len, overlapped, event);
         } finally {
             readLock.unlock();
         }
@@ -494,6 +494,24 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
 
     @Override
     public native long INVALID_HANDLE_VALUE();
+
+    @Override
+    public native long CreateNamedPipeA(String name, int dwOpenMode, int dwPipeMode, int nMaxInstances, int nOutBufferSize, int nInBufferSize, int nDefaultTimeOut, long lpSecurityAttributes) throws UnknownNativeErrorException;
+
+    @Override
+    public native void ConnectNamedPipe(long pipeHandle) throws UnknownNativeErrorException;
+
+    @Override
+    public native long ConnectNamedPipe(long pipeHandle, long eventHandle) throws UnknownNativeErrorException;
+
+    @Override
+    public native boolean WaitNamedPipeA(String name, long infinite) throws UnknownNativeErrorException;
+
+    @Override
+    public native void DisconnectNamedPipe(long pipeHandle) throws UnknownNativeErrorException;
+
+    @Override
+    public native void FlushFileBuffers(long handle)  throws UnknownNativeErrorException;
 
     @Override
     public native List<MibIpForwardRow2> GetIpForwardTable2(int Family) throws UnknownNativeErrorException;

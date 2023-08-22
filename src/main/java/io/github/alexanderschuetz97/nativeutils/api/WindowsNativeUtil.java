@@ -492,7 +492,7 @@ public interface WindowsNativeUtil extends NativeUtil {
      *
      * @param event created by CreateEventA
      */
-    long ReadFile(long handle, NativeMemory buffer, long off, int len, long event) throws InvalidFileDescriptorException, UnknownNativeErrorException;
+    long ReadFile(long handle, NativeMemory buffer, long off, int len, long overlapped, long event) throws InvalidFileDescriptorException, UnknownNativeErrorException;
 
     /**
      * Writes bytes from a Buffer into a handle.
@@ -532,9 +532,11 @@ public interface WindowsNativeUtil extends NativeUtil {
     /**
      * writes using overlapped mechanism. returns an overlapped pointer that must be feed by calling {@link #free(long)} after it has been confirmed that the async WRITE is done by calling GetOverlappedResult.
      *
+     * @param overlapped pointer from a previous already completed call to this function. May be 0.
      * @param event created by CreateEventA
+     * @return pointer to overlapped or input parameter overlapped if parameter was non 0.
      */
-    long WriteFile(long handle, NativeMemory buffer, long off, int len, long event) throws InvalidFileDescriptorException, UnknownNativeErrorException;
+    long WriteFile(long handle, NativeMemory buffer, long off, int len, long overlapped, long event) throws InvalidFileDescriptorException, UnknownNativeErrorException;
 
     /**
      * Gets the result from an async io operation on a handle.
@@ -595,6 +597,29 @@ public interface WindowsNativeUtil extends NativeUtil {
     long ShellExecuteA(long hwnd, String lpOperation, String lpFile, String lpParameters, String lpDirectory, int nShowCmd) throws ShellExecuteException;
 
     long INVALID_HANDLE_VALUE();
+
+    long CreateNamedPipeA(String name, int dwOpenMode, int dwPipeMode, int nMaxInstances, int nOutBufferSize, int nInBufferSize, int nDefaultTimeOut, long lpSecurityAttributes) throws UnknownNativeErrorException;
+
+    void ConnectNamedPipe(long pipeHandle) throws UnknownNativeErrorException;
+
+    /**
+     * @param eventHandle created by CreateEventA
+     * @return a pointer to overlapped. Must be freed by calling free once it is confirmed that the async IO is done.
+     */
+    long ConnectNamedPipe(long pipeHandle, long eventHandle) throws UnknownNativeErrorException;
+
+    /**
+     * returns true if ConnectNamedPipe will succeed. False if timeout occured.
+     * Throws exception on any other error.
+     *
+     * @param name pipe name
+     * @param timeout in millis. 0 to use default timeout of the pipe.
+     */
+    boolean WaitNamedPipeA(String name, long timeout) throws UnknownNativeErrorException;
+
+    void DisconnectNamedPipe(long pipeHandle) throws UnknownNativeErrorException;
+
+    void FlushFileBuffers(long handle) throws UnknownNativeErrorException;
 
     List<MibIpForwardRow2> GetIpForwardTable2(int Family) throws UnknownNativeErrorException;
 

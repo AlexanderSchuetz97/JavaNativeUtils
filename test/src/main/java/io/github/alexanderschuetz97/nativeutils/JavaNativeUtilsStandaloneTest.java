@@ -29,6 +29,7 @@ import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErro
 import io.github.alexanderschuetz97.nativeutils.api.structs.*;
 
 import java.io.IOException;
+import java.lang.annotation.Native;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -77,6 +78,12 @@ public class JavaNativeUtilsStandaloneTest {
 
                 lsreg(args[1]);
                 return;
+            case("pipC"):
+                pipeClientWin(args[1]);
+                return;
+            case("pipS"):
+                pipeServerWin(args[1]);
+                return;
             case("isadmin"):
                 isAdmin();
                 return;
@@ -108,6 +115,75 @@ public class JavaNativeUtilsStandaloneTest {
                 System.out.println("no such test " + args[0]);
                 System.exit(-1);
                 return;
+        }
+    }
+
+    private static void pipeClientWin(String name) {
+        WindowsNativeUtil wnu = NativeUtils.getWindowsUtil();
+        try (NativeMemory nmem = wnu.malloc(4)){
+            nmem.zero();
+            long hdl = wnu.CreateFileA(name, WinConst.FILE_READ_ACCESS | WinConst.FILE_WRITE_ACCESS, false, true, true, WindowsNativeUtil.CreateFileA_createMode.OPEN_EXISTING, 0);
+            try {
+                while(true) {
+                    wnu.WriteFile(hdl, nmem, 0, 4);
+                    wnu.ReadFile(hdl, nmem, 0, 4);
+                    System.out.println(nmem.readInt(0));
+                }
+
+
+            } finally {
+                wnu.CloseHandle(hdl);
+            }
+        } catch (UnknownNativeErrorException e) {
+            e.printStackTrace();
+            System.out.println(wnu.FormatMessageA(e.intCode()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void pipeServerWin(String name) {
+        WindowsNativeUtil wnu = NativeUtils.getWindowsUtil();
+        try (NativeMemory nmem = wnu.malloc(4)){
+
+            long hdl = wnu.CreateNamedPipeA(name, WinConst.PIPE_ACCESS_DUPLEX | WinConst.FILE_FLAG_OVERLAPPED, WinConst.PIPE_TYPE_BYTE, 255, 0x1000, 0x1000, 10000, 0);
+
+            long event = wnu.CreateEventA(0, false, false, null);
+
+            long overlap = wnu.ConnectNamedPipe(hdl, event);
+            System.out.println("ConnectNamedPipe " + overlap);
+            if (wnu.WaitForSingleObject(event, 10000)) {
+                System.out.println("GOT PIPE");
+            } else {
+                System.out.println("Timeout");
+                System.exit(-1);
+            }
+            System.out.println("OVL Bytes " + wnu.GetOverlappedResult(hdl, overlap, true));
+            System.out.println("GetOverlappedResult");
+            while(true) {
+                overlap = wnu.ReadFile(hdl, nmem, 0, 4, overlap, event);
+                System.out.println("OVL Bytes " + wnu.GetOverlappedResult(hdl, overlap, true));
+                System.out.println(nmem.readInt(0));
+                nmem.writeInt(0,nmem.readInt(0)+1);
+                overlap = wnu.WriteFile(hdl, nmem, 0, 4, overlap, event);
+                System.out.println("OVL Bytes " + wnu.GetOverlappedResult(hdl, overlap, true));
+                System.out.println("OVERLAP " + overlap);
+                if (nmem.readInt(0) > 100) {
+                    break;
+                }
+                Thread.sleep(200);
+            }
+
+            wnu.free(overlap);
+            wnu.CloseHandle(event);
+            wnu.FlushFileBuffers(hdl);
+            wnu.DisconnectNamedPipe(hdl);
+            wnu.CloseHandle(hdl);
+        } catch (UnknownNativeErrorException e) {
+            System.out.println(wnu.FormatMessageA(e.intCode()));
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

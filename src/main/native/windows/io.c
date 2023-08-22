@@ -426,10 +426,11 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
  * Method:    ReadFile
- * Signature: (JJIJ)I
+ * Signature: (JJIJJ)I
  */
-JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_ReadFile__JJIJ
-  (JNIEnv * env, jobject inst, jlong jhandle, jlong ptr, jint len, jlong event) {
+
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_ReadFile__JJIJJ
+  (JNIEnv * env, jobject inst, jlong jhandle, jlong ptr, jint len, jlong overlapped, jlong event) {
 
 	HANDLE h = (HANDLE) (uintptr_t) jhandle;
 	if (h == INVALID_HANDLE_VALUE) {
@@ -449,13 +450,14 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 	}
 
 
-	LPOVERLAPPED lp = malloc(sizeof(OVERLAPPED));
+	LPOVERLAPPED lp = overlapped != 0 ? (LPOVERLAPPED) (uintptr_t) overlapped : malloc(sizeof(OVERLAPPED));
 	if (lp == NULL) {
 		jthrowCC_OutOfMemoryError_1(env, "malloc");
 		return 0;
 	}
 
 	memset((void*)lp, 0, sizeof(OVERLAPPED));
+	lp->hEvent = e;
 
 	DWORD read = 0;
 	if (!ReadFile(h, (LPVOID) (uintptr_t) ptr, len, &read, lp)) {
@@ -464,7 +466,9 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 			return (jlong) (uintptr_t) lp;
 		}
 
-		free(lp);
+		if (overlapped != 0) {
+			free(lp);
+		}
 		jthrow_UnknownNativeErrorException_1(env, err);
 	}
 
@@ -560,13 +564,14 @@ JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 	return read;
 }
 
+
 /*
  * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
  * Method:    WriteFile
- * Signature: (JJIJ)I
+ * Signature: (JJIJJ)J
  */
-JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_WriteFile__JJIJ
-(JNIEnv * env, jobject inst, jlong jhandle, jlong ptr, jint len, jlong event) {
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_WriteFile__JJIJJ
+(JNIEnv * env, jobject inst, jlong jhandle, jlong ptr, jint len, jlong overlapped, jlong event) {
 
 	HANDLE h = (HANDLE) (uintptr_t) jhandle;
 	if (h == INVALID_HANDLE_VALUE) {
@@ -586,13 +591,15 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 	}
 
 
-	LPOVERLAPPED lp = malloc(sizeof(OVERLAPPED));
+	LPOVERLAPPED lp = overlapped != 0 ? (LPOVERLAPPED) (uintptr_t) overlapped : malloc(sizeof(OVERLAPPED));
 	if (lp == NULL) {
 		jthrowCC_OutOfMemoryError_1(env, "malloc");
 		return 0;
 	}
 
 	memset((void*)lp, 0, sizeof(OVERLAPPED));
+
+	lp->hEvent = e;
 
 	DWORD read = 0;
 	if (!WriteFile(h, (LPVOID) (uintptr_t) ptr, len, &read, lp)) {
@@ -601,7 +608,10 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 			return (jlong) (uintptr_t) lp;
 		}
 
-		free(lp);
+		if (overlapped == 0) {
+			free(lp);
+		}
+
 		jthrow_UnknownNativeErrorException_1(env, err);
 	}
 
@@ -758,6 +768,148 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWin
 	}
 }
 
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    CreateNamedPipeA
+ * Signature: (Ljava/lang/String;IIIII)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_CreateNamedPipeA
+  (JNIEnv * env, jobject inst, jstring name, jint dwOpenMode, jint dwPipeMode, jint nMaxInstances, jint nOutBufferSize, jint nInBufferSize, jint nDefaultTimeOut, jlong lpSecurityAttributes) {
+	if (name == NULL) {
+		jthrowCC_NullPointerException_1(env, "name");
+		return (jlong) (uintptr_t) INVALID_HANDLE_VALUE;
+	}
 
+	LPCSTR cstr = (*env)->GetStringUTFChars(env, name, NULL);
+	if (cstr == NULL) {
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
+		return (jlong) (uintptr_t) INVALID_HANDLE_VALUE;
+	}
+
+	HANDLE hdl = CreateNamedPipeA(cstr, (DWORD) dwOpenMode, (DWORD)  dwPipeMode, (DWORD) nMaxInstances, (DWORD) nOutBufferSize, (DWORD) nInBufferSize, (DWORD) nDefaultTimeOut, (LPSECURITY_ATTRIBUTES) (uintptr_t) lpSecurityAttributes);
+	if (hdl != INVALID_HANDLE_VALUE) {
+		(*env)->ReleaseStringUTFChars(env, name, cstr);
+		return (jlong) (uintptr_t) hdl;
+	}
+
+	DWORD err = GetLastError();
+	(*env)->ReleaseStringUTFChars(env, name, cstr);
+
+	jthrow_UnknownNativeErrorException_1(env, err);
+
+	return (jlong) (uintptr_t) INVALID_HANDLE_VALUE;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    ConnectNamedPipe
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_ConnectNamedPipe__J
+  (JNIEnv * env, jobject inst, jlong hdl) {
+	if (ConnectNamedPipe((HANDLE) (uintptr_t) hdl, NULL) == 0) {
+		jthrow_UnknownNativeErrorException_1(env, GetLastError());
+	}
+}
+
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    ConnectNamedPipe
+ * Signature: (JJ)J
+ */
+JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_ConnectNamedPipe__JJ
+  (JNIEnv * env, jobject inst, jlong hdl, jlong event) {
+	HANDLE e = (HANDLE) (uintptr_t) event;
+	if (e == INVALID_HANDLE_VALUE) {
+		jthrowCC_IllegalArgumentException_1(env, "event");
+		return 0;
+	}
+
+
+	LPOVERLAPPED lp = malloc(sizeof(OVERLAPPED));
+	if (lp == NULL) {
+		jthrowCC_OutOfMemoryError_1(env, "malloc");
+		return 0;
+	}
+
+	memset((void*) lp, 0, sizeof(OVERLAPPED));
+	lp->hEvent = e;
+
+	if (ConnectNamedPipe((HANDLE) (uintptr_t) hdl, lp) == 0) {
+		DWORD err = GetLastError();
+		if (err == ERROR_IO_PENDING) {
+			return (jlong) (uintptr_t) lp;
+		}
+		free(lp);
+		jthrow_UnknownNativeErrorException_1(env, err);
+		return 0;
+	}
+
+	return (jlong) (uintptr_t) lp;
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    DisconnectNamedPipe
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_DisconnectNamedPipe
+	(JNIEnv * env, jobject inst, jlong hdl) {
+	if (DisconnectNamedPipe((HANDLE) (uintptr_t) hdl) == 0) {
+		jthrow_UnknownNativeErrorException_1(env, GetLastError());
+	}
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    WaitNamedPipeA
+ * Signature: (Ljava/lang/String;J)Z
+ */
+JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_WaitNamedPipeA
+  (JNIEnv * env, jobject inst, jstring name, jlong timeout) {
+	if (name == NULL) {
+		jthrowCC_NullPointerException_1(env, "name");
+		return false;
+	}
+
+	if (timeout < 0) {
+		jthrowCC_IllegalArgumentException_1(env, "timeout < 0");
+		return false;
+	}
+
+	LPCSTR cstr = (*env)->GetStringUTFChars(env, name, NULL);
+	if (cstr == NULL) {
+		jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
+		return false;
+	}
+
+	if (WaitNamedPipeA(cstr, (DWORD) timeout) != 0) {
+		(*env)->ReleaseStringUTFChars(env, name, cstr);
+		return true;
+	}
+
+	DWORD err = GetLastError();
+	(*env)->ReleaseStringUTFChars(env, name, cstr);
+	if (err == ERROR_SEM_TIMEOUT) {
+		return false;
+	}
+
+	jthrow_UnknownNativeErrorException_1(env, err);
+	return false;
+}
+
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    FlushFileBuffers
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWindowsNativeUtil_FlushFileBuffers
+	(JNIEnv * env, jobject inst, jlong hdl) {
+	if (FlushFileBuffers((HANDLE) (uintptr_t) hdl) == 0) {
+		jthrow_UnknownNativeErrorException_1(env, GetLastError());
+	}
+}
 
 
