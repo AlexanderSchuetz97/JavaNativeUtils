@@ -81,6 +81,45 @@ public class SemTest {
     }
 
     @Test
+    public void testTw() throws Exception {
+        final LinuxNativeUtil lnu = NativeUtils.getLinuxUtil();
+
+        final long sem = lnu.sem_open(UUID, LinuxConst.O_CREAT | LinuxConst.O_EXCL, 0777, 0);
+        Future<Boolean> f = ex.submit(new Callable<Boolean>() {
+        @Override
+            public Boolean call() {
+                try {
+                    boolean b = lnu.sem_timedwait(sem, 1000);
+                    System.out.println(b);
+                    return b;
+                } catch (UnknownNativeErrorException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        Thread.sleep(200);
+        Assert.assertFalse(f.isDone());
+        Assert.assertFalse(f.get(2000, TimeUnit.MILLISECONDS));
+
+        f = ex.submit(new Callable<Boolean>() {
+            @Override
+            public Boolean call() {
+                try {
+                    return lnu.sem_timedwait(sem, 1000);
+                } catch (UnknownNativeErrorException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        Thread.sleep(200);
+        Assert.assertFalse(f.isDone());
+        lnu.sem_post(sem);
+        Assert.assertTrue(f.get(2000, TimeUnit.MILLISECONDS));
+    }
+
+    @Test
     public void test() throws Exception {
         final LinuxNativeUtil linuxUtil = NativeUtils.getLinuxUtil();
         final long sem = linuxUtil.sem_open(UUID, LinuxConst.O_CREAT | LinuxConst.O_EXCL, 0777, 0);

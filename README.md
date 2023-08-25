@@ -14,7 +14,7 @@ Maven:
 <dependency>
     <groupId>io.github.alexanderschuetz97</groupId>
     <artifactId>JavaNativeUtils</artifactId>
-    <version>3.0</version>
+    <version>3.3</version>
 </dependency>
 ````
 
@@ -79,6 +79,28 @@ if (NativeUtils.isWindows()) {
 * shm_unlink
 * ftruncate
 * truncate
+* pthread_condattr_destroy
+* pthread_condattr_init
+* pthread_mutexattr_destroy
+* pthread_mutexattr_init
+* pthread_condattr_getpshared
+* pthread_condattr_setpshared
+* pthread_mutexattr_setpshared
+* pthread_mutexattr_getpshared
+* pthread_mutexattr_settype
+* pthread_mutexattr_gettype
+* pthread_mutex_init
+* pthread_mutex_destroy
+* pthread_mutex_lock
+* pthread_mutex_trylock
+* pthread_mutex_unlock
+* pthread_mutex_timedlock
+* pthread_cond_broadcast
+* pthread_cond_signal
+* pthread_cond_wait
+* pthread_cond_timedwait
+* pthread_cond_destroy
+* pthread_cond_init
 
 
 #### Windows

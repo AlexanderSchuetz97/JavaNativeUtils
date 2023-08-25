@@ -499,6 +499,84 @@ public class JNILinuxNativeUtil extends JNICommonNativeUtil implements LinuxNati
     public native void mkfifo(String name, int mode) throws AccessDeniedException, QuotaExceededException, FileAlreadyExistsException, FileNotFoundException, NotDirectoryException, ReadOnlyFileSystemException;
 
     @Override
+    public native long sizeof_pthread_mutex_t();
+
+    @Override
+    public native long sizeof_pthread_mutexattr_t();
+
+    @Override
+    public native long sizeof_pthread_cond_t();
+
+    @Override
+    public native long sizeof_pthread_condattr_t();
+
+    @Override
+    public native void pthread_condattr_destroy(long attributes);
+
+    @Override
+    public native void pthread_condattr_init(long attributes);
+
+    @Override
+    public native void pthread_mutexattr_destroy(long attributes);
+
+    @Override
+    public native void pthread_mutexattr_init(long attributes);
+
+    @Override
+    public native int pthread_condattr_getpshared(long attributes);
+
+    @Override
+    public native void pthread_condattr_setpshared(long attributes, int value);
+
+    @Override
+    public native void pthread_mutexattr_setpshared(long attributes, int value);
+
+    @Override
+    public native int pthread_mutexattr_getpshared(long attributes);
+
+    @Override
+    public native void pthread_mutexattr_settype(long attributes, int value);
+
+    @Override
+    public native int pthread_mutexattr_gettype(long attributes);
+
+    @Override
+    public native void pthread_mutex_init(long mutex, long attributes);
+
+    @Override
+    public native void pthread_mutex_destroy(long mutex);
+
+    @Override
+    public native void pthread_mutex_lock(long mutex);
+
+    @Override
+    public native boolean pthread_mutex_trylock(long mutex);
+
+    @Override
+    public native void pthread_mutex_unlock(long mutex);
+
+    @Override
+    public native boolean pthread_mutex_timedlock(long mutex, long timeout);
+
+    @Override
+    public native void pthread_cond_broadcast(long condition);
+
+    @Override
+    public native void pthread_cond_signal(long condition);
+
+    @Override
+    public native void pthread_cond_wait(long condition, long mutex);
+
+    @Override
+    public native boolean pthread_cond_timedwait(long condition, long mutex, long timeout);
+
+    @Override
+    public native void pthread_cond_destroy(long condition);
+
+    @Override
+    public native void pthread_cond_init(long condition, long attributes);
+
+    @Override
     public native Stat lstat(String path) throws InvalidFileDescriptorException;
 
 

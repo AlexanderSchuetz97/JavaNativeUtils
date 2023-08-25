@@ -466,7 +466,7 @@ JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNIWi
 			return (jlong) (uintptr_t) lp;
 		}
 
-		if (overlapped != 0) {
+		if (overlapped == 0) {
 			free(lp);
 		}
 		jthrow_UnknownNativeErrorException_1(env, err);

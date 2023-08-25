@@ -410,19 +410,13 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 	}
 
 	struct timespec tspec;
-	uint64_t start = currentTimeMillis();
+	uint64_t until = currentTimeMillis() + timeout;
 	while(true) {
-		long rem = timeout - (currentTimeMillis()- start);
-		if (rem <= 0) {
-			rem = 0;
-		}
 
+		uint64_t untilWithoutSeconds = until % 1000;
 
-		uint64_t remWithoutSeconds = rem % 1000;
-
-		tspec.tv_sec = (rem - (remWithoutSeconds)) / 1000;
-		tspec.tv_nsec = remWithoutSeconds * NANOSECONDS_PER_MILISECOND;
-
+		tspec.tv_sec = (until - (untilWithoutSeconds)) / 1000;
+		tspec.tv_nsec = untilWithoutSeconds * NANOSECONDS_PER_MILISECOND;
 
 		if (sem_timedwait(semPtr, &tspec) == 0) {
 			return true;

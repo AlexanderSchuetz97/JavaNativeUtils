@@ -756,11 +756,54 @@ public interface LinuxNativeUtil extends NativeUtil {
 
     void mkfifo(String name, int mode) throws AccessDeniedException, QuotaExceededException, FileAlreadyExistsException, FileNotFoundException, NotDirectoryException, ReadOnlyFileSystemException;
 
+    long sizeof_pthread_mutex_t();
+    long sizeof_pthread_mutexattr_t();
 
+    long sizeof_pthread_cond_t();
+    long sizeof_pthread_condattr_t();
 
+    void pthread_condattr_destroy(long attributes) throws UnknownNativeErrorException;
 
+    void pthread_condattr_init(long attributes) throws UnknownNativeErrorException;
 
+    void pthread_mutexattr_destroy(long attributes) throws UnknownNativeErrorException;
 
+    void pthread_mutexattr_init(long attributes) throws UnknownNativeErrorException;
 
+    int pthread_condattr_getpshared(long attributes) throws UnknownNativeErrorException;
+
+    void pthread_condattr_setpshared(long attributes, int value) throws UnknownNativeErrorException;
+
+    void pthread_mutexattr_setpshared(long attributes, int value) throws UnknownNativeErrorException;
+
+    int pthread_mutexattr_getpshared(long attributes) throws UnknownNativeErrorException;
+
+    void pthread_mutexattr_settype(long attributes, int value) throws UnknownNativeErrorException;
+
+    int pthread_mutexattr_gettype(long attributes) throws UnknownNativeErrorException;
+
+    void pthread_mutex_init(long mutex, long attributes) throws UnknownNativeErrorException, QuotaExceededException;
+
+    void pthread_mutex_destroy(long mutex) throws UnknownNativeErrorException;
+
+    void pthread_mutex_lock(long mutex) throws UnknownNativeErrorException;
+
+    boolean pthread_mutex_trylock(long mutex) throws UnknownNativeErrorException;
+
+    void pthread_mutex_unlock(long mutex) throws UnknownNativeErrorException;
+
+    boolean pthread_mutex_timedlock(long mutex, long timeout) throws UnknownNativeErrorException;
+
+    void pthread_cond_broadcast(long condition) throws UnknownNativeErrorException;
+
+    void pthread_cond_signal(long condition) throws UnknownNativeErrorException;
+
+    void pthread_cond_wait(long condition, long mutex) throws UnknownNativeErrorException;
+
+    boolean pthread_cond_timedwait(long condition, long mutex, long timeout) throws UnknownNativeErrorException;
+
+    void pthread_cond_destroy(long condition) throws UnknownNativeErrorException;
+
+    void pthread_cond_init(long condition, long attributes) throws UnknownNativeErrorException;
 
 }

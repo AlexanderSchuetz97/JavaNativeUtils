@@ -271,6 +271,11 @@ jboolean jinstanceof_IfNameIndex(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, IfNameIndex);
 }
 
+static jclass IllegalMonitorStateException = 0;
+jboolean jinstanceof_IllegalMonitorStateException(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, IllegalMonitorStateException);
+}
+
 static jclass Cmsghdr = 0;
 jboolean jinstanceof_Cmsghdr(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, Cmsghdr);
@@ -6308,6 +6313,42 @@ void jthrow_IllegalArgumentException_3(JNIEnv * env, jobject p0) {
     (*env)->Throw(env, obj);
 }
 
+static jmethodID IllegalMonitorStateException_EC_0 = 0;
+void jthrow_IllegalMonitorStateException(JNIEnv * env) {
+    if ((*env) -> ExceptionCheck(env)) {
+        return;
+    }
+    jobject obj = (*env) -> NewObject(env, IllegalMonitorStateException, IllegalMonitorStateException_EC_0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+        return;
+    }
+    (*env)->Throw(env, obj);
+}
+
+static jmethodID IllegalMonitorStateException_EC_1 = 0;
+void jthrow_IllegalMonitorStateException_1(JNIEnv * env, jstring p0) {
+    if ((*env) -> ExceptionCheck(env)) {
+        return;
+    }
+    jobject obj = (*env) -> NewObject(env, IllegalMonitorStateException, IllegalMonitorStateException_EC_1, p0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+        return;
+    }
+    (*env)->Throw(env, obj);
+}
+
+void jthrowC_IllegalMonitorStateException_1(JNIEnv * env, char* p0) {
+    jthrowCC_IllegalMonitorStateException_1(env, (const char*)p0);
+}
+
+void jthrowCC_IllegalMonitorStateException_1(JNIEnv * env, const char* p0) {
+    if ((*env) -> ExceptionCheck(env)) {
+        return;
+    }
+    (*env) -> ThrowNew(env, IllegalMonitorStateException, p0);
+}
 static jmethodID IllegalStateException_EC_0 = 0;
 void jthrow_IllegalStateException(JNIEnv * env) {
     if ((*env) -> ExceptionCheck(env)) {
@@ -7368,6 +7409,13 @@ jboolean jnigenerator_init(JNIEnv * env) {
     if (IfNameIndex == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/structs/IfNameIndex");
+        return JNI_FALSE;
+    }
+
+    IllegalMonitorStateException = makeGlobalClassRef(env, "java/lang/IllegalMonitorStateException");
+    if (IllegalMonitorStateException == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find java/lang/IllegalMonitorStateException");
         return JNI_FALSE;
     }
 
@@ -12542,6 +12590,20 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
+    IllegalMonitorStateException_EC_0 = (*env) -> GetMethodID(env, IllegalMonitorStateException, "<init>", "()V");
+    if (IllegalMonitorStateException_EC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find java/lang/IllegalMonitorStateException.<init>()V");
+        return JNI_FALSE;
+    }
+
+    IllegalMonitorStateException_EC_1 = (*env) -> GetMethodID(env, IllegalMonitorStateException, "<init>", "(Ljava/lang/String;)V");
+    if (IllegalMonitorStateException_EC_1 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find java/lang/IllegalMonitorStateException.<init>(Ljava/lang/String;)V");
+        return JNI_FALSE;
+    }
+
     IllegalStateException_EC_0 = (*env) -> GetMethodID(env, IllegalStateException, "<init>", "()V");
     if (IllegalStateException_EC_0 == 0) {
         (*env) -> ExceptionClear(env);
@@ -12966,6 +13028,11 @@ void jnigenerator_destroy(JNIEnv * env) {
     if (IfNameIndex != 0) {
         (*env) -> DeleteGlobalRef(env, IfNameIndex);
         IfNameIndex = 0;
+    }
+
+    if (IllegalMonitorStateException != 0) {
+        (*env) -> DeleteGlobalRef(env, IllegalMonitorStateException);
+        IllegalMonitorStateException = 0;
     }
 
     if (Cmsghdr != 0) {
@@ -13873,6 +13940,8 @@ void jnigenerator_destroy(JNIEnv * env) {
     IllegalArgumentException_EC_1 = 0;
     IllegalArgumentException_EC_2 = 0;
     IllegalArgumentException_EC_3 = 0;
+    IllegalMonitorStateException_EC_0 = 0;
+    IllegalMonitorStateException_EC_1 = 0;
     IllegalStateException_EC_0 = 0;
     IllegalStateException_EC_1 = 0;
     IllegalStateException_EC_2 = 0;
