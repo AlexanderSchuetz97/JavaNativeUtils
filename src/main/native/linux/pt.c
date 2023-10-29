@@ -343,6 +343,12 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 	case(EDEADLK):
 		jthrowCC_IllegalMonitorStateException_1(env, "The current thread already owns the mutex.");
 		return;
+    case(EOWNERDEAD):
+        jthrow_InconsistentMutexException(env);
+        return;
+    case(ENOTRECOVERABLE):
+        jthrow_UnrecoverableMutexException(env);
+        return;
 	default:
 		jthrow_UnknownNativeErrorException_1(env, ret);
 		return;
@@ -371,6 +377,12 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 	case(EDEADLK):
 		jthrowCC_IllegalMonitorStateException_1(env, "The current thread already owns the mutex.");
 		return false;
+    case(EOWNERDEAD):
+        jthrow_InconsistentMutexException(env);
+        return false;
+    case(ENOTRECOVERABLE):
+        jthrow_UnrecoverableMutexException(env);
+        return false;
 	default:
 		jthrow_UnknownNativeErrorException_1(env, ret);
 		return false;
@@ -439,6 +451,12 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 		case(EDEADLK):
 			jthrowCC_IllegalMonitorStateException_1(env, "The current already holds the mutex");
 			return false;
+        case(EOWNERDEAD):
+            jthrow_InconsistentMutexException(env);
+            return false;
+        case(ENOTRECOVERABLE):
+            jthrow_UnrecoverableMutexException(env);
+            return false;
 		default:
 			jthrow_UnknownNativeErrorException_1(env, ret);
 			return false;
@@ -505,6 +523,12 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 		case(EINVAL):
 			jthrowCC_IllegalArgumentException_1(env, "The value specified by cond, or mutex is invalid.");
 			return;
+        case(EOWNERDEAD):
+            jthrow_InconsistentMutexException(env);
+            return;
+        case(ENOTRECOVERABLE):
+            jthrow_UnrecoverableMutexException(env);
+            return;
 		default:
 			jthrow_UnknownNativeErrorException_1(env, ret);
 			return;
@@ -536,6 +560,12 @@ JNIEXPORT jboolean JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JN
 		case(EINVAL):
 			jthrowCC_IllegalArgumentException_1(env, "The value specified by cond, mutex, or timeout is invalid.");
 			return false;
+        case(EOWNERDEAD):
+            jthrow_InconsistentMutexException(env);
+            return false;
+        case(ENOTRECOVERABLE):
+            jthrow_UnrecoverableMutexException(env);
+            return false;
 		default:
 			jthrow_UnknownNativeErrorException_1(env, ret);
 			return false;
@@ -587,3 +617,65 @@ JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILin
 			return;
 	}
 }
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    pthread_mutexattr_setrobust
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_pthread_1mutexattr_1setrobust
+    (JNIEnv * env, jobject inst, jlong attributes, jint value) {
+    int ret = pthread_mutexattr_setrobust((pthread_mutexattr_t*)(uintptr_t) attributes, (int) value);
+    if (ret == 0) {
+        return;
+    }
+
+    if (ret == EINVAL) {
+        jthrowCC_IllegalArgumentException_1(env, "The value specified by attr or value is invalid.");
+        return;
+    }
+
+    jthrow_UnknownNativeErrorException_1(env, ret);
+}
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    pthread_mutex_consistent
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_pthread_1mutex_1consistent
+        (JNIEnv * env, jobject inst, jlong mutex) {
+    int ret = pthread_mutex_consistent((pthread_mutex_t*)(uintptr_t) mutex);
+    if (ret == 0) {
+        return;
+    }
+
+    if (ret == EINVAL) {
+        jthrowCC_IllegalArgumentException_1(env, "The value specified by attr or value is invalid.");
+        return;
+    }
+
+    jthrow_UnknownNativeErrorException_1(env, ret);
+}
+
+/*
+ * Class:     io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    pthread_mutexattr_getrobust
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil_pthread_1mutexattr_1getrobust
+        (JNIEnv * env, jobject inst, jlong attributes) {
+    int robustness = 0;
+    int ret = pthread_mutexattr_getrobust((pthread_mutexattr_t*)(uintptr_t) attributes, &robustness);
+    if (ret == 0) {
+        return robustness;
+    }
+
+    if (ret == EINVAL) {
+        jthrowCC_IllegalArgumentException_1(env, "The value specified by attr is invalid.");
+        return 0;
+    }
+
+    jthrow_UnknownNativeErrorException_1(env, ret);
+    return 0;
+}
+

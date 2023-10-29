@@ -4,5 +4,6 @@
 *.so
 *.log
 *.dll
+src/main/native/build/*
 config.sh
 target/

@@ -24,6 +24,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -36,7 +38,7 @@ import java.util.UUID;
  */
 public class NativeLibraryLoaderHelper {
 
-    private static final int EXPECTED_NATIVE_LIB_VERSION = 6;
+    private static final int EXPECTED_NATIVE_LIB_VERSION = 7;
 
     /**
      * Flag to indicate if already loaded.
@@ -52,7 +54,7 @@ public class NativeLibraryLoaderHelper {
      * @throws LinkageError
      */
     public static void loadNativeLibraries() throws LinkageError {
-        loadNativeLibraries(System.getProperty("java.io.tmpdir"));
+        loadNativeLibraries(new File(System.getProperty("java.io.tmpdir"), "jnu").getAbsolutePath());
     }
 
     private static byte[] readLib(String name) {
@@ -286,57 +288,93 @@ public class NativeLibraryLoaderHelper {
 
     private static void loadLib(File aBase, String aLibName) throws IOException {
         //System.out.println("loading lib " + aLibName);
-        Random rng = new Random();
-        File tempLibFile = new File(aBase, aLibName);
-        while (tempLibFile.exists()) {
-            tempLibFile = new File(aBase, new UUID(rng.nextLong(), rng.nextLong()).toString().replace("-","") + aLibName);
+        MessageDigest md5;
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            throw new IOException("MD5 MessageDigest not found", e);
         }
 
-        if (!tempLibFile.createNewFile()) {
+
+        Random rng = new Random();
+        File extractionFile;
+        File loadingFile = null;
+        do {
+            extractionFile = new File(aBase, "X" + new UUID(rng.nextLong(), rng.nextLong()).toString().replace("-","") + aLibName);
+        } while (extractionFile.exists());
+
+        if (!extractionFile.createNewFile()) {
             throw new IOException("Could not call createNewFile on temporary library file!");
         }
 
-        tempLibFile.deleteOnExit();
 
-        InputStream tempInput = null;
-        FileOutputStream tempFaos = new FileOutputStream(tempLibFile);
         try {
-            byte[] tempBuf = new byte[512];
+            InputStream tempInput = null;
 
-            tempInput = NativeLibraryLoaderHelper.class.getResourceAsStream("/" + aLibName);
-            if (tempInput == null) {
-                throw new IOException("The shared library file " + aLibName + " was not found by getResourceAsStream " +
-                        "its either not there or this class was loaded by a classloader that doesn't support resources well!");
-            }
-            int i = 0;
-            while (i != -1) {
-                i = tempInput.read(tempBuf);
-                if (i > 0) {
-                    tempFaos.write(tempBuf, 0, i);
+            try(FileOutputStream tempFaos = new FileOutputStream(extractionFile)) {
+                byte[] tempBuf = new byte[512];
+                tempInput = NativeLibraryLoaderHelper.class.getResourceAsStream("/" + aLibName);
+                if (tempInput == null) {
+                    throw new IOException("The shared library file " + aLibName + " was not found by getResourceAsStream " +
+                            "its either not there or this class was loaded by a classloader that doesn't support resources well!");
+                }
+
+                int i = 0;
+                while (i != -1) {
+                    i = tempInput.read(tempBuf);
+                    if (i > 0) {
+                        md5.update(tempBuf, 0, i);
+                        tempFaos.write(tempBuf, 0, i);
+                    }
+                }
+
+                tempFaos.flush();
+            } finally {
+                try {
+                    if (tempInput != null) {
+                        tempInput.close();
+                    }
+                } catch (IOException e) {
+                    //DC
                 }
             }
 
-            tempFaos.flush();
+            String dig = toHexString(md5.digest());
+            loadingFile = new File(aBase, dig + aLibName);
+
+            //On windows this call will fail on the second run but it will not matter as the last run already extracted it...
+            extractionFile.renameTo(loadingFile);
+
+            //We just check if its actually there and then load it...
+            if (!loadingFile.exists()) {
+                throw new IOException("Could not rename temporary file " + extractionFile.getAbsolutePath() +  " to " + loadingFile.getAbsolutePath());
+            }
+
+            try {
+                System.load(loadingFile.getAbsolutePath());
+            } catch (Throwable t) {
+                t.printStackTrace();
+                throw t;
+
+            }
+
         } finally {
-            try {
-                tempFaos.close();
-            } catch (IOException e) {
-                //DC
+            //This will only delete something on windows, on linux the file is already renamed and gone...
+            extractionFile.delete();
+        }
+    }
+
+    private static String toHexString(byte[] digest) {
+        StringBuilder sb = new StringBuilder(digest.length << 1);
+        for (byte b : digest) {
+            String hx = Integer.toHexString(b & 0XFF);
+            if (hx.length() == 1) {
+                sb.append('0');
             }
-            try {
-                if (tempInput != null) {
-                    tempInput.close();
-                }
-            } catch (IOException e) {
-                //DC
-            }
+            sb.append(hx);
         }
 
-        try {
-            System.load(tempLibFile.getAbsolutePath());
-        } finally {
-            tempLibFile.delete();
-        }
+        return sb.toString();
     }
 
     static native long getNativeLibVersion();

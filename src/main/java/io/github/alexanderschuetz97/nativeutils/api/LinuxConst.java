@@ -274,5 +274,18 @@ public interface LinuxConst {
     int RTA_SPORT = 28;
     int RTA_DPORT = 29;
     int RTA_NH_ID = 30;
+
+    int PTHREAD_MUTEX_STALLED = 0;
+    int PTHREAD_MUTEX_ROBUST = 1;
+
+    int PTHREAD_PROCESS_SHARED = 1;
+
+    int PTHREAD_PROCESS_PRIVATE = 0;
+
+    int PTHREAD_MUTEX_RECURSIVE = 2;
+    int PTHREAD_MUTEX_ERRORCHECK = 1;
+    int PTHREAD_MUTEX_DEFAULT = 0;
+    int PTHREAD_MUTEX_NORMAL = 0;
+
 }
 

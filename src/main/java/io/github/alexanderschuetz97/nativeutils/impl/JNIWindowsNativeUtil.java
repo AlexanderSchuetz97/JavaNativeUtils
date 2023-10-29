@@ -534,6 +534,12 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
     public native long DeleteIpForwardEntry(MibIpForwardRow pRoute) throws UnknownNativeErrorException;
 
     @Override
+    public native long CreateSemaphoreExA(long lpSemaphoreAttributes, long initialCount, long maximumCount, String name, int dwDesiredAccess) throws UnknownNativeErrorException;
+
+    @Override
+    public native long ReleaseSemaphore(long hSemaphore, long lReleaseCount) throws UnknownNativeErrorException;
+
+    @Override
     public boolean isWindows() {
         return true;
     }

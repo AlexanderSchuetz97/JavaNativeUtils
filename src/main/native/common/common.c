@@ -20,6 +20,7 @@
 #include <jni.h>
 #include "common.h"
 #include "jni/io_github_alexanderschuetz97_nativeutils_impl_JNILinuxNativeUtil.h"
+#include "jni/io_github_alexanderschuetz97_nativeutils_impl_NativeLibraryLoaderHelper.h"
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -121,7 +122,7 @@ jfieldID JNINativeMemory_ptr;
  */
 JNIEXPORT jlong JNICALL Java_io_github_alexanderschuetz97_nativeutils_impl_NativeLibraryLoaderHelper_getNativeLibVersion
   (JNIEnv * env, jclass clazz) {
-	return 6;
+	return io_github_alexanderschuetz97_nativeutils_impl_NativeLibraryLoaderHelper_EXPECTED_NATIVE_LIB_VERSION;
 }
 
 

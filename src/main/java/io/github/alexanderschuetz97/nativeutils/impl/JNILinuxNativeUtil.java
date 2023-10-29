@@ -21,9 +21,7 @@ package io.github.alexanderschuetz97.nativeutils.impl;
 
 import io.github.alexanderschuetz97.nativeutils.api.LinuxNativeUtil;
 import io.github.alexanderschuetz97.nativeutils.api.NativeMemory;
-import io.github.alexanderschuetz97.nativeutils.api.exceptions.InvalidFileDescriptorException;
-import io.github.alexanderschuetz97.nativeutils.api.exceptions.QuotaExceededException;
-import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
+import io.github.alexanderschuetz97.nativeutils.api.exceptions.*;
 import io.github.alexanderschuetz97.nativeutils.api.structs.*;
 
 import java.io.*;
@@ -511,70 +509,79 @@ public class JNILinuxNativeUtil extends JNICommonNativeUtil implements LinuxNati
     public native long sizeof_pthread_condattr_t();
 
     @Override
-    public native void pthread_condattr_destroy(long attributes);
+    public native void pthread_condattr_destroy(long attributes) throws UnknownNativeErrorException;
 
     @Override
-    public native void pthread_condattr_init(long attributes);
+    public native void pthread_condattr_init(long attributes) throws UnknownNativeErrorException;
 
     @Override
-    public native void pthread_mutexattr_destroy(long attributes);
+    public native void pthread_mutexattr_destroy(long attributes) throws UnknownNativeErrorException;
 
     @Override
-    public native void pthread_mutexattr_init(long attributes);
+    public native void pthread_mutexattr_init(long attributes) throws UnknownNativeErrorException;
 
     @Override
-    public native int pthread_condattr_getpshared(long attributes);
+    public native int pthread_condattr_getpshared(long attributes) throws UnknownNativeErrorException;
 
     @Override
-    public native void pthread_condattr_setpshared(long attributes, int value);
+    public native void pthread_condattr_setpshared(long attributes, int value) throws UnknownNativeErrorException;
 
     @Override
-    public native void pthread_mutexattr_setpshared(long attributes, int value);
+    public native void pthread_mutexattr_setpshared(long attributes, int value) throws UnknownNativeErrorException;
 
     @Override
-    public native int pthread_mutexattr_getpshared(long attributes);
+    public native int pthread_mutexattr_getpshared(long attributes) throws UnknownNativeErrorException;
 
     @Override
-    public native void pthread_mutexattr_settype(long attributes, int value);
+    public native void pthread_mutexattr_setrobust(long attributes, int value) throws UnknownNativeErrorException;
 
     @Override
-    public native int pthread_mutexattr_gettype(long attributes);
+    public native void pthread_mutex_consistent(long mutex) throws UnknownNativeErrorException;
 
     @Override
-    public native void pthread_mutex_init(long mutex, long attributes);
+    public native int pthread_mutexattr_getrobust(long attributes) throws UnknownNativeErrorException;
 
     @Override
-    public native void pthread_mutex_destroy(long mutex);
+    public native void pthread_mutexattr_settype(long attributes, int value) throws UnknownNativeErrorException;
 
     @Override
-    public native void pthread_mutex_lock(long mutex);
+    public native int pthread_mutexattr_gettype(long attributes) throws UnknownNativeErrorException;
 
     @Override
-    public native boolean pthread_mutex_trylock(long mutex);
+    public native void pthread_mutex_init(long mutex, long attributes) throws UnknownNativeErrorException;
 
     @Override
-    public native void pthread_mutex_unlock(long mutex);
+    public native void pthread_mutex_destroy(long mutex) throws UnknownNativeErrorException;
 
     @Override
-    public native boolean pthread_mutex_timedlock(long mutex, long timeout);
+    public native void pthread_mutex_lock(long mutex) throws UnknownNativeErrorException, InconsistentMutexException, UnrecoverableMutexException;
 
     @Override
-    public native void pthread_cond_broadcast(long condition);
+    public native boolean pthread_mutex_trylock(long mutex) throws UnknownNativeErrorException, InconsistentMutexException, UnrecoverableMutexException;
 
     @Override
-    public native void pthread_cond_signal(long condition);
+    public native void pthread_mutex_unlock(long mutex) throws UnknownNativeErrorException;
 
     @Override
-    public native void pthread_cond_wait(long condition, long mutex);
+    public native boolean pthread_mutex_timedlock(long mutex, long timeout) throws UnknownNativeErrorException;
 
     @Override
-    public native boolean pthread_cond_timedwait(long condition, long mutex, long timeout);
+    public native void pthread_cond_broadcast(long condition) throws UnknownNativeErrorException;
 
     @Override
-    public native void pthread_cond_destroy(long condition);
+    public native void pthread_cond_signal(long condition) throws UnknownNativeErrorException;
 
     @Override
-    public native void pthread_cond_init(long condition, long attributes);
+    public native void pthread_cond_wait(long condition, long mutex)  throws UnknownNativeErrorException, InconsistentMutexException, UnrecoverableMutexException;
+
+    @Override
+    public native boolean pthread_cond_timedwait(long condition, long mutex, long timeout) throws UnknownNativeErrorException, InconsistentMutexException, UnrecoverableMutexException;
+
+    @Override
+    public native void pthread_cond_destroy(long condition) throws UnknownNativeErrorException;
+
+    @Override
+    public native void pthread_cond_init(long condition, long attributes) throws UnknownNativeErrorException;
 
     @Override
     public native Stat lstat(String path) throws InvalidFileDescriptorException;

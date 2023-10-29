@@ -89,6 +89,9 @@ if (NativeUtils.isWindows()) {
 * pthread_mutexattr_getpshared
 * pthread_mutexattr_settype
 * pthread_mutexattr_gettype
+* pthread_mutexattr_getrobust
+* pthread_mutexattr_setrobust
+* pthread_mutex_consistent
 * pthread_mutex_init
 * pthread_mutex_destroy
 * pthread_mutex_lock
@@ -163,6 +166,8 @@ if (NativeUtils.isWindows()) {
 * WaitNamedPipeA
 * DisconnectNamedPipe
 * FlushFileBuffers
+* ReleaseSemaphore
+* CreateSemaphoreExA
 
 
 ### List of exposed JNI Functions (All OS)
@@ -250,3 +255,20 @@ To build:
 ````
 maven -Dmaven.test.skip=true -Dgpg.skip clean install
 ````
+
+## Will this library be obsoleted by the Java FFI Interface (Project Panama)
+Probably yes. The Java FFI Interface allows a java developer to perform most of the actions
+that this library permits expect for bypassing the "Reflection" checks. 
+It will however require a significant amount of java code to be written by the user 
+to perform the same things this library does. 
+The main advantage of the FFI vs this library is probably going to be that it can work with any .dll/.so file
+and on any CPU architecture.
+
+My conclusion from looking at early benchmarks of the Java FFI Interface vs JNI is that the FFI interface
+appears to be somewhat slower than JNI.
+
+In addition to that, the FFI Interface is still a "preview" feature in Java 21 (LTS) and therefore not enabled by
+default. A lot of applications still rely on java 8, and I personally doubt that java 8, 11 and 17 (even 21)
+will disappear in the next 10 years. Just for those versions alone I intend to keep working on this library.
+I also do not expect major adoption of the first LTS release after 21 that will presumably contain the "full" FFI 
+to happen in the next 6 years.

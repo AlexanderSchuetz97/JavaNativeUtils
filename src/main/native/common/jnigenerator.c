@@ -241,6 +241,11 @@ jboolean jinstanceof_OperationInProgressException(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, OperationInProgressException);
 }
 
+static jclass UnrecoverableMutexException = 0;
+jboolean jinstanceof_UnrecoverableMutexException(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, UnrecoverableMutexException);
+}
+
 static jclass ShellExecuteException = 0;
 jboolean jinstanceof_ShellExecuteException(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, ShellExecuteException);
@@ -369,6 +374,11 @@ jboolean jinstanceof_MutexAbandonedException(JNIEnv * env, jobject value) {
 static jclass OutOfMemoryError = 0;
 jboolean jinstanceof_OutOfMemoryError(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, OutOfMemoryError);
+}
+
+static jclass InconsistentMutexException = 0;
+jboolean jinstanceof_InconsistentMutexException(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, InconsistentMutexException);
 }
 
 static jclass SharingViolationException = 0;
@@ -5678,6 +5688,19 @@ void jthrowCC_FileIsDirectoryException(JNIEnv * env, const char* p0) {
     }
     (*env) -> ThrowNew(env, FileIsDirectoryException, p0);
 }
+static jmethodID InconsistentMutexException_EC_0 = 0;
+void jthrow_InconsistentMutexException(JNIEnv * env) {
+    if ((*env) -> ExceptionCheck(env)) {
+        return;
+    }
+    jobject obj = (*env) -> NewObject(env, InconsistentMutexException, InconsistentMutexException_EC_0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+        return;
+    }
+    (*env)->Throw(env, obj);
+}
+
 static jmethodID InvalidFileDescriptorException_EC_0 = 0;
 void jthrow_InvalidFileDescriptorException(JNIEnv * env) {
     if ((*env) -> ExceptionCheck(env)) {
@@ -6003,6 +6026,19 @@ void jthrow_UnknownNativeErrorException_1(JNIEnv * env, jlong p0) {
         return;
     }
     jobject obj = (*env) -> NewObject(env, UnknownNativeErrorException, UnknownNativeErrorException_EC_1, p0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+        return;
+    }
+    (*env)->Throw(env, obj);
+}
+
+static jmethodID UnrecoverableMutexException_EC_0 = 0;
+void jthrow_UnrecoverableMutexException(JNIEnv * env) {
+    if ((*env) -> ExceptionCheck(env)) {
+        return;
+    }
+    jobject obj = (*env) -> NewObject(env, UnrecoverableMutexException, UnrecoverableMutexException_EC_0);
     if (obj == NULL) {
         throw_internal_OutOfMemoryError(env, "NewObject");
         return;
@@ -7370,6 +7406,13 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
+    UnrecoverableMutexException = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/exceptions/UnrecoverableMutexException");
+    if (UnrecoverableMutexException == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/UnrecoverableMutexException");
+        return JNI_FALSE;
+    }
+
     ShellExecuteException = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/exceptions/ShellExecuteException");
     if (ShellExecuteException == 0) {
         (*env) -> ExceptionClear(env);
@@ -7549,6 +7592,13 @@ jboolean jnigenerator_init(JNIEnv * env) {
     if (OutOfMemoryError == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find java/lang/OutOfMemoryError");
+        return JNI_FALSE;
+    }
+
+    InconsistentMutexException = makeGlobalClassRef(env, "io/github/alexanderschuetz97/nativeutils/api/exceptions/InconsistentMutexException");
+    if (InconsistentMutexException == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/InconsistentMutexException");
         return JNI_FALSE;
     }
 
@@ -12401,6 +12451,13 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
+    InconsistentMutexException_EC_0 = (*env) -> GetMethodID(env, InconsistentMutexException, "<init>", "()V");
+    if (InconsistentMutexException_EC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/InconsistentMutexException.<init>()V");
+        return JNI_FALSE;
+    }
+
     InvalidFileDescriptorException_EC_0 = (*env) -> GetMethodID(env, InvalidFileDescriptorException, "<init>", "()V");
     if (InvalidFileDescriptorException_EC_0 == 0) {
         (*env) -> ExceptionClear(env);
@@ -12489,6 +12546,13 @@ jboolean jnigenerator_init(JNIEnv * env) {
     if (UnknownNativeErrorException_EC_1 == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/UnknownNativeErrorException.<init>(J)V");
+        return JNI_FALSE;
+    }
+
+    UnrecoverableMutexException_EC_0 = (*env) -> GetMethodID(env, UnrecoverableMutexException, "<init>", "()V");
+    if (UnrecoverableMutexException_EC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find io/github/alexanderschuetz97/nativeutils/api/exceptions/UnrecoverableMutexException.<init>()V");
         return JNI_FALSE;
     }
 
@@ -13000,6 +13064,11 @@ void jnigenerator_destroy(JNIEnv * env) {
         OperationInProgressException = 0;
     }
 
+    if (UnrecoverableMutexException != 0) {
+        (*env) -> DeleteGlobalRef(env, UnrecoverableMutexException);
+        UnrecoverableMutexException = 0;
+    }
+
     if (ShellExecuteException != 0) {
         (*env) -> DeleteGlobalRef(env, ShellExecuteException);
         ShellExecuteException = 0;
@@ -13128,6 +13197,11 @@ void jnigenerator_destroy(JNIEnv * env) {
     if (OutOfMemoryError != 0) {
         (*env) -> DeleteGlobalRef(env, OutOfMemoryError);
         OutOfMemoryError = 0;
+    }
+
+    if (InconsistentMutexException != 0) {
+        (*env) -> DeleteGlobalRef(env, InconsistentMutexException);
+        InconsistentMutexException = 0;
     }
 
     if (SharingViolationException != 0) {
@@ -13913,6 +13987,7 @@ void jnigenerator_destroy(JNIEnv * env) {
     Iterator_M_next_0 = 0;
     Iterator_M_remove_0 = 0;
     FileIsDirectoryException_EC_0 = 0;
+    InconsistentMutexException_EC_0 = 0;
     InvalidFileDescriptorException_EC_0 = 0;
     MutexAbandonedException_EC_0 = 0;
     OperationInProgressException_EC_0 = 0;
@@ -13926,6 +14001,7 @@ void jnigenerator_destroy(JNIEnv * env) {
     ShellExecuteException_EC_0 = 0;
     UnknownNativeErrorException_EC_0 = 0;
     UnknownNativeErrorException_EC_1 = 0;
+    UnrecoverableMutexException_EC_0 = 0;
     FileNotFoundException_EC_0 = 0;
     FileNotFoundException_EC_1 = 0;
     IOException_EC_0 = 0;

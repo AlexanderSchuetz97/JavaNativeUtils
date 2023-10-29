@@ -19,11 +19,7 @@
 //
 package io.github.alexanderschuetz97.nativeutils.api;
 
-import io.github.alexanderschuetz97.nativeutils.api.exceptions.InvalidFileDescriptorException;
-import io.github.alexanderschuetz97.nativeutils.api.exceptions.OperationInProgressException;
-import io.github.alexanderschuetz97.nativeutils.api.exceptions.PermissionDeniedException;
-import io.github.alexanderschuetz97.nativeutils.api.exceptions.QuotaExceededException;
-import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
+import io.github.alexanderschuetz97.nativeutils.api.exceptions.*;
 import io.github.alexanderschuetz97.nativeutils.api.structs.*;
 
 import java.io.*;
@@ -778,6 +774,12 @@ public interface LinuxNativeUtil extends NativeUtil {
 
     int pthread_mutexattr_getpshared(long attributes) throws UnknownNativeErrorException;
 
+    int pthread_mutexattr_getrobust(long attributes) throws UnknownNativeErrorException;
+
+    void pthread_mutexattr_setrobust(long attributes, int value) throws UnknownNativeErrorException;
+
+    void pthread_mutex_consistent(long mutex) throws UnknownNativeErrorException;
+
     void pthread_mutexattr_settype(long attributes, int value) throws UnknownNativeErrorException;
 
     int pthread_mutexattr_gettype(long attributes) throws UnknownNativeErrorException;
@@ -786,21 +788,21 @@ public interface LinuxNativeUtil extends NativeUtil {
 
     void pthread_mutex_destroy(long mutex) throws UnknownNativeErrorException;
 
-    void pthread_mutex_lock(long mutex) throws UnknownNativeErrorException;
+    void pthread_mutex_lock(long mutex) throws UnknownNativeErrorException, InconsistentMutexException, UnrecoverableMutexException;
 
-    boolean pthread_mutex_trylock(long mutex) throws UnknownNativeErrorException;
+    boolean pthread_mutex_trylock(long mutex) throws UnknownNativeErrorException, InconsistentMutexException, UnrecoverableMutexException;
 
     void pthread_mutex_unlock(long mutex) throws UnknownNativeErrorException;
 
-    boolean pthread_mutex_timedlock(long mutex, long timeout) throws UnknownNativeErrorException;
+    boolean pthread_mutex_timedlock(long mutex, long timeout) throws UnknownNativeErrorException, InconsistentMutexException, UnrecoverableMutexException;
 
     void pthread_cond_broadcast(long condition) throws UnknownNativeErrorException;
 
     void pthread_cond_signal(long condition) throws UnknownNativeErrorException;
 
-    void pthread_cond_wait(long condition, long mutex) throws UnknownNativeErrorException;
+    void pthread_cond_wait(long condition, long mutex) throws UnknownNativeErrorException, InconsistentMutexException, UnrecoverableMutexException;
 
-    boolean pthread_cond_timedwait(long condition, long mutex, long timeout) throws UnknownNativeErrorException;
+    boolean pthread_cond_timedwait(long condition, long mutex, long timeout) throws UnknownNativeErrorException, InconsistentMutexException, UnrecoverableMutexException;
 
     void pthread_cond_destroy(long condition) throws UnknownNativeErrorException;
 

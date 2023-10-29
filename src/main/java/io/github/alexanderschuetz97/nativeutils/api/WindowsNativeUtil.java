@@ -631,6 +631,21 @@ public interface WindowsNativeUtil extends NativeUtil {
 
     int ConvertInterfaceLuidToIndex(long luid) throws UnknownNativeErrorException;
 
+    /**
+     * Create or open semaphore handle.
+     * Returned handle must be closed by calling CloseHandle
+     * @param lpSemaphoreAttributes treated as pointer to LPSECURITY_ATTRIBUTES. Most likely 0 should be passed!
+     * @return semaphore handle
+     */
+    long CreateSemaphoreExA(long lpSemaphoreAttributes, long initialCount, long maximumCount, String name, int dwDesiredAccess) throws UnknownNativeErrorException;
+
+    /**
+     * releases a "locked" semaphore
+     * @return value of lpPreviousCount
+     */
+    long ReleaseSemaphore(long hSemaphore, long lReleaseCount) throws UnknownNativeErrorException;
+
+
     //TODO
     //long CreateIpForwardEntry(MibIpForwardRow pRoute) throws UnknownNativeErrorException;
 
