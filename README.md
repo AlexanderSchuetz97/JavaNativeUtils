@@ -14,7 +14,7 @@ Maven:
 <dependency>
     <groupId>io.github.alexanderschuetz97</groupId>
     <artifactId>JavaNativeUtils</artifactId>
-    <version>3.3</version>
+    <version>3.4</version>
 </dependency>
 ````
 
