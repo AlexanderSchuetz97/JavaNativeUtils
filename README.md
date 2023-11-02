@@ -12,11 +12,17 @@ A copy of the GNU Lesser General Public License Version 3 can be found in the CO
 Maven:
 ````
 <dependency>
-    <groupId>io.github.alexanderschuetz97</groupId>
-    <artifactId>JavaNativeUtils</artifactId>
-    <version>3.4</version>
+    <groupId>eu.aschuetz</groupId>
+    <artifactId>JavaNativeUtilsApi</artifactId>
+    <version>4.0</version>
+</dependency>
+<dependency>
+    <groupId>eu.aschuetz</groupId>
+    <artifactId>JavaNativeUtilsJni</artifactId>
+    <version>4.0</version>
 </dependency>
 ````
+Note: for versions older than 4.0 use groupId io.github.alexanderschuetz97 artifactId JavaNativeUtils
 
 Java:
 ````
@@ -161,6 +167,9 @@ if (NativeUtils.isWindows()) {
 * CreateIpForwardEntry2
 * ConvertInterfaceIndexToLuid
 * ConvertInterfaceLuidToIndex
+* ConvertInterfaceLuidToNameA
+* ConvertInterfaceNameToLuidA
+* ConvertInterfaceLuidToAlias
 * CreateNamedPipeA
 * ConnectNamedPipe
 * WaitNamedPipeA

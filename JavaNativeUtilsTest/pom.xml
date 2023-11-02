@@ -3,21 +3,35 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>eu.aschuetz</groupId>
+        <artifactId>JavaNativeUtils</artifactId>
+        <version>4.0</version>
+    </parent>
 
-    <groupId>eu.aschuetz</groupId>
-    <artifactId>JavaNativeUtilsStandaloneTest</artifactId>
-    <version>1.0</version>
+    <artifactId>JavaNativeUtilsTest</artifactId>
 
     <properties>
         <maven.compiler.source>7</maven.compiler.source>
         <maven.compiler.target>7</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.1</version>
+        </dependency>
+        <dependency>
             <groupId>eu.aschuetz</groupId>
-            <artifactId>JavaNativeUtils</artifactId>
-            <version>3.1</version>
+            <artifactId>JavaNativeUtilsApi</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>eu.aschuetz</groupId>
+            <artifactId>JavaNativeUtilsJni</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
@@ -25,10 +39,16 @@
         <plugins>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals><goal>single</goal></goals>
+                    </execution>
+                </executions>
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>eu.aschuetz.nativeutils.JavaNativeUtilsStandaloneTest</mainClass>
+                            <mainClass>eu.aschuetz.nativeutils.test.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

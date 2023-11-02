@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+
+  java-native-utils-builder:
+    build:
+      context: image
+    container_name: java-native-utils-builder
+    environment:
+      - SOMETHING=123
+    volumes:
+      - ../../:/project
+    entrypoint: /bin/bash /project/JavaNativeUtilsJni/compile_docker.sh
+
+

@@ -4,6 +4,11 @@
 *.so
 *.log
 *.dll
-src/main/native/build/*
+JavaNativeUtilsJni/src/main/native/build/*
 config.sh
 target/
+/bundle/
+/JavaNativeUtilsJni/src/main/resources/java_native_utils_native_src.tar.gz
+/bundle1.jar
+/bundle2.jar
+/bundle3.jar

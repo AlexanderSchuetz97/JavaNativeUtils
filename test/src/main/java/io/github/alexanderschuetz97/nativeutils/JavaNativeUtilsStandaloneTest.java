@@ -17,16 +17,15 @@
 // in the COPYING & COPYING.LESSER files in top level directory of JavaNativeUtils.
 // If not, see <https://www.gnu.org/licenses/>.
 //
-package io.github.alexanderschuetz97.nativeutils;
+package eu.aschuetz.nativeutils;
 
-import io.github.alexanderschuetz97.nativeutils.api.NativeMemory;
-import io.github.alexanderschuetz97.nativeutils.api.NativeUtils;
-import io.github.alexanderschuetz97.nativeutils.api.WinConst;
-import io.github.alexanderschuetz97.nativeutils.api.WindowsNativeUtil;
-import io.github.alexanderschuetz97.nativeutils.api.exceptions.InvalidFileDescriptorException;
-import io.github.alexanderschuetz97.nativeutils.api.exceptions.ShellExecuteException;
-import io.github.alexanderschuetz97.nativeutils.api.exceptions.UnknownNativeErrorException;
-import io.github.alexanderschuetz97.nativeutils.api.structs.*;
+import eu.aschuetz.nativeutils.api.NativeMemory;
+import eu.aschuetz.nativeutils.api.NativeUtils;
+import eu.aschuetz.nativeutils.api.WinConst;
+import eu.aschuetz.nativeutils.api.WindowsNativeUtil;
+import eu.aschuetz.nativeutils.api.exceptions.InvalidFileDescriptorException;
+import eu.aschuetz.nativeutils.api.exceptions.ShellExecuteException;
+import eu.aschuetz.nativeutils.api.exceptions.UnknownNativeErrorException;
 
 import java.io.IOException;
 import java.lang.annotation.Native;
