@@ -9,6 +9,14 @@ extern "C" {
 #endif
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    _getConst
+ * Signature: (Leu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider;)V
+ */
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil__1getConst
+  (JNIEnv *, jclass, jobject);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
  * Method:    getFD
  * Signature: (Ljava/io/FileDescriptor;)I
  */

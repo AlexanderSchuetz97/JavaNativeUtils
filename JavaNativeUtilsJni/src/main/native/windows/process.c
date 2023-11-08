@@ -72,20 +72,17 @@ JNIEXPORT jbyteArray JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeU
 
 	if (GetTokenInformation((HANDLE)(uintptr_t) token, type, NULL, 0, &size)) {
 		//We dont expect this call to succeed...
-		printf("a\n");
 		jthrow_UnknownNativeErrorException_1(env, ERROR_BAD_LENGTH);
 		return NULL;
 	}
 
 	DWORD err = GetLastError();
 	if (err != ERROR_BAD_LENGTH) {
-		printf("b\n");
 		jthrow_UnknownNativeErrorException_1(env, err);
 		return NULL;
 	}
 
 	if (size <= 0) {
-		printf("c\n");
 		jthrow_UnknownNativeErrorException_1(env, ERROR_BAD_LENGTH);
 		return NULL;
 	}
@@ -101,7 +98,6 @@ JNIEXPORT jbyteArray JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeU
 	DWORD nsize = 0;
 
 	if (!GetTokenInformation((HANDLE)(uintptr_t) token, type, mem, size, &nsize)) {
-		printf("d\n");
 		jthrow_UnknownNativeErrorException_1(env, GetLastError());
 		free(mem);
 		return NULL;
@@ -110,7 +106,6 @@ JNIEXPORT jbyteArray JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeU
 	if (nsize > size) {
 		//Unlikely
 		free(mem);
-		printf("e\n");
 		jthrow_UnknownNativeErrorException_1(env, ERROR_BAD_LENGTH);
 		return NULL;
 	}

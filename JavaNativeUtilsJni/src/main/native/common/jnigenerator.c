@@ -136,6 +136,11 @@ jboolean jinstanceof_InvalidFileDescriptorException(JNIEnv * env, jobject value)
    return (*env)->IsInstanceOf(env, value, InvalidFileDescriptorException);
 }
 
+static jclass DefaultLinuxConstProvider = 0;
+jboolean jinstanceof_DefaultLinuxConstProvider(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, DefaultLinuxConstProvider);
+}
+
 static jclass Stat = 0;
 jboolean jinstanceof_Stat(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, Stat);
@@ -369,6 +374,2619 @@ jboolean jinstanceof_PollFD(JNIEnv * env, jobject value) {
 static jclass OutOfMemoryError = 0;
 jboolean jinstanceof_OutOfMemoryError(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, OutOfMemoryError);
+}
+
+static jfieldID DefaultLinuxConstProvider_AF_UNSPEC = 0;
+void jset_DefaultLinuxConstProvider_AF_UNSPEC(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_AF_UNSPEC, value);
+}
+
+jint jget_DefaultLinuxConstProvider_AF_UNSPEC(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_AF_UNSPEC);
+}
+
+static jfieldID DefaultLinuxConstProvider_AF_UNIX = 0;
+void jset_DefaultLinuxConstProvider_AF_UNIX(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_AF_UNIX, value);
+}
+
+jint jget_DefaultLinuxConstProvider_AF_UNIX(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_AF_UNIX);
+}
+
+static jfieldID DefaultLinuxConstProvider_AF_INET = 0;
+void jset_DefaultLinuxConstProvider_AF_INET(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_AF_INET, value);
+}
+
+jint jget_DefaultLinuxConstProvider_AF_INET(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_AF_INET);
+}
+
+static jfieldID DefaultLinuxConstProvider_AF_INET6 = 0;
+void jset_DefaultLinuxConstProvider_AF_INET6(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_AF_INET6, value);
+}
+
+jint jget_DefaultLinuxConstProvider_AF_INET6(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_AF_INET6);
+}
+
+static jfieldID DefaultLinuxConstProvider_AF_NETLINK = 0;
+void jset_DefaultLinuxConstProvider_AF_NETLINK(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_AF_NETLINK, value);
+}
+
+jint jget_DefaultLinuxConstProvider_AF_NETLINK(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_AF_NETLINK);
+}
+
+static jfieldID DefaultLinuxConstProvider_SOCK_STREAM = 0;
+void jset_DefaultLinuxConstProvider_SOCK_STREAM(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SOCK_STREAM, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SOCK_STREAM(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SOCK_STREAM);
+}
+
+static jfieldID DefaultLinuxConstProvider_SOCK_DGRAM = 0;
+void jset_DefaultLinuxConstProvider_SOCK_DGRAM(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SOCK_DGRAM, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SOCK_DGRAM(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SOCK_DGRAM);
+}
+
+static jfieldID DefaultLinuxConstProvider_SOCK_RAW = 0;
+void jset_DefaultLinuxConstProvider_SOCK_RAW(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SOCK_RAW, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SOCK_RAW(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SOCK_RAW);
+}
+
+static jfieldID DefaultLinuxConstProvider_NETLINK_ROUTE = 0;
+void jset_DefaultLinuxConstProvider_NETLINK_ROUTE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_NETLINK_ROUTE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_NETLINK_ROUTE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_NETLINK_ROUTE);
+}
+
+static jfieldID DefaultLinuxConstProvider_SOL_SOCKET = 0;
+void jset_DefaultLinuxConstProvider_SOL_SOCKET(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SOL_SOCKET, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SOL_SOCKET(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SOL_SOCKET);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_DEBUG = 0;
+void jset_DefaultLinuxConstProvider_SO_DEBUG(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_DEBUG, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_DEBUG(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_DEBUG);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_REUSEADDR = 0;
+void jset_DefaultLinuxConstProvider_SO_REUSEADDR(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_REUSEADDR, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_REUSEADDR(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_REUSEADDR);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_TYPE = 0;
+void jset_DefaultLinuxConstProvider_SO_TYPE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_TYPE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_TYPE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_TYPE);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_ERROR = 0;
+void jset_DefaultLinuxConstProvider_SO_ERROR(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_ERROR, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_ERROR(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_ERROR);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_DONTROUTE = 0;
+void jset_DefaultLinuxConstProvider_SO_DONTROUTE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_DONTROUTE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_DONTROUTE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_DONTROUTE);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_BROADCAST = 0;
+void jset_DefaultLinuxConstProvider_SO_BROADCAST(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_BROADCAST, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_BROADCAST(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_BROADCAST);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_SNDBUF = 0;
+void jset_DefaultLinuxConstProvider_SO_SNDBUF(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_SNDBUF, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_SNDBUF(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_SNDBUF);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_RCVBUF = 0;
+void jset_DefaultLinuxConstProvider_SO_RCVBUF(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_RCVBUF, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_RCVBUF(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_RCVBUF);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_SNDBUFFORCE = 0;
+void jset_DefaultLinuxConstProvider_SO_SNDBUFFORCE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_SNDBUFFORCE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_SNDBUFFORCE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_SNDBUFFORCE);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_RCVBUFFORCE = 0;
+void jset_DefaultLinuxConstProvider_SO_RCVBUFFORCE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_RCVBUFFORCE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_RCVBUFFORCE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_RCVBUFFORCE);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_KEEPALIVE = 0;
+void jset_DefaultLinuxConstProvider_SO_KEEPALIVE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_KEEPALIVE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_KEEPALIVE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_KEEPALIVE);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_OOBINLINE = 0;
+void jset_DefaultLinuxConstProvider_SO_OOBINLINE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_OOBINLINE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_OOBINLINE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_OOBINLINE);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_NO_CHECK = 0;
+void jset_DefaultLinuxConstProvider_SO_NO_CHECK(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_NO_CHECK, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_NO_CHECK(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_NO_CHECK);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_PRIORITY = 0;
+void jset_DefaultLinuxConstProvider_SO_PRIORITY(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_PRIORITY, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_PRIORITY(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_PRIORITY);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_LINGER = 0;
+void jset_DefaultLinuxConstProvider_SO_LINGER(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_LINGER, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_LINGER(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_LINGER);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_BSDCOMPAT = 0;
+void jset_DefaultLinuxConstProvider_SO_BSDCOMPAT(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_BSDCOMPAT, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_BSDCOMPAT(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_BSDCOMPAT);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_REUSEPORT = 0;
+void jset_DefaultLinuxConstProvider_SO_REUSEPORT(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_REUSEPORT, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_REUSEPORT(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_REUSEPORT);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_PASSCRED = 0;
+void jset_DefaultLinuxConstProvider_SO_PASSCRED(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_PASSCRED, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_PASSCRED(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_PASSCRED);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_PEERCRED = 0;
+void jset_DefaultLinuxConstProvider_SO_PEERCRED(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_PEERCRED, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_PEERCRED(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_PEERCRED);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_RCVLOWAT = 0;
+void jset_DefaultLinuxConstProvider_SO_RCVLOWAT(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_RCVLOWAT, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_RCVLOWAT(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_RCVLOWAT);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_SNDLOWAT = 0;
+void jset_DefaultLinuxConstProvider_SO_SNDLOWAT(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_SNDLOWAT, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_SNDLOWAT(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_SNDLOWAT);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_RCVTIMEO = 0;
+void jset_DefaultLinuxConstProvider_SO_RCVTIMEO(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_RCVTIMEO, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_RCVTIMEO(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_RCVTIMEO);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_SNDTIMEO = 0;
+void jset_DefaultLinuxConstProvider_SO_SNDTIMEO(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_SNDTIMEO, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_SNDTIMEO(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_SNDTIMEO);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_SECURITY_AUTHENTICATION = 0;
+void jset_DefaultLinuxConstProvider_SO_SECURITY_AUTHENTICATION(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_SECURITY_AUTHENTICATION, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_SECURITY_AUTHENTICATION(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_SECURITY_AUTHENTICATION);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_SECURITY_ENCRYPTION_TRANSPORT = 0;
+void jset_DefaultLinuxConstProvider_SO_SECURITY_ENCRYPTION_TRANSPORT(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_SECURITY_ENCRYPTION_TRANSPORT, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_SECURITY_ENCRYPTION_TRANSPORT(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_SECURITY_ENCRYPTION_TRANSPORT);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_SECURITY_ENCRYPTION_NETWORK = 0;
+void jset_DefaultLinuxConstProvider_SO_SECURITY_ENCRYPTION_NETWORK(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_SECURITY_ENCRYPTION_NETWORK, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_SECURITY_ENCRYPTION_NETWORK(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_SECURITY_ENCRYPTION_NETWORK);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_BINDTODEVICE = 0;
+void jset_DefaultLinuxConstProvider_SO_BINDTODEVICE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_BINDTODEVICE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_BINDTODEVICE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_BINDTODEVICE);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_ATTACH_FILTER = 0;
+void jset_DefaultLinuxConstProvider_SO_ATTACH_FILTER(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_ATTACH_FILTER, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_ATTACH_FILTER(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_ATTACH_FILTER);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_DETACH_FILTER = 0;
+void jset_DefaultLinuxConstProvider_SO_DETACH_FILTER(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_DETACH_FILTER, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_DETACH_FILTER(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_DETACH_FILTER);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_GET_FILTER = 0;
+void jset_DefaultLinuxConstProvider_SO_GET_FILTER(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_GET_FILTER, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_GET_FILTER(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_GET_FILTER);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_PEERNAME = 0;
+void jset_DefaultLinuxConstProvider_SO_PEERNAME(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_PEERNAME, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_PEERNAME(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_PEERNAME);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_TIMESTAMP = 0;
+void jset_DefaultLinuxConstProvider_SO_TIMESTAMP(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_TIMESTAMP, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_TIMESTAMP(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_TIMESTAMP);
+}
+
+static jfieldID DefaultLinuxConstProvider_SCM_TIMESTAMP = 0;
+void jset_DefaultLinuxConstProvider_SCM_TIMESTAMP(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SCM_TIMESTAMP, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SCM_TIMESTAMP(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SCM_TIMESTAMP);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_ACCEPTCONN = 0;
+void jset_DefaultLinuxConstProvider_SO_ACCEPTCONN(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_ACCEPTCONN, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_ACCEPTCONN(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_ACCEPTCONN);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_PEERSEC = 0;
+void jset_DefaultLinuxConstProvider_SO_PEERSEC(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_PEERSEC, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_PEERSEC(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_PEERSEC);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_PASSSEC = 0;
+void jset_DefaultLinuxConstProvider_SO_PASSSEC(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_PASSSEC, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_PASSSEC(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_PASSSEC);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_TIMESTAMPNS = 0;
+void jset_DefaultLinuxConstProvider_SO_TIMESTAMPNS(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_TIMESTAMPNS, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_TIMESTAMPNS(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_TIMESTAMPNS);
+}
+
+static jfieldID DefaultLinuxConstProvider_SCM_TIMESTAMPNS = 0;
+void jset_DefaultLinuxConstProvider_SCM_TIMESTAMPNS(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SCM_TIMESTAMPNS, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SCM_TIMESTAMPNS(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SCM_TIMESTAMPNS);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_MARK = 0;
+void jset_DefaultLinuxConstProvider_SO_MARK(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_MARK, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_MARK(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_MARK);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_TIMESTAMPING = 0;
+void jset_DefaultLinuxConstProvider_SO_TIMESTAMPING(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_TIMESTAMPING, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_TIMESTAMPING(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_TIMESTAMPING);
+}
+
+static jfieldID DefaultLinuxConstProvider_SCM_TIMESTAMPING = 0;
+void jset_DefaultLinuxConstProvider_SCM_TIMESTAMPING(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SCM_TIMESTAMPING, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SCM_TIMESTAMPING(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SCM_TIMESTAMPING);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_PROTOCOL = 0;
+void jset_DefaultLinuxConstProvider_SO_PROTOCOL(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_PROTOCOL, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_PROTOCOL(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_PROTOCOL);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_DOMAIN = 0;
+void jset_DefaultLinuxConstProvider_SO_DOMAIN(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_DOMAIN, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_DOMAIN(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_DOMAIN);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_RXQ_OVFL = 0;
+void jset_DefaultLinuxConstProvider_SO_RXQ_OVFL(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_RXQ_OVFL, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_RXQ_OVFL(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_RXQ_OVFL);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_WIFI_STATUS = 0;
+void jset_DefaultLinuxConstProvider_SO_WIFI_STATUS(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_WIFI_STATUS, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_WIFI_STATUS(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_WIFI_STATUS);
+}
+
+static jfieldID DefaultLinuxConstProvider_SCM_WIFI_STATUS = 0;
+void jset_DefaultLinuxConstProvider_SCM_WIFI_STATUS(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SCM_WIFI_STATUS, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SCM_WIFI_STATUS(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SCM_WIFI_STATUS);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_PEEK_OFF = 0;
+void jset_DefaultLinuxConstProvider_SO_PEEK_OFF(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_PEEK_OFF, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_PEEK_OFF(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_PEEK_OFF);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_NOFCS = 0;
+void jset_DefaultLinuxConstProvider_SO_NOFCS(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_NOFCS, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_NOFCS(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_NOFCS);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_LOCK_FILTER = 0;
+void jset_DefaultLinuxConstProvider_SO_LOCK_FILTER(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_LOCK_FILTER, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_LOCK_FILTER(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_LOCK_FILTER);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_SELECT_ERR_QUEUE = 0;
+void jset_DefaultLinuxConstProvider_SO_SELECT_ERR_QUEUE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_SELECT_ERR_QUEUE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_SELECT_ERR_QUEUE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_SELECT_ERR_QUEUE);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_BUSY_POLL = 0;
+void jset_DefaultLinuxConstProvider_SO_BUSY_POLL(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_BUSY_POLL, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_BUSY_POLL(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_BUSY_POLL);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_MAX_PACING_RATE = 0;
+void jset_DefaultLinuxConstProvider_SO_MAX_PACING_RATE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_MAX_PACING_RATE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_MAX_PACING_RATE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_MAX_PACING_RATE);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_BPF_EXTENSIONS = 0;
+void jset_DefaultLinuxConstProvider_SO_BPF_EXTENSIONS(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_BPF_EXTENSIONS, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_BPF_EXTENSIONS(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_BPF_EXTENSIONS);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_INCOMING_CPU = 0;
+void jset_DefaultLinuxConstProvider_SO_INCOMING_CPU(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_INCOMING_CPU, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_INCOMING_CPU(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_INCOMING_CPU);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_ATTACH_BPF = 0;
+void jset_DefaultLinuxConstProvider_SO_ATTACH_BPF(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_ATTACH_BPF, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_ATTACH_BPF(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_ATTACH_BPF);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_DETACH_BPF = 0;
+void jset_DefaultLinuxConstProvider_SO_DETACH_BPF(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_DETACH_BPF, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_DETACH_BPF(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_DETACH_BPF);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_ATTACH_REUSEPORT_CBPF = 0;
+void jset_DefaultLinuxConstProvider_SO_ATTACH_REUSEPORT_CBPF(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_ATTACH_REUSEPORT_CBPF, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_ATTACH_REUSEPORT_CBPF(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_ATTACH_REUSEPORT_CBPF);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_ATTACH_REUSEPORT_EBPF = 0;
+void jset_DefaultLinuxConstProvider_SO_ATTACH_REUSEPORT_EBPF(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_ATTACH_REUSEPORT_EBPF, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_ATTACH_REUSEPORT_EBPF(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_ATTACH_REUSEPORT_EBPF);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_CNX_ADVICE = 0;
+void jset_DefaultLinuxConstProvider_SO_CNX_ADVICE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_CNX_ADVICE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_CNX_ADVICE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_CNX_ADVICE);
+}
+
+static jfieldID DefaultLinuxConstProvider_SCM_TIMESTAMPING_OPT_STATS = 0;
+void jset_DefaultLinuxConstProvider_SCM_TIMESTAMPING_OPT_STATS(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SCM_TIMESTAMPING_OPT_STATS, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SCM_TIMESTAMPING_OPT_STATS(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SCM_TIMESTAMPING_OPT_STATS);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_MEMINFO = 0;
+void jset_DefaultLinuxConstProvider_SO_MEMINFO(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_MEMINFO, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_MEMINFO(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_MEMINFO);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_INCOMING_NAPI_ID = 0;
+void jset_DefaultLinuxConstProvider_SO_INCOMING_NAPI_ID(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_INCOMING_NAPI_ID, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_INCOMING_NAPI_ID(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_INCOMING_NAPI_ID);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_COOKIE = 0;
+void jset_DefaultLinuxConstProvider_SO_COOKIE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_COOKIE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_COOKIE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_COOKIE);
+}
+
+static jfieldID DefaultLinuxConstProvider_SCM_TIMESTAMPING_PKTINFO = 0;
+void jset_DefaultLinuxConstProvider_SCM_TIMESTAMPING_PKTINFO(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SCM_TIMESTAMPING_PKTINFO, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SCM_TIMESTAMPING_PKTINFO(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SCM_TIMESTAMPING_PKTINFO);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_PEERGROUPS = 0;
+void jset_DefaultLinuxConstProvider_SO_PEERGROUPS(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_PEERGROUPS, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_PEERGROUPS(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_PEERGROUPS);
+}
+
+static jfieldID DefaultLinuxConstProvider_SO_ZEROCOPY = 0;
+void jset_DefaultLinuxConstProvider_SO_ZEROCOPY(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SO_ZEROCOPY, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SO_ZEROCOPY(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SO_ZEROCOPY);
+}
+
+static jfieldID DefaultLinuxConstProvider_SCM_RIGHTS = 0;
+void jset_DefaultLinuxConstProvider_SCM_RIGHTS(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SCM_RIGHTS, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SCM_RIGHTS(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SCM_RIGHTS);
+}
+
+static jfieldID DefaultLinuxConstProvider_MAP_SHARED = 0;
+void jset_DefaultLinuxConstProvider_MAP_SHARED(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MAP_SHARED, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MAP_SHARED(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MAP_SHARED);
+}
+
+static jfieldID DefaultLinuxConstProvider_MAP_PRIVATE = 0;
+void jset_DefaultLinuxConstProvider_MAP_PRIVATE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MAP_PRIVATE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MAP_PRIVATE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MAP_PRIVATE);
+}
+
+static jfieldID DefaultLinuxConstProvider_O_ACCMODE = 0;
+void jset_DefaultLinuxConstProvider_O_ACCMODE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_O_ACCMODE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_O_ACCMODE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_O_ACCMODE);
+}
+
+static jfieldID DefaultLinuxConstProvider_O_RDONLY = 0;
+void jset_DefaultLinuxConstProvider_O_RDONLY(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_O_RDONLY, value);
+}
+
+jint jget_DefaultLinuxConstProvider_O_RDONLY(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_O_RDONLY);
+}
+
+static jfieldID DefaultLinuxConstProvider_O_WRONLY = 0;
+void jset_DefaultLinuxConstProvider_O_WRONLY(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_O_WRONLY, value);
+}
+
+jint jget_DefaultLinuxConstProvider_O_WRONLY(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_O_WRONLY);
+}
+
+static jfieldID DefaultLinuxConstProvider_O_RDWR = 0;
+void jset_DefaultLinuxConstProvider_O_RDWR(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_O_RDWR, value);
+}
+
+jint jget_DefaultLinuxConstProvider_O_RDWR(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_O_RDWR);
+}
+
+static jfieldID DefaultLinuxConstProvider_O_CREAT = 0;
+void jset_DefaultLinuxConstProvider_O_CREAT(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_O_CREAT, value);
+}
+
+jint jget_DefaultLinuxConstProvider_O_CREAT(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_O_CREAT);
+}
+
+static jfieldID DefaultLinuxConstProvider_O_EXCL = 0;
+void jset_DefaultLinuxConstProvider_O_EXCL(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_O_EXCL, value);
+}
+
+jint jget_DefaultLinuxConstProvider_O_EXCL(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_O_EXCL);
+}
+
+static jfieldID DefaultLinuxConstProvider_O_NOCTTY = 0;
+void jset_DefaultLinuxConstProvider_O_NOCTTY(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_O_NOCTTY, value);
+}
+
+jint jget_DefaultLinuxConstProvider_O_NOCTTY(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_O_NOCTTY);
+}
+
+static jfieldID DefaultLinuxConstProvider_O_TRUNC = 0;
+void jset_DefaultLinuxConstProvider_O_TRUNC(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_O_TRUNC, value);
+}
+
+jint jget_DefaultLinuxConstProvider_O_TRUNC(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_O_TRUNC);
+}
+
+static jfieldID DefaultLinuxConstProvider_O_APPEND = 0;
+void jset_DefaultLinuxConstProvider_O_APPEND(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_O_APPEND, value);
+}
+
+jint jget_DefaultLinuxConstProvider_O_APPEND(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_O_APPEND);
+}
+
+static jfieldID DefaultLinuxConstProvider_O_NONBLOCK = 0;
+void jset_DefaultLinuxConstProvider_O_NONBLOCK(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_O_NONBLOCK, value);
+}
+
+jint jget_DefaultLinuxConstProvider_O_NONBLOCK(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_O_NONBLOCK);
+}
+
+static jfieldID DefaultLinuxConstProvider_O_NDELAY = 0;
+void jset_DefaultLinuxConstProvider_O_NDELAY(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_O_NDELAY, value);
+}
+
+jint jget_DefaultLinuxConstProvider_O_NDELAY(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_O_NDELAY);
+}
+
+static jfieldID DefaultLinuxConstProvider_O_SYNC = 0;
+void jset_DefaultLinuxConstProvider_O_SYNC(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_O_SYNC, value);
+}
+
+jint jget_DefaultLinuxConstProvider_O_SYNC(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_O_SYNC);
+}
+
+static jfieldID DefaultLinuxConstProvider_O_ASYNC = 0;
+void jset_DefaultLinuxConstProvider_O_ASYNC(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_O_ASYNC, value);
+}
+
+jint jget_DefaultLinuxConstProvider_O_ASYNC(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_O_ASYNC);
+}
+
+static jfieldID DefaultLinuxConstProvider_O_LARGEFILE = 0;
+void jset_DefaultLinuxConstProvider_O_LARGEFILE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_O_LARGEFILE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_O_LARGEFILE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_O_LARGEFILE);
+}
+
+static jfieldID DefaultLinuxConstProvider_O_DIRECTORY = 0;
+void jset_DefaultLinuxConstProvider_O_DIRECTORY(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_O_DIRECTORY, value);
+}
+
+jint jget_DefaultLinuxConstProvider_O_DIRECTORY(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_O_DIRECTORY);
+}
+
+static jfieldID DefaultLinuxConstProvider_O_NOFOLLOW = 0;
+void jset_DefaultLinuxConstProvider_O_NOFOLLOW(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_O_NOFOLLOW, value);
+}
+
+jint jget_DefaultLinuxConstProvider_O_NOFOLLOW(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_O_NOFOLLOW);
+}
+
+static jfieldID DefaultLinuxConstProvider_O_CLOEXEC = 0;
+void jset_DefaultLinuxConstProvider_O_CLOEXEC(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_O_CLOEXEC, value);
+}
+
+jint jget_DefaultLinuxConstProvider_O_CLOEXEC(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_O_CLOEXEC);
+}
+
+static jfieldID DefaultLinuxConstProvider_O_DIRECT = 0;
+void jset_DefaultLinuxConstProvider_O_DIRECT(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_O_DIRECT, value);
+}
+
+jint jget_DefaultLinuxConstProvider_O_DIRECT(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_O_DIRECT);
+}
+
+static jfieldID DefaultLinuxConstProvider_O_NOATIME = 0;
+void jset_DefaultLinuxConstProvider_O_NOATIME(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_O_NOATIME, value);
+}
+
+jint jget_DefaultLinuxConstProvider_O_NOATIME(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_O_NOATIME);
+}
+
+static jfieldID DefaultLinuxConstProvider_O_PATH = 0;
+void jset_DefaultLinuxConstProvider_O_PATH(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_O_PATH, value);
+}
+
+jint jget_DefaultLinuxConstProvider_O_PATH(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_O_PATH);
+}
+
+static jfieldID DefaultLinuxConstProvider_O_DSYNC = 0;
+void jset_DefaultLinuxConstProvider_O_DSYNC(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_O_DSYNC, value);
+}
+
+jint jget_DefaultLinuxConstProvider_O_DSYNC(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_O_DSYNC);
+}
+
+static jfieldID DefaultLinuxConstProvider_S_IRUSR = 0;
+void jset_DefaultLinuxConstProvider_S_IRUSR(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_S_IRUSR, value);
+}
+
+jint jget_DefaultLinuxConstProvider_S_IRUSR(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_S_IRUSR);
+}
+
+static jfieldID DefaultLinuxConstProvider_S_IWUSR = 0;
+void jset_DefaultLinuxConstProvider_S_IWUSR(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_S_IWUSR, value);
+}
+
+jint jget_DefaultLinuxConstProvider_S_IWUSR(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_S_IWUSR);
+}
+
+static jfieldID DefaultLinuxConstProvider_S_IXUSR = 0;
+void jset_DefaultLinuxConstProvider_S_IXUSR(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_S_IXUSR, value);
+}
+
+jint jget_DefaultLinuxConstProvider_S_IXUSR(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_S_IXUSR);
+}
+
+static jfieldID DefaultLinuxConstProvider_S_IRGRP = 0;
+void jset_DefaultLinuxConstProvider_S_IRGRP(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_S_IRGRP, value);
+}
+
+jint jget_DefaultLinuxConstProvider_S_IRGRP(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_S_IRGRP);
+}
+
+static jfieldID DefaultLinuxConstProvider_S_IWGRP = 0;
+void jset_DefaultLinuxConstProvider_S_IWGRP(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_S_IWGRP, value);
+}
+
+jint jget_DefaultLinuxConstProvider_S_IWGRP(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_S_IWGRP);
+}
+
+static jfieldID DefaultLinuxConstProvider_S_IXGRP = 0;
+void jset_DefaultLinuxConstProvider_S_IXGRP(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_S_IXGRP, value);
+}
+
+jint jget_DefaultLinuxConstProvider_S_IXGRP(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_S_IXGRP);
+}
+
+static jfieldID DefaultLinuxConstProvider_S_IROTH = 0;
+void jset_DefaultLinuxConstProvider_S_IROTH(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_S_IROTH, value);
+}
+
+jint jget_DefaultLinuxConstProvider_S_IROTH(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_S_IROTH);
+}
+
+static jfieldID DefaultLinuxConstProvider_S_IWOTH = 0;
+void jset_DefaultLinuxConstProvider_S_IWOTH(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_S_IWOTH, value);
+}
+
+jint jget_DefaultLinuxConstProvider_S_IWOTH(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_S_IWOTH);
+}
+
+static jfieldID DefaultLinuxConstProvider_S_IXOTH = 0;
+void jset_DefaultLinuxConstProvider_S_IXOTH(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_S_IXOTH, value);
+}
+
+jint jget_DefaultLinuxConstProvider_S_IXOTH(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_S_IXOTH);
+}
+
+static jfieldID DefaultLinuxConstProvider_S_IRWXU = 0;
+void jset_DefaultLinuxConstProvider_S_IRWXU(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_S_IRWXU, value);
+}
+
+jint jget_DefaultLinuxConstProvider_S_IRWXU(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_S_IRWXU);
+}
+
+static jfieldID DefaultLinuxConstProvider_S_IRWXG = 0;
+void jset_DefaultLinuxConstProvider_S_IRWXG(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_S_IRWXG, value);
+}
+
+jint jget_DefaultLinuxConstProvider_S_IRWXG(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_S_IRWXG);
+}
+
+static jfieldID DefaultLinuxConstProvider_S_IRWXO = 0;
+void jset_DefaultLinuxConstProvider_S_IRWXO(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_S_IRWXO, value);
+}
+
+jint jget_DefaultLinuxConstProvider_S_IRWXO(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_S_IRWXO);
+}
+
+static jfieldID DefaultLinuxConstProvider_IFNAMSIZ = 0;
+void jset_DefaultLinuxConstProvider_IFNAMSIZ(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_IFNAMSIZ, value);
+}
+
+jint jget_DefaultLinuxConstProvider_IFNAMSIZ(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_IFNAMSIZ);
+}
+
+static jfieldID DefaultLinuxConstProvider_SIOCGIFFLAGS = 0;
+void jset_DefaultLinuxConstProvider_SIOCGIFFLAGS(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SIOCGIFFLAGS, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SIOCGIFFLAGS(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SIOCGIFFLAGS);
+}
+
+static jfieldID DefaultLinuxConstProvider_SIOCSIFFLAGS = 0;
+void jset_DefaultLinuxConstProvider_SIOCSIFFLAGS(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SIOCSIFFLAGS, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SIOCSIFFLAGS(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SIOCSIFFLAGS);
+}
+
+static jfieldID DefaultLinuxConstProvider_SIOCGIFMTU = 0;
+void jset_DefaultLinuxConstProvider_SIOCGIFMTU(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_SIOCGIFMTU, value);
+}
+
+jint jget_DefaultLinuxConstProvider_SIOCGIFMTU(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_SIOCGIFMTU);
+}
+
+static jfieldID DefaultLinuxConstProvider_NLM_F_REQUEST = 0;
+void jset_DefaultLinuxConstProvider_NLM_F_REQUEST(JNIEnv * env, jobject instance, jshort value) {
+   (*env)->SetShortField(env, instance, DefaultLinuxConstProvider_NLM_F_REQUEST, value);
+}
+
+jshort jget_DefaultLinuxConstProvider_NLM_F_REQUEST(JNIEnv * env, jobject instance) {
+   return (*env)->GetShortField(env, instance, DefaultLinuxConstProvider_NLM_F_REQUEST);
+}
+
+static jfieldID DefaultLinuxConstProvider_NLM_F_DUMP = 0;
+void jset_DefaultLinuxConstProvider_NLM_F_DUMP(JNIEnv * env, jobject instance, jshort value) {
+   (*env)->SetShortField(env, instance, DefaultLinuxConstProvider_NLM_F_DUMP, value);
+}
+
+jshort jget_DefaultLinuxConstProvider_NLM_F_DUMP(JNIEnv * env, jobject instance) {
+   return (*env)->GetShortField(env, instance, DefaultLinuxConstProvider_NLM_F_DUMP);
+}
+
+static jfieldID DefaultLinuxConstProvider_NLM_F_MULTI = 0;
+void jset_DefaultLinuxConstProvider_NLM_F_MULTI(JNIEnv * env, jobject instance, jshort value) {
+   (*env)->SetShortField(env, instance, DefaultLinuxConstProvider_NLM_F_MULTI, value);
+}
+
+jshort jget_DefaultLinuxConstProvider_NLM_F_MULTI(JNIEnv * env, jobject instance) {
+   return (*env)->GetShortField(env, instance, DefaultLinuxConstProvider_NLM_F_MULTI);
+}
+
+static jfieldID DefaultLinuxConstProvider_NLM_F_CREATE = 0;
+void jset_DefaultLinuxConstProvider_NLM_F_CREATE(JNIEnv * env, jobject instance, jshort value) {
+   (*env)->SetShortField(env, instance, DefaultLinuxConstProvider_NLM_F_CREATE, value);
+}
+
+jshort jget_DefaultLinuxConstProvider_NLM_F_CREATE(JNIEnv * env, jobject instance) {
+   return (*env)->GetShortField(env, instance, DefaultLinuxConstProvider_NLM_F_CREATE);
+}
+
+static jfieldID DefaultLinuxConstProvider_NLM_F_EXCL = 0;
+void jset_DefaultLinuxConstProvider_NLM_F_EXCL(JNIEnv * env, jobject instance, jshort value) {
+   (*env)->SetShortField(env, instance, DefaultLinuxConstProvider_NLM_F_EXCL, value);
+}
+
+jshort jget_DefaultLinuxConstProvider_NLM_F_EXCL(JNIEnv * env, jobject instance) {
+   return (*env)->GetShortField(env, instance, DefaultLinuxConstProvider_NLM_F_EXCL);
+}
+
+static jfieldID DefaultLinuxConstProvider_NLM_F_ACK = 0;
+void jset_DefaultLinuxConstProvider_NLM_F_ACK(JNIEnv * env, jobject instance, jshort value) {
+   (*env)->SetShortField(env, instance, DefaultLinuxConstProvider_NLM_F_ACK, value);
+}
+
+jshort jget_DefaultLinuxConstProvider_NLM_F_ACK(JNIEnv * env, jobject instance) {
+   return (*env)->GetShortField(env, instance, DefaultLinuxConstProvider_NLM_F_ACK);
+}
+
+static jfieldID DefaultLinuxConstProvider_NLMSG_NOOP = 0;
+void jset_DefaultLinuxConstProvider_NLMSG_NOOP(JNIEnv * env, jobject instance, jshort value) {
+   (*env)->SetShortField(env, instance, DefaultLinuxConstProvider_NLMSG_NOOP, value);
+}
+
+jshort jget_DefaultLinuxConstProvider_NLMSG_NOOP(JNIEnv * env, jobject instance) {
+   return (*env)->GetShortField(env, instance, DefaultLinuxConstProvider_NLMSG_NOOP);
+}
+
+static jfieldID DefaultLinuxConstProvider_NLMSG_ERROR = 0;
+void jset_DefaultLinuxConstProvider_NLMSG_ERROR(JNIEnv * env, jobject instance, jshort value) {
+   (*env)->SetShortField(env, instance, DefaultLinuxConstProvider_NLMSG_ERROR, value);
+}
+
+jshort jget_DefaultLinuxConstProvider_NLMSG_ERROR(JNIEnv * env, jobject instance) {
+   return (*env)->GetShortField(env, instance, DefaultLinuxConstProvider_NLMSG_ERROR);
+}
+
+static jfieldID DefaultLinuxConstProvider_NLMSG_DONE = 0;
+void jset_DefaultLinuxConstProvider_NLMSG_DONE(JNIEnv * env, jobject instance, jshort value) {
+   (*env)->SetShortField(env, instance, DefaultLinuxConstProvider_NLMSG_DONE, value);
+}
+
+jshort jget_DefaultLinuxConstProvider_NLMSG_DONE(JNIEnv * env, jobject instance) {
+   return (*env)->GetShortField(env, instance, DefaultLinuxConstProvider_NLMSG_DONE);
+}
+
+static jfieldID DefaultLinuxConstProvider_NLMSG_OVERRUN = 0;
+void jset_DefaultLinuxConstProvider_NLMSG_OVERRUN(JNIEnv * env, jobject instance, jshort value) {
+   (*env)->SetShortField(env, instance, DefaultLinuxConstProvider_NLMSG_OVERRUN, value);
+}
+
+jshort jget_DefaultLinuxConstProvider_NLMSG_OVERRUN(JNIEnv * env, jobject instance) {
+   return (*env)->GetShortField(env, instance, DefaultLinuxConstProvider_NLMSG_OVERRUN);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTM_GETLINK = 0;
+void jset_DefaultLinuxConstProvider_RTM_GETLINK(JNIEnv * env, jobject instance, jshort value) {
+   (*env)->SetShortField(env, instance, DefaultLinuxConstProvider_RTM_GETLINK, value);
+}
+
+jshort jget_DefaultLinuxConstProvider_RTM_GETLINK(JNIEnv * env, jobject instance) {
+   return (*env)->GetShortField(env, instance, DefaultLinuxConstProvider_RTM_GETLINK);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTM_DELADDR = 0;
+void jset_DefaultLinuxConstProvider_RTM_DELADDR(JNIEnv * env, jobject instance, jshort value) {
+   (*env)->SetShortField(env, instance, DefaultLinuxConstProvider_RTM_DELADDR, value);
+}
+
+jshort jget_DefaultLinuxConstProvider_RTM_DELADDR(JNIEnv * env, jobject instance) {
+   return (*env)->GetShortField(env, instance, DefaultLinuxConstProvider_RTM_DELADDR);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTM_GETADDR = 0;
+void jset_DefaultLinuxConstProvider_RTM_GETADDR(JNIEnv * env, jobject instance, jshort value) {
+   (*env)->SetShortField(env, instance, DefaultLinuxConstProvider_RTM_GETADDR, value);
+}
+
+jshort jget_DefaultLinuxConstProvider_RTM_GETADDR(JNIEnv * env, jobject instance) {
+   return (*env)->GetShortField(env, instance, DefaultLinuxConstProvider_RTM_GETADDR);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTM_NEWADDR = 0;
+void jset_DefaultLinuxConstProvider_RTM_NEWADDR(JNIEnv * env, jobject instance, jshort value) {
+   (*env)->SetShortField(env, instance, DefaultLinuxConstProvider_RTM_NEWADDR, value);
+}
+
+jshort jget_DefaultLinuxConstProvider_RTM_NEWADDR(JNIEnv * env, jobject instance) {
+   return (*env)->GetShortField(env, instance, DefaultLinuxConstProvider_RTM_NEWADDR);
+}
+
+static jfieldID DefaultLinuxConstProvider_RT_SCOPE_UNIVERSE = 0;
+void jset_DefaultLinuxConstProvider_RT_SCOPE_UNIVERSE(JNIEnv * env, jobject instance, jbyte value) {
+   (*env)->SetByteField(env, instance, DefaultLinuxConstProvider_RT_SCOPE_UNIVERSE, value);
+}
+
+jbyte jget_DefaultLinuxConstProvider_RT_SCOPE_UNIVERSE(JNIEnv * env, jobject instance) {
+   return (*env)->GetByteField(env, instance, DefaultLinuxConstProvider_RT_SCOPE_UNIVERSE);
+}
+
+static jfieldID DefaultLinuxConstProvider_ARPHRD_NETROM = 0;
+void jset_DefaultLinuxConstProvider_ARPHRD_NETROM(JNIEnv * env, jobject instance, jshort value) {
+   (*env)->SetShortField(env, instance, DefaultLinuxConstProvider_ARPHRD_NETROM, value);
+}
+
+jshort jget_DefaultLinuxConstProvider_ARPHRD_NETROM(JNIEnv * env, jobject instance) {
+   return (*env)->GetShortField(env, instance, DefaultLinuxConstProvider_ARPHRD_NETROM);
+}
+
+static jfieldID DefaultLinuxConstProvider_IFLA_IFNAME = 0;
+void jset_DefaultLinuxConstProvider_IFLA_IFNAME(JNIEnv * env, jobject instance, jshort value) {
+   (*env)->SetShortField(env, instance, DefaultLinuxConstProvider_IFLA_IFNAME, value);
+}
+
+jshort jget_DefaultLinuxConstProvider_IFLA_IFNAME(JNIEnv * env, jobject instance) {
+   return (*env)->GetShortField(env, instance, DefaultLinuxConstProvider_IFLA_IFNAME);
+}
+
+static jfieldID DefaultLinuxConstProvider_IFA_UNSPEC = 0;
+void jset_DefaultLinuxConstProvider_IFA_UNSPEC(JNIEnv * env, jobject instance, jshort value) {
+   (*env)->SetShortField(env, instance, DefaultLinuxConstProvider_IFA_UNSPEC, value);
+}
+
+jshort jget_DefaultLinuxConstProvider_IFA_UNSPEC(JNIEnv * env, jobject instance) {
+   return (*env)->GetShortField(env, instance, DefaultLinuxConstProvider_IFA_UNSPEC);
+}
+
+static jfieldID DefaultLinuxConstProvider_IFA_ADDRESS = 0;
+void jset_DefaultLinuxConstProvider_IFA_ADDRESS(JNIEnv * env, jobject instance, jshort value) {
+   (*env)->SetShortField(env, instance, DefaultLinuxConstProvider_IFA_ADDRESS, value);
+}
+
+jshort jget_DefaultLinuxConstProvider_IFA_ADDRESS(JNIEnv * env, jobject instance) {
+   return (*env)->GetShortField(env, instance, DefaultLinuxConstProvider_IFA_ADDRESS);
+}
+
+static jfieldID DefaultLinuxConstProvider_IFA_LOCAL = 0;
+void jset_DefaultLinuxConstProvider_IFA_LOCAL(JNIEnv * env, jobject instance, jshort value) {
+   (*env)->SetShortField(env, instance, DefaultLinuxConstProvider_IFA_LOCAL, value);
+}
+
+jshort jget_DefaultLinuxConstProvider_IFA_LOCAL(JNIEnv * env, jobject instance) {
+   return (*env)->GetShortField(env, instance, DefaultLinuxConstProvider_IFA_LOCAL);
+}
+
+static jfieldID DefaultLinuxConstProvider_IFA_LABEL = 0;
+void jset_DefaultLinuxConstProvider_IFA_LABEL(JNIEnv * env, jobject instance, jshort value) {
+   (*env)->SetShortField(env, instance, DefaultLinuxConstProvider_IFA_LABEL, value);
+}
+
+jshort jget_DefaultLinuxConstProvider_IFA_LABEL(JNIEnv * env, jobject instance) {
+   return (*env)->GetShortField(env, instance, DefaultLinuxConstProvider_IFA_LABEL);
+}
+
+static jfieldID DefaultLinuxConstProvider_IFA_BROADCAST = 0;
+void jset_DefaultLinuxConstProvider_IFA_BROADCAST(JNIEnv * env, jobject instance, jshort value) {
+   (*env)->SetShortField(env, instance, DefaultLinuxConstProvider_IFA_BROADCAST, value);
+}
+
+jshort jget_DefaultLinuxConstProvider_IFA_BROADCAST(JNIEnv * env, jobject instance) {
+   return (*env)->GetShortField(env, instance, DefaultLinuxConstProvider_IFA_BROADCAST);
+}
+
+static jfieldID DefaultLinuxConstProvider_IFA_ANYCAST = 0;
+void jset_DefaultLinuxConstProvider_IFA_ANYCAST(JNIEnv * env, jobject instance, jshort value) {
+   (*env)->SetShortField(env, instance, DefaultLinuxConstProvider_IFA_ANYCAST, value);
+}
+
+jshort jget_DefaultLinuxConstProvider_IFA_ANYCAST(JNIEnv * env, jobject instance) {
+   return (*env)->GetShortField(env, instance, DefaultLinuxConstProvider_IFA_ANYCAST);
+}
+
+static jfieldID DefaultLinuxConstProvider_IFA_CACHEINFO = 0;
+void jset_DefaultLinuxConstProvider_IFA_CACHEINFO(JNIEnv * env, jobject instance, jshort value) {
+   (*env)->SetShortField(env, instance, DefaultLinuxConstProvider_IFA_CACHEINFO, value);
+}
+
+jshort jget_DefaultLinuxConstProvider_IFA_CACHEINFO(JNIEnv * env, jobject instance) {
+   return (*env)->GetShortField(env, instance, DefaultLinuxConstProvider_IFA_CACHEINFO);
+}
+
+static jfieldID DefaultLinuxConstProvider_IFA_F_PERMANENT = 0;
+void jset_DefaultLinuxConstProvider_IFA_F_PERMANENT(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_IFA_F_PERMANENT, value);
+}
+
+jint jget_DefaultLinuxConstProvider_IFA_F_PERMANENT(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_IFA_F_PERMANENT);
+}
+
+static jfieldID DefaultLinuxConstProvider_IFA_F_SECONDARY = 0;
+void jset_DefaultLinuxConstProvider_IFA_F_SECONDARY(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_IFA_F_SECONDARY, value);
+}
+
+jint jget_DefaultLinuxConstProvider_IFA_F_SECONDARY(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_IFA_F_SECONDARY);
+}
+
+static jfieldID DefaultLinuxConstProvider_IFF_UP = 0;
+void jset_DefaultLinuxConstProvider_IFF_UP(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_IFF_UP, value);
+}
+
+jint jget_DefaultLinuxConstProvider_IFF_UP(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_IFF_UP);
+}
+
+static jfieldID DefaultLinuxConstProvider_IFF_NO_PI = 0;
+void jset_DefaultLinuxConstProvider_IFF_NO_PI(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_IFF_NO_PI, value);
+}
+
+jint jget_DefaultLinuxConstProvider_IFF_NO_PI(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_IFF_NO_PI);
+}
+
+static jfieldID DefaultLinuxConstProvider_TUNSETIFF = 0;
+void jset_DefaultLinuxConstProvider_TUNSETIFF(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_TUNSETIFF, value);
+}
+
+jint jget_DefaultLinuxConstProvider_TUNSETIFF(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_TUNSETIFF);
+}
+
+static jfieldID DefaultLinuxConstProvider_TUNSETPERSIST = 0;
+void jset_DefaultLinuxConstProvider_TUNSETPERSIST(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_TUNSETPERSIST, value);
+}
+
+jint jget_DefaultLinuxConstProvider_TUNSETPERSIST(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_TUNSETPERSIST);
+}
+
+static jfieldID DefaultLinuxConstProvider_TUNGETSNDBUF = 0;
+void jset_DefaultLinuxConstProvider_TUNGETSNDBUF(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_TUNGETSNDBUF, value);
+}
+
+jint jget_DefaultLinuxConstProvider_TUNGETSNDBUF(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_TUNGETSNDBUF);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_UNSPEC = 0;
+void jset_DefaultLinuxConstProvider_RTA_UNSPEC(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_UNSPEC, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_UNSPEC(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_UNSPEC);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_DST = 0;
+void jset_DefaultLinuxConstProvider_RTA_DST(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_DST, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_DST(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_DST);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_SRC = 0;
+void jset_DefaultLinuxConstProvider_RTA_SRC(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_SRC, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_SRC(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_SRC);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_IIF = 0;
+void jset_DefaultLinuxConstProvider_RTA_IIF(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_IIF, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_IIF(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_IIF);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_OIF = 0;
+void jset_DefaultLinuxConstProvider_RTA_OIF(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_OIF, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_OIF(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_OIF);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_GATEWAY = 0;
+void jset_DefaultLinuxConstProvider_RTA_GATEWAY(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_GATEWAY, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_GATEWAY(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_GATEWAY);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_PRIORITY = 0;
+void jset_DefaultLinuxConstProvider_RTA_PRIORITY(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_PRIORITY, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_PRIORITY(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_PRIORITY);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_PREFSRC = 0;
+void jset_DefaultLinuxConstProvider_RTA_PREFSRC(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_PREFSRC, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_PREFSRC(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_PREFSRC);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_METRICS = 0;
+void jset_DefaultLinuxConstProvider_RTA_METRICS(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_METRICS, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_METRICS(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_METRICS);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_MULTIPATH = 0;
+void jset_DefaultLinuxConstProvider_RTA_MULTIPATH(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_MULTIPATH, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_MULTIPATH(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_MULTIPATH);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_PROTOINFO = 0;
+void jset_DefaultLinuxConstProvider_RTA_PROTOINFO(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_PROTOINFO, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_PROTOINFO(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_PROTOINFO);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_FLOW = 0;
+void jset_DefaultLinuxConstProvider_RTA_FLOW(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_FLOW, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_FLOW(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_FLOW);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_CACHEINFO = 0;
+void jset_DefaultLinuxConstProvider_RTA_CACHEINFO(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_CACHEINFO, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_CACHEINFO(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_CACHEINFO);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_SESSION = 0;
+void jset_DefaultLinuxConstProvider_RTA_SESSION(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_SESSION, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_SESSION(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_SESSION);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_MP_ALGO = 0;
+void jset_DefaultLinuxConstProvider_RTA_MP_ALGO(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_MP_ALGO, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_MP_ALGO(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_MP_ALGO);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_TABLE = 0;
+void jset_DefaultLinuxConstProvider_RTA_TABLE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_TABLE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_TABLE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_TABLE);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_MARK = 0;
+void jset_DefaultLinuxConstProvider_RTA_MARK(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_MARK, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_MARK(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_MARK);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_MFC_STATS = 0;
+void jset_DefaultLinuxConstProvider_RTA_MFC_STATS(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_MFC_STATS, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_MFC_STATS(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_MFC_STATS);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_VIA = 0;
+void jset_DefaultLinuxConstProvider_RTA_VIA(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_VIA, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_VIA(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_VIA);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_NEWDST = 0;
+void jset_DefaultLinuxConstProvider_RTA_NEWDST(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_NEWDST, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_NEWDST(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_NEWDST);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_PREF = 0;
+void jset_DefaultLinuxConstProvider_RTA_PREF(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_PREF, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_PREF(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_PREF);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_ENCAP_TYPE = 0;
+void jset_DefaultLinuxConstProvider_RTA_ENCAP_TYPE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_ENCAP_TYPE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_ENCAP_TYPE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_ENCAP_TYPE);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_ENCAP = 0;
+void jset_DefaultLinuxConstProvider_RTA_ENCAP(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_ENCAP, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_ENCAP(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_ENCAP);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_EXPIRES = 0;
+void jset_DefaultLinuxConstProvider_RTA_EXPIRES(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_EXPIRES, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_EXPIRES(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_EXPIRES);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_PAD = 0;
+void jset_DefaultLinuxConstProvider_RTA_PAD(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_PAD, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_PAD(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_PAD);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_UID = 0;
+void jset_DefaultLinuxConstProvider_RTA_UID(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_UID, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_UID(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_UID);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_TTL_PROPAGATE = 0;
+void jset_DefaultLinuxConstProvider_RTA_TTL_PROPAGATE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_TTL_PROPAGATE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_TTL_PROPAGATE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_TTL_PROPAGATE);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_IP_PROTO = 0;
+void jset_DefaultLinuxConstProvider_RTA_IP_PROTO(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_IP_PROTO, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_IP_PROTO(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_IP_PROTO);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_SPORT = 0;
+void jset_DefaultLinuxConstProvider_RTA_SPORT(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_SPORT, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_SPORT(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_SPORT);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_DPORT = 0;
+void jset_DefaultLinuxConstProvider_RTA_DPORT(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_DPORT, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_DPORT(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_DPORT);
+}
+
+static jfieldID DefaultLinuxConstProvider_RTA_NH_ID = 0;
+void jset_DefaultLinuxConstProvider_RTA_NH_ID(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_RTA_NH_ID, value);
+}
+
+jint jget_DefaultLinuxConstProvider_RTA_NH_ID(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_RTA_NH_ID);
+}
+
+static jfieldID DefaultLinuxConstProvider_PTHREAD_MUTEX_STALLED = 0;
+void jset_DefaultLinuxConstProvider_PTHREAD_MUTEX_STALLED(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_PTHREAD_MUTEX_STALLED, value);
+}
+
+jint jget_DefaultLinuxConstProvider_PTHREAD_MUTEX_STALLED(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_PTHREAD_MUTEX_STALLED);
+}
+
+static jfieldID DefaultLinuxConstProvider_PTHREAD_MUTEX_ROBUST = 0;
+void jset_DefaultLinuxConstProvider_PTHREAD_MUTEX_ROBUST(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_PTHREAD_MUTEX_ROBUST, value);
+}
+
+jint jget_DefaultLinuxConstProvider_PTHREAD_MUTEX_ROBUST(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_PTHREAD_MUTEX_ROBUST);
+}
+
+static jfieldID DefaultLinuxConstProvider_PTHREAD_PROCESS_SHARED = 0;
+void jset_DefaultLinuxConstProvider_PTHREAD_PROCESS_SHARED(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_PTHREAD_PROCESS_SHARED, value);
+}
+
+jint jget_DefaultLinuxConstProvider_PTHREAD_PROCESS_SHARED(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_PTHREAD_PROCESS_SHARED);
+}
+
+static jfieldID DefaultLinuxConstProvider_PTHREAD_PROCESS_PRIVATE = 0;
+void jset_DefaultLinuxConstProvider_PTHREAD_PROCESS_PRIVATE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_PTHREAD_PROCESS_PRIVATE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_PTHREAD_PROCESS_PRIVATE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_PTHREAD_PROCESS_PRIVATE);
+}
+
+static jfieldID DefaultLinuxConstProvider_PTHREAD_MUTEX_RECURSIVE = 0;
+void jset_DefaultLinuxConstProvider_PTHREAD_MUTEX_RECURSIVE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_PTHREAD_MUTEX_RECURSIVE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_PTHREAD_MUTEX_RECURSIVE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_PTHREAD_MUTEX_RECURSIVE);
+}
+
+static jfieldID DefaultLinuxConstProvider_PTHREAD_MUTEX_ERRORCHECK = 0;
+void jset_DefaultLinuxConstProvider_PTHREAD_MUTEX_ERRORCHECK(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_PTHREAD_MUTEX_ERRORCHECK, value);
+}
+
+jint jget_DefaultLinuxConstProvider_PTHREAD_MUTEX_ERRORCHECK(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_PTHREAD_MUTEX_ERRORCHECK);
+}
+
+static jfieldID DefaultLinuxConstProvider_PTHREAD_MUTEX_DEFAULT = 0;
+void jset_DefaultLinuxConstProvider_PTHREAD_MUTEX_DEFAULT(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_PTHREAD_MUTEX_DEFAULT, value);
+}
+
+jint jget_DefaultLinuxConstProvider_PTHREAD_MUTEX_DEFAULT(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_PTHREAD_MUTEX_DEFAULT);
+}
+
+static jfieldID DefaultLinuxConstProvider_PTHREAD_MUTEX_NORMAL = 0;
+void jset_DefaultLinuxConstProvider_PTHREAD_MUTEX_NORMAL(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_PTHREAD_MUTEX_NORMAL, value);
+}
+
+jint jget_DefaultLinuxConstProvider_PTHREAD_MUTEX_NORMAL(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_PTHREAD_MUTEX_NORMAL);
+}
+
+static jmethodID DefaultLinuxConstProvider_C_0 = 0;
+jobject jnew_DefaultLinuxConstProvider(JNIEnv * env) {
+    jobject obj = (*env) -> NewObject(env, DefaultLinuxConstProvider, DefaultLinuxConstProvider_C_0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID DefaultLinuxConstProvider_M_AF_INET_0 = 0;
+jint jcall_DefaultLinuxConstProvider_AF_INET(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_AF_INET_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_AF_INET6_0 = 0;
+jint jcall_DefaultLinuxConstProvider_AF_INET6(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_AF_INET6_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_AF_NETLINK_0 = 0;
+jint jcall_DefaultLinuxConstProvider_AF_NETLINK(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_AF_NETLINK_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_AF_UNIX_0 = 0;
+jint jcall_DefaultLinuxConstProvider_AF_UNIX(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_AF_UNIX_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_AF_UNSPEC_0 = 0;
+jint jcall_DefaultLinuxConstProvider_AF_UNSPEC(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_AF_UNSPEC_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_ARPHRD_NETROM_0 = 0;
+jshort jcall_DefaultLinuxConstProvider_ARPHRD_NETROM(JNIEnv * env, jobject instance) {
+    return (*env) -> CallShortMethod(env, instance, DefaultLinuxConstProvider_M_ARPHRD_NETROM_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_IFA_ADDRESS_0 = 0;
+jshort jcall_DefaultLinuxConstProvider_IFA_ADDRESS(JNIEnv * env, jobject instance) {
+    return (*env) -> CallShortMethod(env, instance, DefaultLinuxConstProvider_M_IFA_ADDRESS_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_IFA_ANYCAST_0 = 0;
+jshort jcall_DefaultLinuxConstProvider_IFA_ANYCAST(JNIEnv * env, jobject instance) {
+    return (*env) -> CallShortMethod(env, instance, DefaultLinuxConstProvider_M_IFA_ANYCAST_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_IFA_BROADCAST_0 = 0;
+jshort jcall_DefaultLinuxConstProvider_IFA_BROADCAST(JNIEnv * env, jobject instance) {
+    return (*env) -> CallShortMethod(env, instance, DefaultLinuxConstProvider_M_IFA_BROADCAST_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_IFA_CACHEINFO_0 = 0;
+jshort jcall_DefaultLinuxConstProvider_IFA_CACHEINFO(JNIEnv * env, jobject instance) {
+    return (*env) -> CallShortMethod(env, instance, DefaultLinuxConstProvider_M_IFA_CACHEINFO_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_IFA_F_PERMANENT_0 = 0;
+jint jcall_DefaultLinuxConstProvider_IFA_F_PERMANENT(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_IFA_F_PERMANENT_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_IFA_F_SECONDARY_0 = 0;
+jint jcall_DefaultLinuxConstProvider_IFA_F_SECONDARY(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_IFA_F_SECONDARY_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_IFA_LABEL_0 = 0;
+jshort jcall_DefaultLinuxConstProvider_IFA_LABEL(JNIEnv * env, jobject instance) {
+    return (*env) -> CallShortMethod(env, instance, DefaultLinuxConstProvider_M_IFA_LABEL_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_IFA_LOCAL_0 = 0;
+jshort jcall_DefaultLinuxConstProvider_IFA_LOCAL(JNIEnv * env, jobject instance) {
+    return (*env) -> CallShortMethod(env, instance, DefaultLinuxConstProvider_M_IFA_LOCAL_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_IFA_UNSPEC_0 = 0;
+jshort jcall_DefaultLinuxConstProvider_IFA_UNSPEC(JNIEnv * env, jobject instance) {
+    return (*env) -> CallShortMethod(env, instance, DefaultLinuxConstProvider_M_IFA_UNSPEC_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_IFF_NO_PI_0 = 0;
+jint jcall_DefaultLinuxConstProvider_IFF_NO_PI(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_IFF_NO_PI_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_IFF_UP_0 = 0;
+jint jcall_DefaultLinuxConstProvider_IFF_UP(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_IFF_UP_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_IFLA_IFNAME_0 = 0;
+jshort jcall_DefaultLinuxConstProvider_IFLA_IFNAME(JNIEnv * env, jobject instance) {
+    return (*env) -> CallShortMethod(env, instance, DefaultLinuxConstProvider_M_IFLA_IFNAME_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_IFNAMSIZ_0 = 0;
+jint jcall_DefaultLinuxConstProvider_IFNAMSIZ(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_IFNAMSIZ_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MAP_PRIVATE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MAP_PRIVATE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MAP_PRIVATE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MAP_SHARED_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MAP_SHARED(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MAP_SHARED_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_NETLINK_ROUTE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_NETLINK_ROUTE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_NETLINK_ROUTE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_NLMSG_DONE_0 = 0;
+jshort jcall_DefaultLinuxConstProvider_NLMSG_DONE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallShortMethod(env, instance, DefaultLinuxConstProvider_M_NLMSG_DONE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_NLMSG_ERROR_0 = 0;
+jshort jcall_DefaultLinuxConstProvider_NLMSG_ERROR(JNIEnv * env, jobject instance) {
+    return (*env) -> CallShortMethod(env, instance, DefaultLinuxConstProvider_M_NLMSG_ERROR_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_NLMSG_NOOP_0 = 0;
+jshort jcall_DefaultLinuxConstProvider_NLMSG_NOOP(JNIEnv * env, jobject instance) {
+    return (*env) -> CallShortMethod(env, instance, DefaultLinuxConstProvider_M_NLMSG_NOOP_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_NLMSG_OVERRUN_0 = 0;
+jshort jcall_DefaultLinuxConstProvider_NLMSG_OVERRUN(JNIEnv * env, jobject instance) {
+    return (*env) -> CallShortMethod(env, instance, DefaultLinuxConstProvider_M_NLMSG_OVERRUN_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_NLM_F_ACK_0 = 0;
+jshort jcall_DefaultLinuxConstProvider_NLM_F_ACK(JNIEnv * env, jobject instance) {
+    return (*env) -> CallShortMethod(env, instance, DefaultLinuxConstProvider_M_NLM_F_ACK_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_NLM_F_CREATE_0 = 0;
+jshort jcall_DefaultLinuxConstProvider_NLM_F_CREATE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallShortMethod(env, instance, DefaultLinuxConstProvider_M_NLM_F_CREATE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_NLM_F_DUMP_0 = 0;
+jshort jcall_DefaultLinuxConstProvider_NLM_F_DUMP(JNIEnv * env, jobject instance) {
+    return (*env) -> CallShortMethod(env, instance, DefaultLinuxConstProvider_M_NLM_F_DUMP_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_NLM_F_EXCL_0 = 0;
+jshort jcall_DefaultLinuxConstProvider_NLM_F_EXCL(JNIEnv * env, jobject instance) {
+    return (*env) -> CallShortMethod(env, instance, DefaultLinuxConstProvider_M_NLM_F_EXCL_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_NLM_F_MULTI_0 = 0;
+jshort jcall_DefaultLinuxConstProvider_NLM_F_MULTI(JNIEnv * env, jobject instance) {
+    return (*env) -> CallShortMethod(env, instance, DefaultLinuxConstProvider_M_NLM_F_MULTI_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_NLM_F_REQUEST_0 = 0;
+jshort jcall_DefaultLinuxConstProvider_NLM_F_REQUEST(JNIEnv * env, jobject instance) {
+    return (*env) -> CallShortMethod(env, instance, DefaultLinuxConstProvider_M_NLM_F_REQUEST_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_O_ACCMODE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_O_ACCMODE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_O_ACCMODE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_O_APPEND_0 = 0;
+jint jcall_DefaultLinuxConstProvider_O_APPEND(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_O_APPEND_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_O_ASYNC_0 = 0;
+jint jcall_DefaultLinuxConstProvider_O_ASYNC(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_O_ASYNC_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_O_CLOEXEC_0 = 0;
+jint jcall_DefaultLinuxConstProvider_O_CLOEXEC(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_O_CLOEXEC_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_O_CREAT_0 = 0;
+jint jcall_DefaultLinuxConstProvider_O_CREAT(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_O_CREAT_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_O_DIRECT_0 = 0;
+jint jcall_DefaultLinuxConstProvider_O_DIRECT(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_O_DIRECT_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_O_DIRECTORY_0 = 0;
+jint jcall_DefaultLinuxConstProvider_O_DIRECTORY(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_O_DIRECTORY_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_O_DSYNC_0 = 0;
+jint jcall_DefaultLinuxConstProvider_O_DSYNC(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_O_DSYNC_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_O_EXCL_0 = 0;
+jint jcall_DefaultLinuxConstProvider_O_EXCL(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_O_EXCL_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_O_LARGEFILE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_O_LARGEFILE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_O_LARGEFILE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_O_NDELAY_0 = 0;
+jint jcall_DefaultLinuxConstProvider_O_NDELAY(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_O_NDELAY_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_O_NOATIME_0 = 0;
+jint jcall_DefaultLinuxConstProvider_O_NOATIME(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_O_NOATIME_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_O_NOCTTY_0 = 0;
+jint jcall_DefaultLinuxConstProvider_O_NOCTTY(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_O_NOCTTY_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_O_NOFOLLOW_0 = 0;
+jint jcall_DefaultLinuxConstProvider_O_NOFOLLOW(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_O_NOFOLLOW_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_O_NONBLOCK_0 = 0;
+jint jcall_DefaultLinuxConstProvider_O_NONBLOCK(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_O_NONBLOCK_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_O_PATH_0 = 0;
+jint jcall_DefaultLinuxConstProvider_O_PATH(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_O_PATH_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_O_RDONLY_0 = 0;
+jint jcall_DefaultLinuxConstProvider_O_RDONLY(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_O_RDONLY_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_O_RDWR_0 = 0;
+jint jcall_DefaultLinuxConstProvider_O_RDWR(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_O_RDWR_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_O_SYNC_0 = 0;
+jint jcall_DefaultLinuxConstProvider_O_SYNC(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_O_SYNC_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_O_TRUNC_0 = 0;
+jint jcall_DefaultLinuxConstProvider_O_TRUNC(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_O_TRUNC_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_O_WRONLY_0 = 0;
+jint jcall_DefaultLinuxConstProvider_O_WRONLY(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_O_WRONLY_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_PTHREAD_MUTEX_DEFAULT_0 = 0;
+jint jcall_DefaultLinuxConstProvider_PTHREAD_MUTEX_DEFAULT(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_PTHREAD_MUTEX_DEFAULT_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_PTHREAD_MUTEX_ERRORCHECK_0 = 0;
+jint jcall_DefaultLinuxConstProvider_PTHREAD_MUTEX_ERRORCHECK(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_PTHREAD_MUTEX_ERRORCHECK_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_PTHREAD_MUTEX_NORMAL_0 = 0;
+jint jcall_DefaultLinuxConstProvider_PTHREAD_MUTEX_NORMAL(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_PTHREAD_MUTEX_NORMAL_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_PTHREAD_MUTEX_RECURSIVE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_PTHREAD_MUTEX_RECURSIVE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_PTHREAD_MUTEX_RECURSIVE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_PTHREAD_MUTEX_ROBUST_0 = 0;
+jint jcall_DefaultLinuxConstProvider_PTHREAD_MUTEX_ROBUST(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_PTHREAD_MUTEX_ROBUST_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_PTHREAD_MUTEX_STALLED_0 = 0;
+jint jcall_DefaultLinuxConstProvider_PTHREAD_MUTEX_STALLED(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_PTHREAD_MUTEX_STALLED_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_PTHREAD_PROCESS_PRIVATE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_PTHREAD_PROCESS_PRIVATE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_PTHREAD_PROCESS_PRIVATE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_PTHREAD_PROCESS_SHARED_0 = 0;
+jint jcall_DefaultLinuxConstProvider_PTHREAD_PROCESS_SHARED(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_PTHREAD_PROCESS_SHARED_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_CACHEINFO_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_CACHEINFO(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_CACHEINFO_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_DPORT_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_DPORT(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_DPORT_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_DST_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_DST(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_DST_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_ENCAP_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_ENCAP(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_ENCAP_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_ENCAP_TYPE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_ENCAP_TYPE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_ENCAP_TYPE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_EXPIRES_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_EXPIRES(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_EXPIRES_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_FLOW_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_FLOW(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_FLOW_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_GATEWAY_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_GATEWAY(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_GATEWAY_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_IIF_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_IIF(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_IIF_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_IP_PROTO_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_IP_PROTO(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_IP_PROTO_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_MARK_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_MARK(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_MARK_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_METRICS_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_METRICS(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_METRICS_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_MFC_STATS_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_MFC_STATS(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_MFC_STATS_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_MP_ALGO_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_MP_ALGO(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_MP_ALGO_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_MULTIPATH_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_MULTIPATH(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_MULTIPATH_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_NEWDST_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_NEWDST(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_NEWDST_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_NH_ID_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_NH_ID(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_NH_ID_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_OIF_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_OIF(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_OIF_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_PAD_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_PAD(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_PAD_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_PREF_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_PREF(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_PREF_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_PREFSRC_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_PREFSRC(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_PREFSRC_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_PRIORITY_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_PRIORITY(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_PRIORITY_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_PROTOINFO_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_PROTOINFO(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_PROTOINFO_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_SESSION_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_SESSION(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_SESSION_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_SPORT_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_SPORT(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_SPORT_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_SRC_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_SRC(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_SRC_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_TABLE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_TABLE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_TABLE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_TTL_PROPAGATE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_TTL_PROPAGATE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_TTL_PROPAGATE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_UID_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_UID(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_UID_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_UNSPEC_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_UNSPEC(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_UNSPEC_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTA_VIA_0 = 0;
+jint jcall_DefaultLinuxConstProvider_RTA_VIA(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_RTA_VIA_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTM_DELADDR_0 = 0;
+jshort jcall_DefaultLinuxConstProvider_RTM_DELADDR(JNIEnv * env, jobject instance) {
+    return (*env) -> CallShortMethod(env, instance, DefaultLinuxConstProvider_M_RTM_DELADDR_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTM_GETADDR_0 = 0;
+jshort jcall_DefaultLinuxConstProvider_RTM_GETADDR(JNIEnv * env, jobject instance) {
+    return (*env) -> CallShortMethod(env, instance, DefaultLinuxConstProvider_M_RTM_GETADDR_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTM_GETLINK_0 = 0;
+jshort jcall_DefaultLinuxConstProvider_RTM_GETLINK(JNIEnv * env, jobject instance) {
+    return (*env) -> CallShortMethod(env, instance, DefaultLinuxConstProvider_M_RTM_GETLINK_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RTM_NEWADDR_0 = 0;
+jshort jcall_DefaultLinuxConstProvider_RTM_NEWADDR(JNIEnv * env, jobject instance) {
+    return (*env) -> CallShortMethod(env, instance, DefaultLinuxConstProvider_M_RTM_NEWADDR_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_RT_SCOPE_UNIVERSE_0 = 0;
+jbyte jcall_DefaultLinuxConstProvider_RT_SCOPE_UNIVERSE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallByteMethod(env, instance, DefaultLinuxConstProvider_M_RT_SCOPE_UNIVERSE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SCM_RIGHTS_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SCM_RIGHTS(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SCM_RIGHTS_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SCM_TIMESTAMP_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SCM_TIMESTAMP(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SCM_TIMESTAMP_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SCM_TIMESTAMPING_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SCM_TIMESTAMPING(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SCM_TIMESTAMPING_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SCM_TIMESTAMPING_OPT_STATS_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SCM_TIMESTAMPING_OPT_STATS(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SCM_TIMESTAMPING_OPT_STATS_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SCM_TIMESTAMPING_PKTINFO_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SCM_TIMESTAMPING_PKTINFO(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SCM_TIMESTAMPING_PKTINFO_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SCM_TIMESTAMPNS_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SCM_TIMESTAMPNS(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SCM_TIMESTAMPNS_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SCM_WIFI_STATUS_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SCM_WIFI_STATUS(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SCM_WIFI_STATUS_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SIOCGIFFLAGS_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SIOCGIFFLAGS(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SIOCGIFFLAGS_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SIOCGIFMTU_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SIOCGIFMTU(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SIOCGIFMTU_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SIOCSIFFLAGS_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SIOCSIFFLAGS(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SIOCSIFFLAGS_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SOCK_DGRAM_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SOCK_DGRAM(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SOCK_DGRAM_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SOCK_RAW_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SOCK_RAW(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SOCK_RAW_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SOCK_STREAM_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SOCK_STREAM(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SOCK_STREAM_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SOL_SOCKET_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SOL_SOCKET(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SOL_SOCKET_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_ACCEPTCONN_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_ACCEPTCONN(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_ACCEPTCONN_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_ATTACH_BPF_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_ATTACH_BPF(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_ATTACH_BPF_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_ATTACH_FILTER_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_ATTACH_FILTER(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_ATTACH_FILTER_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_ATTACH_REUSEPORT_CBPF_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_ATTACH_REUSEPORT_CBPF(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_ATTACH_REUSEPORT_CBPF_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_ATTACH_REUSEPORT_EBPF_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_ATTACH_REUSEPORT_EBPF(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_ATTACH_REUSEPORT_EBPF_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_BINDTODEVICE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_BINDTODEVICE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_BINDTODEVICE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_BPF_EXTENSIONS_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_BPF_EXTENSIONS(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_BPF_EXTENSIONS_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_BROADCAST_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_BROADCAST(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_BROADCAST_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_BSDCOMPAT_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_BSDCOMPAT(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_BSDCOMPAT_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_BUSY_POLL_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_BUSY_POLL(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_BUSY_POLL_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_CNX_ADVICE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_CNX_ADVICE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_CNX_ADVICE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_COOKIE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_COOKIE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_COOKIE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_DEBUG_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_DEBUG(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_DEBUG_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_DETACH_BPF_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_DETACH_BPF(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_DETACH_BPF_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_DETACH_FILTER_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_DETACH_FILTER(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_DETACH_FILTER_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_DOMAIN_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_DOMAIN(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_DOMAIN_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_DONTROUTE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_DONTROUTE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_DONTROUTE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_ERROR_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_ERROR(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_ERROR_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_GET_FILTER_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_GET_FILTER(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_GET_FILTER_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_INCOMING_CPU_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_INCOMING_CPU(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_INCOMING_CPU_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_INCOMING_NAPI_ID_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_INCOMING_NAPI_ID(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_INCOMING_NAPI_ID_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_KEEPALIVE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_KEEPALIVE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_KEEPALIVE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_LINGER_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_LINGER(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_LINGER_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_LOCK_FILTER_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_LOCK_FILTER(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_LOCK_FILTER_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_MARK_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_MARK(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_MARK_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_MAX_PACING_RATE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_MAX_PACING_RATE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_MAX_PACING_RATE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_MEMINFO_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_MEMINFO(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_MEMINFO_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_NOFCS_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_NOFCS(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_NOFCS_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_NO_CHECK_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_NO_CHECK(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_NO_CHECK_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_OOBINLINE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_OOBINLINE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_OOBINLINE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_PASSCRED_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_PASSCRED(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_PASSCRED_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_PASSSEC_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_PASSSEC(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_PASSSEC_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_PEEK_OFF_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_PEEK_OFF(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_PEEK_OFF_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_PEERCRED_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_PEERCRED(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_PEERCRED_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_PEERGROUPS_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_PEERGROUPS(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_PEERGROUPS_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_PEERNAME_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_PEERNAME(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_PEERNAME_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_PEERSEC_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_PEERSEC(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_PEERSEC_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_PRIORITY_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_PRIORITY(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_PRIORITY_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_PROTOCOL_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_PROTOCOL(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_PROTOCOL_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_RCVBUF_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_RCVBUF(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_RCVBUF_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_RCVBUFFORCE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_RCVBUFFORCE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_RCVBUFFORCE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_RCVLOWAT_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_RCVLOWAT(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_RCVLOWAT_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_RCVTIMEO_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_RCVTIMEO(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_RCVTIMEO_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_REUSEADDR_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_REUSEADDR(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_REUSEADDR_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_REUSEPORT_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_REUSEPORT(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_REUSEPORT_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_RXQ_OVFL_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_RXQ_OVFL(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_RXQ_OVFL_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_SECURITY_AUTHENTICATION_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_SECURITY_AUTHENTICATION(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_SECURITY_AUTHENTICATION_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_SECURITY_ENCRYPTION_NETWORK_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_SECURITY_ENCRYPTION_NETWORK(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_SECURITY_ENCRYPTION_NETWORK_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_SECURITY_ENCRYPTION_TRANSPORT_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_SECURITY_ENCRYPTION_TRANSPORT(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_SECURITY_ENCRYPTION_TRANSPORT_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_SELECT_ERR_QUEUE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_SELECT_ERR_QUEUE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_SELECT_ERR_QUEUE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_SNDBUF_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_SNDBUF(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_SNDBUF_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_SNDBUFFORCE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_SNDBUFFORCE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_SNDBUFFORCE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_SNDLOWAT_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_SNDLOWAT(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_SNDLOWAT_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_SNDTIMEO_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_SNDTIMEO(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_SNDTIMEO_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_TIMESTAMP_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_TIMESTAMP(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_TIMESTAMP_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_TIMESTAMPING_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_TIMESTAMPING(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_TIMESTAMPING_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_TIMESTAMPNS_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_TIMESTAMPNS(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_TIMESTAMPNS_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_TYPE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_TYPE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_TYPE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_WIFI_STATUS_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_WIFI_STATUS(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_WIFI_STATUS_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_SO_ZEROCOPY_0 = 0;
+jint jcall_DefaultLinuxConstProvider_SO_ZEROCOPY(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_SO_ZEROCOPY_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_S_IRGRP_0 = 0;
+jint jcall_DefaultLinuxConstProvider_S_IRGRP(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_S_IRGRP_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_S_IROTH_0 = 0;
+jint jcall_DefaultLinuxConstProvider_S_IROTH(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_S_IROTH_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_S_IRUSR_0 = 0;
+jint jcall_DefaultLinuxConstProvider_S_IRUSR(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_S_IRUSR_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_S_IRWXG_0 = 0;
+jint jcall_DefaultLinuxConstProvider_S_IRWXG(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_S_IRWXG_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_S_IRWXO_0 = 0;
+jint jcall_DefaultLinuxConstProvider_S_IRWXO(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_S_IRWXO_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_S_IRWXU_0 = 0;
+jint jcall_DefaultLinuxConstProvider_S_IRWXU(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_S_IRWXU_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_S_IWGRP_0 = 0;
+jint jcall_DefaultLinuxConstProvider_S_IWGRP(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_S_IWGRP_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_S_IWOTH_0 = 0;
+jint jcall_DefaultLinuxConstProvider_S_IWOTH(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_S_IWOTH_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_S_IWUSR_0 = 0;
+jint jcall_DefaultLinuxConstProvider_S_IWUSR(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_S_IWUSR_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_S_IXGRP_0 = 0;
+jint jcall_DefaultLinuxConstProvider_S_IXGRP(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_S_IXGRP_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_S_IXOTH_0 = 0;
+jint jcall_DefaultLinuxConstProvider_S_IXOTH(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_S_IXOTH_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_S_IXUSR_0 = 0;
+jint jcall_DefaultLinuxConstProvider_S_IXUSR(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_S_IXUSR_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_TUNGETSNDBUF_0 = 0;
+jint jcall_DefaultLinuxConstProvider_TUNGETSNDBUF(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_TUNGETSNDBUF_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_TUNSETIFF_0 = 0;
+jint jcall_DefaultLinuxConstProvider_TUNSETIFF(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_TUNSETIFF_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_TUNSETPERSIST_0 = 0;
+jint jcall_DefaultLinuxConstProvider_TUNSETPERSIST(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_TUNSETPERSIST_0);
 }
 
 static jfieldID Cmsghdr_cmsg_level = 0;
@@ -6774,6 +9392,13 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
+    DefaultLinuxConstProvider = makeGlobalClassRef(env, "eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider");
+    if (DefaultLinuxConstProvider == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider");
+        return JNI_FALSE;
+    }
+
     Stat = makeGlobalClassRef(env, "eu/aschuetz/nativeutils/api/structs/Stat");
     if (Stat == 0) {
         (*env) -> ExceptionClear(env);
@@ -7100,6 +9725,2617 @@ jboolean jnigenerator_init(JNIEnv * env) {
     if (OutOfMemoryError == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find java/lang/OutOfMemoryError");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_AF_UNSPEC = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "AF_UNSPEC", "I");
+    if (DefaultLinuxConstProvider_AF_UNSPEC == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_AF_UNSPEC_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_AF_UNIX = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "AF_UNIX", "I");
+    if (DefaultLinuxConstProvider_AF_UNIX == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_AF_UNIX_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_AF_INET = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "AF_INET", "I");
+    if (DefaultLinuxConstProvider_AF_INET == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_AF_INET_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_AF_INET6 = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "AF_INET6", "I");
+    if (DefaultLinuxConstProvider_AF_INET6 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_AF_INET6_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_AF_NETLINK = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "AF_NETLINK", "I");
+    if (DefaultLinuxConstProvider_AF_NETLINK == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_AF_NETLINK_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SOCK_STREAM = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SOCK_STREAM", "I");
+    if (DefaultLinuxConstProvider_SOCK_STREAM == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SOCK_STREAM_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SOCK_DGRAM = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SOCK_DGRAM", "I");
+    if (DefaultLinuxConstProvider_SOCK_DGRAM == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SOCK_DGRAM_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SOCK_RAW = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SOCK_RAW", "I");
+    if (DefaultLinuxConstProvider_SOCK_RAW == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SOCK_RAW_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_NETLINK_ROUTE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "NETLINK_ROUTE", "I");
+    if (DefaultLinuxConstProvider_NETLINK_ROUTE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_NETLINK_ROUTE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SOL_SOCKET = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SOL_SOCKET", "I");
+    if (DefaultLinuxConstProvider_SOL_SOCKET == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SOL_SOCKET_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_DEBUG = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_DEBUG", "I");
+    if (DefaultLinuxConstProvider_SO_DEBUG == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_DEBUG_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_REUSEADDR = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_REUSEADDR", "I");
+    if (DefaultLinuxConstProvider_SO_REUSEADDR == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_REUSEADDR_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_TYPE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_TYPE", "I");
+    if (DefaultLinuxConstProvider_SO_TYPE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_TYPE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_ERROR = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_ERROR", "I");
+    if (DefaultLinuxConstProvider_SO_ERROR == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_ERROR_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_DONTROUTE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_DONTROUTE", "I");
+    if (DefaultLinuxConstProvider_SO_DONTROUTE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_DONTROUTE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_BROADCAST = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_BROADCAST", "I");
+    if (DefaultLinuxConstProvider_SO_BROADCAST == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_BROADCAST_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_SNDBUF = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_SNDBUF", "I");
+    if (DefaultLinuxConstProvider_SO_SNDBUF == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_SNDBUF_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_RCVBUF = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_RCVBUF", "I");
+    if (DefaultLinuxConstProvider_SO_RCVBUF == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_RCVBUF_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_SNDBUFFORCE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_SNDBUFFORCE", "I");
+    if (DefaultLinuxConstProvider_SO_SNDBUFFORCE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_SNDBUFFORCE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_RCVBUFFORCE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_RCVBUFFORCE", "I");
+    if (DefaultLinuxConstProvider_SO_RCVBUFFORCE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_RCVBUFFORCE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_KEEPALIVE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_KEEPALIVE", "I");
+    if (DefaultLinuxConstProvider_SO_KEEPALIVE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_KEEPALIVE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_OOBINLINE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_OOBINLINE", "I");
+    if (DefaultLinuxConstProvider_SO_OOBINLINE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_OOBINLINE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_NO_CHECK = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_NO_CHECK", "I");
+    if (DefaultLinuxConstProvider_SO_NO_CHECK == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_NO_CHECK_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_PRIORITY = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_PRIORITY", "I");
+    if (DefaultLinuxConstProvider_SO_PRIORITY == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_PRIORITY_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_LINGER = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_LINGER", "I");
+    if (DefaultLinuxConstProvider_SO_LINGER == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_LINGER_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_BSDCOMPAT = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_BSDCOMPAT", "I");
+    if (DefaultLinuxConstProvider_SO_BSDCOMPAT == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_BSDCOMPAT_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_REUSEPORT = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_REUSEPORT", "I");
+    if (DefaultLinuxConstProvider_SO_REUSEPORT == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_REUSEPORT_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_PASSCRED = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_PASSCRED", "I");
+    if (DefaultLinuxConstProvider_SO_PASSCRED == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_PASSCRED_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_PEERCRED = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_PEERCRED", "I");
+    if (DefaultLinuxConstProvider_SO_PEERCRED == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_PEERCRED_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_RCVLOWAT = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_RCVLOWAT", "I");
+    if (DefaultLinuxConstProvider_SO_RCVLOWAT == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_RCVLOWAT_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_SNDLOWAT = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_SNDLOWAT", "I");
+    if (DefaultLinuxConstProvider_SO_SNDLOWAT == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_SNDLOWAT_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_RCVTIMEO = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_RCVTIMEO", "I");
+    if (DefaultLinuxConstProvider_SO_RCVTIMEO == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_RCVTIMEO_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_SNDTIMEO = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_SNDTIMEO", "I");
+    if (DefaultLinuxConstProvider_SO_SNDTIMEO == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_SNDTIMEO_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_SECURITY_AUTHENTICATION = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_SECURITY_AUTHENTICATION", "I");
+    if (DefaultLinuxConstProvider_SO_SECURITY_AUTHENTICATION == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_SECURITY_AUTHENTICATION_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_SECURITY_ENCRYPTION_TRANSPORT = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_SECURITY_ENCRYPTION_TRANSPORT", "I");
+    if (DefaultLinuxConstProvider_SO_SECURITY_ENCRYPTION_TRANSPORT == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_SECURITY_ENCRYPTION_TRANSPORT_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_SECURITY_ENCRYPTION_NETWORK = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_SECURITY_ENCRYPTION_NETWORK", "I");
+    if (DefaultLinuxConstProvider_SO_SECURITY_ENCRYPTION_NETWORK == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_SECURITY_ENCRYPTION_NETWORK_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_BINDTODEVICE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_BINDTODEVICE", "I");
+    if (DefaultLinuxConstProvider_SO_BINDTODEVICE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_BINDTODEVICE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_ATTACH_FILTER = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_ATTACH_FILTER", "I");
+    if (DefaultLinuxConstProvider_SO_ATTACH_FILTER == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_ATTACH_FILTER_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_DETACH_FILTER = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_DETACH_FILTER", "I");
+    if (DefaultLinuxConstProvider_SO_DETACH_FILTER == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_DETACH_FILTER_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_GET_FILTER = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_GET_FILTER", "I");
+    if (DefaultLinuxConstProvider_SO_GET_FILTER == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_GET_FILTER_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_PEERNAME = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_PEERNAME", "I");
+    if (DefaultLinuxConstProvider_SO_PEERNAME == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_PEERNAME_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_TIMESTAMP = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_TIMESTAMP", "I");
+    if (DefaultLinuxConstProvider_SO_TIMESTAMP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_TIMESTAMP_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SCM_TIMESTAMP = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SCM_TIMESTAMP", "I");
+    if (DefaultLinuxConstProvider_SCM_TIMESTAMP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SCM_TIMESTAMP_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_ACCEPTCONN = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_ACCEPTCONN", "I");
+    if (DefaultLinuxConstProvider_SO_ACCEPTCONN == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_ACCEPTCONN_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_PEERSEC = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_PEERSEC", "I");
+    if (DefaultLinuxConstProvider_SO_PEERSEC == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_PEERSEC_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_PASSSEC = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_PASSSEC", "I");
+    if (DefaultLinuxConstProvider_SO_PASSSEC == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_PASSSEC_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_TIMESTAMPNS = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_TIMESTAMPNS", "I");
+    if (DefaultLinuxConstProvider_SO_TIMESTAMPNS == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_TIMESTAMPNS_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SCM_TIMESTAMPNS = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SCM_TIMESTAMPNS", "I");
+    if (DefaultLinuxConstProvider_SCM_TIMESTAMPNS == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SCM_TIMESTAMPNS_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_MARK = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_MARK", "I");
+    if (DefaultLinuxConstProvider_SO_MARK == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_MARK_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_TIMESTAMPING = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_TIMESTAMPING", "I");
+    if (DefaultLinuxConstProvider_SO_TIMESTAMPING == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_TIMESTAMPING_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SCM_TIMESTAMPING = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SCM_TIMESTAMPING", "I");
+    if (DefaultLinuxConstProvider_SCM_TIMESTAMPING == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SCM_TIMESTAMPING_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_PROTOCOL = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_PROTOCOL", "I");
+    if (DefaultLinuxConstProvider_SO_PROTOCOL == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_PROTOCOL_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_DOMAIN = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_DOMAIN", "I");
+    if (DefaultLinuxConstProvider_SO_DOMAIN == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_DOMAIN_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_RXQ_OVFL = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_RXQ_OVFL", "I");
+    if (DefaultLinuxConstProvider_SO_RXQ_OVFL == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_RXQ_OVFL_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_WIFI_STATUS = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_WIFI_STATUS", "I");
+    if (DefaultLinuxConstProvider_SO_WIFI_STATUS == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_WIFI_STATUS_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SCM_WIFI_STATUS = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SCM_WIFI_STATUS", "I");
+    if (DefaultLinuxConstProvider_SCM_WIFI_STATUS == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SCM_WIFI_STATUS_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_PEEK_OFF = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_PEEK_OFF", "I");
+    if (DefaultLinuxConstProvider_SO_PEEK_OFF == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_PEEK_OFF_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_NOFCS = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_NOFCS", "I");
+    if (DefaultLinuxConstProvider_SO_NOFCS == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_NOFCS_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_LOCK_FILTER = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_LOCK_FILTER", "I");
+    if (DefaultLinuxConstProvider_SO_LOCK_FILTER == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_LOCK_FILTER_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_SELECT_ERR_QUEUE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_SELECT_ERR_QUEUE", "I");
+    if (DefaultLinuxConstProvider_SO_SELECT_ERR_QUEUE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_SELECT_ERR_QUEUE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_BUSY_POLL = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_BUSY_POLL", "I");
+    if (DefaultLinuxConstProvider_SO_BUSY_POLL == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_BUSY_POLL_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_MAX_PACING_RATE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_MAX_PACING_RATE", "I");
+    if (DefaultLinuxConstProvider_SO_MAX_PACING_RATE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_MAX_PACING_RATE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_BPF_EXTENSIONS = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_BPF_EXTENSIONS", "I");
+    if (DefaultLinuxConstProvider_SO_BPF_EXTENSIONS == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_BPF_EXTENSIONS_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_INCOMING_CPU = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_INCOMING_CPU", "I");
+    if (DefaultLinuxConstProvider_SO_INCOMING_CPU == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_INCOMING_CPU_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_ATTACH_BPF = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_ATTACH_BPF", "I");
+    if (DefaultLinuxConstProvider_SO_ATTACH_BPF == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_ATTACH_BPF_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_DETACH_BPF = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_DETACH_BPF", "I");
+    if (DefaultLinuxConstProvider_SO_DETACH_BPF == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_DETACH_BPF_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_ATTACH_REUSEPORT_CBPF = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_ATTACH_REUSEPORT_CBPF", "I");
+    if (DefaultLinuxConstProvider_SO_ATTACH_REUSEPORT_CBPF == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_ATTACH_REUSEPORT_CBPF_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_ATTACH_REUSEPORT_EBPF = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_ATTACH_REUSEPORT_EBPF", "I");
+    if (DefaultLinuxConstProvider_SO_ATTACH_REUSEPORT_EBPF == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_ATTACH_REUSEPORT_EBPF_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_CNX_ADVICE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_CNX_ADVICE", "I");
+    if (DefaultLinuxConstProvider_SO_CNX_ADVICE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_CNX_ADVICE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SCM_TIMESTAMPING_OPT_STATS = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SCM_TIMESTAMPING_OPT_STATS", "I");
+    if (DefaultLinuxConstProvider_SCM_TIMESTAMPING_OPT_STATS == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SCM_TIMESTAMPING_OPT_STATS_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_MEMINFO = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_MEMINFO", "I");
+    if (DefaultLinuxConstProvider_SO_MEMINFO == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_MEMINFO_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_INCOMING_NAPI_ID = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_INCOMING_NAPI_ID", "I");
+    if (DefaultLinuxConstProvider_SO_INCOMING_NAPI_ID == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_INCOMING_NAPI_ID_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_COOKIE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_COOKIE", "I");
+    if (DefaultLinuxConstProvider_SO_COOKIE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_COOKIE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SCM_TIMESTAMPING_PKTINFO = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SCM_TIMESTAMPING_PKTINFO", "I");
+    if (DefaultLinuxConstProvider_SCM_TIMESTAMPING_PKTINFO == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SCM_TIMESTAMPING_PKTINFO_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_PEERGROUPS = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_PEERGROUPS", "I");
+    if (DefaultLinuxConstProvider_SO_PEERGROUPS == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_PEERGROUPS_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SO_ZEROCOPY = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SO_ZEROCOPY", "I");
+    if (DefaultLinuxConstProvider_SO_ZEROCOPY == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SO_ZEROCOPY_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SCM_RIGHTS = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SCM_RIGHTS", "I");
+    if (DefaultLinuxConstProvider_SCM_RIGHTS == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SCM_RIGHTS_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MAP_SHARED = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MAP_SHARED", "I");
+    if (DefaultLinuxConstProvider_MAP_SHARED == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MAP_SHARED_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MAP_PRIVATE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MAP_PRIVATE", "I");
+    if (DefaultLinuxConstProvider_MAP_PRIVATE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MAP_PRIVATE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_O_ACCMODE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "O_ACCMODE", "I");
+    if (DefaultLinuxConstProvider_O_ACCMODE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_O_ACCMODE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_O_RDONLY = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "O_RDONLY", "I");
+    if (DefaultLinuxConstProvider_O_RDONLY == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_O_RDONLY_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_O_WRONLY = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "O_WRONLY", "I");
+    if (DefaultLinuxConstProvider_O_WRONLY == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_O_WRONLY_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_O_RDWR = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "O_RDWR", "I");
+    if (DefaultLinuxConstProvider_O_RDWR == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_O_RDWR_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_O_CREAT = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "O_CREAT", "I");
+    if (DefaultLinuxConstProvider_O_CREAT == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_O_CREAT_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_O_EXCL = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "O_EXCL", "I");
+    if (DefaultLinuxConstProvider_O_EXCL == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_O_EXCL_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_O_NOCTTY = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "O_NOCTTY", "I");
+    if (DefaultLinuxConstProvider_O_NOCTTY == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_O_NOCTTY_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_O_TRUNC = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "O_TRUNC", "I");
+    if (DefaultLinuxConstProvider_O_TRUNC == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_O_TRUNC_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_O_APPEND = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "O_APPEND", "I");
+    if (DefaultLinuxConstProvider_O_APPEND == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_O_APPEND_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_O_NONBLOCK = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "O_NONBLOCK", "I");
+    if (DefaultLinuxConstProvider_O_NONBLOCK == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_O_NONBLOCK_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_O_NDELAY = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "O_NDELAY", "I");
+    if (DefaultLinuxConstProvider_O_NDELAY == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_O_NDELAY_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_O_SYNC = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "O_SYNC", "I");
+    if (DefaultLinuxConstProvider_O_SYNC == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_O_SYNC_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_O_ASYNC = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "O_ASYNC", "I");
+    if (DefaultLinuxConstProvider_O_ASYNC == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_O_ASYNC_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_O_LARGEFILE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "O_LARGEFILE", "I");
+    if (DefaultLinuxConstProvider_O_LARGEFILE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_O_LARGEFILE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_O_DIRECTORY = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "O_DIRECTORY", "I");
+    if (DefaultLinuxConstProvider_O_DIRECTORY == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_O_DIRECTORY_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_O_NOFOLLOW = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "O_NOFOLLOW", "I");
+    if (DefaultLinuxConstProvider_O_NOFOLLOW == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_O_NOFOLLOW_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_O_CLOEXEC = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "O_CLOEXEC", "I");
+    if (DefaultLinuxConstProvider_O_CLOEXEC == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_O_CLOEXEC_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_O_DIRECT = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "O_DIRECT", "I");
+    if (DefaultLinuxConstProvider_O_DIRECT == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_O_DIRECT_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_O_NOATIME = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "O_NOATIME", "I");
+    if (DefaultLinuxConstProvider_O_NOATIME == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_O_NOATIME_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_O_PATH = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "O_PATH", "I");
+    if (DefaultLinuxConstProvider_O_PATH == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_O_PATH_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_O_DSYNC = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "O_DSYNC", "I");
+    if (DefaultLinuxConstProvider_O_DSYNC == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_O_DSYNC_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_S_IRUSR = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "S_IRUSR", "I");
+    if (DefaultLinuxConstProvider_S_IRUSR == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_S_IRUSR_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_S_IWUSR = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "S_IWUSR", "I");
+    if (DefaultLinuxConstProvider_S_IWUSR == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_S_IWUSR_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_S_IXUSR = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "S_IXUSR", "I");
+    if (DefaultLinuxConstProvider_S_IXUSR == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_S_IXUSR_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_S_IRGRP = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "S_IRGRP", "I");
+    if (DefaultLinuxConstProvider_S_IRGRP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_S_IRGRP_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_S_IWGRP = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "S_IWGRP", "I");
+    if (DefaultLinuxConstProvider_S_IWGRP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_S_IWGRP_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_S_IXGRP = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "S_IXGRP", "I");
+    if (DefaultLinuxConstProvider_S_IXGRP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_S_IXGRP_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_S_IROTH = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "S_IROTH", "I");
+    if (DefaultLinuxConstProvider_S_IROTH == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_S_IROTH_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_S_IWOTH = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "S_IWOTH", "I");
+    if (DefaultLinuxConstProvider_S_IWOTH == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_S_IWOTH_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_S_IXOTH = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "S_IXOTH", "I");
+    if (DefaultLinuxConstProvider_S_IXOTH == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_S_IXOTH_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_S_IRWXU = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "S_IRWXU", "I");
+    if (DefaultLinuxConstProvider_S_IRWXU == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_S_IRWXU_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_S_IRWXG = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "S_IRWXG", "I");
+    if (DefaultLinuxConstProvider_S_IRWXG == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_S_IRWXG_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_S_IRWXO = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "S_IRWXO", "I");
+    if (DefaultLinuxConstProvider_S_IRWXO == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_S_IRWXO_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_IFNAMSIZ = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "IFNAMSIZ", "I");
+    if (DefaultLinuxConstProvider_IFNAMSIZ == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_IFNAMSIZ_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SIOCGIFFLAGS = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SIOCGIFFLAGS", "I");
+    if (DefaultLinuxConstProvider_SIOCGIFFLAGS == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SIOCGIFFLAGS_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SIOCSIFFLAGS = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SIOCSIFFLAGS", "I");
+    if (DefaultLinuxConstProvider_SIOCSIFFLAGS == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SIOCSIFFLAGS_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_SIOCGIFMTU = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "SIOCGIFMTU", "I");
+    if (DefaultLinuxConstProvider_SIOCGIFMTU == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_SIOCGIFMTU_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_NLM_F_REQUEST = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "NLM_F_REQUEST", "S");
+    if (DefaultLinuxConstProvider_NLM_F_REQUEST == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_NLM_F_REQUEST_S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_NLM_F_DUMP = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "NLM_F_DUMP", "S");
+    if (DefaultLinuxConstProvider_NLM_F_DUMP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_NLM_F_DUMP_S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_NLM_F_MULTI = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "NLM_F_MULTI", "S");
+    if (DefaultLinuxConstProvider_NLM_F_MULTI == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_NLM_F_MULTI_S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_NLM_F_CREATE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "NLM_F_CREATE", "S");
+    if (DefaultLinuxConstProvider_NLM_F_CREATE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_NLM_F_CREATE_S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_NLM_F_EXCL = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "NLM_F_EXCL", "S");
+    if (DefaultLinuxConstProvider_NLM_F_EXCL == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_NLM_F_EXCL_S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_NLM_F_ACK = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "NLM_F_ACK", "S");
+    if (DefaultLinuxConstProvider_NLM_F_ACK == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_NLM_F_ACK_S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_NLMSG_NOOP = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "NLMSG_NOOP", "S");
+    if (DefaultLinuxConstProvider_NLMSG_NOOP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_NLMSG_NOOP_S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_NLMSG_ERROR = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "NLMSG_ERROR", "S");
+    if (DefaultLinuxConstProvider_NLMSG_ERROR == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_NLMSG_ERROR_S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_NLMSG_DONE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "NLMSG_DONE", "S");
+    if (DefaultLinuxConstProvider_NLMSG_DONE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_NLMSG_DONE_S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_NLMSG_OVERRUN = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "NLMSG_OVERRUN", "S");
+    if (DefaultLinuxConstProvider_NLMSG_OVERRUN == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_NLMSG_OVERRUN_S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTM_GETLINK = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTM_GETLINK", "S");
+    if (DefaultLinuxConstProvider_RTM_GETLINK == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTM_GETLINK_S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTM_DELADDR = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTM_DELADDR", "S");
+    if (DefaultLinuxConstProvider_RTM_DELADDR == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTM_DELADDR_S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTM_GETADDR = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTM_GETADDR", "S");
+    if (DefaultLinuxConstProvider_RTM_GETADDR == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTM_GETADDR_S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTM_NEWADDR = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTM_NEWADDR", "S");
+    if (DefaultLinuxConstProvider_RTM_NEWADDR == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTM_NEWADDR_S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RT_SCOPE_UNIVERSE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RT_SCOPE_UNIVERSE", "B");
+    if (DefaultLinuxConstProvider_RT_SCOPE_UNIVERSE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RT_SCOPE_UNIVERSE_B");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_ARPHRD_NETROM = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "ARPHRD_NETROM", "S");
+    if (DefaultLinuxConstProvider_ARPHRD_NETROM == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_ARPHRD_NETROM_S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_IFLA_IFNAME = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "IFLA_IFNAME", "S");
+    if (DefaultLinuxConstProvider_IFLA_IFNAME == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_IFLA_IFNAME_S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_IFA_UNSPEC = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "IFA_UNSPEC", "S");
+    if (DefaultLinuxConstProvider_IFA_UNSPEC == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_IFA_UNSPEC_S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_IFA_ADDRESS = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "IFA_ADDRESS", "S");
+    if (DefaultLinuxConstProvider_IFA_ADDRESS == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_IFA_ADDRESS_S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_IFA_LOCAL = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "IFA_LOCAL", "S");
+    if (DefaultLinuxConstProvider_IFA_LOCAL == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_IFA_LOCAL_S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_IFA_LABEL = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "IFA_LABEL", "S");
+    if (DefaultLinuxConstProvider_IFA_LABEL == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_IFA_LABEL_S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_IFA_BROADCAST = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "IFA_BROADCAST", "S");
+    if (DefaultLinuxConstProvider_IFA_BROADCAST == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_IFA_BROADCAST_S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_IFA_ANYCAST = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "IFA_ANYCAST", "S");
+    if (DefaultLinuxConstProvider_IFA_ANYCAST == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_IFA_ANYCAST_S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_IFA_CACHEINFO = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "IFA_CACHEINFO", "S");
+    if (DefaultLinuxConstProvider_IFA_CACHEINFO == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_IFA_CACHEINFO_S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_IFA_F_PERMANENT = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "IFA_F_PERMANENT", "I");
+    if (DefaultLinuxConstProvider_IFA_F_PERMANENT == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_IFA_F_PERMANENT_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_IFA_F_SECONDARY = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "IFA_F_SECONDARY", "I");
+    if (DefaultLinuxConstProvider_IFA_F_SECONDARY == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_IFA_F_SECONDARY_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_IFF_UP = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "IFF_UP", "I");
+    if (DefaultLinuxConstProvider_IFF_UP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_IFF_UP_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_IFF_NO_PI = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "IFF_NO_PI", "I");
+    if (DefaultLinuxConstProvider_IFF_NO_PI == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_IFF_NO_PI_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_TUNSETIFF = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "TUNSETIFF", "I");
+    if (DefaultLinuxConstProvider_TUNSETIFF == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_TUNSETIFF_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_TUNSETPERSIST = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "TUNSETPERSIST", "I");
+    if (DefaultLinuxConstProvider_TUNSETPERSIST == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_TUNSETPERSIST_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_TUNGETSNDBUF = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "TUNGETSNDBUF", "I");
+    if (DefaultLinuxConstProvider_TUNGETSNDBUF == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_TUNGETSNDBUF_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_UNSPEC = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_UNSPEC", "I");
+    if (DefaultLinuxConstProvider_RTA_UNSPEC == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_UNSPEC_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_DST = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_DST", "I");
+    if (DefaultLinuxConstProvider_RTA_DST == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_DST_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_SRC = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_SRC", "I");
+    if (DefaultLinuxConstProvider_RTA_SRC == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_SRC_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_IIF = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_IIF", "I");
+    if (DefaultLinuxConstProvider_RTA_IIF == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_IIF_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_OIF = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_OIF", "I");
+    if (DefaultLinuxConstProvider_RTA_OIF == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_OIF_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_GATEWAY = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_GATEWAY", "I");
+    if (DefaultLinuxConstProvider_RTA_GATEWAY == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_GATEWAY_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_PRIORITY = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_PRIORITY", "I");
+    if (DefaultLinuxConstProvider_RTA_PRIORITY == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_PRIORITY_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_PREFSRC = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_PREFSRC", "I");
+    if (DefaultLinuxConstProvider_RTA_PREFSRC == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_PREFSRC_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_METRICS = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_METRICS", "I");
+    if (DefaultLinuxConstProvider_RTA_METRICS == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_METRICS_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_MULTIPATH = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_MULTIPATH", "I");
+    if (DefaultLinuxConstProvider_RTA_MULTIPATH == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_MULTIPATH_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_PROTOINFO = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_PROTOINFO", "I");
+    if (DefaultLinuxConstProvider_RTA_PROTOINFO == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_PROTOINFO_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_FLOW = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_FLOW", "I");
+    if (DefaultLinuxConstProvider_RTA_FLOW == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_FLOW_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_CACHEINFO = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_CACHEINFO", "I");
+    if (DefaultLinuxConstProvider_RTA_CACHEINFO == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_CACHEINFO_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_SESSION = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_SESSION", "I");
+    if (DefaultLinuxConstProvider_RTA_SESSION == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_SESSION_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_MP_ALGO = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_MP_ALGO", "I");
+    if (DefaultLinuxConstProvider_RTA_MP_ALGO == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_MP_ALGO_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_TABLE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_TABLE", "I");
+    if (DefaultLinuxConstProvider_RTA_TABLE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_TABLE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_MARK = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_MARK", "I");
+    if (DefaultLinuxConstProvider_RTA_MARK == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_MARK_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_MFC_STATS = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_MFC_STATS", "I");
+    if (DefaultLinuxConstProvider_RTA_MFC_STATS == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_MFC_STATS_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_VIA = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_VIA", "I");
+    if (DefaultLinuxConstProvider_RTA_VIA == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_VIA_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_NEWDST = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_NEWDST", "I");
+    if (DefaultLinuxConstProvider_RTA_NEWDST == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_NEWDST_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_PREF = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_PREF", "I");
+    if (DefaultLinuxConstProvider_RTA_PREF == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_PREF_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_ENCAP_TYPE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_ENCAP_TYPE", "I");
+    if (DefaultLinuxConstProvider_RTA_ENCAP_TYPE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_ENCAP_TYPE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_ENCAP = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_ENCAP", "I");
+    if (DefaultLinuxConstProvider_RTA_ENCAP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_ENCAP_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_EXPIRES = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_EXPIRES", "I");
+    if (DefaultLinuxConstProvider_RTA_EXPIRES == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_EXPIRES_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_PAD = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_PAD", "I");
+    if (DefaultLinuxConstProvider_RTA_PAD == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_PAD_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_UID = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_UID", "I");
+    if (DefaultLinuxConstProvider_RTA_UID == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_UID_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_TTL_PROPAGATE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_TTL_PROPAGATE", "I");
+    if (DefaultLinuxConstProvider_RTA_TTL_PROPAGATE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_TTL_PROPAGATE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_IP_PROTO = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_IP_PROTO", "I");
+    if (DefaultLinuxConstProvider_RTA_IP_PROTO == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_IP_PROTO_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_SPORT = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_SPORT", "I");
+    if (DefaultLinuxConstProvider_RTA_SPORT == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_SPORT_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_DPORT = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_DPORT", "I");
+    if (DefaultLinuxConstProvider_RTA_DPORT == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_DPORT_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_RTA_NH_ID = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "RTA_NH_ID", "I");
+    if (DefaultLinuxConstProvider_RTA_NH_ID == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_RTA_NH_ID_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_PTHREAD_MUTEX_STALLED = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "PTHREAD_MUTEX_STALLED", "I");
+    if (DefaultLinuxConstProvider_PTHREAD_MUTEX_STALLED == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_PTHREAD_MUTEX_STALLED_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_PTHREAD_MUTEX_ROBUST = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "PTHREAD_MUTEX_ROBUST", "I");
+    if (DefaultLinuxConstProvider_PTHREAD_MUTEX_ROBUST == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_PTHREAD_MUTEX_ROBUST_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_PTHREAD_PROCESS_SHARED = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "PTHREAD_PROCESS_SHARED", "I");
+    if (DefaultLinuxConstProvider_PTHREAD_PROCESS_SHARED == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_PTHREAD_PROCESS_SHARED_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_PTHREAD_PROCESS_PRIVATE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "PTHREAD_PROCESS_PRIVATE", "I");
+    if (DefaultLinuxConstProvider_PTHREAD_PROCESS_PRIVATE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_PTHREAD_PROCESS_PRIVATE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_PTHREAD_MUTEX_RECURSIVE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "PTHREAD_MUTEX_RECURSIVE", "I");
+    if (DefaultLinuxConstProvider_PTHREAD_MUTEX_RECURSIVE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_PTHREAD_MUTEX_RECURSIVE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_PTHREAD_MUTEX_ERRORCHECK = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "PTHREAD_MUTEX_ERRORCHECK", "I");
+    if (DefaultLinuxConstProvider_PTHREAD_MUTEX_ERRORCHECK == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_PTHREAD_MUTEX_ERRORCHECK_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_PTHREAD_MUTEX_DEFAULT = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "PTHREAD_MUTEX_DEFAULT", "I");
+    if (DefaultLinuxConstProvider_PTHREAD_MUTEX_DEFAULT == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_PTHREAD_MUTEX_DEFAULT_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_PTHREAD_MUTEX_NORMAL = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "PTHREAD_MUTEX_NORMAL", "I");
+    if (DefaultLinuxConstProvider_PTHREAD_MUTEX_NORMAL == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_PTHREAD_MUTEX_NORMAL_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_C_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "<init>", "()V");
+    if (DefaultLinuxConstProvider_C_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.<init>()V");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_AF_INET_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "AF_INET", "()I");
+    if (DefaultLinuxConstProvider_M_AF_INET_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.AF_INET()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_AF_INET6_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "AF_INET6", "()I");
+    if (DefaultLinuxConstProvider_M_AF_INET6_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.AF_INET6()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_AF_NETLINK_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "AF_NETLINK", "()I");
+    if (DefaultLinuxConstProvider_M_AF_NETLINK_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.AF_NETLINK()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_AF_UNIX_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "AF_UNIX", "()I");
+    if (DefaultLinuxConstProvider_M_AF_UNIX_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.AF_UNIX()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_AF_UNSPEC_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "AF_UNSPEC", "()I");
+    if (DefaultLinuxConstProvider_M_AF_UNSPEC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.AF_UNSPEC()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_ARPHRD_NETROM_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "ARPHRD_NETROM", "()S");
+    if (DefaultLinuxConstProvider_M_ARPHRD_NETROM_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.ARPHRD_NETROM()S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_IFA_ADDRESS_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "IFA_ADDRESS", "()S");
+    if (DefaultLinuxConstProvider_M_IFA_ADDRESS_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.IFA_ADDRESS()S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_IFA_ANYCAST_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "IFA_ANYCAST", "()S");
+    if (DefaultLinuxConstProvider_M_IFA_ANYCAST_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.IFA_ANYCAST()S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_IFA_BROADCAST_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "IFA_BROADCAST", "()S");
+    if (DefaultLinuxConstProvider_M_IFA_BROADCAST_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.IFA_BROADCAST()S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_IFA_CACHEINFO_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "IFA_CACHEINFO", "()S");
+    if (DefaultLinuxConstProvider_M_IFA_CACHEINFO_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.IFA_CACHEINFO()S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_IFA_F_PERMANENT_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "IFA_F_PERMANENT", "()I");
+    if (DefaultLinuxConstProvider_M_IFA_F_PERMANENT_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.IFA_F_PERMANENT()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_IFA_F_SECONDARY_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "IFA_F_SECONDARY", "()I");
+    if (DefaultLinuxConstProvider_M_IFA_F_SECONDARY_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.IFA_F_SECONDARY()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_IFA_LABEL_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "IFA_LABEL", "()S");
+    if (DefaultLinuxConstProvider_M_IFA_LABEL_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.IFA_LABEL()S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_IFA_LOCAL_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "IFA_LOCAL", "()S");
+    if (DefaultLinuxConstProvider_M_IFA_LOCAL_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.IFA_LOCAL()S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_IFA_UNSPEC_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "IFA_UNSPEC", "()S");
+    if (DefaultLinuxConstProvider_M_IFA_UNSPEC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.IFA_UNSPEC()S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_IFF_NO_PI_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "IFF_NO_PI", "()I");
+    if (DefaultLinuxConstProvider_M_IFF_NO_PI_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.IFF_NO_PI()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_IFF_UP_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "IFF_UP", "()I");
+    if (DefaultLinuxConstProvider_M_IFF_UP_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.IFF_UP()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_IFLA_IFNAME_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "IFLA_IFNAME", "()S");
+    if (DefaultLinuxConstProvider_M_IFLA_IFNAME_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.IFLA_IFNAME()S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_IFNAMSIZ_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "IFNAMSIZ", "()I");
+    if (DefaultLinuxConstProvider_M_IFNAMSIZ_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.IFNAMSIZ()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MAP_PRIVATE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MAP_PRIVATE", "()I");
+    if (DefaultLinuxConstProvider_M_MAP_PRIVATE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MAP_PRIVATE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MAP_SHARED_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MAP_SHARED", "()I");
+    if (DefaultLinuxConstProvider_M_MAP_SHARED_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MAP_SHARED()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_NETLINK_ROUTE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "NETLINK_ROUTE", "()I");
+    if (DefaultLinuxConstProvider_M_NETLINK_ROUTE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.NETLINK_ROUTE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_NLMSG_DONE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "NLMSG_DONE", "()S");
+    if (DefaultLinuxConstProvider_M_NLMSG_DONE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.NLMSG_DONE()S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_NLMSG_ERROR_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "NLMSG_ERROR", "()S");
+    if (DefaultLinuxConstProvider_M_NLMSG_ERROR_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.NLMSG_ERROR()S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_NLMSG_NOOP_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "NLMSG_NOOP", "()S");
+    if (DefaultLinuxConstProvider_M_NLMSG_NOOP_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.NLMSG_NOOP()S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_NLMSG_OVERRUN_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "NLMSG_OVERRUN", "()S");
+    if (DefaultLinuxConstProvider_M_NLMSG_OVERRUN_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.NLMSG_OVERRUN()S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_NLM_F_ACK_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "NLM_F_ACK", "()S");
+    if (DefaultLinuxConstProvider_M_NLM_F_ACK_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.NLM_F_ACK()S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_NLM_F_CREATE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "NLM_F_CREATE", "()S");
+    if (DefaultLinuxConstProvider_M_NLM_F_CREATE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.NLM_F_CREATE()S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_NLM_F_DUMP_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "NLM_F_DUMP", "()S");
+    if (DefaultLinuxConstProvider_M_NLM_F_DUMP_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.NLM_F_DUMP()S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_NLM_F_EXCL_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "NLM_F_EXCL", "()S");
+    if (DefaultLinuxConstProvider_M_NLM_F_EXCL_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.NLM_F_EXCL()S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_NLM_F_MULTI_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "NLM_F_MULTI", "()S");
+    if (DefaultLinuxConstProvider_M_NLM_F_MULTI_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.NLM_F_MULTI()S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_NLM_F_REQUEST_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "NLM_F_REQUEST", "()S");
+    if (DefaultLinuxConstProvider_M_NLM_F_REQUEST_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.NLM_F_REQUEST()S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_O_ACCMODE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "O_ACCMODE", "()I");
+    if (DefaultLinuxConstProvider_M_O_ACCMODE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.O_ACCMODE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_O_APPEND_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "O_APPEND", "()I");
+    if (DefaultLinuxConstProvider_M_O_APPEND_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.O_APPEND()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_O_ASYNC_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "O_ASYNC", "()I");
+    if (DefaultLinuxConstProvider_M_O_ASYNC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.O_ASYNC()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_O_CLOEXEC_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "O_CLOEXEC", "()I");
+    if (DefaultLinuxConstProvider_M_O_CLOEXEC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.O_CLOEXEC()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_O_CREAT_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "O_CREAT", "()I");
+    if (DefaultLinuxConstProvider_M_O_CREAT_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.O_CREAT()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_O_DIRECT_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "O_DIRECT", "()I");
+    if (DefaultLinuxConstProvider_M_O_DIRECT_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.O_DIRECT()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_O_DIRECTORY_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "O_DIRECTORY", "()I");
+    if (DefaultLinuxConstProvider_M_O_DIRECTORY_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.O_DIRECTORY()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_O_DSYNC_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "O_DSYNC", "()I");
+    if (DefaultLinuxConstProvider_M_O_DSYNC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.O_DSYNC()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_O_EXCL_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "O_EXCL", "()I");
+    if (DefaultLinuxConstProvider_M_O_EXCL_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.O_EXCL()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_O_LARGEFILE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "O_LARGEFILE", "()I");
+    if (DefaultLinuxConstProvider_M_O_LARGEFILE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.O_LARGEFILE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_O_NDELAY_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "O_NDELAY", "()I");
+    if (DefaultLinuxConstProvider_M_O_NDELAY_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.O_NDELAY()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_O_NOATIME_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "O_NOATIME", "()I");
+    if (DefaultLinuxConstProvider_M_O_NOATIME_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.O_NOATIME()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_O_NOCTTY_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "O_NOCTTY", "()I");
+    if (DefaultLinuxConstProvider_M_O_NOCTTY_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.O_NOCTTY()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_O_NOFOLLOW_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "O_NOFOLLOW", "()I");
+    if (DefaultLinuxConstProvider_M_O_NOFOLLOW_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.O_NOFOLLOW()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_O_NONBLOCK_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "O_NONBLOCK", "()I");
+    if (DefaultLinuxConstProvider_M_O_NONBLOCK_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.O_NONBLOCK()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_O_PATH_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "O_PATH", "()I");
+    if (DefaultLinuxConstProvider_M_O_PATH_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.O_PATH()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_O_RDONLY_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "O_RDONLY", "()I");
+    if (DefaultLinuxConstProvider_M_O_RDONLY_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.O_RDONLY()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_O_RDWR_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "O_RDWR", "()I");
+    if (DefaultLinuxConstProvider_M_O_RDWR_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.O_RDWR()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_O_SYNC_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "O_SYNC", "()I");
+    if (DefaultLinuxConstProvider_M_O_SYNC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.O_SYNC()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_O_TRUNC_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "O_TRUNC", "()I");
+    if (DefaultLinuxConstProvider_M_O_TRUNC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.O_TRUNC()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_O_WRONLY_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "O_WRONLY", "()I");
+    if (DefaultLinuxConstProvider_M_O_WRONLY_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.O_WRONLY()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_PTHREAD_MUTEX_DEFAULT_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "PTHREAD_MUTEX_DEFAULT", "()I");
+    if (DefaultLinuxConstProvider_M_PTHREAD_MUTEX_DEFAULT_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.PTHREAD_MUTEX_DEFAULT()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_PTHREAD_MUTEX_ERRORCHECK_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "PTHREAD_MUTEX_ERRORCHECK", "()I");
+    if (DefaultLinuxConstProvider_M_PTHREAD_MUTEX_ERRORCHECK_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.PTHREAD_MUTEX_ERRORCHECK()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_PTHREAD_MUTEX_NORMAL_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "PTHREAD_MUTEX_NORMAL", "()I");
+    if (DefaultLinuxConstProvider_M_PTHREAD_MUTEX_NORMAL_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.PTHREAD_MUTEX_NORMAL()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_PTHREAD_MUTEX_RECURSIVE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "PTHREAD_MUTEX_RECURSIVE", "()I");
+    if (DefaultLinuxConstProvider_M_PTHREAD_MUTEX_RECURSIVE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.PTHREAD_MUTEX_RECURSIVE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_PTHREAD_MUTEX_ROBUST_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "PTHREAD_MUTEX_ROBUST", "()I");
+    if (DefaultLinuxConstProvider_M_PTHREAD_MUTEX_ROBUST_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.PTHREAD_MUTEX_ROBUST()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_PTHREAD_MUTEX_STALLED_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "PTHREAD_MUTEX_STALLED", "()I");
+    if (DefaultLinuxConstProvider_M_PTHREAD_MUTEX_STALLED_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.PTHREAD_MUTEX_STALLED()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_PTHREAD_PROCESS_PRIVATE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "PTHREAD_PROCESS_PRIVATE", "()I");
+    if (DefaultLinuxConstProvider_M_PTHREAD_PROCESS_PRIVATE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.PTHREAD_PROCESS_PRIVATE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_PTHREAD_PROCESS_SHARED_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "PTHREAD_PROCESS_SHARED", "()I");
+    if (DefaultLinuxConstProvider_M_PTHREAD_PROCESS_SHARED_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.PTHREAD_PROCESS_SHARED()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_CACHEINFO_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_CACHEINFO", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_CACHEINFO_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_CACHEINFO()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_DPORT_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_DPORT", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_DPORT_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_DPORT()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_DST_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_DST", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_DST_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_DST()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_ENCAP_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_ENCAP", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_ENCAP_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_ENCAP()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_ENCAP_TYPE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_ENCAP_TYPE", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_ENCAP_TYPE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_ENCAP_TYPE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_EXPIRES_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_EXPIRES", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_EXPIRES_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_EXPIRES()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_FLOW_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_FLOW", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_FLOW_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_FLOW()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_GATEWAY_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_GATEWAY", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_GATEWAY_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_GATEWAY()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_IIF_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_IIF", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_IIF_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_IIF()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_IP_PROTO_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_IP_PROTO", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_IP_PROTO_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_IP_PROTO()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_MARK_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_MARK", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_MARK_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_MARK()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_METRICS_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_METRICS", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_METRICS_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_METRICS()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_MFC_STATS_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_MFC_STATS", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_MFC_STATS_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_MFC_STATS()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_MP_ALGO_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_MP_ALGO", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_MP_ALGO_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_MP_ALGO()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_MULTIPATH_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_MULTIPATH", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_MULTIPATH_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_MULTIPATH()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_NEWDST_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_NEWDST", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_NEWDST_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_NEWDST()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_NH_ID_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_NH_ID", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_NH_ID_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_NH_ID()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_OIF_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_OIF", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_OIF_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_OIF()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_PAD_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_PAD", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_PAD_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_PAD()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_PREF_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_PREF", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_PREF_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_PREF()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_PREFSRC_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_PREFSRC", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_PREFSRC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_PREFSRC()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_PRIORITY_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_PRIORITY", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_PRIORITY_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_PRIORITY()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_PROTOINFO_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_PROTOINFO", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_PROTOINFO_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_PROTOINFO()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_SESSION_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_SESSION", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_SESSION_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_SESSION()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_SPORT_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_SPORT", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_SPORT_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_SPORT()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_SRC_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_SRC", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_SRC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_SRC()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_TABLE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_TABLE", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_TABLE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_TABLE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_TTL_PROPAGATE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_TTL_PROPAGATE", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_TTL_PROPAGATE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_TTL_PROPAGATE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_UID_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_UID", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_UID_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_UID()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_UNSPEC_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_UNSPEC", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_UNSPEC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_UNSPEC()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTA_VIA_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTA_VIA", "()I");
+    if (DefaultLinuxConstProvider_M_RTA_VIA_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTA_VIA()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTM_DELADDR_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTM_DELADDR", "()S");
+    if (DefaultLinuxConstProvider_M_RTM_DELADDR_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTM_DELADDR()S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTM_GETADDR_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTM_GETADDR", "()S");
+    if (DefaultLinuxConstProvider_M_RTM_GETADDR_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTM_GETADDR()S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTM_GETLINK_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTM_GETLINK", "()S");
+    if (DefaultLinuxConstProvider_M_RTM_GETLINK_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTM_GETLINK()S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RTM_NEWADDR_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RTM_NEWADDR", "()S");
+    if (DefaultLinuxConstProvider_M_RTM_NEWADDR_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RTM_NEWADDR()S");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_RT_SCOPE_UNIVERSE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "RT_SCOPE_UNIVERSE", "()B");
+    if (DefaultLinuxConstProvider_M_RT_SCOPE_UNIVERSE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.RT_SCOPE_UNIVERSE()B");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SCM_RIGHTS_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SCM_RIGHTS", "()I");
+    if (DefaultLinuxConstProvider_M_SCM_RIGHTS_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SCM_RIGHTS()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SCM_TIMESTAMP_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SCM_TIMESTAMP", "()I");
+    if (DefaultLinuxConstProvider_M_SCM_TIMESTAMP_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SCM_TIMESTAMP()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SCM_TIMESTAMPING_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SCM_TIMESTAMPING", "()I");
+    if (DefaultLinuxConstProvider_M_SCM_TIMESTAMPING_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SCM_TIMESTAMPING()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SCM_TIMESTAMPING_OPT_STATS_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SCM_TIMESTAMPING_OPT_STATS", "()I");
+    if (DefaultLinuxConstProvider_M_SCM_TIMESTAMPING_OPT_STATS_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SCM_TIMESTAMPING_OPT_STATS()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SCM_TIMESTAMPING_PKTINFO_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SCM_TIMESTAMPING_PKTINFO", "()I");
+    if (DefaultLinuxConstProvider_M_SCM_TIMESTAMPING_PKTINFO_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SCM_TIMESTAMPING_PKTINFO()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SCM_TIMESTAMPNS_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SCM_TIMESTAMPNS", "()I");
+    if (DefaultLinuxConstProvider_M_SCM_TIMESTAMPNS_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SCM_TIMESTAMPNS()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SCM_WIFI_STATUS_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SCM_WIFI_STATUS", "()I");
+    if (DefaultLinuxConstProvider_M_SCM_WIFI_STATUS_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SCM_WIFI_STATUS()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SIOCGIFFLAGS_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SIOCGIFFLAGS", "()I");
+    if (DefaultLinuxConstProvider_M_SIOCGIFFLAGS_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SIOCGIFFLAGS()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SIOCGIFMTU_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SIOCGIFMTU", "()I");
+    if (DefaultLinuxConstProvider_M_SIOCGIFMTU_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SIOCGIFMTU()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SIOCSIFFLAGS_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SIOCSIFFLAGS", "()I");
+    if (DefaultLinuxConstProvider_M_SIOCSIFFLAGS_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SIOCSIFFLAGS()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SOCK_DGRAM_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SOCK_DGRAM", "()I");
+    if (DefaultLinuxConstProvider_M_SOCK_DGRAM_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SOCK_DGRAM()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SOCK_RAW_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SOCK_RAW", "()I");
+    if (DefaultLinuxConstProvider_M_SOCK_RAW_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SOCK_RAW()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SOCK_STREAM_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SOCK_STREAM", "()I");
+    if (DefaultLinuxConstProvider_M_SOCK_STREAM_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SOCK_STREAM()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SOL_SOCKET_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SOL_SOCKET", "()I");
+    if (DefaultLinuxConstProvider_M_SOL_SOCKET_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SOL_SOCKET()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_ACCEPTCONN_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_ACCEPTCONN", "()I");
+    if (DefaultLinuxConstProvider_M_SO_ACCEPTCONN_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_ACCEPTCONN()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_ATTACH_BPF_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_ATTACH_BPF", "()I");
+    if (DefaultLinuxConstProvider_M_SO_ATTACH_BPF_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_ATTACH_BPF()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_ATTACH_FILTER_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_ATTACH_FILTER", "()I");
+    if (DefaultLinuxConstProvider_M_SO_ATTACH_FILTER_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_ATTACH_FILTER()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_ATTACH_REUSEPORT_CBPF_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_ATTACH_REUSEPORT_CBPF", "()I");
+    if (DefaultLinuxConstProvider_M_SO_ATTACH_REUSEPORT_CBPF_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_ATTACH_REUSEPORT_CBPF()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_ATTACH_REUSEPORT_EBPF_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_ATTACH_REUSEPORT_EBPF", "()I");
+    if (DefaultLinuxConstProvider_M_SO_ATTACH_REUSEPORT_EBPF_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_ATTACH_REUSEPORT_EBPF()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_BINDTODEVICE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_BINDTODEVICE", "()I");
+    if (DefaultLinuxConstProvider_M_SO_BINDTODEVICE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_BINDTODEVICE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_BPF_EXTENSIONS_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_BPF_EXTENSIONS", "()I");
+    if (DefaultLinuxConstProvider_M_SO_BPF_EXTENSIONS_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_BPF_EXTENSIONS()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_BROADCAST_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_BROADCAST", "()I");
+    if (DefaultLinuxConstProvider_M_SO_BROADCAST_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_BROADCAST()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_BSDCOMPAT_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_BSDCOMPAT", "()I");
+    if (DefaultLinuxConstProvider_M_SO_BSDCOMPAT_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_BSDCOMPAT()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_BUSY_POLL_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_BUSY_POLL", "()I");
+    if (DefaultLinuxConstProvider_M_SO_BUSY_POLL_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_BUSY_POLL()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_CNX_ADVICE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_CNX_ADVICE", "()I");
+    if (DefaultLinuxConstProvider_M_SO_CNX_ADVICE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_CNX_ADVICE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_COOKIE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_COOKIE", "()I");
+    if (DefaultLinuxConstProvider_M_SO_COOKIE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_COOKIE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_DEBUG_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_DEBUG", "()I");
+    if (DefaultLinuxConstProvider_M_SO_DEBUG_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_DEBUG()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_DETACH_BPF_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_DETACH_BPF", "()I");
+    if (DefaultLinuxConstProvider_M_SO_DETACH_BPF_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_DETACH_BPF()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_DETACH_FILTER_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_DETACH_FILTER", "()I");
+    if (DefaultLinuxConstProvider_M_SO_DETACH_FILTER_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_DETACH_FILTER()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_DOMAIN_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_DOMAIN", "()I");
+    if (DefaultLinuxConstProvider_M_SO_DOMAIN_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_DOMAIN()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_DONTROUTE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_DONTROUTE", "()I");
+    if (DefaultLinuxConstProvider_M_SO_DONTROUTE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_DONTROUTE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_ERROR_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_ERROR", "()I");
+    if (DefaultLinuxConstProvider_M_SO_ERROR_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_ERROR()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_GET_FILTER_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_GET_FILTER", "()I");
+    if (DefaultLinuxConstProvider_M_SO_GET_FILTER_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_GET_FILTER()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_INCOMING_CPU_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_INCOMING_CPU", "()I");
+    if (DefaultLinuxConstProvider_M_SO_INCOMING_CPU_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_INCOMING_CPU()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_INCOMING_NAPI_ID_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_INCOMING_NAPI_ID", "()I");
+    if (DefaultLinuxConstProvider_M_SO_INCOMING_NAPI_ID_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_INCOMING_NAPI_ID()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_KEEPALIVE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_KEEPALIVE", "()I");
+    if (DefaultLinuxConstProvider_M_SO_KEEPALIVE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_KEEPALIVE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_LINGER_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_LINGER", "()I");
+    if (DefaultLinuxConstProvider_M_SO_LINGER_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_LINGER()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_LOCK_FILTER_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_LOCK_FILTER", "()I");
+    if (DefaultLinuxConstProvider_M_SO_LOCK_FILTER_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_LOCK_FILTER()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_MARK_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_MARK", "()I");
+    if (DefaultLinuxConstProvider_M_SO_MARK_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_MARK()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_MAX_PACING_RATE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_MAX_PACING_RATE", "()I");
+    if (DefaultLinuxConstProvider_M_SO_MAX_PACING_RATE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_MAX_PACING_RATE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_MEMINFO_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_MEMINFO", "()I");
+    if (DefaultLinuxConstProvider_M_SO_MEMINFO_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_MEMINFO()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_NOFCS_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_NOFCS", "()I");
+    if (DefaultLinuxConstProvider_M_SO_NOFCS_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_NOFCS()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_NO_CHECK_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_NO_CHECK", "()I");
+    if (DefaultLinuxConstProvider_M_SO_NO_CHECK_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_NO_CHECK()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_OOBINLINE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_OOBINLINE", "()I");
+    if (DefaultLinuxConstProvider_M_SO_OOBINLINE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_OOBINLINE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_PASSCRED_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_PASSCRED", "()I");
+    if (DefaultLinuxConstProvider_M_SO_PASSCRED_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_PASSCRED()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_PASSSEC_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_PASSSEC", "()I");
+    if (DefaultLinuxConstProvider_M_SO_PASSSEC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_PASSSEC()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_PEEK_OFF_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_PEEK_OFF", "()I");
+    if (DefaultLinuxConstProvider_M_SO_PEEK_OFF_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_PEEK_OFF()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_PEERCRED_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_PEERCRED", "()I");
+    if (DefaultLinuxConstProvider_M_SO_PEERCRED_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_PEERCRED()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_PEERGROUPS_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_PEERGROUPS", "()I");
+    if (DefaultLinuxConstProvider_M_SO_PEERGROUPS_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_PEERGROUPS()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_PEERNAME_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_PEERNAME", "()I");
+    if (DefaultLinuxConstProvider_M_SO_PEERNAME_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_PEERNAME()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_PEERSEC_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_PEERSEC", "()I");
+    if (DefaultLinuxConstProvider_M_SO_PEERSEC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_PEERSEC()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_PRIORITY_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_PRIORITY", "()I");
+    if (DefaultLinuxConstProvider_M_SO_PRIORITY_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_PRIORITY()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_PROTOCOL_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_PROTOCOL", "()I");
+    if (DefaultLinuxConstProvider_M_SO_PROTOCOL_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_PROTOCOL()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_RCVBUF_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_RCVBUF", "()I");
+    if (DefaultLinuxConstProvider_M_SO_RCVBUF_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_RCVBUF()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_RCVBUFFORCE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_RCVBUFFORCE", "()I");
+    if (DefaultLinuxConstProvider_M_SO_RCVBUFFORCE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_RCVBUFFORCE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_RCVLOWAT_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_RCVLOWAT", "()I");
+    if (DefaultLinuxConstProvider_M_SO_RCVLOWAT_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_RCVLOWAT()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_RCVTIMEO_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_RCVTIMEO", "()I");
+    if (DefaultLinuxConstProvider_M_SO_RCVTIMEO_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_RCVTIMEO()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_REUSEADDR_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_REUSEADDR", "()I");
+    if (DefaultLinuxConstProvider_M_SO_REUSEADDR_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_REUSEADDR()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_REUSEPORT_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_REUSEPORT", "()I");
+    if (DefaultLinuxConstProvider_M_SO_REUSEPORT_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_REUSEPORT()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_RXQ_OVFL_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_RXQ_OVFL", "()I");
+    if (DefaultLinuxConstProvider_M_SO_RXQ_OVFL_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_RXQ_OVFL()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_SECURITY_AUTHENTICATION_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_SECURITY_AUTHENTICATION", "()I");
+    if (DefaultLinuxConstProvider_M_SO_SECURITY_AUTHENTICATION_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_SECURITY_AUTHENTICATION()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_SECURITY_ENCRYPTION_NETWORK_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_SECURITY_ENCRYPTION_NETWORK", "()I");
+    if (DefaultLinuxConstProvider_M_SO_SECURITY_ENCRYPTION_NETWORK_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_SECURITY_ENCRYPTION_NETWORK()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_SECURITY_ENCRYPTION_TRANSPORT_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_SECURITY_ENCRYPTION_TRANSPORT", "()I");
+    if (DefaultLinuxConstProvider_M_SO_SECURITY_ENCRYPTION_TRANSPORT_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_SECURITY_ENCRYPTION_TRANSPORT()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_SELECT_ERR_QUEUE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_SELECT_ERR_QUEUE", "()I");
+    if (DefaultLinuxConstProvider_M_SO_SELECT_ERR_QUEUE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_SELECT_ERR_QUEUE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_SNDBUF_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_SNDBUF", "()I");
+    if (DefaultLinuxConstProvider_M_SO_SNDBUF_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_SNDBUF()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_SNDBUFFORCE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_SNDBUFFORCE", "()I");
+    if (DefaultLinuxConstProvider_M_SO_SNDBUFFORCE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_SNDBUFFORCE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_SNDLOWAT_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_SNDLOWAT", "()I");
+    if (DefaultLinuxConstProvider_M_SO_SNDLOWAT_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_SNDLOWAT()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_SNDTIMEO_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_SNDTIMEO", "()I");
+    if (DefaultLinuxConstProvider_M_SO_SNDTIMEO_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_SNDTIMEO()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_TIMESTAMP_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_TIMESTAMP", "()I");
+    if (DefaultLinuxConstProvider_M_SO_TIMESTAMP_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_TIMESTAMP()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_TIMESTAMPING_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_TIMESTAMPING", "()I");
+    if (DefaultLinuxConstProvider_M_SO_TIMESTAMPING_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_TIMESTAMPING()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_TIMESTAMPNS_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_TIMESTAMPNS", "()I");
+    if (DefaultLinuxConstProvider_M_SO_TIMESTAMPNS_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_TIMESTAMPNS()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_TYPE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_TYPE", "()I");
+    if (DefaultLinuxConstProvider_M_SO_TYPE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_TYPE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_WIFI_STATUS_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_WIFI_STATUS", "()I");
+    if (DefaultLinuxConstProvider_M_SO_WIFI_STATUS_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_WIFI_STATUS()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_SO_ZEROCOPY_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "SO_ZEROCOPY", "()I");
+    if (DefaultLinuxConstProvider_M_SO_ZEROCOPY_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.SO_ZEROCOPY()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_S_IRGRP_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "S_IRGRP", "()I");
+    if (DefaultLinuxConstProvider_M_S_IRGRP_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.S_IRGRP()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_S_IROTH_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "S_IROTH", "()I");
+    if (DefaultLinuxConstProvider_M_S_IROTH_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.S_IROTH()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_S_IRUSR_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "S_IRUSR", "()I");
+    if (DefaultLinuxConstProvider_M_S_IRUSR_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.S_IRUSR()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_S_IRWXG_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "S_IRWXG", "()I");
+    if (DefaultLinuxConstProvider_M_S_IRWXG_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.S_IRWXG()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_S_IRWXO_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "S_IRWXO", "()I");
+    if (DefaultLinuxConstProvider_M_S_IRWXO_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.S_IRWXO()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_S_IRWXU_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "S_IRWXU", "()I");
+    if (DefaultLinuxConstProvider_M_S_IRWXU_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.S_IRWXU()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_S_IWGRP_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "S_IWGRP", "()I");
+    if (DefaultLinuxConstProvider_M_S_IWGRP_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.S_IWGRP()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_S_IWOTH_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "S_IWOTH", "()I");
+    if (DefaultLinuxConstProvider_M_S_IWOTH_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.S_IWOTH()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_S_IWUSR_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "S_IWUSR", "()I");
+    if (DefaultLinuxConstProvider_M_S_IWUSR_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.S_IWUSR()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_S_IXGRP_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "S_IXGRP", "()I");
+    if (DefaultLinuxConstProvider_M_S_IXGRP_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.S_IXGRP()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_S_IXOTH_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "S_IXOTH", "()I");
+    if (DefaultLinuxConstProvider_M_S_IXOTH_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.S_IXOTH()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_S_IXUSR_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "S_IXUSR", "()I");
+    if (DefaultLinuxConstProvider_M_S_IXUSR_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.S_IXUSR()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_TUNGETSNDBUF_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "TUNGETSNDBUF", "()I");
+    if (DefaultLinuxConstProvider_M_TUNGETSNDBUF_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.TUNGETSNDBUF()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_TUNSETIFF_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "TUNSETIFF", "()I");
+    if (DefaultLinuxConstProvider_M_TUNSETIFF_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.TUNSETIFF()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_TUNSETPERSIST_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "TUNSETPERSIST", "()I");
+    if (DefaultLinuxConstProvider_M_TUNSETPERSIST_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.TUNSETPERSIST()I");
         return JNI_FALSE;
     }
 
@@ -11740,6 +16976,11 @@ void jnigenerator_destroy(JNIEnv * env) {
         InvalidFileDescriptorException = 0;
     }
 
+    if (DefaultLinuxConstProvider != 0) {
+        (*env) -> DeleteGlobalRef(env, DefaultLinuxConstProvider);
+        DefaultLinuxConstProvider = 0;
+    }
+
     if (Stat != 0) {
         (*env) -> DeleteGlobalRef(env, Stat);
         Stat = 0;
@@ -11975,6 +17216,379 @@ void jnigenerator_destroy(JNIEnv * env) {
         OutOfMemoryError = 0;
     }
 
+    DefaultLinuxConstProvider_AF_UNSPEC = 0;
+    DefaultLinuxConstProvider_AF_UNIX = 0;
+    DefaultLinuxConstProvider_AF_INET = 0;
+    DefaultLinuxConstProvider_AF_INET6 = 0;
+    DefaultLinuxConstProvider_AF_NETLINK = 0;
+    DefaultLinuxConstProvider_SOCK_STREAM = 0;
+    DefaultLinuxConstProvider_SOCK_DGRAM = 0;
+    DefaultLinuxConstProvider_SOCK_RAW = 0;
+    DefaultLinuxConstProvider_NETLINK_ROUTE = 0;
+    DefaultLinuxConstProvider_SOL_SOCKET = 0;
+    DefaultLinuxConstProvider_SO_DEBUG = 0;
+    DefaultLinuxConstProvider_SO_REUSEADDR = 0;
+    DefaultLinuxConstProvider_SO_TYPE = 0;
+    DefaultLinuxConstProvider_SO_ERROR = 0;
+    DefaultLinuxConstProvider_SO_DONTROUTE = 0;
+    DefaultLinuxConstProvider_SO_BROADCAST = 0;
+    DefaultLinuxConstProvider_SO_SNDBUF = 0;
+    DefaultLinuxConstProvider_SO_RCVBUF = 0;
+    DefaultLinuxConstProvider_SO_SNDBUFFORCE = 0;
+    DefaultLinuxConstProvider_SO_RCVBUFFORCE = 0;
+    DefaultLinuxConstProvider_SO_KEEPALIVE = 0;
+    DefaultLinuxConstProvider_SO_OOBINLINE = 0;
+    DefaultLinuxConstProvider_SO_NO_CHECK = 0;
+    DefaultLinuxConstProvider_SO_PRIORITY = 0;
+    DefaultLinuxConstProvider_SO_LINGER = 0;
+    DefaultLinuxConstProvider_SO_BSDCOMPAT = 0;
+    DefaultLinuxConstProvider_SO_REUSEPORT = 0;
+    DefaultLinuxConstProvider_SO_PASSCRED = 0;
+    DefaultLinuxConstProvider_SO_PEERCRED = 0;
+    DefaultLinuxConstProvider_SO_RCVLOWAT = 0;
+    DefaultLinuxConstProvider_SO_SNDLOWAT = 0;
+    DefaultLinuxConstProvider_SO_RCVTIMEO = 0;
+    DefaultLinuxConstProvider_SO_SNDTIMEO = 0;
+    DefaultLinuxConstProvider_SO_SECURITY_AUTHENTICATION = 0;
+    DefaultLinuxConstProvider_SO_SECURITY_ENCRYPTION_TRANSPORT = 0;
+    DefaultLinuxConstProvider_SO_SECURITY_ENCRYPTION_NETWORK = 0;
+    DefaultLinuxConstProvider_SO_BINDTODEVICE = 0;
+    DefaultLinuxConstProvider_SO_ATTACH_FILTER = 0;
+    DefaultLinuxConstProvider_SO_DETACH_FILTER = 0;
+    DefaultLinuxConstProvider_SO_GET_FILTER = 0;
+    DefaultLinuxConstProvider_SO_PEERNAME = 0;
+    DefaultLinuxConstProvider_SO_TIMESTAMP = 0;
+    DefaultLinuxConstProvider_SCM_TIMESTAMP = 0;
+    DefaultLinuxConstProvider_SO_ACCEPTCONN = 0;
+    DefaultLinuxConstProvider_SO_PEERSEC = 0;
+    DefaultLinuxConstProvider_SO_PASSSEC = 0;
+    DefaultLinuxConstProvider_SO_TIMESTAMPNS = 0;
+    DefaultLinuxConstProvider_SCM_TIMESTAMPNS = 0;
+    DefaultLinuxConstProvider_SO_MARK = 0;
+    DefaultLinuxConstProvider_SO_TIMESTAMPING = 0;
+    DefaultLinuxConstProvider_SCM_TIMESTAMPING = 0;
+    DefaultLinuxConstProvider_SO_PROTOCOL = 0;
+    DefaultLinuxConstProvider_SO_DOMAIN = 0;
+    DefaultLinuxConstProvider_SO_RXQ_OVFL = 0;
+    DefaultLinuxConstProvider_SO_WIFI_STATUS = 0;
+    DefaultLinuxConstProvider_SCM_WIFI_STATUS = 0;
+    DefaultLinuxConstProvider_SO_PEEK_OFF = 0;
+    DefaultLinuxConstProvider_SO_NOFCS = 0;
+    DefaultLinuxConstProvider_SO_LOCK_FILTER = 0;
+    DefaultLinuxConstProvider_SO_SELECT_ERR_QUEUE = 0;
+    DefaultLinuxConstProvider_SO_BUSY_POLL = 0;
+    DefaultLinuxConstProvider_SO_MAX_PACING_RATE = 0;
+    DefaultLinuxConstProvider_SO_BPF_EXTENSIONS = 0;
+    DefaultLinuxConstProvider_SO_INCOMING_CPU = 0;
+    DefaultLinuxConstProvider_SO_ATTACH_BPF = 0;
+    DefaultLinuxConstProvider_SO_DETACH_BPF = 0;
+    DefaultLinuxConstProvider_SO_ATTACH_REUSEPORT_CBPF = 0;
+    DefaultLinuxConstProvider_SO_ATTACH_REUSEPORT_EBPF = 0;
+    DefaultLinuxConstProvider_SO_CNX_ADVICE = 0;
+    DefaultLinuxConstProvider_SCM_TIMESTAMPING_OPT_STATS = 0;
+    DefaultLinuxConstProvider_SO_MEMINFO = 0;
+    DefaultLinuxConstProvider_SO_INCOMING_NAPI_ID = 0;
+    DefaultLinuxConstProvider_SO_COOKIE = 0;
+    DefaultLinuxConstProvider_SCM_TIMESTAMPING_PKTINFO = 0;
+    DefaultLinuxConstProvider_SO_PEERGROUPS = 0;
+    DefaultLinuxConstProvider_SO_ZEROCOPY = 0;
+    DefaultLinuxConstProvider_SCM_RIGHTS = 0;
+    DefaultLinuxConstProvider_MAP_SHARED = 0;
+    DefaultLinuxConstProvider_MAP_PRIVATE = 0;
+    DefaultLinuxConstProvider_O_ACCMODE = 0;
+    DefaultLinuxConstProvider_O_RDONLY = 0;
+    DefaultLinuxConstProvider_O_WRONLY = 0;
+    DefaultLinuxConstProvider_O_RDWR = 0;
+    DefaultLinuxConstProvider_O_CREAT = 0;
+    DefaultLinuxConstProvider_O_EXCL = 0;
+    DefaultLinuxConstProvider_O_NOCTTY = 0;
+    DefaultLinuxConstProvider_O_TRUNC = 0;
+    DefaultLinuxConstProvider_O_APPEND = 0;
+    DefaultLinuxConstProvider_O_NONBLOCK = 0;
+    DefaultLinuxConstProvider_O_NDELAY = 0;
+    DefaultLinuxConstProvider_O_SYNC = 0;
+    DefaultLinuxConstProvider_O_ASYNC = 0;
+    DefaultLinuxConstProvider_O_LARGEFILE = 0;
+    DefaultLinuxConstProvider_O_DIRECTORY = 0;
+    DefaultLinuxConstProvider_O_NOFOLLOW = 0;
+    DefaultLinuxConstProvider_O_CLOEXEC = 0;
+    DefaultLinuxConstProvider_O_DIRECT = 0;
+    DefaultLinuxConstProvider_O_NOATIME = 0;
+    DefaultLinuxConstProvider_O_PATH = 0;
+    DefaultLinuxConstProvider_O_DSYNC = 0;
+    DefaultLinuxConstProvider_S_IRUSR = 0;
+    DefaultLinuxConstProvider_S_IWUSR = 0;
+    DefaultLinuxConstProvider_S_IXUSR = 0;
+    DefaultLinuxConstProvider_S_IRGRP = 0;
+    DefaultLinuxConstProvider_S_IWGRP = 0;
+    DefaultLinuxConstProvider_S_IXGRP = 0;
+    DefaultLinuxConstProvider_S_IROTH = 0;
+    DefaultLinuxConstProvider_S_IWOTH = 0;
+    DefaultLinuxConstProvider_S_IXOTH = 0;
+    DefaultLinuxConstProvider_S_IRWXU = 0;
+    DefaultLinuxConstProvider_S_IRWXG = 0;
+    DefaultLinuxConstProvider_S_IRWXO = 0;
+    DefaultLinuxConstProvider_IFNAMSIZ = 0;
+    DefaultLinuxConstProvider_SIOCGIFFLAGS = 0;
+    DefaultLinuxConstProvider_SIOCSIFFLAGS = 0;
+    DefaultLinuxConstProvider_SIOCGIFMTU = 0;
+    DefaultLinuxConstProvider_NLM_F_REQUEST = 0;
+    DefaultLinuxConstProvider_NLM_F_DUMP = 0;
+    DefaultLinuxConstProvider_NLM_F_MULTI = 0;
+    DefaultLinuxConstProvider_NLM_F_CREATE = 0;
+    DefaultLinuxConstProvider_NLM_F_EXCL = 0;
+    DefaultLinuxConstProvider_NLM_F_ACK = 0;
+    DefaultLinuxConstProvider_NLMSG_NOOP = 0;
+    DefaultLinuxConstProvider_NLMSG_ERROR = 0;
+    DefaultLinuxConstProvider_NLMSG_DONE = 0;
+    DefaultLinuxConstProvider_NLMSG_OVERRUN = 0;
+    DefaultLinuxConstProvider_RTM_GETLINK = 0;
+    DefaultLinuxConstProvider_RTM_DELADDR = 0;
+    DefaultLinuxConstProvider_RTM_GETADDR = 0;
+    DefaultLinuxConstProvider_RTM_NEWADDR = 0;
+    DefaultLinuxConstProvider_RT_SCOPE_UNIVERSE = 0;
+    DefaultLinuxConstProvider_ARPHRD_NETROM = 0;
+    DefaultLinuxConstProvider_IFLA_IFNAME = 0;
+    DefaultLinuxConstProvider_IFA_UNSPEC = 0;
+    DefaultLinuxConstProvider_IFA_ADDRESS = 0;
+    DefaultLinuxConstProvider_IFA_LOCAL = 0;
+    DefaultLinuxConstProvider_IFA_LABEL = 0;
+    DefaultLinuxConstProvider_IFA_BROADCAST = 0;
+    DefaultLinuxConstProvider_IFA_ANYCAST = 0;
+    DefaultLinuxConstProvider_IFA_CACHEINFO = 0;
+    DefaultLinuxConstProvider_IFA_F_PERMANENT = 0;
+    DefaultLinuxConstProvider_IFA_F_SECONDARY = 0;
+    DefaultLinuxConstProvider_IFF_UP = 0;
+    DefaultLinuxConstProvider_IFF_NO_PI = 0;
+    DefaultLinuxConstProvider_TUNSETIFF = 0;
+    DefaultLinuxConstProvider_TUNSETPERSIST = 0;
+    DefaultLinuxConstProvider_TUNGETSNDBUF = 0;
+    DefaultLinuxConstProvider_RTA_UNSPEC = 0;
+    DefaultLinuxConstProvider_RTA_DST = 0;
+    DefaultLinuxConstProvider_RTA_SRC = 0;
+    DefaultLinuxConstProvider_RTA_IIF = 0;
+    DefaultLinuxConstProvider_RTA_OIF = 0;
+    DefaultLinuxConstProvider_RTA_GATEWAY = 0;
+    DefaultLinuxConstProvider_RTA_PRIORITY = 0;
+    DefaultLinuxConstProvider_RTA_PREFSRC = 0;
+    DefaultLinuxConstProvider_RTA_METRICS = 0;
+    DefaultLinuxConstProvider_RTA_MULTIPATH = 0;
+    DefaultLinuxConstProvider_RTA_PROTOINFO = 0;
+    DefaultLinuxConstProvider_RTA_FLOW = 0;
+    DefaultLinuxConstProvider_RTA_CACHEINFO = 0;
+    DefaultLinuxConstProvider_RTA_SESSION = 0;
+    DefaultLinuxConstProvider_RTA_MP_ALGO = 0;
+    DefaultLinuxConstProvider_RTA_TABLE = 0;
+    DefaultLinuxConstProvider_RTA_MARK = 0;
+    DefaultLinuxConstProvider_RTA_MFC_STATS = 0;
+    DefaultLinuxConstProvider_RTA_VIA = 0;
+    DefaultLinuxConstProvider_RTA_NEWDST = 0;
+    DefaultLinuxConstProvider_RTA_PREF = 0;
+    DefaultLinuxConstProvider_RTA_ENCAP_TYPE = 0;
+    DefaultLinuxConstProvider_RTA_ENCAP = 0;
+    DefaultLinuxConstProvider_RTA_EXPIRES = 0;
+    DefaultLinuxConstProvider_RTA_PAD = 0;
+    DefaultLinuxConstProvider_RTA_UID = 0;
+    DefaultLinuxConstProvider_RTA_TTL_PROPAGATE = 0;
+    DefaultLinuxConstProvider_RTA_IP_PROTO = 0;
+    DefaultLinuxConstProvider_RTA_SPORT = 0;
+    DefaultLinuxConstProvider_RTA_DPORT = 0;
+    DefaultLinuxConstProvider_RTA_NH_ID = 0;
+    DefaultLinuxConstProvider_PTHREAD_MUTEX_STALLED = 0;
+    DefaultLinuxConstProvider_PTHREAD_MUTEX_ROBUST = 0;
+    DefaultLinuxConstProvider_PTHREAD_PROCESS_SHARED = 0;
+    DefaultLinuxConstProvider_PTHREAD_PROCESS_PRIVATE = 0;
+    DefaultLinuxConstProvider_PTHREAD_MUTEX_RECURSIVE = 0;
+    DefaultLinuxConstProvider_PTHREAD_MUTEX_ERRORCHECK = 0;
+    DefaultLinuxConstProvider_PTHREAD_MUTEX_DEFAULT = 0;
+    DefaultLinuxConstProvider_PTHREAD_MUTEX_NORMAL = 0;
+    DefaultLinuxConstProvider_C_0 = 0;
+    DefaultLinuxConstProvider_M_AF_INET_0 = 0;
+    DefaultLinuxConstProvider_M_AF_INET6_0 = 0;
+    DefaultLinuxConstProvider_M_AF_NETLINK_0 = 0;
+    DefaultLinuxConstProvider_M_AF_UNIX_0 = 0;
+    DefaultLinuxConstProvider_M_AF_UNSPEC_0 = 0;
+    DefaultLinuxConstProvider_M_ARPHRD_NETROM_0 = 0;
+    DefaultLinuxConstProvider_M_IFA_ADDRESS_0 = 0;
+    DefaultLinuxConstProvider_M_IFA_ANYCAST_0 = 0;
+    DefaultLinuxConstProvider_M_IFA_BROADCAST_0 = 0;
+    DefaultLinuxConstProvider_M_IFA_CACHEINFO_0 = 0;
+    DefaultLinuxConstProvider_M_IFA_F_PERMANENT_0 = 0;
+    DefaultLinuxConstProvider_M_IFA_F_SECONDARY_0 = 0;
+    DefaultLinuxConstProvider_M_IFA_LABEL_0 = 0;
+    DefaultLinuxConstProvider_M_IFA_LOCAL_0 = 0;
+    DefaultLinuxConstProvider_M_IFA_UNSPEC_0 = 0;
+    DefaultLinuxConstProvider_M_IFF_NO_PI_0 = 0;
+    DefaultLinuxConstProvider_M_IFF_UP_0 = 0;
+    DefaultLinuxConstProvider_M_IFLA_IFNAME_0 = 0;
+    DefaultLinuxConstProvider_M_IFNAMSIZ_0 = 0;
+    DefaultLinuxConstProvider_M_MAP_PRIVATE_0 = 0;
+    DefaultLinuxConstProvider_M_MAP_SHARED_0 = 0;
+    DefaultLinuxConstProvider_M_NETLINK_ROUTE_0 = 0;
+    DefaultLinuxConstProvider_M_NLMSG_DONE_0 = 0;
+    DefaultLinuxConstProvider_M_NLMSG_ERROR_0 = 0;
+    DefaultLinuxConstProvider_M_NLMSG_NOOP_0 = 0;
+    DefaultLinuxConstProvider_M_NLMSG_OVERRUN_0 = 0;
+    DefaultLinuxConstProvider_M_NLM_F_ACK_0 = 0;
+    DefaultLinuxConstProvider_M_NLM_F_CREATE_0 = 0;
+    DefaultLinuxConstProvider_M_NLM_F_DUMP_0 = 0;
+    DefaultLinuxConstProvider_M_NLM_F_EXCL_0 = 0;
+    DefaultLinuxConstProvider_M_NLM_F_MULTI_0 = 0;
+    DefaultLinuxConstProvider_M_NLM_F_REQUEST_0 = 0;
+    DefaultLinuxConstProvider_M_O_ACCMODE_0 = 0;
+    DefaultLinuxConstProvider_M_O_APPEND_0 = 0;
+    DefaultLinuxConstProvider_M_O_ASYNC_0 = 0;
+    DefaultLinuxConstProvider_M_O_CLOEXEC_0 = 0;
+    DefaultLinuxConstProvider_M_O_CREAT_0 = 0;
+    DefaultLinuxConstProvider_M_O_DIRECT_0 = 0;
+    DefaultLinuxConstProvider_M_O_DIRECTORY_0 = 0;
+    DefaultLinuxConstProvider_M_O_DSYNC_0 = 0;
+    DefaultLinuxConstProvider_M_O_EXCL_0 = 0;
+    DefaultLinuxConstProvider_M_O_LARGEFILE_0 = 0;
+    DefaultLinuxConstProvider_M_O_NDELAY_0 = 0;
+    DefaultLinuxConstProvider_M_O_NOATIME_0 = 0;
+    DefaultLinuxConstProvider_M_O_NOCTTY_0 = 0;
+    DefaultLinuxConstProvider_M_O_NOFOLLOW_0 = 0;
+    DefaultLinuxConstProvider_M_O_NONBLOCK_0 = 0;
+    DefaultLinuxConstProvider_M_O_PATH_0 = 0;
+    DefaultLinuxConstProvider_M_O_RDONLY_0 = 0;
+    DefaultLinuxConstProvider_M_O_RDWR_0 = 0;
+    DefaultLinuxConstProvider_M_O_SYNC_0 = 0;
+    DefaultLinuxConstProvider_M_O_TRUNC_0 = 0;
+    DefaultLinuxConstProvider_M_O_WRONLY_0 = 0;
+    DefaultLinuxConstProvider_M_PTHREAD_MUTEX_DEFAULT_0 = 0;
+    DefaultLinuxConstProvider_M_PTHREAD_MUTEX_ERRORCHECK_0 = 0;
+    DefaultLinuxConstProvider_M_PTHREAD_MUTEX_NORMAL_0 = 0;
+    DefaultLinuxConstProvider_M_PTHREAD_MUTEX_RECURSIVE_0 = 0;
+    DefaultLinuxConstProvider_M_PTHREAD_MUTEX_ROBUST_0 = 0;
+    DefaultLinuxConstProvider_M_PTHREAD_MUTEX_STALLED_0 = 0;
+    DefaultLinuxConstProvider_M_PTHREAD_PROCESS_PRIVATE_0 = 0;
+    DefaultLinuxConstProvider_M_PTHREAD_PROCESS_SHARED_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_CACHEINFO_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_DPORT_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_DST_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_ENCAP_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_ENCAP_TYPE_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_EXPIRES_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_FLOW_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_GATEWAY_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_IIF_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_IP_PROTO_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_MARK_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_METRICS_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_MFC_STATS_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_MP_ALGO_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_MULTIPATH_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_NEWDST_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_NH_ID_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_OIF_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_PAD_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_PREF_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_PREFSRC_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_PRIORITY_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_PROTOINFO_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_SESSION_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_SPORT_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_SRC_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_TABLE_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_TTL_PROPAGATE_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_UID_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_UNSPEC_0 = 0;
+    DefaultLinuxConstProvider_M_RTA_VIA_0 = 0;
+    DefaultLinuxConstProvider_M_RTM_DELADDR_0 = 0;
+    DefaultLinuxConstProvider_M_RTM_GETADDR_0 = 0;
+    DefaultLinuxConstProvider_M_RTM_GETLINK_0 = 0;
+    DefaultLinuxConstProvider_M_RTM_NEWADDR_0 = 0;
+    DefaultLinuxConstProvider_M_RT_SCOPE_UNIVERSE_0 = 0;
+    DefaultLinuxConstProvider_M_SCM_RIGHTS_0 = 0;
+    DefaultLinuxConstProvider_M_SCM_TIMESTAMP_0 = 0;
+    DefaultLinuxConstProvider_M_SCM_TIMESTAMPING_0 = 0;
+    DefaultLinuxConstProvider_M_SCM_TIMESTAMPING_OPT_STATS_0 = 0;
+    DefaultLinuxConstProvider_M_SCM_TIMESTAMPING_PKTINFO_0 = 0;
+    DefaultLinuxConstProvider_M_SCM_TIMESTAMPNS_0 = 0;
+    DefaultLinuxConstProvider_M_SCM_WIFI_STATUS_0 = 0;
+    DefaultLinuxConstProvider_M_SIOCGIFFLAGS_0 = 0;
+    DefaultLinuxConstProvider_M_SIOCGIFMTU_0 = 0;
+    DefaultLinuxConstProvider_M_SIOCSIFFLAGS_0 = 0;
+    DefaultLinuxConstProvider_M_SOCK_DGRAM_0 = 0;
+    DefaultLinuxConstProvider_M_SOCK_RAW_0 = 0;
+    DefaultLinuxConstProvider_M_SOCK_STREAM_0 = 0;
+    DefaultLinuxConstProvider_M_SOL_SOCKET_0 = 0;
+    DefaultLinuxConstProvider_M_SO_ACCEPTCONN_0 = 0;
+    DefaultLinuxConstProvider_M_SO_ATTACH_BPF_0 = 0;
+    DefaultLinuxConstProvider_M_SO_ATTACH_FILTER_0 = 0;
+    DefaultLinuxConstProvider_M_SO_ATTACH_REUSEPORT_CBPF_0 = 0;
+    DefaultLinuxConstProvider_M_SO_ATTACH_REUSEPORT_EBPF_0 = 0;
+    DefaultLinuxConstProvider_M_SO_BINDTODEVICE_0 = 0;
+    DefaultLinuxConstProvider_M_SO_BPF_EXTENSIONS_0 = 0;
+    DefaultLinuxConstProvider_M_SO_BROADCAST_0 = 0;
+    DefaultLinuxConstProvider_M_SO_BSDCOMPAT_0 = 0;
+    DefaultLinuxConstProvider_M_SO_BUSY_POLL_0 = 0;
+    DefaultLinuxConstProvider_M_SO_CNX_ADVICE_0 = 0;
+    DefaultLinuxConstProvider_M_SO_COOKIE_0 = 0;
+    DefaultLinuxConstProvider_M_SO_DEBUG_0 = 0;
+    DefaultLinuxConstProvider_M_SO_DETACH_BPF_0 = 0;
+    DefaultLinuxConstProvider_M_SO_DETACH_FILTER_0 = 0;
+    DefaultLinuxConstProvider_M_SO_DOMAIN_0 = 0;
+    DefaultLinuxConstProvider_M_SO_DONTROUTE_0 = 0;
+    DefaultLinuxConstProvider_M_SO_ERROR_0 = 0;
+    DefaultLinuxConstProvider_M_SO_GET_FILTER_0 = 0;
+    DefaultLinuxConstProvider_M_SO_INCOMING_CPU_0 = 0;
+    DefaultLinuxConstProvider_M_SO_INCOMING_NAPI_ID_0 = 0;
+    DefaultLinuxConstProvider_M_SO_KEEPALIVE_0 = 0;
+    DefaultLinuxConstProvider_M_SO_LINGER_0 = 0;
+    DefaultLinuxConstProvider_M_SO_LOCK_FILTER_0 = 0;
+    DefaultLinuxConstProvider_M_SO_MARK_0 = 0;
+    DefaultLinuxConstProvider_M_SO_MAX_PACING_RATE_0 = 0;
+    DefaultLinuxConstProvider_M_SO_MEMINFO_0 = 0;
+    DefaultLinuxConstProvider_M_SO_NOFCS_0 = 0;
+    DefaultLinuxConstProvider_M_SO_NO_CHECK_0 = 0;
+    DefaultLinuxConstProvider_M_SO_OOBINLINE_0 = 0;
+    DefaultLinuxConstProvider_M_SO_PASSCRED_0 = 0;
+    DefaultLinuxConstProvider_M_SO_PASSSEC_0 = 0;
+    DefaultLinuxConstProvider_M_SO_PEEK_OFF_0 = 0;
+    DefaultLinuxConstProvider_M_SO_PEERCRED_0 = 0;
+    DefaultLinuxConstProvider_M_SO_PEERGROUPS_0 = 0;
+    DefaultLinuxConstProvider_M_SO_PEERNAME_0 = 0;
+    DefaultLinuxConstProvider_M_SO_PEERSEC_0 = 0;
+    DefaultLinuxConstProvider_M_SO_PRIORITY_0 = 0;
+    DefaultLinuxConstProvider_M_SO_PROTOCOL_0 = 0;
+    DefaultLinuxConstProvider_M_SO_RCVBUF_0 = 0;
+    DefaultLinuxConstProvider_M_SO_RCVBUFFORCE_0 = 0;
+    DefaultLinuxConstProvider_M_SO_RCVLOWAT_0 = 0;
+    DefaultLinuxConstProvider_M_SO_RCVTIMEO_0 = 0;
+    DefaultLinuxConstProvider_M_SO_REUSEADDR_0 = 0;
+    DefaultLinuxConstProvider_M_SO_REUSEPORT_0 = 0;
+    DefaultLinuxConstProvider_M_SO_RXQ_OVFL_0 = 0;
+    DefaultLinuxConstProvider_M_SO_SECURITY_AUTHENTICATION_0 = 0;
+    DefaultLinuxConstProvider_M_SO_SECURITY_ENCRYPTION_NETWORK_0 = 0;
+    DefaultLinuxConstProvider_M_SO_SECURITY_ENCRYPTION_TRANSPORT_0 = 0;
+    DefaultLinuxConstProvider_M_SO_SELECT_ERR_QUEUE_0 = 0;
+    DefaultLinuxConstProvider_M_SO_SNDBUF_0 = 0;
+    DefaultLinuxConstProvider_M_SO_SNDBUFFORCE_0 = 0;
+    DefaultLinuxConstProvider_M_SO_SNDLOWAT_0 = 0;
+    DefaultLinuxConstProvider_M_SO_SNDTIMEO_0 = 0;
+    DefaultLinuxConstProvider_M_SO_TIMESTAMP_0 = 0;
+    DefaultLinuxConstProvider_M_SO_TIMESTAMPING_0 = 0;
+    DefaultLinuxConstProvider_M_SO_TIMESTAMPNS_0 = 0;
+    DefaultLinuxConstProvider_M_SO_TYPE_0 = 0;
+    DefaultLinuxConstProvider_M_SO_WIFI_STATUS_0 = 0;
+    DefaultLinuxConstProvider_M_SO_ZEROCOPY_0 = 0;
+    DefaultLinuxConstProvider_M_S_IRGRP_0 = 0;
+    DefaultLinuxConstProvider_M_S_IROTH_0 = 0;
+    DefaultLinuxConstProvider_M_S_IRUSR_0 = 0;
+    DefaultLinuxConstProvider_M_S_IRWXG_0 = 0;
+    DefaultLinuxConstProvider_M_S_IRWXO_0 = 0;
+    DefaultLinuxConstProvider_M_S_IRWXU_0 = 0;
+    DefaultLinuxConstProvider_M_S_IWGRP_0 = 0;
+    DefaultLinuxConstProvider_M_S_IWOTH_0 = 0;
+    DefaultLinuxConstProvider_M_S_IWUSR_0 = 0;
+    DefaultLinuxConstProvider_M_S_IXGRP_0 = 0;
+    DefaultLinuxConstProvider_M_S_IXOTH_0 = 0;
+    DefaultLinuxConstProvider_M_S_IXUSR_0 = 0;
+    DefaultLinuxConstProvider_M_TUNGETSNDBUF_0 = 0;
+    DefaultLinuxConstProvider_M_TUNSETIFF_0 = 0;
+    DefaultLinuxConstProvider_M_TUNSETPERSIST_0 = 0;
     Cmsghdr_cmsg_level = 0;
     Cmsghdr_cmsg_type = 0;
     Cmsghdr_payload = 0;

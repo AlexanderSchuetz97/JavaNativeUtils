@@ -19,6 +19,7 @@
 //
 package eu.aschuetz.nativeutils.api;
 
+import eu.aschuetz.nativeutils.api.consts.LinuxConstProvider;
 import eu.aschuetz.nativeutils.api.exceptions.*;
 import eu.aschuetz.nativeutils.api.structs.*;
 
@@ -38,6 +39,7 @@ import java.util.Collection;
 
 public interface LinuxNativeUtil extends NativeUtil {
 
+    LinuxConstProvider getLinuxConstProvider();
 
     int getFD(FileDescriptor fd);
 

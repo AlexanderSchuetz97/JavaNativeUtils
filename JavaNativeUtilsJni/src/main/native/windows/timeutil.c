@@ -31,5 +31,8 @@ uint64_t currentTimeMillis() {
 
 	ftime(&tempCurrent);
 
-	return (tempCurrent.time * 1000) + tempCurrent.millitm;
+    uint64_t sec = tempCurrent.time;
+    uint64_t ms = tempCurrent.millitm;
+
+	return (sec * 1000) + ms;
 }

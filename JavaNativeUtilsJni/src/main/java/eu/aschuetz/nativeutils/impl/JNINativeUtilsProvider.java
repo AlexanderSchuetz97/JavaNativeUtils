@@ -1,12 +1,14 @@
 package eu.aschuetz.nativeutils.impl;
 
-import eu.aschuetz.nativeutils.api.NativeUtil;
-import eu.aschuetz.nativeutils.api.NativeUtilsProvider;
-import eu.aschuetz.nativeutils.api.NoopNativeUtil;
+import eu.aschuetz.nativeutils.api.*;
+import eu.aschuetz.nativeutils.api.consts.DefaultLinuxConstProvider;
+import eu.aschuetz.nativeutils.api.consts.LinuxConstProvider;
 
 import java.util.Map;
 
 public class JNINativeUtilsProvider implements NativeUtilsProvider {
+
+
     @Override
     public Map<String, byte[]> getNativeLibraryBinaries() {
         return NativeLibraryLoaderHelper.getNativeLibraryBinaries();
@@ -33,6 +35,7 @@ public class JNINativeUtilsProvider implements NativeUtilsProvider {
 
         if (tempOS.contains("linux")) {
             return new JNILinuxNativeUtil();
+
         } else if (tempOS.contains("windows")) {
             return new JNIWindowsNativeUtil();
         } else {

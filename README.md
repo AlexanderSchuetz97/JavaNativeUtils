@@ -14,12 +14,12 @@ Maven:
 <dependency>
     <groupId>eu.aschuetz</groupId>
     <artifactId>JavaNativeUtilsApi</artifactId>
-    <version>4.0</version>
+    <version>4.1</version>
 </dependency>
 <dependency>
     <groupId>eu.aschuetz</groupId>
     <artifactId>JavaNativeUtilsJni</artifactId>
-    <version>4.0</version>
+    <version>4.1</version>
 </dependency>
 ````
 Note: for versions older than 4.0 use groupId io.github.alexanderschuetz97 artifactId JavaNativeUtils
@@ -264,6 +264,16 @@ To build:
 ````
 maven -Dmaven.test.skip=true -Dgpg.skip clean install
 ````
+
+### How to run foreign architecture tests using QEMU+docker+binfmt_misc
+To run non amd64 tests you may use the run bash script dockertest.sh in the repository root.
+1. build the entire project and run amd64 tests (clean install)
+2. install qemu-user-static so that for example /usr/bin/qemu-riscv64-static exists, repeat for all architectures
+3. setup binfmt_misc so that the linux kernel knows how to execute elf binaries of foreign architecture 
+   - ls /proc/sys/fs/binfmt_misc/ should contain 1 qemu file per architecture
+4. configure your docker daemon to allow foreign architectures
+   - "docker run --rm -it arm64v8/debian:bookworm" is a good way to test this.
+5. run dockertest.sh (exit code 0 = no error)
 
 ## Will this library be obsoleted by the Java FFI Interface (Project Panama)
 Probably yes. The Java FFI Interface allows a java developer to perform most of the actions

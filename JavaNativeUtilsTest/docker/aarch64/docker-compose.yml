@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+
+  java-native-utils-test-aarch64:
+    build:
+      context: image
+    container_name: java-native-utils-test-aarch64
+    environment:
+      - QEMU=TRUE
+      - QARCH=aarch64
+    volumes:
+      - ../../../:/project
+    entrypoint: /usr/bin/env bash /project/JavaNativeUtilsTest/docker/runtest.sh
+
+

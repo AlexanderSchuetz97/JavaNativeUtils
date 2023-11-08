@@ -279,6 +279,9 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_pthr
 	switch(ret) {
 		case(0):
 			return;
+        case(EOPNOTSUPP):
+            jthrowCC_UnsupportedOperationException_1(env, "The operating system does not support creating a mutex with the desired characteristics");
+            return;
 		case(EAGAIN):
 			jthrowCC_QuotaExceededException(env, "The system lacked the necessary resources (other than memory) to initialize another mutex.");
 			return;

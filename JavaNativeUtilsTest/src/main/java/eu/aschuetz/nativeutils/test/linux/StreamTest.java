@@ -17,6 +17,7 @@ public class StreamTest {
     public void testReadWrite() throws UnknownNativeErrorException, IOException {
         UUID r = UUID.randomUUID();
         LinuxNativeUtil util = NativeUtils.getLinuxUtil();
+
         int fd = util.open("/tmp/" + r.toString(), LinuxConst.O_CREAT | LinuxConst.O_RDWR, 0777);
         try(OutputStream outputStream = util.outputStreamFromFD(fd, true)) {
             outputStream.write("Hallo ".getBytes(StandardCharsets.UTF_8));

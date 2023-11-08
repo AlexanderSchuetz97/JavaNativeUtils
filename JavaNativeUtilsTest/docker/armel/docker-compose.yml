@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+
+  java-native-utils-test-armel:
+    build:
+      context: image
+    container_name: java-native-utils-test-armel
+    environment:
+      - QEMU=true
+      - QARCH=armel
+    volumes:
+      - ../../../:/project
+    entrypoint: /usr/bin/env bash /project/JavaNativeUtilsTest/docker/runtest.sh
+
+

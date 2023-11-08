@@ -23,10 +23,7 @@ import eu.aschuetz.nativeutils.api.NativeMemory;
 import eu.aschuetz.nativeutils.api.NativeUtils;
 import eu.aschuetz.nativeutils.api.exceptions.InvalidFileDescriptorException;
 import eu.aschuetz.nativeutils.api.exceptions.UnknownNativeErrorException;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -246,6 +243,8 @@ public class MemTest {
 
         @Test
         public void xadd1Byte() throws Throwable {
+            Assume.assumeTrue(memory.supportsAtomicOperations());
+
             for (long i = 0; i < memory.size(); i++) {
                 memory.write(i, (byte) 0);
                 for (int j = 0; j <= 0xff; j++) {
@@ -268,6 +267,8 @@ public class MemTest {
 
         @Test
         public void xadd2Byte() throws Throwable {
+            Assume.assumeTrue(memory.supportsAtomicOperations());
+
             mkRandom();
             for (long i = 0; i + 1 < memory.size(); i++) {
                 memory.write(i, (short) 0);
@@ -289,6 +290,8 @@ public class MemTest {
 
         @Test
         public void xadd4Byte() throws Throwable {
+            Assume.assumeTrue(memory.supportsAtomicOperations());
+
             mkRandom();
             for (long i = 0; i + 3 < memory.size(); i++) {
                 memory.write(i, 0);
@@ -309,6 +312,7 @@ public class MemTest {
 
         @Test
         public void xadd8Byte() throws Throwable {
+            Assume.assumeTrue(memory.supportsAtomicOperations());
             mkRandom();
             int inc = 1;
 
@@ -335,9 +339,7 @@ public class MemTest {
 
         @Test
         public void cmpxchg1b() throws Throwable {
-            if (!memory.supportsAtomicOperations()) {
-                return;
-            }
+            Assume.assumeTrue(memory.supportsAtomicOperations());
 
             for (long i = 0; i < memory.size(); i++) {
                 for (int j = 0; j < 0xff; j++) {
@@ -351,9 +353,7 @@ public class MemTest {
 
         @Test
         public void cmpxchg2b() throws Throwable {
-            if (!memory.supportsAtomicOperations()) {
-                return;
-            }
+            Assume.assumeTrue(memory.supportsAtomicOperations());
 
             mkRandom();
             for (long i = 0; i + 1 < memory.size(); i++) {
@@ -368,9 +368,7 @@ public class MemTest {
 
         @Test
         public void cmpxchg4b() throws Throwable {
-            if (!memory.supportsAtomicOperations()) {
-                return;
-            }
+            Assume.assumeTrue(memory.supportsAtomicOperations());
 
             mkRandom();
             for (long i = 0; i + 3 < memory.size(); i++) {
@@ -386,9 +384,7 @@ public class MemTest {
 
         @Test
         public void cmpxchg8b() throws Throwable {
-            if (!memory.supportsAtomicOperations()) {
-                return;
-            }
+            Assume.assumeTrue(memory.supportsAtomicOperations());
 
             mkRandom();
             int inc = 1;
@@ -448,13 +444,9 @@ public class MemTest {
 
         @Test
         public void testI386missalignment() {
-            if (!memory.supportsAtomicOperations()) {
-                return;
-            }
+            Assume.assumeTrue(memory.supportsAtomicOperations());
+            Assume.assumeTrue(memory.atomic8ByteOperationsRequireAlignment());
 
-            if (!memory.atomic8ByteOperationsRequireAlignment()) {
-                return;
-            }
 
             try {
                 memory.getAndSet(1, (long) 1);
@@ -482,11 +474,7 @@ public class MemTest {
 
         @Test
         public void xchg8b() throws Throwable {
-
-            if (!memory.supportsAtomicOperations()) {
-                return;
-            }
-
+            Assume.assumeTrue(memory.supportsAtomicOperations());
 
             int increment = 1;
 
@@ -506,10 +494,7 @@ public class MemTest {
 
         @Test
         public void xchg4b() throws Throwable {
-
-            if (!memory.supportsAtomicOperations()) {
-                return;
-            }
+            Assume.assumeTrue(memory.supportsAtomicOperations());
 
 
             for (long i = 0; i + 7 < memory.size(); i++) {
@@ -523,10 +508,7 @@ public class MemTest {
 
         @Test
         public void xchg2b() throws Throwable {
-
-            if (!memory.supportsAtomicOperations()) {
-                return;
-            }
+            Assume.assumeTrue(memory.supportsAtomicOperations());
 
 
             for (long i = 0; i + 7 < memory.size(); i++) {
@@ -540,10 +522,7 @@ public class MemTest {
 
         @Test
         public void xchg1b() throws Throwable {
-
-            if (!memory.supportsAtomicOperations()) {
-                return;
-            }
+            Assume.assumeTrue(memory.supportsAtomicOperations());
 
 
             for (long i = 0; i + 7 < memory.size(); i++) {
@@ -998,6 +977,8 @@ public class MemTest {
         public void testOutOfBoundsXADD() throws Throwable {
             //UNDERFLOW
 
+            Assume.assumeTrue(memory.supportsAtomicOperations());
+
             try {
                 memory.getAndAdd(-1, (long) 1);
                 Assert.fail();
@@ -1067,7 +1048,7 @@ public class MemTest {
         @Test
         public void testOutOfBoundsXCHG() throws Throwable {
             //UNDERFLOW
-
+            Assume.assumeTrue(memory.supportsAtomicOperations());
             try {
                 memory.getAndSet(-1, (long) 1);
                 Assert.fail();

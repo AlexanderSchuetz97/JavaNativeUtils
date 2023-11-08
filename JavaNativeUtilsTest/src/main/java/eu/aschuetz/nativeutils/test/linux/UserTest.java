@@ -25,6 +25,7 @@ import eu.aschuetz.nativeutils.api.NativeUtils;
 import eu.aschuetz.nativeutils.api.structs.Group;
 import eu.aschuetz.nativeutils.api.structs.Passwd;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -35,7 +36,14 @@ public class UserTest {
     public void testUser() throws Exception {
         LinuxNativeUtil lnu = NativeUtils.getLinuxUtil();
         long uid = lnu.getuid();
-        String username = lnu.getlogin_r();
+        String username = null;
+        try {
+            username = lnu.getlogin_r();
+        } catch (IllegalStateException e) {
+            //Docker container
+            Assume.assumeFalse("The calling process has no controlling terminal.".equals(e.getMessage()));
+        }
+
         Passwd passwd = lnu.getpwuid_r(uid);
         Assert.assertEquals(passwd.getPw_name(), username);
         Passwd passwd2 = lnu.getpwnam_r(username);

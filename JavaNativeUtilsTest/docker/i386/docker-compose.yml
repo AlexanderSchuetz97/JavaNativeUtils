@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+
+  java-native-utils-test-i386:
+    build:
+      context: image
+    container_name: java-native-utils-test-i386
+    environment:
+      - QEMU=false
+#      - QARCH=i386
+    volumes:
+      - ../../../:/project
+    entrypoint: /usr/bin/env bash /project/JavaNativeUtilsTest/docker/runtest.sh
+
+

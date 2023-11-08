@@ -627,9 +627,6 @@ JNIEXPORT jstring JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
     name[NDIS_IF_MAX_STRING_SIZE+1] = 0;
 
     DWORD result = ConvertInterfaceLuidToNameA((CONST NET_LUID *)&cluid, name, NDIS_IF_MAX_STRING_SIZE+1);
-    if (result == 0) {
-
-    }
 
     switch (result) {
         case 0: {

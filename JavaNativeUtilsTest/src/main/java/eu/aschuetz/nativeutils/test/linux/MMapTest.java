@@ -34,7 +34,7 @@ public class MMapTest {
 
         Assert.assertTrue(new File("/dev/shm/" + uuid.toString()).delete());
         Thread.sleep(5000);
-        mem.write(80_000_000, 1);
+        mem.writeByte(80_000_000, 1);
         Assert.assertEquals(1, mem.readUnsignedByte(80_000_000));
         lnu.munmap(ptr, 100_000_000);
         lnu.close(fd);

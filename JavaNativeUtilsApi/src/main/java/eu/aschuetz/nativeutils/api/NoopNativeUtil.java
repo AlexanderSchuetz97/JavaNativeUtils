@@ -20,8 +20,6 @@
 
 package eu.aschuetz.nativeutils.api;
 
-import eu.aschuetz.nativeutils.api.NativeUtil;
-
 public class NoopNativeUtil implements NativeUtil {
 
     @Override
@@ -43,4 +41,5 @@ public class NoopNativeUtil implements NativeUtil {
     public boolean isNoop() {
         return true;
     }
+
 }

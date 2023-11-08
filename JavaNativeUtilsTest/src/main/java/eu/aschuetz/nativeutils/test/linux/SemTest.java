@@ -1,9 +1,6 @@
 package eu.aschuetz.nativeutils.test.linux;
 
-import eu.aschuetz.nativeutils.api.LinuxConst;
-import eu.aschuetz.nativeutils.api.LinuxNativeUtil;
-import eu.aschuetz.nativeutils.api.NativeMemory;
-import eu.aschuetz.nativeutils.api.NativeUtils;
+import eu.aschuetz.nativeutils.api.*;
 import eu.aschuetz.nativeutils.api.exceptions.UnknownNativeErrorException;
 import org.junit.*;
 

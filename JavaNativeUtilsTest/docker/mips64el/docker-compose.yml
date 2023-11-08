@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+
+  java-native-utils-test-mips64el:
+    build:
+      context: image
+    container_name: java-native-utils-test-mips64el
+    environment:
+      - QEMU=true
+      - QARCH=mips64el
+    volumes:
+      - ../../../:/project
+    entrypoint: /usr/bin/env bash /project/JavaNativeUtilsTest/docker/runtest.sh
+
+

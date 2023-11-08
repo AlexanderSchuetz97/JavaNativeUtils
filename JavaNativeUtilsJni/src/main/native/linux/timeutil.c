@@ -28,8 +28,10 @@
 void sleepMillis(uint64_t aMillis) {
 	uint64_t tempMillisWithoutSeconds = aMillis % 1000;
 	struct timespec tempTime;
-	tempTime.tv_sec = (aMillis - (tempMillisWithoutSeconds)) / 1000;
-	tempTime.tv_nsec = tempMillisWithoutSeconds * NANOSECONDS_PER_MILISECOND;
+
+    //on 32-bit systems tv_sec is 32 bit
+	tempTime.tv_sec = (time_t) ((aMillis - (tempMillisWithoutSeconds)) / 1000);
+	tempTime.tv_nsec = (time_t) (tempMillisWithoutSeconds * NANOSECONDS_PER_MILISECOND);
 
 	struct timespec tempRem;
 	while(true) {
@@ -55,5 +57,9 @@ uint64_t currentTimeMillis() {
 
     clock_gettime(CLOCK_REALTIME, &spec);
 
-    return spec.tv_sec * 1000 + (spec.tv_nsec / NANOSECONDS_PER_MILISECOND);
+    //on 32-bit systems tv_sec is 32 bit
+    uint64_t sec = spec.tv_sec;
+    uint64_t n_sec = spec.tv_nsec;
+
+    return sec * 1000 + (n_sec / NANOSECONDS_PER_MILISECOND);
 }

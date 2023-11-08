@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+
+  java-native-utils-test-s390x:
+    build:
+      context: image
+    container_name: java-native-utils-test-s390x
+    environment:
+      - QEMU=true
+      - QARCH=s390x
+    volumes:
+      - ../../../:/project
+    entrypoint: /usr/bin/env bash /project/JavaNativeUtilsTest/docker/s390x/runtest.sh
+
+

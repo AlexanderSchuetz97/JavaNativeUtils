@@ -1,0 +1,200 @@
+//THIS FILE IS MACHINE GENERATED, DO NOT EDIT
+#include "linux_const_provider.h"
+#include "../common/jnigenerator.h"
+#include <sys/socket.h>
+#include <linux/netlink.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <pthread.h>
+#include <linux/if_addr.h>
+#include <net/if.h>
+#include <linux/rtnetlink.h>
+#include <linux/if_tun.h>
+#include <linux/if_arp.h>
+#include <linux/ioctl.h>
+#include <linux/sockios.h>
+#include <linux/fcntl.h>
+
+void jfetchconst_DefaultLinuxConstProvider(JNIEnv * env, jobject instance) {
+   jset_DefaultLinuxConstProvider_AF_UNSPEC(env, instance, (jint) AF_UNSPEC);
+   jset_DefaultLinuxConstProvider_AF_UNIX(env, instance, (jint) AF_UNIX);
+   jset_DefaultLinuxConstProvider_AF_INET(env, instance, (jint) AF_INET);
+   jset_DefaultLinuxConstProvider_AF_INET6(env, instance, (jint) AF_INET6);
+   jset_DefaultLinuxConstProvider_AF_NETLINK(env, instance, (jint) AF_NETLINK);
+   jset_DefaultLinuxConstProvider_SOCK_STREAM(env, instance, (jint) SOCK_STREAM);
+   jset_DefaultLinuxConstProvider_SOCK_DGRAM(env, instance, (jint) SOCK_DGRAM);
+   jset_DefaultLinuxConstProvider_SOCK_RAW(env, instance, (jint) SOCK_RAW);
+   jset_DefaultLinuxConstProvider_NETLINK_ROUTE(env, instance, (jint) NETLINK_ROUTE);
+   jset_DefaultLinuxConstProvider_SOL_SOCKET(env, instance, (jint) SOL_SOCKET);
+   jset_DefaultLinuxConstProvider_SO_DEBUG(env, instance, (jint) SO_DEBUG);
+   jset_DefaultLinuxConstProvider_SO_REUSEADDR(env, instance, (jint) SO_REUSEADDR);
+   jset_DefaultLinuxConstProvider_SO_TYPE(env, instance, (jint) SO_TYPE);
+   jset_DefaultLinuxConstProvider_SO_ERROR(env, instance, (jint) SO_ERROR);
+   jset_DefaultLinuxConstProvider_SO_DONTROUTE(env, instance, (jint) SO_DONTROUTE);
+   jset_DefaultLinuxConstProvider_SO_BROADCAST(env, instance, (jint) SO_BROADCAST);
+   jset_DefaultLinuxConstProvider_SO_SNDBUF(env, instance, (jint) SO_SNDBUF);
+   jset_DefaultLinuxConstProvider_SO_RCVBUF(env, instance, (jint) SO_RCVBUF);
+   jset_DefaultLinuxConstProvider_SO_SNDBUFFORCE(env, instance, (jint) SO_SNDBUFFORCE);
+   jset_DefaultLinuxConstProvider_SO_RCVBUFFORCE(env, instance, (jint) SO_RCVBUFFORCE);
+   jset_DefaultLinuxConstProvider_SO_KEEPALIVE(env, instance, (jint) SO_KEEPALIVE);
+   jset_DefaultLinuxConstProvider_SO_OOBINLINE(env, instance, (jint) SO_OOBINLINE);
+   jset_DefaultLinuxConstProvider_SO_NO_CHECK(env, instance, (jint) SO_NO_CHECK);
+   jset_DefaultLinuxConstProvider_SO_PRIORITY(env, instance, (jint) SO_PRIORITY);
+   jset_DefaultLinuxConstProvider_SO_LINGER(env, instance, (jint) SO_LINGER);
+   jset_DefaultLinuxConstProvider_SO_BSDCOMPAT(env, instance, (jint) SO_BSDCOMPAT);
+   jset_DefaultLinuxConstProvider_SO_REUSEPORT(env, instance, (jint) SO_REUSEPORT);
+   jset_DefaultLinuxConstProvider_SO_PASSCRED(env, instance, (jint) SO_PASSCRED);
+   jset_DefaultLinuxConstProvider_SO_PEERCRED(env, instance, (jint) SO_PEERCRED);
+   jset_DefaultLinuxConstProvider_SO_RCVLOWAT(env, instance, (jint) SO_RCVLOWAT);
+   jset_DefaultLinuxConstProvider_SO_SNDLOWAT(env, instance, (jint) SO_SNDLOWAT);
+   jset_DefaultLinuxConstProvider_SO_RCVTIMEO(env, instance, (jint) SO_RCVTIMEO);
+   jset_DefaultLinuxConstProvider_SO_SNDTIMEO(env, instance, (jint) SO_SNDTIMEO);
+   jset_DefaultLinuxConstProvider_SO_SECURITY_AUTHENTICATION(env, instance, (jint) SO_SECURITY_AUTHENTICATION);
+   jset_DefaultLinuxConstProvider_SO_SECURITY_ENCRYPTION_TRANSPORT(env, instance, (jint) SO_SECURITY_ENCRYPTION_TRANSPORT);
+   jset_DefaultLinuxConstProvider_SO_SECURITY_ENCRYPTION_NETWORK(env, instance, (jint) SO_SECURITY_ENCRYPTION_NETWORK);
+   jset_DefaultLinuxConstProvider_SO_BINDTODEVICE(env, instance, (jint) SO_BINDTODEVICE);
+   jset_DefaultLinuxConstProvider_SO_ATTACH_FILTER(env, instance, (jint) SO_ATTACH_FILTER);
+   jset_DefaultLinuxConstProvider_SO_DETACH_FILTER(env, instance, (jint) SO_DETACH_FILTER);
+   jset_DefaultLinuxConstProvider_SO_GET_FILTER(env, instance, (jint) SO_GET_FILTER);
+   jset_DefaultLinuxConstProvider_SO_PEERNAME(env, instance, (jint) SO_PEERNAME);
+   jset_DefaultLinuxConstProvider_SO_TIMESTAMP(env, instance, (jint) SO_TIMESTAMP);
+   jset_DefaultLinuxConstProvider_SCM_TIMESTAMP(env, instance, (jint) SCM_TIMESTAMP);
+   jset_DefaultLinuxConstProvider_SO_ACCEPTCONN(env, instance, (jint) SO_ACCEPTCONN);
+   jset_DefaultLinuxConstProvider_SO_PEERSEC(env, instance, (jint) SO_PEERSEC);
+   jset_DefaultLinuxConstProvider_SO_PASSSEC(env, instance, (jint) SO_PASSSEC);
+   jset_DefaultLinuxConstProvider_SO_TIMESTAMPNS(env, instance, (jint) SO_TIMESTAMPNS);
+   jset_DefaultLinuxConstProvider_SCM_TIMESTAMPNS(env, instance, (jint) SCM_TIMESTAMPNS);
+   jset_DefaultLinuxConstProvider_SO_MARK(env, instance, (jint) SO_MARK);
+   jset_DefaultLinuxConstProvider_SO_TIMESTAMPING(env, instance, (jint) SO_TIMESTAMPING);
+   jset_DefaultLinuxConstProvider_SCM_TIMESTAMPING(env, instance, (jint) SCM_TIMESTAMPING);
+   jset_DefaultLinuxConstProvider_SO_PROTOCOL(env, instance, (jint) SO_PROTOCOL);
+   jset_DefaultLinuxConstProvider_SO_DOMAIN(env, instance, (jint) SO_DOMAIN);
+   jset_DefaultLinuxConstProvider_SO_RXQ_OVFL(env, instance, (jint) SO_RXQ_OVFL);
+   jset_DefaultLinuxConstProvider_SO_WIFI_STATUS(env, instance, (jint) SO_WIFI_STATUS);
+   jset_DefaultLinuxConstProvider_SCM_WIFI_STATUS(env, instance, (jint) SCM_WIFI_STATUS);
+   jset_DefaultLinuxConstProvider_SO_PEEK_OFF(env, instance, (jint) SO_PEEK_OFF);
+   jset_DefaultLinuxConstProvider_SO_NOFCS(env, instance, (jint) SO_NOFCS);
+   jset_DefaultLinuxConstProvider_SO_LOCK_FILTER(env, instance, (jint) SO_LOCK_FILTER);
+   jset_DefaultLinuxConstProvider_SO_SELECT_ERR_QUEUE(env, instance, (jint) SO_SELECT_ERR_QUEUE);
+   jset_DefaultLinuxConstProvider_SO_BUSY_POLL(env, instance, (jint) SO_BUSY_POLL);
+   jset_DefaultLinuxConstProvider_SO_MAX_PACING_RATE(env, instance, (jint) SO_MAX_PACING_RATE);
+   jset_DefaultLinuxConstProvider_SO_BPF_EXTENSIONS(env, instance, (jint) SO_BPF_EXTENSIONS);
+   jset_DefaultLinuxConstProvider_SO_INCOMING_CPU(env, instance, (jint) SO_INCOMING_CPU);
+   jset_DefaultLinuxConstProvider_SO_ATTACH_BPF(env, instance, (jint) SO_ATTACH_BPF);
+   jset_DefaultLinuxConstProvider_SO_DETACH_BPF(env, instance, (jint) SO_DETACH_BPF);
+   jset_DefaultLinuxConstProvider_SO_ATTACH_REUSEPORT_CBPF(env, instance, (jint) SO_ATTACH_REUSEPORT_CBPF);
+   jset_DefaultLinuxConstProvider_SO_ATTACH_REUSEPORT_EBPF(env, instance, (jint) SO_ATTACH_REUSEPORT_EBPF);
+   jset_DefaultLinuxConstProvider_SO_CNX_ADVICE(env, instance, (jint) SO_CNX_ADVICE);
+   jset_DefaultLinuxConstProvider_SCM_TIMESTAMPING_OPT_STATS(env, instance, (jint) SCM_TIMESTAMPING_OPT_STATS);
+   jset_DefaultLinuxConstProvider_SO_MEMINFO(env, instance, (jint) SO_MEMINFO);
+   jset_DefaultLinuxConstProvider_SO_INCOMING_NAPI_ID(env, instance, (jint) SO_INCOMING_NAPI_ID);
+   jset_DefaultLinuxConstProvider_SO_COOKIE(env, instance, (jint) SO_COOKIE);
+   jset_DefaultLinuxConstProvider_SCM_TIMESTAMPING_PKTINFO(env, instance, (jint) SCM_TIMESTAMPING_PKTINFO);
+   jset_DefaultLinuxConstProvider_SO_PEERGROUPS(env, instance, (jint) SO_PEERGROUPS);
+   jset_DefaultLinuxConstProvider_SO_ZEROCOPY(env, instance, (jint) SO_ZEROCOPY);
+   jset_DefaultLinuxConstProvider_SCM_RIGHTS(env, instance, (jint) SCM_RIGHTS);
+   jset_DefaultLinuxConstProvider_MAP_SHARED(env, instance, (jint) MAP_SHARED);
+   jset_DefaultLinuxConstProvider_MAP_PRIVATE(env, instance, (jint) MAP_PRIVATE);
+   jset_DefaultLinuxConstProvider_O_ACCMODE(env, instance, (jint) O_ACCMODE);
+   jset_DefaultLinuxConstProvider_O_RDONLY(env, instance, (jint) O_RDONLY);
+   jset_DefaultLinuxConstProvider_O_WRONLY(env, instance, (jint) O_WRONLY);
+   jset_DefaultLinuxConstProvider_O_RDWR(env, instance, (jint) O_RDWR);
+   jset_DefaultLinuxConstProvider_O_CREAT(env, instance, (jint) O_CREAT);
+   jset_DefaultLinuxConstProvider_O_EXCL(env, instance, (jint) O_EXCL);
+   jset_DefaultLinuxConstProvider_O_NOCTTY(env, instance, (jint) O_NOCTTY);
+   jset_DefaultLinuxConstProvider_O_TRUNC(env, instance, (jint) O_TRUNC);
+   jset_DefaultLinuxConstProvider_O_APPEND(env, instance, (jint) O_APPEND);
+   jset_DefaultLinuxConstProvider_O_NONBLOCK(env, instance, (jint) O_NONBLOCK);
+   jset_DefaultLinuxConstProvider_O_NDELAY(env, instance, (jint) O_NDELAY);
+   jset_DefaultLinuxConstProvider_O_SYNC(env, instance, (jint) O_SYNC);
+   jset_DefaultLinuxConstProvider_O_LARGEFILE(env, instance, (jint) O_LARGEFILE);
+   jset_DefaultLinuxConstProvider_O_DIRECTORY(env, instance, (jint) O_DIRECTORY);
+   jset_DefaultLinuxConstProvider_O_NOFOLLOW(env, instance, (jint) O_NOFOLLOW);
+   jset_DefaultLinuxConstProvider_O_CLOEXEC(env, instance, (jint) O_CLOEXEC);
+   jset_DefaultLinuxConstProvider_O_DIRECT(env, instance, (jint) O_DIRECT);
+   jset_DefaultLinuxConstProvider_O_NOATIME(env, instance, (jint) O_NOATIME);
+   jset_DefaultLinuxConstProvider_O_PATH(env, instance, (jint) O_PATH);
+   jset_DefaultLinuxConstProvider_O_DSYNC(env, instance, (jint) O_DSYNC);
+   jset_DefaultLinuxConstProvider_S_IRUSR(env, instance, (jint) S_IRUSR);
+   jset_DefaultLinuxConstProvider_S_IWUSR(env, instance, (jint) S_IWUSR);
+   jset_DefaultLinuxConstProvider_S_IXUSR(env, instance, (jint) S_IXUSR);
+   jset_DefaultLinuxConstProvider_S_IRGRP(env, instance, (jint) S_IRGRP);
+   jset_DefaultLinuxConstProvider_S_IWGRP(env, instance, (jint) S_IWGRP);
+   jset_DefaultLinuxConstProvider_S_IXGRP(env, instance, (jint) S_IXGRP);
+   jset_DefaultLinuxConstProvider_S_IROTH(env, instance, (jint) S_IROTH);
+   jset_DefaultLinuxConstProvider_S_IWOTH(env, instance, (jint) S_IWOTH);
+   jset_DefaultLinuxConstProvider_S_IXOTH(env, instance, (jint) S_IXOTH);
+   jset_DefaultLinuxConstProvider_S_IRWXU(env, instance, (jint) S_IRWXU);
+   jset_DefaultLinuxConstProvider_S_IRWXG(env, instance, (jint) S_IRWXG);
+   jset_DefaultLinuxConstProvider_S_IRWXO(env, instance, (jint) S_IRWXO);
+   jset_DefaultLinuxConstProvider_IFNAMSIZ(env, instance, (jint) IFNAMSIZ);
+   jset_DefaultLinuxConstProvider_SIOCGIFFLAGS(env, instance, (jint) SIOCGIFFLAGS);
+   jset_DefaultLinuxConstProvider_SIOCSIFFLAGS(env, instance, (jint) SIOCSIFFLAGS);
+   jset_DefaultLinuxConstProvider_SIOCGIFMTU(env, instance, (jint) SIOCGIFMTU);
+   jset_DefaultLinuxConstProvider_NLM_F_REQUEST(env, instance, (jshort) NLM_F_REQUEST);
+   jset_DefaultLinuxConstProvider_NLM_F_DUMP(env, instance, (jshort) NLM_F_DUMP);
+   jset_DefaultLinuxConstProvider_NLM_F_MULTI(env, instance, (jshort) NLM_F_MULTI);
+   jset_DefaultLinuxConstProvider_NLM_F_CREATE(env, instance, (jshort) NLM_F_CREATE);
+   jset_DefaultLinuxConstProvider_NLM_F_EXCL(env, instance, (jshort) NLM_F_EXCL);
+   jset_DefaultLinuxConstProvider_NLM_F_ACK(env, instance, (jshort) NLM_F_ACK);
+   jset_DefaultLinuxConstProvider_NLMSG_NOOP(env, instance, (jshort) NLMSG_NOOP);
+   jset_DefaultLinuxConstProvider_NLMSG_ERROR(env, instance, (jshort) NLMSG_ERROR);
+   jset_DefaultLinuxConstProvider_NLMSG_DONE(env, instance, (jshort) NLMSG_DONE);
+   jset_DefaultLinuxConstProvider_NLMSG_OVERRUN(env, instance, (jshort) NLMSG_OVERRUN);
+   jset_DefaultLinuxConstProvider_RTM_GETLINK(env, instance, (jshort) RTM_GETLINK);
+   jset_DefaultLinuxConstProvider_RTM_DELADDR(env, instance, (jshort) RTM_DELADDR);
+   jset_DefaultLinuxConstProvider_RTM_GETADDR(env, instance, (jshort) RTM_GETADDR);
+   jset_DefaultLinuxConstProvider_RTM_NEWADDR(env, instance, (jshort) RTM_NEWADDR);
+   jset_DefaultLinuxConstProvider_RT_SCOPE_UNIVERSE(env, instance, (jbyte) RT_SCOPE_UNIVERSE);
+   jset_DefaultLinuxConstProvider_ARPHRD_NETROM(env, instance, (jshort) ARPHRD_NETROM);
+   jset_DefaultLinuxConstProvider_IFLA_IFNAME(env, instance, (jshort) IFLA_IFNAME);
+   jset_DefaultLinuxConstProvider_IFA_UNSPEC(env, instance, (jshort) IFA_UNSPEC);
+   jset_DefaultLinuxConstProvider_IFA_ADDRESS(env, instance, (jshort) IFA_ADDRESS);
+   jset_DefaultLinuxConstProvider_IFA_LOCAL(env, instance, (jshort) IFA_LOCAL);
+   jset_DefaultLinuxConstProvider_IFA_LABEL(env, instance, (jshort) IFA_LABEL);
+   jset_DefaultLinuxConstProvider_IFA_BROADCAST(env, instance, (jshort) IFA_BROADCAST);
+   jset_DefaultLinuxConstProvider_IFA_ANYCAST(env, instance, (jshort) IFA_ANYCAST);
+   jset_DefaultLinuxConstProvider_IFA_CACHEINFO(env, instance, (jshort) IFA_CACHEINFO);
+   jset_DefaultLinuxConstProvider_IFA_F_PERMANENT(env, instance, (jint) IFA_F_PERMANENT);
+   jset_DefaultLinuxConstProvider_IFA_F_SECONDARY(env, instance, (jint) IFA_F_SECONDARY);
+   jset_DefaultLinuxConstProvider_IFF_UP(env, instance, (jint) IFF_UP);
+   jset_DefaultLinuxConstProvider_IFF_NO_PI(env, instance, (jint) IFF_NO_PI);
+   jset_DefaultLinuxConstProvider_TUNSETIFF(env, instance, (jint) TUNSETIFF);
+   jset_DefaultLinuxConstProvider_TUNSETPERSIST(env, instance, (jint) TUNSETPERSIST);
+   jset_DefaultLinuxConstProvider_TUNGETSNDBUF(env, instance, (jint) TUNGETSNDBUF);
+   jset_DefaultLinuxConstProvider_RTA_UNSPEC(env, instance, (jint) RTA_UNSPEC);
+   jset_DefaultLinuxConstProvider_RTA_DST(env, instance, (jint) RTA_DST);
+   jset_DefaultLinuxConstProvider_RTA_SRC(env, instance, (jint) RTA_SRC);
+   jset_DefaultLinuxConstProvider_RTA_IIF(env, instance, (jint) RTA_IIF);
+   jset_DefaultLinuxConstProvider_RTA_OIF(env, instance, (jint) RTA_OIF);
+   jset_DefaultLinuxConstProvider_RTA_GATEWAY(env, instance, (jint) RTA_GATEWAY);
+   jset_DefaultLinuxConstProvider_RTA_PRIORITY(env, instance, (jint) RTA_PRIORITY);
+   jset_DefaultLinuxConstProvider_RTA_PREFSRC(env, instance, (jint) RTA_PREFSRC);
+   jset_DefaultLinuxConstProvider_RTA_METRICS(env, instance, (jint) RTA_METRICS);
+   jset_DefaultLinuxConstProvider_RTA_MULTIPATH(env, instance, (jint) RTA_MULTIPATH);
+   jset_DefaultLinuxConstProvider_RTA_PROTOINFO(env, instance, (jint) RTA_PROTOINFO);
+   jset_DefaultLinuxConstProvider_RTA_FLOW(env, instance, (jint) RTA_FLOW);
+   jset_DefaultLinuxConstProvider_RTA_CACHEINFO(env, instance, (jint) RTA_CACHEINFO);
+   jset_DefaultLinuxConstProvider_RTA_SESSION(env, instance, (jint) RTA_SESSION);
+   jset_DefaultLinuxConstProvider_RTA_MP_ALGO(env, instance, (jint) RTA_MP_ALGO);
+   jset_DefaultLinuxConstProvider_RTA_TABLE(env, instance, (jint) RTA_TABLE);
+   jset_DefaultLinuxConstProvider_RTA_MARK(env, instance, (jint) RTA_MARK);
+   jset_DefaultLinuxConstProvider_RTA_MFC_STATS(env, instance, (jint) RTA_MFC_STATS);
+   jset_DefaultLinuxConstProvider_RTA_VIA(env, instance, (jint) RTA_VIA);
+   jset_DefaultLinuxConstProvider_RTA_NEWDST(env, instance, (jint) RTA_NEWDST);
+   jset_DefaultLinuxConstProvider_RTA_PREF(env, instance, (jint) RTA_PREF);
+   jset_DefaultLinuxConstProvider_RTA_ENCAP_TYPE(env, instance, (jint) RTA_ENCAP_TYPE);
+   jset_DefaultLinuxConstProvider_RTA_ENCAP(env, instance, (jint) RTA_ENCAP);
+   jset_DefaultLinuxConstProvider_RTA_EXPIRES(env, instance, (jint) RTA_EXPIRES);
+   jset_DefaultLinuxConstProvider_RTA_PAD(env, instance, (jint) RTA_PAD);
+   jset_DefaultLinuxConstProvider_RTA_UID(env, instance, (jint) RTA_UID);
+   jset_DefaultLinuxConstProvider_RTA_TTL_PROPAGATE(env, instance, (jint) RTA_TTL_PROPAGATE);
+   jset_DefaultLinuxConstProvider_PTHREAD_MUTEX_STALLED(env, instance, (jint) PTHREAD_MUTEX_STALLED);
+   jset_DefaultLinuxConstProvider_PTHREAD_MUTEX_ROBUST(env, instance, (jint) PTHREAD_MUTEX_ROBUST);
+   jset_DefaultLinuxConstProvider_PTHREAD_PROCESS_SHARED(env, instance, (jint) PTHREAD_PROCESS_SHARED);
+   jset_DefaultLinuxConstProvider_PTHREAD_PROCESS_PRIVATE(env, instance, (jint) PTHREAD_PROCESS_PRIVATE);
+   jset_DefaultLinuxConstProvider_PTHREAD_MUTEX_RECURSIVE(env, instance, (jint) PTHREAD_MUTEX_RECURSIVE);
+   jset_DefaultLinuxConstProvider_PTHREAD_MUTEX_ERRORCHECK(env, instance, (jint) PTHREAD_MUTEX_ERRORCHECK);
+   jset_DefaultLinuxConstProvider_PTHREAD_MUTEX_DEFAULT(env, instance, (jint) PTHREAD_MUTEX_DEFAULT);
+   jset_DefaultLinuxConstProvider_PTHREAD_MUTEX_NORMAL(env, instance, (jint) PTHREAD_MUTEX_NORMAL);
+}

@@ -19,6 +19,8 @@
 //
 package eu.aschuetz.nativeutils.api;
 
+import eu.aschuetz.nativeutils.api.consts.LinuxConstProvider;
+
 import java.util.Map;
 
 public interface NativeUtilsProvider {

@@ -6,7 +6,7 @@
     <parent>
         <groupId>eu.aschuetz</groupId>
         <artifactId>JavaNativeUtils</artifactId>
-        <version>4.0</version>
+        <version>4.1</version>
     </parent>
 
     <artifactId>JavaNativeUtilsJni</artifactId>
@@ -41,13 +41,48 @@
             <plugin>
                 <groupId>io.github.alexanderschuetz97</groupId>
                 <artifactId>jnigenerator</artifactId>
-                <version>1.2</version>
+                <version>1.3</version>
                 <executions>
                     <execution>
                         <id>stub</id>
                         <phase>process-classes</phase>
                         <configuration>
+                            <gen>true</gen>
+                            <consts>
+                                <const>
+                                    <classname>eu.aschuetz.nativeutils.api.consts.DefaultLinuxConstProvider</classname>
+                                    <headers>
+                                        <header>#include "linux_const_provider.h"</header>
+                                        <header>#include "../common/jnigenerator.h"</header>
+                                        <header>#include &lt;sys/socket.h&gt;</header>
+                                        <header>#include &lt;linux/netlink.h&gt;</header>
+                                        <header>#include &lt;sys/mman.h&gt;</header>
+                                        <header>#include &lt;sys/stat.h&gt;</header>
+                                        <header>#include &lt;pthread.h&gt;</header>
+                                        <header>#include &lt;linux/if_addr.h&gt;</header>
+                                        <header>#include &lt;net/if.h&gt;</header>
+                                        <header>#include &lt;linux/rtnetlink.h></header>
+                                        <header>#include &lt;linux/if_tun.h&gt;</header>
+                                        <header>#include &lt;linux/if_arp.h&gt;</header>
+                                        <header>#include &lt;linux/ioctl.h&gt;</header>
+                                        <header>#include &lt;linux/sockios.h&gt;</header>
+                                        <header>#include &lt;linux/fcntl.h&gt;</header>
+                                    </headers>
+                                    <constFilters>
+                                        <constFilter>O_ASYNC</constFilter>
+                                        <constFilter>RTA_IP_PROTO</constFilter>
+                                        <constFilter>RTA_SPORT</constFilter>
+                                        <constFilter>RTA_DPORT</constFilter>
+                                        <constFilter>RTA_NH_ID</constFilter>
+                                    </constFilters>
+                                    <headerFile>JavaNativeUtilsJni/src/main/native/linux/linux_const_provider.h</headerFile>
+                                    <codeFile>JavaNativeUtilsJni/src/main/native/linux/linux_const_provider.c</codeFile>
+                                </const>
+                            </consts>
                             <structs>
+                                <struct>
+                                    <classname>eu.aschuetz.nativeutils.api.consts.DefaultLinuxConstProvider</classname>
+                                </struct>
                                 <struct>
                                     <classname>eu.aschuetz.nativeutils.api.structs.RegEnumKeyExResult</classname>
                                 </struct>

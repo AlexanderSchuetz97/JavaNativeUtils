@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+
+  java-native-utils-test-amd64-musl:
+    build:
+      context: image
+    container_name: java-native-utils-test-amd64-musl
+    environment:
+      - QEMU=false
+#      - QARCH=amd64
+    volumes:
+      - ../../../:/project
+    entrypoint: /usr/bin/env bash /project/JavaNativeUtilsTest/docker/amd64_musl/runtest.sh
+
+

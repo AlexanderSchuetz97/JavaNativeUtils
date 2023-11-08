@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+
+  java-native-utils-test-armhf:
+    build:
+      context: image
+    container_name: java-native-utils-test-armhf
+    environment:
+      - QEMU=true
+      - QARCH=armhf
+    volumes:
+      - ../../../:/project
+    entrypoint: /usr/bin/env bash /project/JavaNativeUtilsTest/docker/runtest.sh
+
+

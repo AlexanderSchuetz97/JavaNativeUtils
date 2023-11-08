@@ -19,8 +19,10 @@
 //
 package eu.aschuetz.nativeutils.impl;
 
+import eu.aschuetz.nativeutils.api.consts.DefaultLinuxConstProvider;
 import eu.aschuetz.nativeutils.api.LinuxNativeUtil;
 import eu.aschuetz.nativeutils.api.NativeMemory;
+import eu.aschuetz.nativeutils.api.consts.LinuxConstProvider;
 import eu.aschuetz.nativeutils.api.exceptions.*;
 import eu.aschuetz.nativeutils.api.structs.*;
 
@@ -40,6 +42,19 @@ import java.util.Collection;
 
 public class JNILinuxNativeUtil extends JNICommonNativeUtil implements LinuxNativeUtil {
 
+    public static native void _getConst(DefaultLinuxConstProvider provider);
+
+    private final DefaultLinuxConstProvider theConst = new DefaultLinuxConstProvider();
+
+    public JNILinuxNativeUtil() {
+        _getConst(theConst);
+    }
+
+    @Override
+    public LinuxConstProvider getLinuxConstProvider() {
+        return theConst;
+    }
+
     @Override
     public boolean isWindows() {
         return false;
@@ -49,6 +64,10 @@ public class JNILinuxNativeUtil extends JNICommonNativeUtil implements LinuxNati
     public boolean isLinux() {
         return true;
     }
+
+
+
+
 
     @Override
     public native int getFD(FileDescriptor fd);

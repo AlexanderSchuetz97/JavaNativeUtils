@@ -81,7 +81,7 @@ public final class NativeUtils {
         throw new UnsupportedOperationException("Windows functions not supported.");
     }
 
-    private static NativeUtilsProvider getProvider() {
+    static NativeUtilsProvider getProvider() {
         if (provider != null) {
             return provider;
         }

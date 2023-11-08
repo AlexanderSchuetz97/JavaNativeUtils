@@ -235,6 +235,7 @@ JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_open
 	}
 
 	while(true) {
+
 		int fd = open(ptr, (int) flags, (mode_t) mode);
 
 		if (fd == -1) {

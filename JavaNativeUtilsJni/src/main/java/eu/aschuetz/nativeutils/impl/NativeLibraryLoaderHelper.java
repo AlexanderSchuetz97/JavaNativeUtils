@@ -353,7 +353,6 @@ public class NativeLibraryLoaderHelper {
             try {
                 System.load(loadingFile.getAbsolutePath());
             } catch (Throwable t) {
-                t.printStackTrace();
                 throw t;
 
             }
