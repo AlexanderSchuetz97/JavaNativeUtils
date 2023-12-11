@@ -9,10 +9,10 @@ extern "C" {
 #endif
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
- * Method:    atomic8ByteOperationsRequireAlignment
+ * Method:    supportsCompareAndSet16Byte
  * Signature: ()Z
  */
-JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_atomic8ByteOperationsRequireAlignment
+JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_supportsCompareAndSet16Byte
   (JNIEnv *, jobject);
 
 /*
@@ -129,18 +129,66 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_readDou
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
- * Method:    supportsAtomicOperations
+ * Method:    supportsCompareAndSet8Byte
  * Signature: ()Z
  */
-JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_supportsAtomicOperations
+JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_supportsCompareAndSet8Byte
   (JNIEnv *, jobject);
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
- * Method:    supports16ByteCompareAndSet
+ * Method:    compareAndSet8ByteAlignment
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_compareAndSet8ByteAlignment
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
+ * Method:    supportsCompareAndSet4Byte
  * Signature: ()Z
  */
-JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_supports16ByteCompareAndSet
+JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_supportsCompareAndSet4Byte
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
+ * Method:    compareAndSet4ByteAlignment
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_compareAndSet4ByteAlignment
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
+ * Method:    supportsCompareAndSet2Byte
+ * Signature: ()Z
+ */
+JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_supportsCompareAndSet2Byte
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
+ * Method:    compareAndSet2ByteAlignment
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_compareAndSet2ByteAlignment
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
+ * Method:    supportsCompareAndSet1Byte
+ * Signature: ()Z
+ */
+JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_supportsCompareAndSet1Byte
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
+ * Method:    compareAndSet1ByteAlignment
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_compareAndSet1ByteAlignment
   (JNIEnv *, jobject);
 
 /*
@@ -394,130 +442,130 @@ JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_com
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
  * Method:    spinAndSet
- * Signature: (JJJJJJ)Z
+ * Signature: (JJJJJJLjava/nio/ByteBuffer;)Z
  */
-JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spinAndSet__JJJJJJ
-  (JNIEnv *, jobject, jlong, jlong, jlong, jlong, jlong, jlong);
+JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spinAndSet__JJJJJJLjava_nio_ByteBuffer_2
+  (JNIEnv *, jobject, jlong, jlong, jlong, jlong, jlong, jlong, jobject);
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
  * Method:    spinAndSet
- * Signature: (JJJJJ)V
+ * Signature: (JJJJJLjava/nio/ByteBuffer;)V
  */
-JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spinAndSet__JJJJJ
-  (JNIEnv *, jobject, jlong, jlong, jlong, jlong, jlong);
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spinAndSet__JJJJJLjava_nio_ByteBuffer_2
+  (JNIEnv *, jobject, jlong, jlong, jlong, jlong, jlong, jobject);
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
  * Method:    spin
- * Signature: (JJJJJ)Z
+ * Signature: (JJJJJLjava/nio/ByteBuffer;)Z
  */
-JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spin__JJJJJ
-  (JNIEnv *, jobject, jlong, jlong, jlong, jlong, jlong);
+JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spin__JJJJJLjava_nio_ByteBuffer_2
+  (JNIEnv *, jobject, jlong, jlong, jlong, jlong, jlong, jobject);
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
  * Method:    spin
- * Signature: (JJJJ)V
+ * Signature: (JJJJLjava/nio/ByteBuffer;)V
  */
-JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spin__JJJJ
-  (JNIEnv *, jobject, jlong, jlong, jlong, jlong);
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spin__JJJJLjava_nio_ByteBuffer_2
+  (JNIEnv *, jobject, jlong, jlong, jlong, jlong, jobject);
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
  * Method:    spinAndSet
- * Signature: (JJIIJJ)Z
+ * Signature: (JJIIJJLjava/nio/ByteBuffer;)Z
  */
-JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spinAndSet__JJIIJJ
-  (JNIEnv *, jobject, jlong, jlong, jint, jint, jlong, jlong);
+JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spinAndSet__JJIIJJLjava_nio_ByteBuffer_2
+  (JNIEnv *, jobject, jlong, jlong, jint, jint, jlong, jlong, jobject);
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
  * Method:    spinAndSet
- * Signature: (JJIIJ)V
+ * Signature: (JJIIJLjava/nio/ByteBuffer;)V
  */
-JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spinAndSet__JJIIJ
-  (JNIEnv *, jobject, jlong, jlong, jint, jint, jlong);
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spinAndSet__JJIIJLjava_nio_ByteBuffer_2
+  (JNIEnv *, jobject, jlong, jlong, jint, jint, jlong, jobject);
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
  * Method:    spin
- * Signature: (JJIJJ)Z
+ * Signature: (JJIJJLjava/nio/ByteBuffer;)Z
  */
-JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spin__JJIJJ
-  (JNIEnv *, jobject, jlong, jlong, jint, jlong, jlong);
+JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spin__JJIJJLjava_nio_ByteBuffer_2
+  (JNIEnv *, jobject, jlong, jlong, jint, jlong, jlong, jobject);
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
  * Method:    spin
- * Signature: (JJIJ)V
+ * Signature: (JJIJLjava/nio/ByteBuffer;)V
  */
-JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spin__JJIJ
-  (JNIEnv *, jobject, jlong, jlong, jint, jlong);
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spin__JJIJLjava_nio_ByteBuffer_2
+  (JNIEnv *, jobject, jlong, jlong, jint, jlong, jobject);
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
  * Method:    spinAndSet
- * Signature: (JJSSJJ)Z
+ * Signature: (JJSSJJLjava/nio/ByteBuffer;)Z
  */
-JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spinAndSet__JJSSJJ
-  (JNIEnv *, jobject, jlong, jlong, jshort, jshort, jlong, jlong);
+JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spinAndSet__JJSSJJLjava_nio_ByteBuffer_2
+  (JNIEnv *, jobject, jlong, jlong, jshort, jshort, jlong, jlong, jobject);
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
  * Method:    spinAndSet
- * Signature: (JJSSJ)V
+ * Signature: (JJSSJLjava/nio/ByteBuffer;)V
  */
-JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spinAndSet__JJSSJ
-  (JNIEnv *, jobject, jlong, jlong, jshort, jshort, jlong);
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spinAndSet__JJSSJLjava_nio_ByteBuffer_2
+  (JNIEnv *, jobject, jlong, jlong, jshort, jshort, jlong, jobject);
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
  * Method:    spin
- * Signature: (JJSJJ)Z
+ * Signature: (JJSJJLjava/nio/ByteBuffer;)Z
  */
-JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spin__JJSJJ
-  (JNIEnv *, jobject, jlong, jlong, jshort, jlong, jlong);
+JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spin__JJSJJLjava_nio_ByteBuffer_2
+  (JNIEnv *, jobject, jlong, jlong, jshort, jlong, jlong, jobject);
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
  * Method:    spin
- * Signature: (JJSJ)V
+ * Signature: (JJSJLjava/nio/ByteBuffer;)V
  */
-JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spin__JJSJ
-  (JNIEnv *, jobject, jlong, jlong, jshort, jlong);
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spin__JJSJLjava_nio_ByteBuffer_2
+  (JNIEnv *, jobject, jlong, jlong, jshort, jlong, jobject);
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
  * Method:    spinAndSet
- * Signature: (JJBBJJ)Z
+ * Signature: (JJBBJJLjava/nio/ByteBuffer;)Z
  */
-JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spinAndSet__JJBBJJ
-  (JNIEnv *, jobject, jlong, jlong, jbyte, jbyte, jlong, jlong);
+JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spinAndSet__JJBBJJLjava_nio_ByteBuffer_2
+  (JNIEnv *, jobject, jlong, jlong, jbyte, jbyte, jlong, jlong, jobject);
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
  * Method:    spinAndSet
- * Signature: (JJBBJ)V
+ * Signature: (JJBBJLjava/nio/ByteBuffer;)V
  */
-JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spinAndSet__JJBBJ
-  (JNIEnv *, jobject, jlong, jlong, jbyte, jbyte, jlong);
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spinAndSet__JJBBJLjava_nio_ByteBuffer_2
+  (JNIEnv *, jobject, jlong, jlong, jbyte, jbyte, jlong, jobject);
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
  * Method:    spin
- * Signature: (JJBJJ)Z
+ * Signature: (JJBJJLjava/nio/ByteBuffer;)Z
  */
-JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spin__JJBJJ
-  (JNIEnv *, jobject, jlong, jlong, jbyte, jlong, jlong);
+JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spin__JJBJJLjava_nio_ByteBuffer_2
+  (JNIEnv *, jobject, jlong, jlong, jbyte, jlong, jlong, jobject);
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory
  * Method:    spin
- * Signature: (JJBJ)V
+ * Signature: (JJBJLjava/nio/ByteBuffer;)V
  */
-JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spin__JJBJ
-  (JNIEnv *, jobject, jlong, jlong, jbyte, jlong);
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_spin__JJBJLjava_nio_ByteBuffer_2
+  (JNIEnv *, jobject, jlong, jlong, jbyte, jlong, jobject);
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNINativeMemory

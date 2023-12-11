@@ -19,10 +19,7 @@
 //
 package eu.aschuetz.nativeutils.test.windows;
 
-import eu.aschuetz.nativeutils.api.NativeMemory;
-import eu.aschuetz.nativeutils.api.NativeUtils;
-import eu.aschuetz.nativeutils.api.WinConst;
-import eu.aschuetz.nativeutils.api.WindowsNativeUtil;
+import eu.aschuetz.nativeutils.api.*;
 import eu.aschuetz.nativeutils.api.exceptions.InvalidFileDescriptorException;
 import eu.aschuetz.nativeutils.api.exceptions.UnknownNativeErrorException;
 import eu.aschuetz.nativeutils.test.common.MemTest;
@@ -30,6 +27,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 
+import java.io.SyncFailedException;
 import java.util.UUID;
 
 public class WinMmapTest extends MemTest {
@@ -40,16 +38,35 @@ public class WinMmapTest extends MemTest {
     private NativeMemory view2;
     @Before
     public void before() throws Throwable {
-        WindowsNativeUtil wnu = NativeUtils.getWindowsUtil();
+        final WindowsNativeUtil wnu = NativeUtils.getWindowsUtil();
         UUID uuid = UUID.randomUUID();
         hdl = wnu.CreateFileMappingA(wnu.INVALID_HANDLE_VALUE(), 0, WinConst.PAGE_READWRITE, 0, 4096, uuid.toString());
 
 
-        memory = wnu.MapViewOfFileEx(hdl, WinConst.FILE_MAP_ALL_ACCESS, 0, 0, 4096, 0);
+        long ptr1 = wnu.MapViewOfFileEx(hdl, WinConst.FILE_MAP_ALL_ACCESS, 0, 0, 4096, 0);
+
+        final PointerHandler handler = new PointerHandler() {
+            @Override
+            public void handleClose(long ptr, long size) {
+                try {
+                    wnu.UnmapViewOfFile(ptr);
+                } catch (UnknownNativeErrorException e) {
+                    throw new IllegalStateException(""+e.intCode());
+                }
+            }
+
+            @Override
+            public void handleSync(long ptr, long size, long offset, long length, boolean invalidate) throws SyncFailedException {
+
+            }
+        };
+
+        memory = wnu.pointer(ptr1, 4096, handler);
 
         hdl2 = wnu.OpenFileMappingA(WinConst.FILE_MAP_ALL_ACCESS, false, uuid.toString());
 
-        view2 = wnu.MapViewOfFileEx(hdl2, WinConst.FILE_MAP_ALL_ACCESS, 0, 0, 4096, 0);
+        long ptr2 = wnu.MapViewOfFileEx(hdl2, WinConst.FILE_MAP_ALL_ACCESS, 0, 0, 4096, 0);
+        view2 = wnu.pointer(ptr2, 4096, handler);
 
         rng.setSeed(0);
         memory.zero();

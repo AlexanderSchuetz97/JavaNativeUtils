@@ -36,18 +36,11 @@ public class UserTest {
     public void testUser() throws Exception {
         LinuxNativeUtil lnu = NativeUtils.getLinuxUtil();
         long uid = lnu.getuid();
-        String username = null;
-        try {
-            username = lnu.getlogin_r();
-        } catch (IllegalStateException e) {
-            //Docker container
-            Assume.assumeFalse("The calling process has no controlling terminal.".equals(e.getMessage()));
-        }
-
         Passwd passwd = lnu.getpwuid_r(uid);
-        Assert.assertEquals(passwd.getPw_name(), username);
-        Passwd passwd2 = lnu.getpwnam_r(username);
+        Passwd passwd2 = lnu.getpwnam_r(passwd.getPw_name());
         Assert.assertEquals(passwd, passwd2);
+
+        String username = passwd.getPw_name();
 
         long[] gid = lnu.getgrouplist(username, passwd.getPw_gid());
         boolean found = false;
@@ -63,5 +56,22 @@ public class UserTest {
         }
 
         Assert.assertTrue(Arrays.toString(gid) + "->" + passwd.getPw_gid(), found);
+    }
+
+    @Test
+    public void testUser2() throws Exception {
+        LinuxNativeUtil lnu = NativeUtils.getLinuxUtil();
+        long uid = lnu.getuid();
+        String username = null;
+        try {
+            username = lnu.getlogin_r();
+        } catch (IllegalStateException e) {
+            //No terminal/stdin etc
+            Assume.assumeFalse("The calling process has no controlling terminal.".equals(e.getMessage()));
+            Assume.assumeFalse("Standard input didn't refer to a terminal.".equals(e.getMessage()));
+        }
+
+        Passwd passwd = lnu.getpwuid_r(uid);
+        Assert.assertEquals(passwd.getPw_name(), username);
     }
 }

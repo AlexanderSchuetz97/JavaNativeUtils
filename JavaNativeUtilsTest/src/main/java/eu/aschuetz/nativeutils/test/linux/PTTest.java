@@ -7,7 +7,11 @@ import eu.aschuetz.nativeutils.api.exceptions.UnknownNativeErrorException;
 import eu.aschuetz.nativeutils.api.exceptions.UnrecoverableMutexException;
 import org.junit.*;
 
-import java.io.SyncFailedException;
+import java.io.*;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.*;
 
@@ -194,7 +198,7 @@ public class PTTest {
         long mmap = lnu.mmap(i, 4096, LinuxConst.MAP_SHARED, true, true, 0);
         final PointerHandler ptr = new PointerHandler() {
             @Override
-            public void handleClose(long ptr, long size, boolean read, boolean write) {
+            public void handleClose(long ptr, long size) {
                 try {
                     lnu.munmap(ptr, size);
                 } catch (UnknownNativeErrorException e) {
@@ -203,7 +207,7 @@ public class PTTest {
             }
 
             @Override
-            public void handleSync(long ptr, long size, boolean read, boolean write, long offset, long length, boolean invalidate) throws SyncFailedException {
+            public void handleSync(long ptr, long size,long offset, long length, boolean invalidate) throws SyncFailedException {
 
             }
         };
@@ -271,5 +275,91 @@ public class PTTest {
         } catch (UnknownNativeErrorException e) {
             throw new RuntimeException(lnu.strerror_r(e.intCode()), e);
         }
+    }
+
+    private static void runCFile(String cfileName, String... args) throws Exception {
+        File tdir = Files.createTempDirectory("").toFile();
+        File cfile = new File(tdir, cfileName);
+        cfile.createNewFile();
+        try(InputStream input = PTTest.class.getResourceAsStream("/" + cfileName)) {
+            try(FileOutputStream faos = new FileOutputStream(cfile, false)) {
+                byte[] buf = new byte[4096];
+                int x = 0;
+                while(x != -1) {
+                    x = input.read(buf);
+                    if (x > 0) {
+                        faos.write(buf, 0, x);
+                    }
+                }
+            }
+        }
+
+        int r = new ProcessBuilder("gcc", cfileName, "-lpthread", "-lrt").directory(tdir).start().waitFor();
+        Assert.assertEquals(0, r);
+        System.out.println("RUNNING C PROGRAM " + cfileName + " " + Arrays.toString(args));
+        List<String> str = new ArrayList<>();
+        str.add(new File(tdir, "a.out").getAbsolutePath());
+        str.addAll(Arrays.asList(args));
+        int r2 = new ProcessBuilder(str).directory(tdir).inheritIO().start().waitFor();
+        Assert.assertEquals(0, r2);
+        System.out.println("C PROGRAM " + cfileName + " DONE");
+
+        for (File f : tdir.listFiles()) {
+            f.delete();
+        }
+
+        tdir.delete();
+    }
+
+    @Test
+    public void testSharedGCC() throws Exception {
+        final LinuxNativeUtil lnu = NativeUtils.getLinuxUtil();
+        final UUID uuid = UUID.randomUUID();
+        int i = lnu.shm_open(uuid.toString(), LinuxConst.O_RDWR | LinuxConst.O_CREAT, 0777);
+        lnu.ftruncate(i, 4096);
+        long mmap = lnu.mmap(i, 4096, LinuxConst.MAP_SHARED, true, true, 0);
+        final PointerHandler ptr = new PointerHandler() {
+            @Override
+            public void handleClose(long ptr, long size) {
+                try {
+                    lnu.munmap(ptr, size);
+                } catch (UnknownNativeErrorException e) {
+                    //DONT CARE
+                }
+            }
+
+            @Override
+            public void handleSync(long ptr, long size, long offset, long length, boolean invalidate) throws SyncFailedException {
+
+            }
+        };
+
+        NativeMemory mem = lnu.pointer(mmap, 4096, ptr);
+        mem.zero();
+        final long mutex_attr = mem.getNativePointer(0);
+        final long mutex = mem.getNativePointer(lnu.sizeof_pthread_condattr_t());
+
+        lnu.pthread_mutexattr_init(mutex_attr);
+        if (!"riscv64".equalsIgnoreCase(System.getenv("QARCH"))) {
+            lnu.pthread_mutexattr_setrobust(mutex_attr, LinuxConst.PTHREAD_MUTEX_ROBUST);
+        }
+        lnu.pthread_mutexattr_setpshared(mutex_attr, LinuxConst.PTHREAD_PROCESS_SHARED);
+        lnu.pthread_mutex_init(mutex, mutex_attr);
+
+        lnu.pthread_mutex_lock(mutex);
+        Future<Object> submit = ex.submit(new Callable<Object>() {
+            @Override
+            public Object call() throws Exception {
+                runCFile("mutextest.c", uuid.toString());
+                return null;
+            }
+        });
+
+        Thread.sleep(5000);
+        Assert.assertFalse(submit.isDone());
+        lnu.pthread_mutex_unlock(mutex);
+
+        submit.get(2, TimeUnit.SECONDS);
+        mem.close();
     }
 }

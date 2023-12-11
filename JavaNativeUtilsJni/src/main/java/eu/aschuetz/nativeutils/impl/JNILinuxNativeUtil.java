@@ -131,10 +131,6 @@ public class JNILinuxNativeUtil extends JNICommonNativeUtil implements LinuxNati
 
     @Override
     public int read(int fd, NativeMemory mem, long off, int len) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException {
-        if (!mem.isReadable()) {
-            throw new IllegalArgumentException("not readable");
-        }
-
         if (!mem.isValid(off, len)) {
             throw new IllegalArgumentException("out of bounds");
         }
@@ -258,10 +254,6 @@ public class JNILinuxNativeUtil extends JNICommonNativeUtil implements LinuxNati
 
     @Override
     public int write(int fd, NativeMemory mem, long off, int len) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException {
-        if (!mem.isWriteable()) {
-            throw new IllegalArgumentException("not writeable");
-        }
-
         if (!mem.isValid(off, len)) {
             throw new IllegalArgumentException("out of bounds");
         }

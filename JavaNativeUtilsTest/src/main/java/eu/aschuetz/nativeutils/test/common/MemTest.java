@@ -27,10 +27,10 @@ import org.junit.*;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MemTest {
 
@@ -66,6 +66,308 @@ public class MemTest {
         public void after() throws Throwable {
             memory.close();
         }
+
+    @Test
+    public void testAtomicShort() throws Exception {
+        if (!memory.supportsCompareAndSet2Byte()) {
+            return;
+        }
+
+        memory.zero();
+
+        final AtomicBoolean bool = new AtomicBoolean(true);
+        List<Thread> tt = new ArrayList<>();
+        List<Collection<Integer>> listo = new ArrayList<>();
+        for (int i = 0; i < Runtime.getRuntime().availableProcessors(); i++) {
+
+            final Collection<Integer> inti = new LinkedList<>();
+            Thread x = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while(bool.get()) {
+                        int o = memory.getAndAdd(64, (short) 1) & 0xFFFF;
+                        inti.add(o);
+                        if (o > 0xFFE0) {
+                            return;
+                        }
+                    }
+
+                }
+            });
+
+            tt.add(x);
+            listo.add(inti);
+        }
+
+        for (Thread t : tt) {
+            t.start();
+        }
+
+        Thread.sleep(5000);
+        bool.set(false);
+        for (Thread t : tt) {
+            t.join();
+        }
+
+        int sz = 0;
+
+        for (Collection<Integer> inti : listo) {
+            Assert.assertFalse(inti.isEmpty());
+            sz+=inti.size();
+        }
+
+        boolean[] res = new boolean[sz];
+        for (Collection<Integer> inti : listo) {
+            for (int i : inti) {
+                Assert.assertFalse(res[i]);
+                res[i] = true;
+            }
+        }
+
+        for (int i = 0; i < res.length; i++) {
+            Assert.assertTrue(res[i]);
+        }
+
+        Assert.assertEquals(res.length, memory.readInt(64));
+
+
+        for (Collection<Integer> inti : listo) {
+            Iterator<Integer> iterator = inti.iterator();
+            long oval = iterator.next();
+            while(iterator.hasNext()) {
+                long next = iterator.next();
+                Assert.assertTrue(next > oval);
+                oval = next;
+            }
+        }
+    }
+
+    @Test
+    public void testAtomicLong() throws Exception {
+        if (!memory.supportsCompareAndSet8Byte()) {
+            return;
+        }
+
+        memory.zero();
+
+        final AtomicBoolean bool = new AtomicBoolean(true);
+        List<Thread> tt = new ArrayList<>();
+        List<Collection<Long>> listo = new ArrayList<>();
+        for (int i = 0; i < Runtime.getRuntime().availableProcessors(); i++) {
+
+            final Collection<Long> inti = new LinkedList<>();
+            Thread x = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while(bool.get()) {
+                        long o = memory.getAndAdd(64, 1L);
+                        inti.add(o);
+                        if (o > 64_000_000) {
+                            return;
+                        }
+                    }
+
+                }
+            });
+
+            tt.add(x);
+            listo.add(inti);
+        }
+
+        for (Thread t : tt) {
+            t.start();
+        }
+
+        Thread.sleep(5000);
+        bool.set(false);
+        for (Thread t : tt) {
+            t.join();
+        }
+
+        int sz = 0;
+
+        for (Collection<Long> inti : listo) {
+            Assert.assertFalse(inti.isEmpty());
+            sz+=inti.size();
+        }
+
+        boolean[] res = new boolean[sz];
+        for (Collection<Long> inti : listo) {
+            for (long i : inti) {
+                Assert.assertFalse(res[(int) i]);
+                res[(int) i] = true;
+            }
+        }
+
+        for (int i = 0; i < res.length; i++) {
+            Assert.assertTrue(res[i]);
+        }
+
+        Assert.assertEquals(res.length, memory.readInt(64));
+
+
+        for (Collection<Long> inti : listo) {
+            Iterator<Long> iterator = inti.iterator();
+            long oval = iterator.next();
+            while(iterator.hasNext()) {
+                long next = iterator.next();
+                Assert.assertTrue(next > oval);
+                oval = next;
+            }
+        }
+    }
+
+        @Test
+        public void testAtomicInteger() throws Exception {
+            if (!memory.supportsCompareAndSet4Byte()) {
+                return;
+            }
+
+            memory.zero();
+
+            final AtomicBoolean bool = new AtomicBoolean(true);
+            List<Thread> tt = new ArrayList<>();
+            List<Collection<Integer>> listo = new ArrayList<>();
+            for (int i = 0; i < Runtime.getRuntime().availableProcessors(); i++) {
+
+                final Collection<Integer> inti = new LinkedList<>();
+                Thread x = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while(bool.get()) {
+                            int o = memory.getAndAdd(64, 1);
+                            inti.add(o);
+                            if (o > 64_000_000) {
+                                return;
+                            }
+                        }
+
+                    }
+                });
+
+                tt.add(x);
+                listo.add(inti);
+            }
+
+            for (Thread t : tt) {
+                t.start();
+            }
+
+            Thread.sleep(5000);
+            bool.set(false);
+            for (Thread t : tt) {
+                t.join();
+            }
+
+            int sz = 0;
+
+            for (Collection<Integer> inti : listo) {
+                Assert.assertFalse(inti.isEmpty());
+                sz+=inti.size();
+            }
+
+            boolean[] res = new boolean[sz];
+            for (Collection<Integer> inti : listo) {
+                for (int i : inti) {
+                    Assert.assertFalse(res[i]);
+                    res[i] = true;
+                }
+            }
+
+            for (int i = 0; i < res.length; i++) {
+                Assert.assertTrue(res[i]);
+            }
+
+            Assert.assertEquals(res.length, memory.readInt(64));
+
+
+            for (Collection<Integer> inti : listo) {
+                Iterator<Integer> iterator = inti.iterator();
+                int oval = iterator.next();
+                while(iterator.hasNext()) {
+                    int next = iterator.next();
+                    Assert.assertTrue(next > oval);
+                    oval = next;
+                }
+            }
+        }
+
+    @Test
+    public void testMTCas4() throws Exception {
+        if (!memory.supportsCompareAndSet4Byte()) {
+            return;
+        }
+
+        memory.zero();
+
+        final AtomicBoolean bool = new AtomicBoolean(true);
+        List<Thread> tt = new ArrayList<>();
+        List<Collection<Integer>> listo = new ArrayList<>();
+        for (int i = 0; i < Runtime.getRuntime().availableProcessors(); i++) {
+
+            final Collection<Integer> inti = new LinkedList<>();
+            Thread x = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while(bool.get()) {
+                        int o = memory.readInt(64);
+                        if (memory.compareAndSet(64,o, o+1)) {
+                            inti.add(o);
+                            if (o > 64_000_000) {
+                                return;
+                            }
+                        }
+                    }
+
+                }
+            });
+
+            tt.add(x);
+            listo.add(inti);
+        }
+
+        for (Thread t : tt) {
+            t.start();
+        }
+
+        Thread.sleep(5000);
+        bool.set(false);
+        for (Thread t : tt) {
+            t.join();
+        }
+
+        int sz = 0;
+
+        for (Collection<Integer> inti : listo) {
+            Assert.assertFalse(inti.isEmpty());
+            sz+=inti.size();
+        }
+
+        boolean[] res = new boolean[sz];
+        for (Collection<Integer> inti : listo) {
+            for (int i : inti) {
+                Assert.assertFalse(res[i]);
+                res[i] = true;
+            }
+        }
+
+        for (int i = 0; i < res.length; i++) {
+            Assert.assertTrue(res[i]);
+        }
+
+        Assert.assertEquals(res.length, memory.readInt(64));
+
+
+        for (Collection<Integer> inti : listo) {
+            Iterator<Integer> iterator = inti.iterator();
+            int oval = iterator.next();
+            while(iterator.hasNext()) {
+                int next = iterator.next();
+                Assert.assertTrue(next > oval);
+                oval = next;
+            }
+        }
+    }
 
         @Test
         public void testSingleByteWriteAndRead() throws Throwable {
@@ -243,10 +545,28 @@ public class MemTest {
 
         @Test
         public void xadd1Byte() throws Throwable {
-            Assume.assumeTrue(memory.supportsAtomicOperations());
+            if (!memory.supportsCompareAndSet1Byte()) {
+                try {
+                    memory.getAndAdd(0, (byte) 1);
+                    Assert.fail("uoe expected");
+                } catch (UnsupportedOperationException uoe) {
+
+                }
+                return;
+            }
 
             for (long i = 0; i < memory.size(); i++) {
                 memory.write(i, (byte) 0);
+                if ((i % memory.compareAndSet1ByteAlignment()) != 0) {
+                    try {
+                        memory.getAndAdd(i, (byte) 1);
+                        Assert.fail("iae expected");
+                    } catch (IllegalArgumentException iae) {
+                        Assert.assertTrue(iae.getMessage().toLowerCase().contains("align"));
+                    }
+                    continue;
+                }
+
                 for (int j = 0; j <= 0xff; j++) {
                     byte aByte = memory.getAndAdd(i, (byte) 1);
                     Assert.assertEquals(j, aByte & 0xFF);
@@ -267,11 +587,28 @@ public class MemTest {
 
         @Test
         public void xadd2Byte() throws Throwable {
-            Assume.assumeTrue(memory.supportsAtomicOperations());
+            if (!memory.supportsCompareAndSet2Byte()) {
+                try {
+                    memory.getAndAdd(0, (short)1);
+                    Assert.fail("uoe expected");
+                } catch (UnsupportedOperationException uoe) {
+
+                }
+                return;
+            }
 
             mkRandom();
             for (long i = 0; i + 1 < memory.size(); i++) {
                 memory.write(i, (short) 0);
+                if ((i % memory.compareAndSet2ByteAlignment()) != 0) {
+                    try {
+                        memory.getAndAdd(i, (short) 1);
+                        Assert.fail("iae expected");
+                    } catch (IllegalArgumentException iae) {
+                        Assert.assertTrue(iae.getMessage().toLowerCase().contains("align"));
+                    }
+                    continue;
+                }
                 int akku = 0;
                 for (short j : randomShorts) {
                     short aByte = memory.getAndAdd(i, j);
@@ -290,12 +627,30 @@ public class MemTest {
 
         @Test
         public void xadd4Byte() throws Throwable {
-            Assume.assumeTrue(memory.supportsAtomicOperations());
+            if (!memory.supportsCompareAndSet4Byte()) {
+                try {
+                    memory.getAndAdd(0, 1);
+                    Assert.fail("uoe expected");
+                } catch (UnsupportedOperationException uoe) {
+
+                }
+                return;
+            }
 
             mkRandom();
             for (long i = 0; i + 3 < memory.size(); i++) {
                 memory.write(i, 0);
                 int akku = 0;
+                if ((i % memory.compareAndSet4ByteAlignment()) != 0) {
+                    try {
+                        memory.getAndAdd(i, 1);
+                        Assert.fail("iae expected");
+                    } catch (IllegalArgumentException iae) {
+                        Assert.assertTrue(iae.getMessage().toLowerCase().contains("align"));
+                    }
+                    continue;
+                }
+
                 for (int j : randomInts) {
                     int aByte = memory.getAndAdd(i, j);
                     Assert.assertEquals(akku, aByte);
@@ -312,17 +667,31 @@ public class MemTest {
 
         @Test
         public void xadd8Byte() throws Throwable {
-            Assume.assumeTrue(memory.supportsAtomicOperations());
+            if (!memory.supportsCompareAndSet8Byte()) {
+                try {
+                    memory.getAndAdd(0, 1L);
+                    Assert.fail("uoe expected");
+                } catch (UnsupportedOperationException uoe) {
+
+                }
+                return;
+            }
+
             mkRandom();
             int inc = 1;
-
-            if (memory.atomic8ByteOperationsRequireAlignment()) {
-                inc = 8;
-            }
 
             for (long i = 0; i + 7 < memory.size(); i += inc) {
                 memory.write(i, (long) 0);
                 long akku = 0;
+                if ((i % memory.compareAndSet8ByteAlignment()) != 0) {
+                    try {
+                        memory.getAndAdd(i, 1L);
+                        Assert.fail("iae expected");
+                    } catch (IllegalArgumentException iae) {
+                        Assert.assertTrue(iae.getMessage().toLowerCase().contains("align"));
+                    }
+                    continue;
+                }
                 for (long j : randomLongs) {
                     long aByte = memory.getAndAdd(i, j);
                     Assert.assertEquals(akku, aByte);
@@ -339,9 +708,26 @@ public class MemTest {
 
         @Test
         public void cmpxchg1b() throws Throwable {
-            Assume.assumeTrue(memory.supportsAtomicOperations());
+            if (!memory.supportsCompareAndSet1Byte()) {
+                try {
+                    memory.compareAndSet(0, (byte)0, (byte)1);
+                    Assert.fail("uoe expected");
+                } catch (UnsupportedOperationException uoe) {
+
+                }
+                return;
+            }
 
             for (long i = 0; i < memory.size(); i++) {
+                if ((i % memory.compareAndSet2ByteAlignment()) != 0) {
+                    try {
+                        memory.compareAndSet(0, (byte)0, (byte)1);
+                        Assert.fail("IAE expected");
+                    } catch (IllegalArgumentException iae) {
+                        Assert.assertTrue(iae.getMessage().contains("align"));
+                    }
+                    continue;
+                }
                 for (int j = 0; j < 0xff; j++) {
                     memory.write(i, (byte) j);
                     Assert.assertFalse(memory.compareAndSet(i, (byte) (j+1), (byte) (j + 2)));
@@ -353,10 +739,27 @@ public class MemTest {
 
         @Test
         public void cmpxchg2b() throws Throwable {
-            Assume.assumeTrue(memory.supportsAtomicOperations());
+            if (!memory.supportsCompareAndSet2Byte()) {
+                try {
+                    memory.compareAndSet(0, (short) 0, (short) 1);
+                    Assert.fail("uoe expected");
+                } catch (UnsupportedOperationException uoe) {
+
+                }
+                return;
+            }
 
             mkRandom();
             for (long i = 0; i + 1 < memory.size(); i++) {
+                if ((i % memory.compareAndSet1ByteAlignment()) != 0) {
+                    try {
+                        memory.compareAndSet(i, (short) 0, (short) 1);
+                        Assert.fail("IAE expected");
+                    } catch (IllegalArgumentException iae) {
+                        Assert.assertTrue(iae.getMessage().contains("align"));
+                    }
+                    continue;
+                }
                 for (short j : randomShorts) {
                     memory.write(i, j);
                     Assert.assertFalse(memory.compareAndSet(i, (short) (j+1), (short) (j)));
@@ -368,11 +771,27 @@ public class MemTest {
 
         @Test
         public void cmpxchg4b() throws Throwable {
-            Assume.assumeTrue(memory.supportsAtomicOperations());
+            if (!memory.supportsCompareAndSet4Byte()) {
+                try {
+                    memory.compareAndSet(0, 0, 1);
+                    Assert.fail("uoe expected");
+                } catch (UnsupportedOperationException uoe) {
+
+                }
+                return;
+            }
 
             mkRandom();
             for (long i = 0; i + 3 < memory.size(); i++) {
-
+                if ((i % memory.compareAndSet4ByteAlignment()) != 0) {
+                    try {
+                        memory.compareAndSet(i, 0, 1);
+                        Assert.fail("IAE expected");
+                    } catch (IllegalArgumentException iae) {
+                        Assert.assertTrue(iae.getMessage().contains("align"));
+                    }
+                    continue;
+                }
                 for (int j : randomInts) {
                     memory.write(i, j);
                     Assert.assertFalse(memory.compareAndSet(i, j+1, j + 2));
@@ -384,20 +803,40 @@ public class MemTest {
 
         @Test
         public void cmpxchg8b() throws Throwable {
-            Assume.assumeTrue(memory.supportsAtomicOperations());
+            if (!memory.supportsCompareAndSet8Byte()) {
+                try {
+                    memory.compareAndSet(0, 0L, 1L);
+                    Assert.fail("uoe expected");
+                } catch (UnsupportedOperationException uoe) {
 
-            mkRandom();
-            int inc = 1;
-            if (memory.atomic8ByteOperationsRequireAlignment()) {
-                inc = 8;
+                }
+                return;
             }
 
-            for (long i = 0; i + 7 < memory.size(); i += inc) {
+            mkRandom();
+
+            for (long i = 0; i + 7 < memory.size(); i++) {
+                if ((i % memory.compareAndSet8ByteAlignment()) != 0) {
+                    try {
+                        memory.compareAndSet(i, 0L, 1L);
+                        Assert.fail("IAE expected");
+                    } catch (IllegalArgumentException iae) {
+                        Assert.assertTrue(iae.getMessage().contains("align"));
+                    }
+                    continue;
+                }
                 for (long j : randomLongs) {
                     memory.write(i, j);
                     Assert.assertFalse(memory.compareAndSet(i, j+1, j + 2));
-                    Assert.assertTrue(memory.compareAndSet(i, j, j + 1));
+                    Assert.assertEquals(memory.readLong(i), j);
+                    if (!memory.compareAndSet(i, j, j + 1)) {
+                        System.out.println("MEMOP " + i + " " + j);
+                        Assert.fail();
+                    }
+
+                    Assert.assertEquals(memory.readLong(i), j+1);
                     Assert.assertFalse(memory.compareAndSet(i, j, j + 2));
+                    Assert.assertEquals(memory.readLong(i), j+1);
                 }
             }
         }
@@ -408,7 +847,7 @@ public class MemTest {
             byte[] buf2 = new byte[16];
             byte[] buf3 = new byte[32];
 
-            if (!memory.supports16ByteCompareAndSet()) {
+            if (!memory.supportsCompareAndSet16Byte()) {
                 try {
                     memory.compareAndSet(0, buf3);
                     Assert.fail();
@@ -418,14 +857,25 @@ public class MemTest {
                 return;
             }
 
+            long start = memory.getNativePointer() % memory.compareAndSet16ByteAlignment();
 
-            for (long i = 0; i + 15 < memory.size(); i += 16) {
+
+            for (long i = start; i + 15 < memory.size(); i ++) {
                 rng.nextBytes(buf);
                 rng.nextBytes(buf2);
                 System.arraycopy(buf, 0, buf3, 0, buf.length);
                 System.arraycopy(buf2, 0, buf3, buf.length, buf2.length);
                 memory.write(i, buf);
 
+                if (((i-start) % memory.compareAndSet16ByteAlignment()) != 0) {
+                    try {
+                        memory.compareAndSet(i, buf3);
+                        Assert.fail("IAE expected");
+                    } catch (IllegalArgumentException iae) {
+                        Assert.assertTrue(iae.getMessage().contains("align"));
+                    }
+                    continue;
+                }
 
                 Assert.assertTrue(memory.compareAndSet(i, buf3));
 
@@ -443,49 +893,31 @@ public class MemTest {
         }
 
         @Test
-        public void testI386missalignment() {
-            Assume.assumeTrue(memory.supportsAtomicOperations());
-            Assume.assumeTrue(memory.atomic8ByteOperationsRequireAlignment());
-
-
-            try {
-                memory.getAndSet(1, (long) 1);
-                Assert.fail();
-            } catch (Exception e) {
-               
-            }
-
-
-            try {
-                memory.compareAndSet(1, (long) 1, (long) 1);
-                Assert.fail();
-            } catch (Exception e) {
-              
-            }
-
-
-            try {
-                memory.getAndAdd(1, (long) 1);
-                Assert.fail();
-            } catch (Exception e) {
-               
-            }
-        }
-
-        @Test
         public void xchg8b() throws Throwable {
-            Assume.assumeTrue(memory.supportsAtomicOperations());
+            if (!memory.supportsCompareAndSet8Byte()) {
+                try {
+                    memory.getAndSet(0, 0L);
+                    Assert.fail();
+                } catch (UnsupportedOperationException exc) {
 
-            int increment = 1;
-
-            if (memory.atomic8ByteOperationsRequireAlignment()) {
-                increment = 8;
+                }
+                return;
             }
 
-            for (long i = 0; i + 7 < memory.size(); i += increment) {
+            for (long i = 0; i + 7 < memory.size(); i++) {
                 long tempBase = rng.nextLong();
                 long tempSet = rng.nextLong();
                 memory.write(i, tempBase);
+                if ((i % memory.compareAndSet8ByteAlignment()) != 0) {
+                    try {
+                        memory.getAndSet(i, tempSet);
+                        Assert.fail("IAE expected");
+                    } catch (IllegalArgumentException iae) {
+                        Assert.assertTrue(iae.getMessage().contains("align"));
+                    }
+                    continue;
+                }
+
                 Assert.assertEquals(tempBase, memory.getAndSet(i, tempSet));
                 Assert.assertEquals(tempSet, memory.readLong(i));
             }
@@ -494,13 +926,30 @@ public class MemTest {
 
         @Test
         public void xchg4b() throws Throwable {
-            Assume.assumeTrue(memory.supportsAtomicOperations());
+            if (!memory.supportsCompareAndSet4Byte()) {
+                try {
+                    memory.getAndSet(0, 0);
+                    Assert.fail();
+                } catch (UnsupportedOperationException exc) {
+
+                }
+                return;
+            }
 
 
             for (long i = 0; i + 7 < memory.size(); i++) {
                 int tempBase = rng.nextInt();
                 int tempSet = rng.nextInt();
                 memory.write(i, tempBase);
+                if ((i % memory.compareAndSet4ByteAlignment()) != 0) {
+                    try {
+                        memory.getAndSet(i, tempSet);
+                        Assert.fail("IAE expected");
+                    } catch (IllegalArgumentException iae) {
+                        Assert.assertTrue(iae.getMessage().contains("align"));
+                    }
+                    continue;
+                }
                 Assert.assertEquals(tempBase, memory.getAndSet(i, tempSet));
                 Assert.assertEquals(tempSet, memory.readInt(i));
             }
@@ -508,13 +957,30 @@ public class MemTest {
 
         @Test
         public void xchg2b() throws Throwable {
-            Assume.assumeTrue(memory.supportsAtomicOperations());
+            if (!memory.supportsCompareAndSet2Byte()) {
+                try {
+                    memory.getAndSet(0, (short) 0);
+                    Assert.fail();
+                } catch (UnsupportedOperationException exc) {
+
+                }
+                return;
+            }
 
 
             for (long i = 0; i + 7 < memory.size(); i++) {
                 short tempBase = (short) rng.nextInt();
                 short tempSet = (short) rng.nextInt();
                 memory.write(i, tempBase);
+                if ((i % memory.compareAndSet2ByteAlignment()) != 0) {
+                    try {
+                        memory.getAndSet(i, tempSet);
+                        Assert.fail("IAE expected");
+                    } catch (IllegalArgumentException iae) {
+                        Assert.assertTrue(iae.getMessage().contains("align"));
+                    }
+                    continue;
+                }
                 Assert.assertEquals(tempBase, memory.getAndSet(i, tempSet));
                 Assert.assertEquals(tempSet, memory.readShort(i));
             }
@@ -522,13 +988,30 @@ public class MemTest {
 
         @Test
         public void xchg1b() throws Throwable {
-            Assume.assumeTrue(memory.supportsAtomicOperations());
+            if (!memory.supportsCompareAndSet1Byte()) {
+                try {
+                    memory.getAndSet(0, (byte) 0);
+                    Assert.fail();
+                } catch (UnsupportedOperationException exc) {
+
+                }
+                return;
+            }
 
 
             for (long i = 0; i + 7 < memory.size(); i++) {
                 byte tempBase = (byte) rng.nextInt();
                 byte tempSet = (byte) rng.nextInt();
                 memory.write(i, tempBase);
+                if ((i % memory.compareAndSet1ByteAlignment()) != 0) {
+                    try {
+                        memory.getAndSet(i, tempSet);
+                        Assert.fail("IAE expected");
+                    } catch (IllegalArgumentException iae) {
+                        Assert.assertTrue(iae.getMessage().contains("align"));
+                    }
+                    continue;
+                }
                 Assert.assertEquals(tempBase, memory.getAndSet(i, tempSet));
                 Assert.assertEquals(tempSet, memory.read(i));
             }
@@ -803,314 +1286,340 @@ public class MemTest {
 
         @Test
         public void testOutOfBoundsCMPXCHG() throws Throwable {
-            if (!memory.supportsAtomicOperations()) {
-                return;
+            if (memory.supportsCompareAndSet1Byte()) {
+                //CMGPXCHG byte
+                try {
+                    memory.compareAndSet(memory.size(), (byte) 0, (byte) 0);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+
+                try {
+                    memory.compareAndSet(memory.size() + 1, (byte) 0, (byte) 0);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+
+                try {
+                    memory.compareAndSet(-64, (byte) 0, (byte) 0);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+
+                try {
+                    memory.compareAndSet(-1, (byte) 0, (byte) 0);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+
+                memory.compareAndSet(memory.size() - 1, (byte) 0, (byte) 0);
             }
 
-
-
-            //CMGPXCHG byte
-            try {
-                memory.compareAndSet(memory.size(), (byte) 0, (byte) 0);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
-            try {
-                memory.compareAndSet(memory.size() + 1, (byte) 0, (byte) 0);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
-            try {
-                memory.compareAndSet(-64, (byte) 0, (byte) 0);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
-            try {
-                memory.compareAndSet(-1, (byte) 0, (byte) 0);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
-            memory.compareAndSet(memory.size() - 1, (byte) 0, (byte) 0);
 
             //CMGPXCHG short
-            try {
-                memory.compareAndSet(memory.size() - 1, (short) 0, (short) 0);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
-            try {
-                memory.compareAndSet(memory.size(), (short) 0, (short) 0);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
-            try {
-                memory.compareAndSet(memory.size() + 1, (short) 0, (short) 0);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
-            try {
-                memory.compareAndSet(-64, (short) 0, (short) 0);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
-            try {
-                memory.compareAndSet(-1, (short) 0, (short) 0);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
-            memory.compareAndSet(memory.size() - 2, (short) 0, (short) 0);
+            if (memory.supportsCompareAndSet2Byte()) {
+                try {
+                    memory.compareAndSet(memory.size() - 1, (short) 0, (short) 0);
+                    Assert.fail();
+                } catch (Exception exc) {
 
+                }
+                try {
+                    memory.compareAndSet(memory.size(), (short) 0, (short) 0);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+                try {
+                    memory.compareAndSet(memory.size() + 1, (short) 0, (short) 0);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+                try {
+                    memory.compareAndSet(-64, (short) 0, (short) 0);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+                try {
+                    memory.compareAndSet(-1, (short) 0, (short) 0);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+                memory.compareAndSet(memory.size() - 2, (short) 0, (short) 0);
+            }
             //CMGPXCHG int
-            try {
-                memory.compareAndSet(memory.size() - 3, 0, 0);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
-            try {
-                memory.compareAndSet(memory.size(), 0, 0);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
-            try {
-                memory.compareAndSet(memory.size() + 1, 0, 0);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
-            try {
-                memory.compareAndSet(-64, 0, 0);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
-            try {
-                memory.compareAndSet(-1, 0, 0);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
-            memory.compareAndSet(memory.size() - 4, 0, 0);
+            if (memory.supportsCompareAndSet4Byte()) {
+                try {
+                    memory.compareAndSet(memory.size() - 3, 0, 0);
+                    Assert.fail();
+                } catch (Exception exc) {
 
+                }
+                try {
+                    memory.compareAndSet(memory.size(), 0, 0);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+                try {
+                    memory.compareAndSet(memory.size() + 1, 0, 0);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+                try {
+                    memory.compareAndSet(-64, 0, 0);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+                try {
+                    memory.compareAndSet(-1, 0, 0);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+                memory.compareAndSet(memory.size() - 4, 0, 0);
+            }
             //CMGPXCHG long
-            try {
-                memory.compareAndSet(memory.size() - 7, (long) 0, (long) 0);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
-            try {
-                memory.compareAndSet(memory.size(), (long) 0, (long) 0);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
-            try {
-                memory.compareAndSet(memory.size() + 1, (long) 0, (long) 0);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
-            try {
-                memory.compareAndSet(-64, (long) 0, (long) 0);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
-            try {
-                memory.compareAndSet(-1, (long) 0, (long) 0);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
-            memory.compareAndSet(memory.size() - 8, (long) 0, (long) 0);
+            if (memory.supportsCompareAndSet8Byte()) {
+                try {
+                    memory.compareAndSet(memory.size() - 7, (long) 0, (long) 0);
+                    Assert.fail();
+                } catch (Exception exc) {
 
-            //CMPXCHG16B
-            byte[] tempBuf = new byte[32];
-            try {
-                memory.compareAndSet(memory.size() - 15, tempBuf);
-                Assert.fail();
-            } catch (Exception exc) {
+                }
+                try {
+                    memory.compareAndSet(memory.size(), (long) 0, (long) 0);
+                    Assert.fail();
+                } catch (Exception exc) {
 
-            }
-            try {
-                memory.compareAndSet(memory.size(), tempBuf);
-                Assert.fail();
-            } catch (Exception exc) {
+                }
+                try {
+                    memory.compareAndSet(memory.size() + 1, (long) 0, (long) 0);
+                    Assert.fail();
+                } catch (Exception exc) {
 
-            }
-            try {
-                memory.compareAndSet(memory.size() + 1, tempBuf);
-                Assert.fail();
-            } catch (Exception exc) {
+                }
+                try {
+                    memory.compareAndSet(-64, (long) 0, (long) 0);
+                    Assert.fail();
+                } catch (Exception exc) {
 
-            }
-            try {
-                memory.compareAndSet(-64, tempBuf);
-                Assert.fail();
-            } catch (Exception exc) {
+                }
+                try {
+                    memory.compareAndSet(-1, (long) 0, (long) 0);
+                    Assert.fail();
+                } catch (Exception exc) {
 
-            }
-            try {
-                memory.compareAndSet(-7, tempBuf);
-                Assert.fail();
-            } catch (Exception exc) {
-
+                }
+                memory.compareAndSet(memory.size() - 8, (long) 0, (long) 0);
             }
 
-            if (memory.supports16ByteCompareAndSet()) {
+            if (memory.supportsCompareAndSet16Byte()) {
+                //CMPXCHG16B
+                byte[] tempBuf = new byte[32];
+                try {
+                    memory.compareAndSet(memory.size() - 15, tempBuf);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+                try {
+                    memory.compareAndSet(memory.size(), tempBuf);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+                try {
+                    memory.compareAndSet(memory.size() + 1, tempBuf);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+                try {
+                    memory.compareAndSet(-64, tempBuf);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+                try {
+                    memory.compareAndSet(-7, tempBuf);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
                 memory.compareAndSet(memory.size() - 16, tempBuf);
             }
         }
 
         @Test
         public void testOutOfBoundsXADD() throws Throwable {
-            //UNDERFLOW
 
-            Assume.assumeTrue(memory.supportsAtomicOperations());
+            if (memory.supportsCompareAndSet8Byte()) {
+                try {
+                    memory.getAndAdd(-1, (long) 1);
+                    Assert.fail();
+                } catch (Exception exc) {
 
-            try {
-                memory.getAndAdd(-1, (long) 1);
-                Assert.fail();
-            } catch (Exception exc) {
-               
+                }
+
+                try {
+                    memory.getAndAdd(memory.size() - 7, (long) 1);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+
+
+                memory.getAndAdd(memory.size() - 8, (long) 1);
             }
 
-            try {
-                memory.getAndAdd(-1, 1);
-                Assert.fail();
-            } catch (Exception exc) {
-               
+            if (memory.supportsCompareAndSet4Byte()) {
+                try {
+                    memory.getAndAdd(-1, 1);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+
+                try {
+                    memory.getAndAdd(memory.size() - 3, 1);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+
+                memory.getAndAdd(memory.size() - 4, 1);
             }
 
-            try {
-                memory.getAndAdd(-1, (short) 1);
-                Assert.fail();
-            } catch (Exception exc) {
-               
+            if (memory.supportsCompareAndSet2Byte()) {
+                try {
+                    memory.getAndAdd(-1, (short) 1);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+
+                try {
+                    memory.getAndAdd(memory.size() - 1, (short) 1);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+
+
+                memory.getAndAdd(memory.size() - 2, (short) 1);
             }
 
-            try {
-                memory.getAndAdd(-1, (byte) 1);
-                Assert.fail();
-            } catch (Exception exc) {
-               
+
+            if (memory.supportsCompareAndSet1Byte()) {
+                try {
+                    memory.getAndAdd(-1, (byte) 1);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+
+                //TEST OOB TOO BIG
+                try {
+                    memory.getAndAdd(memory.size(), (byte) 1);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+
+
+                memory.getAndAdd(memory.size() - 1, (byte) 1);
             }
-
-            //TEST OOB TOO BIG
-            try {
-                memory.getAndAdd(memory.size() - 7, (long) 1);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
-
-            try {
-                memory.getAndAdd(memory.size() - 3, 1);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
-
-            try {
-                memory.getAndAdd(memory.size() - 1, (short) 1);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
-
-            try {
-                memory.getAndAdd(memory.size(), (byte) 1);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
-
-            //Test SUCCESS at edge
-            memory.getAndAdd(memory.size() - 8, (long) 1);
-            memory.getAndAdd(memory.size() - 4, 1);
-            memory.getAndAdd(memory.size() - 2, (short) 1);
-            memory.getAndAdd(memory.size() - 1, (byte) 1);
-
-
         }
 
         @Test
         public void testOutOfBoundsXCHG() throws Throwable {
             //UNDERFLOW
-            Assume.assumeTrue(memory.supportsAtomicOperations());
-            try {
-                memory.getAndSet(-1, (long) 1);
-                Assert.fail();
-            } catch (Exception exc) {
-               
+            if (memory.supportsCompareAndSet8Byte()) {
+                try {
+                    memory.getAndSet(-1, (long) 1);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+
+                try {
+                    memory.getAndSet(memory.size() - 7, (long) 1);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+
+
+                memory.getAndSet(memory.size() - 8, (long) 1);
             }
 
-            try {
-                memory.getAndSet(-1, 1);
-                Assert.fail();
-            } catch (Exception exc) {
-               
+            if (memory.supportsCompareAndSet4Byte()) {
+                try {
+                    memory.getAndSet(-1, 1);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+
+                try {
+                    memory.getAndSet(memory.size() - 3, 1);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+
+                memory.getAndSet(memory.size() - 4, 1);
             }
 
-            try {
-                memory.getAndSet(-1, (short) 1);
-                Assert.fail();
-            } catch (Exception exc) {
-               
+            if (memory.supportsCompareAndSet2Byte()) {
+                try {
+                    memory.getAndSet(-1, (short) 1);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+
+                try {
+                    memory.getAndSet(memory.size() - 1, (short) 1);
+                    Assert.fail();
+                } catch (Exception exc) {
+
+                }
+
+
+                memory.getAndSet(memory.size() - 2, (short) 1);
             }
 
-            try {
-                memory.getAndSet(-1, (byte) 1);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
 
-            //TEST OOB TOO BIG
-            try {
-                memory.getAndSet(memory.size() - 7, (long) 1);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
+            if (memory.supportsCompareAndSet1Byte()) {
+                try {
+                    memory.getAndSet(-1, (byte) 1);
+                    Assert.fail();
+                } catch (Exception exc) {
 
-            try {
-                memory.getAndSet(memory.size() - 3, 1);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
+                }
 
-            try {
-                memory.getAndSet(memory.size() - 1, (short) 1);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
+                //TEST OOB TOO BIG
+                try {
+                    memory.getAndSet(memory.size(), (byte) 1);
+                    Assert.fail();
+                } catch (Exception exc) {
 
-            try {
-                memory.getAndSet(memory.size(), (byte) 1);
-                Assert.fail();
-            } catch (Exception exc) {
-               
-            }
+                }
 
-            //Test SUCCESS at edge
-            memory.getAndSet(memory.size() - 8, (long) 1);
-            memory.getAndSet(memory.size() - 4, 1);
-            memory.getAndSet(memory.size() - 2, (short) 1);
-            memory.getAndSet(memory.size() - 1, (byte) 1);
+
+                memory.getAndSet(memory.size() - 1, (byte) 1);
+            }
         }
 
         private boolean checkOffset(long l) {
@@ -1221,28 +1730,462 @@ public class MemTest {
 
 
         @Test
-        public void testExIntSimple() {
-            int[] x = new int[]{0x24, 0x77};
+        public void testExInt1() {
+            int[] x = new int[]{0x24, 0xFE77};
             memory.writeByte(3, 1);
             memory.write(0, x, 1, 0, 2);
+            x = new int[]{0x24, 0x77};
             byte[] x2 = new byte[] {0x24, 0x77};
             byte[] x3 = new byte[2];
+            int[] r2 = new int[2];
+            memory.read(0, r2, 1, 0, 2);
             memory.read(0,x3);
+            Assert.assertArrayEquals(x, r2);
             Assert.assertArrayEquals(x2, x3);
             Assert.assertEquals(1, memory.read(3));
-
-            if (ByteOrder.nativeOrder() != ByteOrder.LITTLE_ENDIAN) {
-                return;
-            }
-
-            x = new int[]{0x24, 0x77FE};
-            memory.writeByte(6, 1);
-            memory.write(0, x, 3, 0, 2);
-            x2 = new byte[] {0x24, 0x00, 0x00, (byte)0xFE, 0x77, 0x00};
-            x3 = new byte[6];
-            memory.read(0,x3);
-            Assert.assertEquals(1, memory.read(6));
-            Assert.assertArrayEquals(x2, x3);
         }
+
+    @Test
+    public void testExInt2() {
+        int[] x = new int[]{0x24, 0x77FE};
+        memory.writeByte(4, 1);
+        memory.write(0, x, 2, 0, 2);
+        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                new byte[] {0x00, 0x24, 0x77, (byte)0xFE}:
+                new byte[] {0x24, 0x00, (byte)0xFE, 0x77};
+        byte[] x3 = new byte[4];
+        memory.read(0,x3);
+        int[] r2 = new int[2];
+        memory.read(0, r2, 2, 0, 2);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(4));
+        Assert.assertArrayEquals(x2, x3);
+    }
+
+    @Test
+    public void testExInt3() {
+        int[] x = new int[]{0x24, 0x77FE};
+        memory.writeByte(6, 1);
+        memory.write(0, x, 3, 0, 2);
+        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                new byte[] {0x00, 0x00, 0x24, 0x00, 0x77, (byte)0xFE}:
+                new byte[] {0x24, 0x00, 0x00, (byte)0xFE, 0x77, 0x00};
+        byte[] x3 = new byte[6];
+        memory.read(0,x3);
+        int[] r2 = new int[2];
+        memory.read(0, r2, 3, 0, 2);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(6));
+        Assert.assertArrayEquals(x2, x3);
+    }
+
+    @Test
+    public void testExInt4() {
+        int[] x = new int[]{0x24, 0x77FE};
+        memory.writeByte(8, 1);
+        memory.write(0, x, 4, 0, 2);
+        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                new byte[] {0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x77, (byte)0xFE}:
+                new byte[] {0x24, 0x00, 0x00, 0x00, (byte)0xFE, 0x77, 0x00, 0x00};
+        byte[] x3 = new byte[8];
+        memory.read(0,x3);
+        int[] r2 = new int[2];
+        memory.read(0, r2, 4, 0, 2);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(8));
+        Assert.assertArrayEquals(x2, x3);
+    }
+
+    @Test
+    public void testExInt5() {
+        int[] x = new int[]{0x24, 0x77FE};
+        memory.writeByte(10, 1);
+        memory.write(0, x, 5, 0, 2);
+        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                new byte[] {0x00, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x77, (byte)0xFE}:
+                new byte[] {0x24, 0x00, 0x00, 0x00, 0x00, (byte)0xFE, 0x77, 0x00, 0x00, 0x00};
+        byte[] x3 = new byte[10];
+        memory.read(0,x3);
+        int[] r2 = new int[2];
+        memory.read(0, r2, 5, 0, 2);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(10));
+        Assert.assertArrayEquals(x2, x3);
+    }
+
+    @Test
+    public void testExInt6() {
+        int[] x = new int[]{0x24, 0x77FE};
+        memory.writeByte(12, 1);
+        memory.write(0, x, 6, 0, 2);
+        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                new byte[] {0x00, 0x00, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00, 0x77, (byte)0xFE}:
+                new byte[] {0x24, 0x00, 0x00, 0x00, 0x00, 0x00, (byte)0xFE, 0x77, 0x00, 0x00, 0x00, 0x00};
+        byte[] x3 = new byte[12];
+        memory.read(0,x3);
+        int[] r2 = new int[2];
+        memory.read(0, r2, 6, 0, 2);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(12));
+        Assert.assertArrayEquals(x2, x3);
+    }
+
+    @Test
+    public void testExLong1() {
+        long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
+        memory.writeByte(4, 1);
+        memory.write(0, x, 1, 0, 3);
+        x = new long[]{0x24, 0x77, 0x42};
+        byte[] x2 = new byte[] {0x24, 0x77, 0x42};
+        byte[] x3 = new byte[3];
+        long[] r2 = new long[3];
+        memory.read(0, r2, 1, 0, 3);
+        memory.read(0,x3);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertArrayEquals(x2, x3);
+        Assert.assertEquals(1, memory.read(4));
+    }
+
+    @Test
+    public void testExLong2() {
+        long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
+        memory.writeByte(6, 1);
+        memory.write(0, x, 2, 0, 3);
+        x = new long[]{0x24, 0xFE77, 0xAA42L};
+        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                new byte[] {0x00, 0x24, (byte) 0xFE, 0x77, (byte) 0xAA, 0x42}:
+                new byte[] {0x24, 0x00, 0x77, (byte) 0xFE, 0x42, (byte) 0xAA};
+        byte[] x3 = new byte[6];
+        memory.read(0,x3);
+        long[] r2 = new long[3];
+        memory.read(0, r2, 2, 0, 3);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(6));
+        Assert.assertArrayEquals(x2, x3);
+    }
+
+    @Test
+    public void testExLong3() {
+        long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
+        memory.writeByte(9, 1);
+        memory.write(0, x, 3, 0, 3);
+        x = new long[]{0x24, 0xFE77, 0xC0AA42L};
+        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                new byte[] {0x00, 0x00, 0x24, 0x00, (byte) 0xFE, 0x77, (byte) 0xC0, (byte) 0xAA, 0x42}:
+                new byte[] {0x24, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x42, (byte) 0xAA, (byte) 0xC0};
+        byte[] x3 = new byte[9];
+        memory.read(0,x3);
+        long[] r2 = new long[3];
+        memory.read(0, r2, 3, 0, 3);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(9));
+        Assert.assertArrayEquals(x2, x3);
+    }
+
+    @Test
+    public void testExLong4() {
+        long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
+        memory.writeByte(12, 1);
+        memory.write(0, x, 4, 0, 3);
+        x = new long[]{0x24, 0xFE77, 0xABC0AA42L};
+        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                new byte[] {0x00, 0x00, 0x00, 0x24, 0x00, 0x00, (byte) 0xFE, 0x77, (byte) 0xAB, (byte) 0xC0, (byte) 0xAA, 0x42}:
+                new byte[] {0x24, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x00, 0x42, (byte) 0xAA, (byte) 0xC0, (byte) 0xAB};
+        byte[] x3 = new byte[12];
+        memory.read(0,x3);
+        long[] r2 = new long[3];
+        memory.read(0, r2, 4, 0, 3);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(12));
+        Assert.assertArrayEquals(x2, x3);
+    }
+
+    @Test
+    public void testExLong5() {
+        long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
+        memory.writeByte(15, 1);
+        memory.write(0, x, 5, 0, 3);
+        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                new byte[] {0x00, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, (byte) 0xFE, 0x77, (byte) 0xFE, (byte) 0xAB, (byte) 0xC0, (byte) 0xAA, 0x42}:
+                new byte[] {0x24, 0x00, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x00, 0x00, 0x42, (byte) 0xAA, (byte) 0xC0, (byte) 0xAB, (byte) 0xFE};
+        byte[] x3 = new byte[15];
+        memory.read(0,x3);
+        long[] r2 = new long[3];
+        memory.read(0, r2, 5, 0, 3);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(15));
+        Assert.assertArrayEquals(x2, x3);
+    }
+
+    @Test
+    public void testExLong6() {
+        long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
+        memory.writeByte(18, 1);
+        memory.write(0, x, 6, 0, 3);
+        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                new byte[] {0x00, 0x00, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, 0x77, 0x00, (byte) 0xFE, (byte) 0xAB, (byte) 0xC0, (byte) 0xAA, 0x42}:
+                new byte[] {0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x00, 0x00, 0x00, 0x42, (byte) 0xAA, (byte) 0xC0, (byte) 0xAB, (byte) 0xFE, 0x00};
+        byte[] x3 = new byte[18];
+        memory.read(0,x3);
+        long[] r2 = new long[3];
+        memory.read(0, r2, 6, 0, 3);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(18));
+        Assert.assertArrayEquals(x2, x3);
+    }
+
+    @Test
+    public void testExLong7() {
+        long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
+        memory.writeByte(21, 1);
+        memory.write(0, x, 7, 0, 3);
+        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                new byte[] {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, 0x77, 0x00, 0x00, (byte) 0xFE, (byte) 0xAB, (byte) 0xC0, (byte) 0xAA, 0x42}:
+                new byte[] {0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x42, (byte) 0xAA, (byte) 0xC0, (byte) 0xAB, (byte) 0xFE, 0x00, 0x00};
+        byte[] x3 = new byte[21];
+        memory.read(0,x3);
+        long[] r2 = new long[3];
+        memory.read(0, r2, 7, 0, 3);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(21));
+        Assert.assertArrayEquals(x2, x3);
+    }
+
+    @Test
+    public void testExLong8() {
+        long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
+        memory.writeByte(24, 1);
+        memory.write(0, x, 8, 0, 3);
+        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                new byte[] {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, 0x77, 0x00, 0x00, 0x00, (byte) 0xFE, (byte) 0xAB, (byte) 0xC0, (byte) 0xAA, 0x42}:
+                new byte[] {0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x42, (byte) 0xAA, (byte) 0xC0, (byte) 0xAB, (byte) 0xFE, 0x00, 0x00, 0x00};
+        byte[] x3 = new byte[24];
+        memory.read(0,x3);
+        long[] r2 = new long[3];
+        memory.read(0, r2, 8, 0, 3);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(24));
+        Assert.assertArrayEquals(x2, x3);
+    }
+
+    @Test
+    public void testExLong9() {
+        long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
+        memory.writeByte(27, 1);
+        memory.write(0, x, 9, 0, 3);
+        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                new byte[] {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, 0x77, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, (byte) 0xAB, (byte) 0xC0, (byte) 0xAA, 0x42}:
+                new byte[] {0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x42, (byte) 0xAA, (byte) 0xC0, (byte) 0xAB, (byte) 0xFE, 0x00, 0x00, 0x00, 0x00};
+        byte[] x3 = new byte[27];
+        memory.read(0,x3);
+        long[] r2 = new long[3];
+        memory.read(0, r2, 9, 0, 3);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(27));
+        Assert.assertArrayEquals(x2, x3);
+    }
+
+    @Test
+    public void testExLong10() {
+        long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
+        memory.writeByte(30, 1);
+        memory.write(0, x, 10, 0, 3);
+        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                new byte[] {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, 0x77, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, (byte) 0xAB, (byte) 0xC0, (byte) 0xAA, 0x42}:
+                new byte[] {0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x42, (byte) 0xAA, (byte) 0xC0, (byte) 0xAB, (byte) 0xFE, 0x00, 0x00, 0x00, 0x00, 0x00};
+        byte[] x3 = new byte[30];
+        memory.read(0,x3);
+        long[] r2 = new long[3];
+        memory.read(0, r2, 10, 0, 3);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(30));
+        Assert.assertArrayEquals(x2, x3);
+    }
+
+    @Test
+    public void testExShort1() {
+        short[] x = new short[]{0x24, (short) 0xFE77};
+        memory.writeByte(2, 1);
+        memory.write(0, x, 1, 0, 2);
+        x = new short[]{0x24, (short) 0x77};
+        byte[] x2 = new byte[] {0x24, 0x77};
+        byte[] x3 = new byte[2];
+        memory.read(0,x3);
+        short[] r2 = new short[2];
+        memory.read(0, r2, 1, 0, 2);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(2));
+        Assert.assertArrayEquals(x2, x3);
+    }
+
+    @Test
+    public void testExShort2() {
+        short[] x = new short[]{0x24, (short) 0xFE77};
+        memory.writeByte(4, 1);
+        memory.write(0, x, 2, 0, 2);
+        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                new byte[] {0x00, 0x24, (byte) 0xFE, 0x77}:
+                new byte[] {0x24, 0x00, 0x77, (byte) 0xFE};
+        byte[] x3 = new byte[4];
+        memory.read(0,x3);
+        short[] r2 = new short[2];
+        memory.read(0, r2, 2, 0, 2);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(4));
+        Assert.assertArrayEquals(x2, x3);
+    }
+
+    @Test
+    public void testExShort3() {
+        short[] x = new short[]{0x24, (short) 0xFE77};
+        memory.writeByte(6, 1);
+        memory.write(0, x, 3, 0, 2);
+        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                new byte[] {0x00, 0x00, 0x24, 0x00, (byte) 0xFE, 0x77}:
+                new byte[] {0x24, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00};
+        byte[] x3 = new byte[6];
+        memory.read(0,x3);
+        short[] r2 = new short[2];
+        memory.read(0, r2, 3, 0, 2);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(6));
+        Assert.assertArrayEquals(x2, x3);
+    }
+
+    @Test
+    public void testExShort4() {
+        short[] x = new short[]{0x24, (short) 0xFE77};
+        memory.writeByte(8, 1);
+        memory.write(0, x, 4, 0, 2);
+        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                new byte[] {0x00, 0x00, 0x00, 0x24, 0x00, 0x00, (byte) 0xFE, 0x77}:
+                new byte[] {0x24, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x00};
+        byte[] x3 = new byte[8];
+        memory.read(0,x3);
+        short[] r2 = new short[2];
+        memory.read(0, r2, 4, 0, 2);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(8));
+        Assert.assertArrayEquals(x2, x3);
+    }
+
+
+    @Test
+    public void testExChar1() {
+        char[] x = new char[]{0x24, (char) 0xFE77};
+        memory.writeByte(2, 1);
+        memory.write(0, x, 1, 0, 2);
+        x = new char[]{0x24, (char) 0x77};
+        byte[] x2 = new byte[] {0x24, 0x77};
+        byte[] x3 = new byte[2];
+        memory.read(0,x3);
+        char[] r2 = new char[2];
+        memory.read(0, r2, 1, 0, 2);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(2));
+        Assert.assertArrayEquals(x2, x3);
+    }
+
+    @Test
+    public void testExChar2() {
+        char[] x = new char[]{0x24, (char) 0xFE77};
+        memory.writeByte(4, 1);
+        memory.write(0, x, 2, 0, 2);
+        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                new byte[] {0x00, 0x24, (byte) 0xFE, 0x77}:
+                new byte[] {0x24, 0x00, 0x77, (byte) 0xFE};
+        byte[] x3 = new byte[4];
+        memory.read(0,x3);
+        char[] r2 = new char[2];
+        memory.read(0, r2, 2, 0, 2);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(4));
+        Assert.assertArrayEquals(x2, x3);
+    }
+
+    @Test
+    public void testExChar3() {
+        char[] x = new char[]{0x24, (char) 0xFE77};
+        memory.writeByte(6, 1);
+        memory.write(0, x, 3, 0, 2);
+        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                new byte[] {0x00, 0x00, 0x24, 0x00, (byte) 0xFE, 0x77}:
+                new byte[] {0x24, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00};
+        byte[] x3 = new byte[6];
+        memory.read(0,x3);
+        char[] r2 = new char[2];
+        memory.read(0, r2, 3, 0, 2);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(6));
+        Assert.assertArrayEquals(x2, x3);
+    }
+
+    @Test
+    public void testExChar4() {
+        char[] x = new char[]{0x24, (char) 0xFE77};
+        memory.writeByte(8, 1);
+        memory.write(0, x, 4, 0, 2);
+        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                new byte[] {0x00, 0x00, 0x00, 0x24, 0x00, 0x00, (byte) 0xFE, 0x77}:
+                new byte[] {0x24, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x00};
+        byte[] x3 = new byte[8];
+        memory.read(0,x3);
+        char[] r2 = new char[2];
+        memory.read(0, r2, 4, 0, 2);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(8));
+        Assert.assertArrayEquals(x2, x3);
+    }
+
+    @Test
+    public void testExByte1() {
+        byte[] x = new byte[]{0x24, (byte) 0xFE};
+        memory.writeByte(2, 1);
+        memory.write(0, x, 1, 0, 2);
+        byte[] x2 = new byte[] {0x24, (byte) 0xFE};
+        byte[] x3 = new byte[2];
+        memory.read(0,x3);
+        byte[] r2 = new byte[2];
+        memory.read(0, r2, 1, 0, 2);
+        Assert.assertArrayEquals(x2, x3);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(2));
+    }
+
+    @Test
+    public void testExByte2() {
+        byte[] x = new byte[]{0x24, (byte) 0xFE};
+        memory.writeByte(4, 1);
+        memory.write(0, x, 2, 0, 2);
+        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                new byte[] {0x00, 0x24, 0x00, (byte) 0xFE}:
+                new byte[] {0x24, 0x00, (byte) 0xFE, 0x00};
+        byte[] x3 = new byte[4];
+        memory.read(0,x3);
+        byte[] r2 = new byte[2];
+        memory.read(0, r2, 2, 0, 2);
+        Assert.assertArrayEquals(x2, x3);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(4));
+    }
+
+
+    @Test
+    public void testExByte3() {
+        byte[] x = new byte[]{0x24, (byte) 0xFE};
+        memory.writeByte(6, 1);
+        memory.write(0, x, 3, 0, 2);
+        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                new byte[] {0x00, 0x00, 0x24, 0x00, 0x00, (byte) 0xFE}:
+                new byte[] {0x24, 0x00, 0x00, (byte) 0xFE, 0x00, 0x00};
+        byte[] x3 = new byte[6];
+        memory.read(0,x3);
+        byte[] r2 = new byte[2];
+        memory.read(0, r2, 3, 0, 2);
+        Assert.assertArrayEquals(x, r2);
+        Assert.assertEquals(1, memory.read(6));
+        Assert.assertArrayEquals(x2, x3);
+    }
+
 
 }

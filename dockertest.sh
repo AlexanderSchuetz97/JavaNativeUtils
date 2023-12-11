@@ -33,3 +33,4 @@ cd ../s390x
 docker compose up --build --exit-code-from java-native-utils-test-s390x &
 
 wait
+echo $?

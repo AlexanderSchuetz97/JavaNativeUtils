@@ -34,7 +34,7 @@ public interface PointerHandler {
      * @param read is the pointer marked for reading.
      * @param write is the pointer marked for writing.
      */
-    void handleClose(long ptr, long size, boolean read, boolean write);
+    void handleClose(long ptr, long size);
 
     /**
      * Flush changes made to the pointer to disk/device.
@@ -48,5 +48,5 @@ public interface PointerHandler {
      * @param length length of the region to flush changes
      * @param invalidate invalidate all caches
      */
-    void handleSync(long ptr, long size, boolean read, boolean write, long offset, long length, boolean invalidate) throws SyncFailedException;
+    void handleSync(long ptr, long size, long offset, long length, boolean invalidate) throws SyncFailedException;
 }

@@ -32,6 +32,7 @@ import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,7 +44,8 @@ public class Main {
             MemTest.class,
             TestRef.class,
             TestMonitor.class,
-            ReflectionTests.class);
+            ReflectionTests.class,
+            MemCmpXchgTest.class);
     private static List<Class> LINUX_TESTS = (List) Arrays.asList(
             ChdirTests.class,
             ChmodTest.class,
@@ -69,7 +71,7 @@ public class Main {
     );
 
 
-    public static Result runTests() {
+    public static Result runTests(String test) {
         NativeUtil nativeUtil = NativeUtils.get();
         if (!nativeUtil.isLinux() && ! nativeUtil.isWindows()) {
             System.err.println("Lib failed to load!");
@@ -110,15 +112,26 @@ public class Main {
                 System.out.println("IGNORE " + description);
             }
         });
-        Result result = null;
+
+        if (test != null) {
+            System.out.println(test);
+            ArrayList<Class> ar = new ArrayList();
+            try {
+                ar.add(Class.forName(test));
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
+            return junit.run(ar.toArray(new Class[0]));
+        }
 
         if (nativeUtil.isLinux()) {
-            System.out.println("LINUX");
+            System.out.println("LINUX " + ByteOrder.nativeOrder().toString());
             ArrayList<Class> ar = new ArrayList();
             ar.addAll(COMMON_TESTS);
             ar.addAll(LINUX_TESTS);
 
-            result = junit.run(ar.toArray(new Class[0]));
+            return junit.run(ar.toArray(new Class[0]));
         }
 
         if (nativeUtil.isWindows()) {
@@ -127,14 +140,14 @@ public class Main {
             ar.addAll(COMMON_TESTS);
             ar.addAll(WINDOWS_TESTS);
 
-            result = junit.run(ar.toArray(new Class[0]));
+            return junit.run(ar.toArray(new Class[0]));
         }
 
-        return result;
+        return null;
     }
 
     public static void main(String[] args) {
-        Result result = runTests();
+        Result result = runTests(args.length == 0 ? null : args[0]);
 
         if (result.getFailureCount() != 0) {
             System.err.println("FAILURES " + result.getFailureCount());

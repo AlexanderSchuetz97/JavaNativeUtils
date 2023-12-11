@@ -38,7 +38,7 @@ import java.util.UUID;
  */
 public class NativeLibraryLoaderHelper {
 
-    private static final int EXPECTED_NATIVE_LIB_VERSION = 7;
+    private static final int EXPECTED_NATIVE_LIB_VERSION = 9;
 
     /**
      * Flag to indicate if already loaded.
@@ -54,7 +54,7 @@ public class NativeLibraryLoaderHelper {
      * @throws LinkageError
      */
     public static void loadNativeLibraries() throws LinkageError {
-        loadNativeLibraries(new File(System.getProperty("java.io.tmpdir"), "jnu").getAbsolutePath());
+        loadNativeLibraries(new File(System.getProperty("java.io.tmpdir")).getAbsolutePath());
     }
 
     private static byte[] readLib(String name) {
@@ -69,7 +69,7 @@ public class NativeLibraryLoaderHelper {
         try {
             int i = 0;
             while (i != -1) {
-                    i = tempInput.read(tempBuf);
+                i = tempInput.read(tempBuf);
                 if (i > 0) {
                     baos.write(tempBuf, 0, i);
                 }

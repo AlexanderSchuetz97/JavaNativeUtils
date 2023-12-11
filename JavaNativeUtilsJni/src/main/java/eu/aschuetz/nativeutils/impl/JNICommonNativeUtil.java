@@ -109,7 +109,7 @@ public abstract class JNICommonNativeUtil implements JVMNativeUtil {
             addr = pointerAdd(addr, off);
         }
 
-        return new JNINativeMemory(addr, size, true, !buffer.isReadOnly(), new BufferPointerHandler(buffer));
+        return new JNINativeMemory(addr, size, new BufferPointerHandler(buffer));
     }
 
     protected static class BufferPointerHandler implements PointerHandler {
@@ -121,12 +121,12 @@ public abstract class JNICommonNativeUtil implements JVMNativeUtil {
         }
 
         @Override
-        public void handleClose(long ptr, long size, boolean read, boolean write) {
+        public void handleClose(long ptr, long size) {
             buffer = null;
         }
 
         @Override
-        public void handleSync(long ptr, long size, boolean read, boolean write, long offset, long length, boolean invalidate) throws SyncFailedException {
+        public void handleSync(long ptr, long size, long offset, long length, boolean invalidate) throws SyncFailedException {
             //NOOP
         }
     }
@@ -256,12 +256,12 @@ public abstract class JNICommonNativeUtil implements JVMNativeUtil {
 
     private static final PointerHandler FREE_HANDLER = new PointerHandler() {
         @Override
-        public void handleClose(long ptr, long size, boolean read, boolean write) {
+        public void handleClose(long ptr, long size) {
             _free(ptr);
         }
 
         @Override
-        public void handleSync(long ptr, long size, boolean read, boolean write, long offset, long length, boolean invalidate) {
+        public void handleSync(long ptr, long size, long offset, long length, boolean invalidate) {
             //NOOP.
         }
     };
@@ -281,7 +281,7 @@ public abstract class JNICommonNativeUtil implements JVMNativeUtil {
         if (size < 0) {
             size = Long.MAX_VALUE;
         }
-        return new JNINativeMemory(ptr, size, true, true, handler);
+        return new JNINativeMemory(ptr, size, handler);
     }
 
     public NativeMemory malloc(long size) throws OutOfMemoryError, IllegalArgumentException {
@@ -290,7 +290,7 @@ public abstract class JNICommonNativeUtil implements JVMNativeUtil {
         }
 
         long nPtr = _malloc(size);
-        return new JNINativeMemory(nPtr, size, true, true, FREE_HANDLER);
+        return new JNINativeMemory(nPtr, size, FREE_HANDLER);
     }
 
 

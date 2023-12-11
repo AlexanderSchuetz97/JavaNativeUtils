@@ -30,13 +30,12 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public interface NativeMemory extends AutoCloseable {
 
     /**
-     * This is safe to call and will block until all other threads are no longer reading/writing.
-     * As soon as its called all other threads will fail with NPE when they will call anything
-     * on the memory.
+     * Closes the memory.
+     *
+     * Calling this method when other threads are still using the memory will most likely cause use after free and may
+     * lead to the application accessing unexpected memory. This may crash the JVM.
      */
     void close();
-
-
 
     /**
      * Returns true if the close() method of this memory has not yet been called.
@@ -52,16 +51,6 @@ public interface NativeMemory extends AutoCloseable {
      * Returns true if the close() method of this memory has not yet been called and the memory is valid for the given offset and length
      */
     boolean isValid(long off, long len);
-
-    /**
-     * Is the memory marked readable?
-     */
-    boolean isReadable();
-
-    /**
-     * Is the memory marked as writeable?
-     */
-    boolean isWriteable();
 
     /**
      * returns the size of this memory.
@@ -88,23 +77,6 @@ public interface NativeMemory extends AutoCloseable {
      */
     long getNativePointer(long off);
 
-    /**
-     * Returns the read lock of this native memory object. While the read lock is held calls to "close" will block.
-     * This lock will be acquired automatically by any operation (read & write) to prevent async
-     * segmentation faults due to other threads calling close. You may wish to manually acquire this lock to perform bulk operations.
-     *
-     * This lock remains valid even when the memory is closed.
-     */
-    ReentrantReadWriteLock.ReadLock readLock();
-
-    /**
-     * The WriteLock by default is only held when close is called.
-     * You may wish to acquire this lock to perform exclusive operations on the memory.
-     *
-     * This lock remains valid even when the memory is closed.
-     * This lock is not fair! Beware of starvation!
-     */
-    ReentrantReadWriteLock.WriteLock writeLock();
 
     /**
      * Synchronize the changes made to the memory to the device/file backing the memory.
@@ -249,7 +221,7 @@ public interface NativeMemory extends AutoCloseable {
      */
     void writeByte(long offset, byte aByte);
 
-    void writeByte(long offset, int aByte);
+    void writeByte(long offset, int aInt);
 
     /**
      * writes a pointer value to the given offset.
@@ -392,16 +364,6 @@ public interface NativeMemory extends AutoCloseable {
     int readUnsignedByte(long offset);
 
     /**
-     * returns true if atomic operations are supported.
-     * ARM CPU Architecture does not have instructions for atomic operations.
-     * AARCH64 Architecture does have "some" of those instructions, but they are not implemented yet...
-     *
-     * TODO implement AARCH64 CAS
-     * Any method below will throw an UnsupportedOperationException if this method returns true.
-     */
-    boolean supportsAtomicOperations();
-
-    /**
      * adds the parameter to the long at offset. returns the previous value. this operation is atomic.
      *
      * This operations requires offset alignment(offset must be dividable by 8) on i386 (x86 - 32 bit) jvms
@@ -409,20 +371,28 @@ public interface NativeMemory extends AutoCloseable {
      */
     long getAndAdd(long offset, long aLong);
 
+    long getAndAddLong(long offset, long aLong);
+
     /**
      * adds the parameter to the int at offset. returns the previous value. this operation is atomic.
      */
     int getAndAdd(long offset, int aInt);
+
+    int getAndAddInt(long offset, int aInt);
 
     /**
      * adds the parameter to the short at offset. returns the previous value. this operation is atomic.
      */
     short getAndAdd(long offset, short aShort);
 
+    short getAndAddShort(long offset, short aShort);
+
     /**
      * adds the parameter to the byte at offset. returns the previous value. this operation is atomic.
      */
     byte getAndAdd(long offset, byte aByte);
+
+    byte getAndAddByte(long offset, byte aByte);
 
     /**
      * sets the value at offset to the given long. returns the previous value. this operation is atomic.
@@ -432,22 +402,30 @@ public interface NativeMemory extends AutoCloseable {
      */
     long getAndSet(long offset, long aLong);
 
+    long getAndSetLong(long offset, long aLong);
+
     /**
      * sets the value at offset to the given int. returns the previous value. this operation is atomic.
      */
     int getAndSet(long offset, int aInt);
+
+    int getAndSetInt(long offset, int aInt);
 
     /**
      * sets the value at offset to the given short. returns the previous value. this operation is atomic.
      */
     short getAndSet(long offset, short aShort);
 
+    short getAndSetShort(long offset, short aShort);
+
     /**
      * sets the value at offset to the given byte. returns the previous value. this operation is atomic.
      */
     byte getAndSet(long offset, byte aByte);
 
-    /*
+    byte getAndSetByte(long offset, byte aByte);
+
+    /**
      * compares the value at offset with expect if equal sets the value at offset to update and returns true otherwise return false.
      * this operation is atomic.
      *
@@ -456,25 +434,81 @@ public interface NativeMemory extends AutoCloseable {
      */
     boolean compareAndSet(long offset, long expect, long update);
 
-    /*
+    boolean compareAndSetLong(long offset, long expect, long update);
+
+    /**
+     * Returns true if the cpu can do 8 byte atomic operations.
+     */
+    boolean supportsCompareAndSet8Byte();
+
+    /**
+     * Returns the amount of alignment needed for addresses to do 8 byte atomic operations on (if supported by cpu)
+     */
+    long compareAndSet8ByteAlignment();
+
+    /**
      * compares the value at offset with expect if equal sets the value at offset to update and returns true otherwise return false.
      * this operation is atomic.
      */
     boolean compareAndSet(long offset, int expect, int update);
 
-    /*
+    boolean compareAndSetInt(long offset, int expect, int update);
+
+    /**
+     * Returns true if the cpu can do 4 byte atomic operations.
+     */
+    boolean supportsCompareAndSet4Byte();
+
+    /**
+     * Returns the amount of alignment needed for addresses to do 4 byte atomic operations on (if supported by cpu)
+     */
+    long compareAndSet4ByteAlignment();
+
+    /**
      * compares the value at offset with expect if equal sets the value at offset to update and returns true otherwise return false.
      * this operation is atomic.
      */
     boolean compareAndSet(long offset, short expect, short update);
 
-    /*
+    boolean compareAndSetShort(long offset, short expect, short update);
+
+    /**
+     * Returns the amount of alignment needed for addresses to do 2 byte atomic operations on (if supported by cpu)
+     */
+    boolean supportsCompareAndSet2Byte();
+
+    /**
+     * Returns true if the cpu can do 2 byte atomic operations.
+     */
+    long compareAndSet2ByteAlignment();
+
+    /**
      * compares the value at offset with expect if equal sets the value at offset to update and returns true otherwise return false.
      * this operation is atomic.
      */
     boolean compareAndSet(long offset, byte expect, byte update);
 
-    /*
+    boolean compareAndSetByte(long offset, byte expect, byte update);
+
+    /**
+     * Returns true if the cpu can do 1 byte atomic operations.
+     */
+    boolean supportsCompareAndSet1Byte();
+
+    /**
+     * Returns the amount of alignment needed for addresses to do 1 byte atomic operations on (if supported by cpu)
+     */
+    long compareAndSet1ByteAlignment();
+
+    /**
+     * Stops/Cancels all java calls that are inside the spin(...) methods. They will all complete exceptionally. further calls to any spin method
+     * will always fail immediately.
+     * This call only guarantees that threads stuck in spin calls will return eventually.
+     * This method returns immediately and does not guarantee that all threads stuck have returned yet.
+     */
+    void stopSpin();
+
+    /**
      * sets the value to update if it ever becomes expect before aTimeout elapses. returns true if the value was written false if the timeout expired.
      * the parameter aSpinTime determines how long the thread should be put to sleep before trying again after a failed attempt.
      * a negative value for aSpinTime indicates that the thread shouldn't be put to sleep.
@@ -482,7 +516,7 @@ public interface NativeMemory extends AutoCloseable {
      */
     boolean spinAndSet(long offset, long expect, long update, long aSpinTime, long aTimeout, TimeUnit aUnit);
 
-    /*
+    /**
      * sets the value to update if it ever becomes expect before aTimeout elapses. returns true if the value was written false if the timeout expired.
      * the parameter aSpinTime determines how long the thread should be put to sleep before trying again after a failed attempt.
      * a negative value for aSpinTime indicates that the thread shouldn't be put to sleep.
@@ -490,7 +524,7 @@ public interface NativeMemory extends AutoCloseable {
      */
     boolean spinAndSet(long offset, int expect, int update, long aSpinTime, long aTimeout, TimeUnit aUnit);
 
-    /*
+    /**
      * sets the value to update if it ever becomes expect before aTimeout elapses. returns true if the value was written false if the timeout expired.
      * the parameter aSpinTime determines how long the thread should be put to sleep before trying again after a failed attempt.
      * a negative value for aSpinTime indicates that the thread shouldn't be put to sleep.
@@ -498,7 +532,7 @@ public interface NativeMemory extends AutoCloseable {
      */
     boolean spinAndSet(long offset, short expect, short update, long aSpinTime, long aTimeout, TimeUnit aUnit);
 
-    /*
+    /**
      * sets the value to update if it ever becomes expect before aTimeout elapses. returns true if the value was write false if the timeout expired.
      * the parameter aSpinTime determines how long the thread should be put to sleep before trying again after a failed attempt.
      * a negative value for aSpinTime indicates that the thread shouldn't be put to sleep.
@@ -506,35 +540,35 @@ public interface NativeMemory extends AutoCloseable {
      */
     boolean spinAndSet(long offset, byte expect, byte update, long aSpinTime, long aTimeout, TimeUnit aUnit);
 
-    /*
+    /**
      * sets the value to update if it ever becomes expect before aTimeout elapses. returns true if the value was write false if the timeout expired.
      * the parameter aSpinTime determines how long the thread should be put to sleep before trying again after a failed attempt.
      * a negative value for aSpinTime indicates that the thread shouldn't be put to sleep.
      */
     void spinAndSet(long offset, long expect, long update, long aSpinTime, TimeUnit aUnit);
 
-    /*
+    /**
      * sets the value to update if it ever becomes expect before aTimeout elapses. returns true if the value was write false if the timeout expired.
      * the parameter aSpinTime determines how long the thread should be put to sleep before trying again after a failed attempt.
      * a negative value for aSpinTime indicates that the thread shouldn't be put to sleep.
      */
     void spinAndSet(long offset, int expect, int update, long aSpinTime, TimeUnit aUnit);
 
-    /*
+    /**
      * sets the value to update if it ever becomes expect before aTimeout elapses. returns true if the value was write false if the timeout expired.
      * the parameter aSpinTime determines how long the thread should be put to sleep before trying again after a failed attempt.
      * a negative value for aSpinTime indicates that the thread shouldn't be put to sleep.
      */
     void spinAndSet(long offset, short expect, short update, long aSpinTime, TimeUnit aUnit);
 
-    /*
+    /**
      * sets the value to update if it ever becomes expect before aTimeout elapses. returns true if the value was write false if the timeout expired.
      * the parameter aSpinTime determines how long the thread should be put to sleep before trying again after a failed attempt.
      * a negative value for aSpinTime indicates that the thread shouldn't be put to sleep.
      */
     void spinAndSet(long offset, byte expect, byte update, long aSpinTime, TimeUnit aUnit);
 
-    /*
+    /**
      * returns true if the value at offset becomes expected. After every read the Thread sleeps for aSpinTime.
      * Returns if aTimeout elapsed before the value became expect.
      * a negative value for aSpinTime indicates that the thread shouldn't be put to sleep.
@@ -542,7 +576,7 @@ public interface NativeMemory extends AutoCloseable {
      */
     boolean spin(long offset, long expect, long aSpinTime, long aTimeout, TimeUnit aUnit);
 
-    /*
+    /**
      * returns true if the value at offset becomes expected. After every read the Thread sleeps for aSpinTime.
      * Returns if aTimeout elapsed before the value became expect.
      * a negative value for aSpinTime indicates that the thread shouldn't be put to sleep.
@@ -550,7 +584,7 @@ public interface NativeMemory extends AutoCloseable {
      */
     boolean spin(long offset, int expect, long aSpinTime, long aTimeout, TimeUnit aUnit);
 
-    /*
+    /**
      * returns true if the value at offset becomes expected. After every read the Thread sleeps for aSpinTime.
      * Returns if aTimeout elapsed before the value became expect.
      * a negative value for aSpinTime indicates that the thread shouldn't be put to sleep.
@@ -558,7 +592,7 @@ public interface NativeMemory extends AutoCloseable {
      */
     boolean spin(long offset, short expect, long aSpinTime, long aTimeout, TimeUnit aUnit);
 
-    /*
+    /**
      * returns true if the value at offset becomes expected. After every read the Thread sleeps for aSpinTime.
      * Returns if aTimeout elapsed before the value became expect.
      * a negative value for aSpinTime indicates that the thread shouldn't be put to sleep.
@@ -566,46 +600,37 @@ public interface NativeMemory extends AutoCloseable {
      */
     boolean spin(long offset, byte expect, long aSpinTime, long aTimeout, TimeUnit aUnit);
 
-    /*
+    /**
      * returns true if the value at offset becomes expected. After every read the Thread sleeps for aSpinTime.
      * Returns if aTimeout elapsed before the value became expect.
      * a negative value for aSpinTime indicates that the thread shouldn't be put to sleep.
      */
     void spin(long offset, long expect, long aSpinTime, TimeUnit aUnit);
 
-    /*
+    /**
      * returns true if the value at offset becomes expected. After every read the Thread sleeps for aSpinTime.
      * Returns if aTimeout elapsed before the value became expect.
      * a negative value for aSpinTime indicates that the thread shouldn't be put to sleep.
      */
     void spin(long offset, int expect, long aSpinTime, TimeUnit aUnit);
 
-    /*
+    /**
      * returns true if the value at offset becomes expected. After every read the Thread sleeps for aSpinTime.
      * Returns if aTimeout elapsed before the value became expect.
      * a negative value for aSpinTime indicates that the thread shouldn't be put to sleep.
      */
     void spin(long offset, short expect, long aSpinTime, TimeUnit aUnit);
 
-    /*
+    /**
      * returns true if the value at offset becomes expected. After every read the Thread sleeps for aSpinTime.
      * Returns if aTimeout elapsed before the value became expect.
      * a negative value for aSpinTime indicates that the thread shouldn't be put to sleep.
      */
     void spin(long offset, byte expect, long aSpinTime, TimeUnit aUnit);
 
+    boolean supportsCompareAndSet16Byte();
 
-    /**
-     * Is 16 Byte compare and set supported?
-     * returns false on anything except amd64 architecture
-     *
-     */
-    boolean supports16ByteCompareAndSet();
-
-    /**
-     * Returns true if offset+{@link #getNativePointer()} must be dividable by 4 for all 8 Byte atomic operations.
-     */
-    boolean atomic8ByteOperationsRequireAlignment();
+    long compareAndSet16ByteAlignment();
 
     /*
      * compares the value of offset with the first 16 bytes of data. if equal write the data at offset to the second 16 bytes of data and return true otherwise return false.

@@ -215,7 +215,7 @@ public interface WindowsNativeUtil extends NativeUtil {
      */
     long OpenFileMappingA(int dwDesiredAccess, boolean bInheritHandle, String lpName) throws UnknownNativeErrorException;
 
-    NativeMemory MapViewOfFileEx(long hFileMappingObject, int dwDesiredAccess, int dwFileOffsetHigh, int dwFileOffsetLow, int dwNumberOfBytesToMap, long lpBaseAddress) throws UnknownNativeErrorException;
+    long MapViewOfFileEx(long hFileMappingObject, int dwDesiredAccess, int dwFileOffsetHigh, int dwFileOffsetLow, int dwNumberOfBytesToMap, long lpBaseAddress) throws UnknownNativeErrorException;
 
     void UnmapViewOfFile(long address) throws UnknownNativeErrorException;
     /**

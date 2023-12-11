@@ -22,12 +22,12 @@ public class MMapTest {
         long ptr = lnu.mmap(fd, 100_000_000, LinuxConst.MAP_SHARED, true, true, 0);
         NativeMemory mem = lnu.pointer(ptr, 100_000_000, new PointerHandler() {
             @Override
-            public void handleClose(long ptr, long size, boolean read, boolean write) {
+            public void handleClose(long ptr, long size) {
                 //NOOP
             }
 
             @Override
-            public void handleSync(long ptr, long size, boolean read, boolean write, long offset, long length, boolean invalidate) throws SyncFailedException {
+            public void handleSync(long ptr, long size, long offset, long length, boolean invalidate) throws SyncFailedException {
                 //NOOP
             }
         });

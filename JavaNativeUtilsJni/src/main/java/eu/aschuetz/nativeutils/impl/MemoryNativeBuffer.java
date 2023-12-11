@@ -226,14 +226,9 @@ public class MemoryNativeBuffer implements NativeBuffer {
     @Override
     public void writeZeroTerminatedUTF8(String str) {
         byte[] buf = str.getBytes(StandardCharsets.UTF_8);
-        try {
-            memory.readLock().lock();
-            memory.write(offset, buf);
-            memory.writeByte(offset +buf.length, 0);
-            offset +=buf.length+1;
-        } finally {
-            memory.readLock().unlock();
-        }
+        memory.write(offset, buf);
+        memory.writeByte(offset +buf.length, 0);
+        offset +=buf.length+1;
     }
 
     @Override
@@ -396,56 +391,52 @@ public class MemoryNativeBuffer implements NativeBuffer {
             return;
         }
 
-        memory.readLock().lock();
-        try {
-            int length3 = length*3;
-            byte[] buffer = new byte[Math.max(length+(length3/2), Math.min(length3, 32))];
-            int bufIdx = 0;
-            long startPosition = offset +2;
-            long utfPosition = startPosition;
+        int length3 = length*3;
+        byte[] buffer = new byte[Math.max(length+(length3/2), Math.min(length3, 32))];
+        int bufIdx = 0;
+        long startPosition = offset +2;
+        long utfPosition = startPosition;
 
-            for (int i = 0; i < length; i++) {
-                //Generally if our string only contains 1 byte utf chars then we never get to this. we got a 33% 'buffer' which should cover most european languages too.
-                //Asia+Russia will just have multiple iterations over the buffer since their chars need more than 33% overhead
-                if ((buffer.length-bufIdx) < 3) {
-                    memory.write(utfPosition, buffer, 0, bufIdx);
-                    utfPosition+=bufIdx;
-                    bufIdx = 0;
-                }
-
-                int currentChar = str.charAt(i);
-                if ((currentChar >= 0x0001) && (currentChar <= 0x007f)) {
-                    buffer[bufIdx++] = (byte) currentChar;
-                    continue;
-                }
-
-                if (currentChar <= 0x07ff) {
-                    buffer[bufIdx++] = (byte) (0xc0 | ((currentChar >>  6) & 0x1f));
-                    buffer[bufIdx++] = (byte) (0x80 | ((currentChar >>  0) & 0x3f));
-                    continue;
-                }
-
-                buffer[bufIdx++] = (byte) (0xe0 | ((currentChar >> 12) & 0x0f));
-                buffer[bufIdx++] = (byte) (0x80 | ((currentChar >>  6) & 0x3f));
-                buffer[bufIdx++] = (byte) (0x80 | ((currentChar >>  0) & 0x3f));
-            }
-
-            if (bufIdx > 0) {
+        for (int i = 0; i < length; i++) {
+            //Generally if our string only contains 1 byte utf chars then we never get to this. we got a 33% 'buffer' which should cover most european languages too.
+            //Asia+Russia will just have multiple iterations over the buffer since their chars need more than 33% overhead
+            if ((buffer.length-bufIdx) < 3) {
                 memory.write(utfPosition, buffer, 0, bufIdx);
-                utfPosition += bufIdx;
+                utfPosition+=bufIdx;
+                bufIdx = 0;
             }
 
-            long bytesInUtf8 = utfPosition-startPosition;
-
-            if (bytesInUtf8 > 0xffff) {
-                throw new IllegalArgumentException("string too long " + bytesInUtf8);
+            int currentChar = str.charAt(i);
+            if ((currentChar >= 0x0001) && (currentChar <= 0x007f)) {
+                buffer[bufIdx++] = (byte) currentChar;
+                continue;
             }
 
-            memory.writeShort(offset, (int) bytesInUtf8);
-            offset +=bytesInUtf8+2;
-        } finally {
-            memory.readLock().unlock();
+            if (currentChar <= 0x07ff) {
+                buffer[bufIdx++] = (byte) (0xc0 | ((currentChar >>  6) & 0x1f));
+                buffer[bufIdx++] = (byte) (0x80 | ((currentChar >>  0) & 0x3f));
+                continue;
+            }
+
+            buffer[bufIdx++] = (byte) (0xe0 | ((currentChar >> 12) & 0x0f));
+            buffer[bufIdx++] = (byte) (0x80 | ((currentChar >>  6) & 0x3f));
+            buffer[bufIdx++] = (byte) (0x80 | ((currentChar >>  0) & 0x3f));
         }
+
+        if (bufIdx > 0) {
+            memory.write(utfPosition, buffer, 0, bufIdx);
+            utfPosition += bufIdx;
+        }
+
+        long bytesInUtf8 = utfPosition-startPosition;
+
+        if (bytesInUtf8 > 0xffff) {
+            throw new IllegalArgumentException("string too long " + bytesInUtf8);
+        }
+
+        memory.writeShort(offset, (int) bytesInUtf8);
+        offset +=bytesInUtf8+2;
+
 
 
     }

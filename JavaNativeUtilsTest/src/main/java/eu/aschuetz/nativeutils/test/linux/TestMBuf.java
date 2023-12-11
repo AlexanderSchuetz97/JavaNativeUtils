@@ -59,13 +59,13 @@ public class TestMBuf {
         }
 
         @Override
-        public void handleClose(long ptr, long size, boolean read, boolean write) {
+        public void handleClose(long ptr, long size) {
             buffer = null;
             //GC will actually close to buffer
         }
 
         @Override
-        public void handleSync(long ptr, long size, boolean read, boolean write, long offset, long length, boolean invalidate) throws SyncFailedException {
+        public void handleSync(long ptr, long size, long offset, long length, boolean invalidate) throws SyncFailedException {
 
         }
     }

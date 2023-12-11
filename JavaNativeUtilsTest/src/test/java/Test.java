@@ -5,6 +5,6 @@ public class Test {
 
     @org.junit.Test
     public void run() {
-        Assert.assertEquals(0, Main.runTests().getFailureCount());
+        Assert.assertEquals(0, Main.runTests(null).getFailureCount());
     }
 }

@@ -21,7 +21,8 @@
 #if defined(__linux__)
 #include <endian.h>
 #elif defined(_WIN32)
-//I dont intend to ever support non LITTLE_ENDIAN windows systems (only xbox 360 comes to mind honestly)
+//I dont intend to ever support non LITTLE_ENDIAN windows systems
+//(only xbox 360 and ancient server versions for ppc comes to mind honestly, none of them support java)
 #define LITTLE_ENDIAN 1234
 #define BIG_ENDIAN 4321
 #define BYTE_ORDER 1234

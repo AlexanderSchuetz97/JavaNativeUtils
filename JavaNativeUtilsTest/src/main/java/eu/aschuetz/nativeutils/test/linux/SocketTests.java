@@ -111,7 +111,7 @@ public class SocketTests {
         long memPtr = lni.mmap(fd, stat.getSize(), LinuxConst.MAP_SHARED, true, true, 0);
         NativeMemory mem = lni.pointer(memPtr, stat.getSize(), new PointerHandler() {
             @Override
-            public void handleClose(long ptr, long size, boolean read, boolean write) {
+            public void handleClose(long ptr, long size) {
                 try {
                     lni.munmap(ptr, size);
                 } catch (UnknownNativeErrorException e) {
@@ -120,7 +120,7 @@ public class SocketTests {
             }
 
             @Override
-            public void handleSync(long ptr, long size, boolean read, boolean write, long offset, long length, boolean invalidate) throws SyncFailedException {
+            public void handleSync(long ptr, long size, long offset, long length, boolean invalidate) throws SyncFailedException {
 
             }
         });

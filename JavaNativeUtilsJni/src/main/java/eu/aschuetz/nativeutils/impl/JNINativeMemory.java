@@ -27,77 +27,63 @@ import java.io.SyncFailedException;
 import java.nio.ByteBuffer;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLongFieldUpdater;
+import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 class JNINativeMemory implements NativeMemory {
-    private final boolean read;
-    private final boolean write;
+
+    private static final AtomicLongFieldUpdater<JNINativeMemory> PTR_UPDATER = AtomicLongFieldUpdater.newUpdater(JNINativeMemory.class, "ptr");
     private volatile long ptr;
     private final long size;
     private final PointerHandler handler;
-
     private final int hashCode;
+    private static final AtomicReferenceFieldUpdater<JNINativeMemory, ByteBuffer> SPIN_GUARD_UPDATER = AtomicReferenceFieldUpdater.newUpdater(JNINativeMemory.class, ByteBuffer.class, "spinGuard");
+    private static final ByteBuffer NO_SPIN_GUARD = ByteBuffer.allocateDirect(1);
+    static {
+        NO_SPIN_GUARD.put(0, (byte) 1);
+    }
+    private volatile ByteBuffer spinGuard;
 
-    private final ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
-    private final ReentrantReadWriteLock.ReadLock rLock = rwl.readLock();
-    private final ReentrantReadWriteLock.WriteLock wLock = rwl.writeLock();
-
-    JNINativeMemory(long ptr, long size, boolean read, boolean write, PointerHandler handler) {
+    JNINativeMemory(long ptr, long size, PointerHandler handler) {
         this.ptr = ptr;
         this.size = size;
-        this.read = read;
-        this.write = write;
         this.handler = Objects.requireNonNull(handler);
         this.hashCode = (int)(ptr ^ (ptr >>> 32));
     }
 
-
+    @Override
+    public native boolean supportsCompareAndSet16Byte();
 
     @Override
-    public native boolean atomic8ByteOperationsRequireAlignment();
+    public long compareAndSet16ByteAlignment() {
+        //only amd64 has this, always 16.
+        return 16;
+    }
 
     @Override
     public void close() {
-        long optr = ptr;
-        ptr = 0;
+        long optr = PTR_UPDATER.getAndSet(this, 0);
+
         if (optr == 0) {
             return;
         }
 
-        wLock.lock();
-        try {
-            handler.handleClose(optr, size, read, write);
-        } finally {
-            wLock.unlock();
-        }
+        SPIN_GUARD_UPDATER.compareAndSet(this, null, NO_SPIN_GUARD);
+        spinGuard.put(0, (byte) 1);
+        handler.handleClose(optr, size);
     }
 
     @Override
     public void read(long off, NativeMemory dst, long dstOff, long len) {
-        if (!dst.isWriteable()) {
-            throw new IllegalArgumentException("dst not writeable");
-        }
-
         if (len == 0) {
             return;
         }
-
-        ReentrantReadWriteLock.ReadLock dLock = dst.readLock();
-        dLock.lock();
-        try {
-            lockForRead(off, len);
-            try {
-                if (!dst.isValid(dstOff, len)) {
-                    throw new IllegalArgumentException("dst out of bounds");
-                }
-
-                memmove(ptr, off, dst.getNativePointer(dstOff), len);
-            } finally {
-                rLock.unlock();
-            }
-        } finally {
-            dLock.unlock();
+        if (!dst.isValid(dstOff, len)) {
+            throw new IllegalArgumentException("dst out of bounds");
         }
+
+        memmove(ptr, off, dst.getNativePointer(dstOff), len);
     }
 
     @Override
@@ -110,40 +96,32 @@ class JNINativeMemory implements NativeMemory {
             return;
         }
 
-        lockForRead(offset, len);
-        try {
-            if (!buffer.isDirect()) {
-                if (!buffer.hasArray()) {
-                    byte[] tmp = new byte[len];
-                    read(offset, tmp, 0, len);
-                    buffer.put(tmp);
-                    return;
-                }
-
-                int pos = buffer.position();
-                byte[] buf = buffer.array();
-                read(offset, buf, pos, len);
-                buffer.position(pos+len);
+        if (!buffer.isDirect()) {
+            if (!buffer.hasArray()) {
+                byte[] tmp = new byte[len];
+                read(offset, tmp, 0, len);
+                buffer.put(tmp);
                 return;
             }
 
             int pos = buffer.position();
-            readBuffer(ptr, offset, buffer, pos, len);
+            byte[] buf = buffer.array();
+            read(offset, buf, pos, len);
             buffer.position(pos+len);
-        } finally {
-            rLock.unlock();
+            return;
         }
+
+
+        checkOffset(offset, len);
+        int pos = buffer.position();
+        readBuffer(ptr, offset, buffer, pos, len);
+        buffer.position(pos+len);
     }
 
     @Override
     public void sync(long offset, long length, boolean invalidate) throws SyncFailedException {
-        lockForWrite(offset, length);
-        try {
-            handler.handleSync(ptr, size, read, write, offset, length, invalidate);
-        } finally {
-            rLock.unlock();
-        }
-
+        checkOffset(offset, length);
+        handler.handleSync(ptr, size, offset, length, invalidate);
     }
 
     @Override
@@ -163,16 +141,6 @@ class JNINativeMemory implements NativeMemory {
         }
 
         return off(ptr, off);
-    }
-
-    @Override
-    public ReentrantReadWriteLock.ReadLock readLock() {
-        return this.rLock;
-    }
-
-    @Override
-    public ReentrantReadWriteLock.WriteLock writeLock() {
-        return this.wLock;
     }
 
     @Override
@@ -197,16 +165,6 @@ class JNINativeMemory implements NativeMemory {
     }
 
     @Override
-    public boolean isReadable() {
-        return read;
-    }
-
-    @Override
-    public boolean isWriteable() {
-        return write;
-    }
-
-    @Override
     public long size() {
         return this.size;
     }
@@ -217,11 +175,7 @@ class JNINativeMemory implements NativeMemory {
     }
 
 
-    protected void lockForWrite(long offset, long len) {
-        if (!write) {
-            throw new UnsupportedOperationException("memory does not support writing");
-        }
-
+    protected void checkOffset(long offset, long len) {
         if (ptr == 0) {
             throw new NullPointerException();
         }
@@ -229,67 +183,32 @@ class JNINativeMemory implements NativeMemory {
         if (offset < 0 || len < 0 || offset >= size || offset+len > size) {
             throw new IllegalArgumentException("out of bounds");
         }
-
-        rLock.lock();
     }
 
-    protected void lockForRead(long offset, long len) {
-        //C checks it again, this is intentionally left before the call to lock.
+    protected void initSpinGuard() {
+        if (spinGuard != null) {
+            return;
+        }
+
         if (ptr == 0) {
             throw new NullPointerException();
         }
 
-        if (!read) {
-            throw new UnsupportedOperationException("memory does not support reading");
-        }
-
-        if (offset < 0 || len <= 0 || offset+len > size) {
-            throw new IllegalArgumentException("out of bounds");
-        }
-
-        rLock.lock();
-    }
-
-    protected void lockForReadWrite(long offset, long len) {
-        //C checks it again, this is intentionally left before the call to lock.
-        if (ptr == 0) {
-            throw new NullPointerException();
-        }
-
-        if (!write) {
-            throw new UnsupportedOperationException("memory does not support writing");
-        }
-
-        if (!read) {
-            throw new UnsupportedOperationException("memory does not support reading");
-        }
-
-        if (offset < 0 || len <= 0 || offset >= size || offset+len > size) {
-            throw new IllegalArgumentException("out of bounds");
-        }
-
-        rLock.lock();
+        SPIN_GUARD_UPDATER.compareAndSet(this, null, ByteBuffer.allocateDirect(1));
     }
 
 
     @Override
     public void set(long offset, byte value, long len) {
-        lockForWrite(offset, len);
-        try {
-            set(ptr, offset, value, len);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, len);
+        set(ptr, offset, value, len);
+
     }
 
     @Override
     public void set(long offset, int value, long len) {
-        lockForWrite(offset, len);
-        try {
-            set(ptr, offset, (byte) value, len);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, len);
+        set(ptr, offset, (byte) value, len);
     }
 
     @Override
@@ -311,12 +230,8 @@ class JNINativeMemory implements NativeMemory {
             return;
         }
 
-        lockForWrite(offset, len);
-        try {
-            write(ptr, offset, buffer, bufferOffset, len);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, len);
+        write(ptr, offset, buffer, bufferOffset, len);
     }
 
     @Override
@@ -330,33 +245,29 @@ class JNINativeMemory implements NativeMemory {
             return;
         }
 
-        lockForRead(offset, len);
-        try {
-            if (!buffer.isDirect()) {
-                if (!buffer.hasArray()) {
-                    byte[] tmp = new byte[len];
-                    buffer.get(tmp);
-                    write(offset, tmp);
-                    return;
-                }
+        if (!buffer.isDirect()) {
+            if (!buffer.hasArray()) {
+                byte[] tmp = new byte[len];
+                buffer.get(tmp);
+                write(offset, tmp);
+                return;
+            }
 
-                if (len == 0) {
-                    return;
-                }
-
-                int pos = buffer.position();
-                byte[] buf = buffer.array();
-                write(offset, buf, pos, len);
-                buffer.position(pos+len);
+            if (len == 0) {
                 return;
             }
 
             int pos = buffer.position();
-            writeBuffer(ptr, offset, buffer, pos, len);
+            byte[] buf = buffer.array();
+            write(offset, buf, pos, len);
             buffer.position(pos+len);
-        } finally {
-            rLock.unlock();
+            return;
         }
+
+        checkOffset(offset, len);
+        int pos = buffer.position();
+        writeBuffer(ptr, offset, buffer, pos, len);
+        buffer.position(pos+len);
     }
 
     @Override
@@ -378,12 +289,8 @@ class JNINativeMemory implements NativeMemory {
             return;
         }
 
-        lockForWrite(offset, ((long)len)*size);
-        try {
-            writeExpandedByteArray(ptr, offset, bytes, size, off, len);
-        } finally {
-            this.rLock.unlock();
-        }
+        checkOffset(offset, ((long)len)*size);
+        writeExpandedByteArray(ptr, offset, bytes, size, off, len);
     }
 
     static native void writeExpandedByteArray(long ptr, long offset, byte[] bytes, int size, int off, int len);
@@ -399,7 +306,7 @@ class JNINativeMemory implements NativeMemory {
         }
 
         if (size == 1) {
-            write(offset, bytes, off, len);
+            read(offset, bytes, off, len);
             return;
         }
 
@@ -407,12 +314,8 @@ class JNINativeMemory implements NativeMemory {
             return;
         }
 
-        lockForRead(offset, ((long)len)*size);
-        try {
-            readExpandedByteArray(ptr, offset, bytes, size, off, len);
-        } finally {
-            this.rLock.unlock();
-        }
+        checkOffset(offset, ((long)len)*size);
+        readExpandedByteArray(ptr, offset, bytes, size, off, len);
     }
 
     static native void readExpandedByteArray(long ptr, long offset, byte[] bytes, int size, int off, int len);
@@ -432,12 +335,8 @@ class JNINativeMemory implements NativeMemory {
             return;
         }
 
-        lockForWrite(offset, ((long)len)*size);
-        try {
-            writeExpandedCharArray(ptr, offset, chars, size, off, len);
-        } finally {
-            this.rLock.unlock();
-        }
+        checkOffset(offset, ((long)len)*size);
+        writeExpandedCharArray(ptr, offset, chars, size, off, len);
     }
 
     static native void writeExpandedCharArray(long ptr, long offset, char[] chars, int size, int off, int len);
@@ -455,12 +354,8 @@ class JNINativeMemory implements NativeMemory {
             return;
         }
 
-        lockForRead(offset, ((long)len)*size);
-        try {
-            readExpandedCharArray(ptr, offset, chars, size, off, len);
-        } finally {
-            this.rLock.unlock();
-        }
+        checkOffset(offset, ((long)len)*size);
+        readExpandedCharArray(ptr, offset, chars, size, off, len);
     }
 
     static native void readExpandedCharArray(long ptr, long offset, char[] chars, int size, int off, int len);
@@ -479,12 +374,8 @@ class JNINativeMemory implements NativeMemory {
             return;
         }
 
-        lockForWrite(offset, ((long)len)*size);
-        try {
-            writeExpandedShortArray(ptr, offset, shorts, size, off, len);
-        } finally {
-            this.rLock.unlock();
-        }
+        checkOffset(offset, ((long)len)*size);
+        writeExpandedShortArray(ptr, offset, shorts, size, off, len);
     }
 
 
@@ -503,12 +394,8 @@ class JNINativeMemory implements NativeMemory {
             return;
         }
 
-        lockForRead(offset, ((long)len)*size);
-        try {
-            readExpandedShortArray(ptr, offset, shorts, size, off, len);
-        } finally {
-            this.rLock.unlock();
-        }
+        checkOffset(offset, ((long)len)*size);
+        readExpandedShortArray(ptr, offset, shorts, size, off, len);
     }
 
     static native void readExpandedShortArray(long ptr, long offset, short[] chars, int size, int off, int len);
@@ -527,12 +414,8 @@ class JNINativeMemory implements NativeMemory {
             return;
         }
 
-        lockForWrite(offset, ((long)len)*size);
-        try {
-            writeExpandedIntArray(ptr, offset, ints, size, off, len);
-        } finally {
-            this.rLock.unlock();
-        }
+        checkOffset(offset, ((long)len)*size);
+        writeExpandedIntArray(ptr, offset, ints, size, off, len);
     }
 
     static native void writeExpandedIntArray(long ptr, long offset, int[] ints, int size, int off, int len);
@@ -551,12 +434,8 @@ class JNINativeMemory implements NativeMemory {
             return;
         }
 
-        lockForRead(offset, ((long)len)*size);
-        try {
-            readExpandedIntArray(ptr, offset, ints, size, off, len);
-        } finally {
-            this.rLock.unlock();
-        }
+        checkOffset(offset, ((long)len)*size);
+        readExpandedIntArray(ptr, offset, ints, size, off, len);
     }
 
     static native void readExpandedIntArray(long ptr, long offset, int[] ints, int size, int off, int len);
@@ -575,12 +454,8 @@ class JNINativeMemory implements NativeMemory {
             return;
         }
 
-        lockForWrite(offset, ((long)len)*size);
-        try {
-            writeExpandedLongArray(ptr, offset, longs, size, off, len);
-        } finally {
-            this.rLock.unlock();
-        }
+        checkOffset(offset, ((long)len)*size);
+        writeExpandedLongArray(ptr, offset, longs, size, off, len);
     }
 
     static native void writeExpandedLongArray(long ptr, long offset, long[] ints, int size, int off, int len);
@@ -598,12 +473,8 @@ class JNINativeMemory implements NativeMemory {
             return;
         }
 
-        lockForRead(offset, ((long)len)*size);
-        try {
-            readExpandedLongArray(ptr, offset, longs, size, off, len);
-        } finally {
-            this.rLock.unlock();
-        }
+        checkOffset(offset, ((long)len)*size);
+        readExpandedLongArray(ptr, offset, longs, size, off, len);
     }
 
     static native void readExpandedLongArray(long ptr, long offset, long[] ints, int size, int off, int len);
@@ -618,12 +489,8 @@ class JNINativeMemory implements NativeMemory {
             return;
         }
 
-        lockForWrite(offset, (len * 4L));
-        try {
-            writeFloatArray(ptr, offset, floats, off, len);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, (len * 4L));
+        writeFloatArray(ptr, offset, floats, off, len);
     }
 
     static native void writeFloatArray(long ptr, long offset, float[] floats, int off, int len);
@@ -638,12 +505,8 @@ class JNINativeMemory implements NativeMemory {
             return;
         }
 
-        lockForRead(offset, (len * 4L));
-        try {
-            readFloatArray(ptr, offset, floats, off, len);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, (len * 4L));
+        readFloatArray(ptr, offset, floats, off, len);
     }
 
     static native void readFloatArray(long ptr, long offset, float[] floats, int off, int len);
@@ -658,12 +521,8 @@ class JNINativeMemory implements NativeMemory {
             return;
         }
 
-        lockForWrite(offset, (len * 8L));
-        try {
-            writeDoubleArray(ptr, offset, doubles, off, len);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, (len * 8L));
+        writeDoubleArray(ptr, offset, doubles, off, len);
     }
 
     static native void writeDoubleArray(long ptr, long offset, double[] doubles, int off, int len);
@@ -678,12 +537,8 @@ class JNINativeMemory implements NativeMemory {
             return;
         }
 
-        lockForRead(offset, (len * 8L));
-        try {
-            readDoubleArray(ptr, offset, doubles, off, len);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, (len * 8L));
+        readDoubleArray(ptr, offset, doubles, off, len);
     }
 
     static native void readDoubleArray(long ptr, long offset, double[] doubles, int off, int len);
@@ -691,12 +546,8 @@ class JNINativeMemory implements NativeMemory {
 
     @Override
     public void write(long offset, byte aByte) {
-        lockForWrite(offset, 1);
-        try {
-            write(ptr, offset, aByte);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 1);
+        write(ptr, offset, aByte);
     }
 
     @Override
@@ -721,12 +572,8 @@ class JNINativeMemory implements NativeMemory {
 
     @Override
     public void write(long offset, int aInt) {
-        lockForWrite(offset, 4);
-        try {
-            write(ptr, offset, aInt);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 4);
+        write(ptr, offset, aInt);
     }
 
     @Override
@@ -736,12 +583,8 @@ class JNINativeMemory implements NativeMemory {
 
     @Override
     public void write(long offset, long aLong) {
-        lockForWrite(offset, 8);
-        try {
-            write(ptr, offset, aLong);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 8);
+        write(ptr, offset, aLong);
     }
 
     @Override
@@ -751,12 +594,8 @@ class JNINativeMemory implements NativeMemory {
 
     @Override
     public void write(long offset, float aFloat) {
-        lockForWrite(offset, 4);
-        try {
-            write(ptr, offset, aFloat);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 4);
+        write(ptr, offset, aFloat);
     }
 
     @Override
@@ -766,12 +605,8 @@ class JNINativeMemory implements NativeMemory {
 
     @Override
     public void write(long offset, double aDouble) {
-        lockForWrite(offset, 8);
-        try {
-            write(ptr, offset, aDouble);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 8);
+        write(ptr, offset, aDouble);
     }
 
     @Override
@@ -781,12 +616,8 @@ class JNINativeMemory implements NativeMemory {
 
     @Override
     public void write(long offset, short aShort) {
-        lockForWrite(offset, 2);
-        try {
-            write(ptr, offset, aShort);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 2);
+        write(ptr, offset, aShort);
     }
 
     @Override
@@ -813,12 +644,8 @@ class JNINativeMemory implements NativeMemory {
         }
 
 
-        lockForRead(offset, len);
-        try {
-            read(ptr, offset, buffer, bufferOffset, len);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, len);
+        read(ptr, offset, buffer, bufferOffset, len);
     }
 
     @Override
@@ -828,12 +655,8 @@ class JNINativeMemory implements NativeMemory {
 
     @Override
     public int readInt(long offset) {
-        lockForRead(offset, 4);
-        try {
-            return readInt(ptr, offset);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 4);
+        return readInt(ptr, offset);
     }
 
     @Override
@@ -843,12 +666,8 @@ class JNINativeMemory implements NativeMemory {
 
     @Override
     public long readLong(long offset) {
-        lockForRead(offset, 8);
-        try {
-            return readLong(ptr, offset);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 8);
+        return readLong(ptr, offset);
     }
 
     @Override
@@ -862,32 +681,20 @@ class JNINativeMemory implements NativeMemory {
 
     @Override
     public float readFloat(long offset) {
-        lockForRead(offset, 4);
-        try {
-            return readFloat(ptr, offset);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 4);
+        return readFloat(ptr, offset);
     }
 
     @Override
     public double readDouble(long offset) {
-        lockForRead(offset, 8);
-        try {
-            return readDouble(ptr, offset);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 8);
+        return readDouble(ptr, offset);
     }
 
     @Override
     public short readShort(long offset) {
-        lockForRead(offset, 2);
-        try {
-            return readShort(ptr, offset);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 2);
+        return readShort(ptr, offset);
     }
 
     @Override
@@ -897,12 +704,8 @@ class JNINativeMemory implements NativeMemory {
 
     @Override
     public byte read(long offset) {
-        lockForRead(offset, 1);
-        try {
-            return readByte(ptr, offset);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 1);
+        return readByte(ptr, offset);
     }
 
     @Override
@@ -910,223 +713,234 @@ class JNINativeMemory implements NativeMemory {
         return read(offset) & 0xff;
     }
 
-    @Override
-    public native boolean supportsAtomicOperations();
 
-    @Override
-    public native boolean supports16ByteCompareAndSet();
 
     @Override
     public long getAndAdd(long offset, long aLong) {
-        lockForReadWrite(offset, 8);
-        try {
-            return getAndAdd(ptr, offset, aLong);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 8);
+        return getAndAdd(ptr, offset, aLong);
+    }
+
+    @Override
+    public long getAndAddLong(long offset, long aLong) {
+        return getAndAdd(offset, aLong);
     }
 
     @Override
     public int getAndAdd(long offset, int aInt) {
-        lockForReadWrite(offset, 4);
-        try {
-            return getAndAdd(ptr, offset, aInt);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 4);
+        return getAndAdd(ptr, offset, aInt);
+    }
+
+    @Override
+    public int getAndAddInt(long offset, int aInt) {
+        return getAndAdd(offset, aInt);
     }
 
     @Override
     public short getAndAdd(long offset, short aShort) {
-        lockForReadWrite(offset, 2);
-        try {
-            return getAndAdd(ptr, offset, aShort);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 2);
+        return getAndAdd(ptr, offset, aShort);
+    }
+
+    @Override
+    public short getAndAddShort(long offset, short aShort) {
+        return getAndAdd(offset, aShort);
     }
 
     @Override
     public byte getAndAdd(long offset, byte aByte) {
-        lockForReadWrite(offset, 1);
-        try {
-            return getAndAdd(ptr, offset, aByte);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 1);
+        return getAndAdd(ptr, offset, aByte);
+    }
+
+    @Override
+    public byte getAndAddByte(long offset, byte aByte) {
+        return getAndAdd(offset, aByte);
     }
 
     @Override
     public long getAndSet(long offset, long aLong) {
-        lockForReadWrite(offset, 8);
-        try {
-            return getAndSet(ptr, offset, aLong);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 8);
+        return getAndSet(ptr, offset, aLong);
+    }
+
+    @Override
+    public long getAndSetLong(long offset, long aLong) {
+        return getAndSet(offset, aLong);
     }
 
     @Override
     public int getAndSet(long offset, int aInt) {
-        lockForReadWrite(offset, 4);
-        try {
-            return getAndSet(ptr, offset, aInt);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 4);
+        return getAndSet(ptr, offset, aInt);
+    }
+
+    @Override
+    public int getAndSetInt(long offset, int aInt) {
+        return getAndSet(offset, aInt);
     }
 
     @Override
     public short getAndSet(long offset, short aShort) {
-        lockForReadWrite(offset, 2);
-        try {
-            return getAndSet(ptr, offset, aShort);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 2);
+        return getAndSet(ptr, offset, aShort);
+    }
+
+    @Override
+    public short getAndSetShort(long offset, short aShort) {
+        return getAndSet(offset, aShort);
     }
 
     @Override
     public byte getAndSet(long offset, byte aByte) {
-        lockForReadWrite(offset, 1);
-        try {
-            return getAndSet(ptr, offset, aByte);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 1);
+        return getAndSet(ptr, offset, aByte);
+    }
+
+    @Override
+    public byte getAndSetByte(long offset, byte aByte) {
+        return getAndSet(offset, aByte);
     }
 
     @Override
     public boolean compareAndSet(long offset, long expect, long update) {
-        lockForReadWrite(offset, 8);
-        try {
-            return compareAndSet(ptr, offset, expect, update);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 8);
+        return compareAndSet(ptr, offset, expect, update);
     }
+
+    @Override
+    public boolean compareAndSetLong(long offset, long expect, long update) {
+        return compareAndSet(offset, expect, update);
+    }
+
+    @Override
+    public native boolean supportsCompareAndSet8Byte();
+
+    @Override
+    public native long compareAndSet8ByteAlignment();
 
     @Override
     public boolean compareAndSet(long offset, int expect, int update) {
-        lockForReadWrite(offset, 4);
-        try {
-            return compareAndSet(ptr, offset, expect, update);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 4);
+        return compareAndSet(ptr, offset, expect, update);
+
     }
+
+    @Override
+    public boolean compareAndSetInt(long offset, int expect, int update) {
+        return compareAndSet(offset, expect, update);
+    }
+
+    @Override
+    public native boolean supportsCompareAndSet4Byte();
+
+    @Override
+    public native long compareAndSet4ByteAlignment();
 
     @Override
     public boolean compareAndSet(long offset, short expect, short update) {
-        lockForReadWrite(offset, 2);
-        try {
-            return compareAndSet(ptr, offset, expect, update);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 2);
+        return compareAndSet(ptr, offset, expect, update);
     }
 
     @Override
+    public boolean compareAndSetShort(long offset, short expect, short update) {
+        return compareAndSet(offset, expect, update);
+    }
+
+    @Override
+    public native boolean supportsCompareAndSet2Byte();
+
+    @Override
+    public native long compareAndSet2ByteAlignment();
+
+    @Override
     public boolean compareAndSet(long offset, byte expect, byte update) {
-        lockForReadWrite(offset, 1);
-        try {
-            return compareAndSet(ptr, offset, expect, update);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 1);
+        return compareAndSet(ptr, offset, expect, update);
+    }
+
+    @Override
+    public boolean compareAndSetByte(long offset, byte expect, byte update) {
+        return compareAndSet(offset, expect, update);
+    }
+
+    @Override
+    public native boolean supportsCompareAndSet1Byte();
+
+    @Override
+    public native long compareAndSet1ByteAlignment();
+
+    @Override
+    public void stopSpin() {
+        SPIN_GUARD_UPDATER.compareAndSet(this, null, NO_SPIN_GUARD);
+        spinGuard.put(0, (byte) 1);
     }
 
     @Override
     public boolean spinAndSet(long offset, long expect, long update, long aSpinTime, long aTimeout, TimeUnit aUnit) {
-        lockForReadWrite(offset, 8);
-        try {
-            return spinAndSet(ptr, offset, expect, update, aUnit.toMillis(aSpinTime), aUnit.toMillis(aTimeout));
-        } finally {
-            rLock.unlock();
-        }
-
+        checkOffset(offset, 8);
+        initSpinGuard();
+        return spinAndSet(ptr, offset, expect, update, aUnit.toMillis(aSpinTime), aUnit.toMillis(aTimeout), spinGuard);
     }
 
 
     @Override
     public boolean spinAndSet(long offset, int expect, int update, long aSpinTime, long aTimeout, TimeUnit aUnit) {
-        lockForReadWrite(offset, 4);
-        try {
-            return spinAndSet(ptr, offset, expect, update, aUnit.toMillis(aSpinTime), aUnit.toMillis(aTimeout));
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 4);
+        initSpinGuard();
+        return spinAndSet(ptr, offset, expect, update, aUnit.toMillis(aSpinTime), aUnit.toMillis(aTimeout), spinGuard);
     }
 
     @Override
     public boolean spinAndSet(long offset, short expect, short update, long aSpinTime, long aTimeout, TimeUnit aUnit) {
-        lockForReadWrite(offset, 2);
-        try {
-            return spinAndSet(ptr, offset, expect, update, aUnit.toMillis(aSpinTime), aUnit.toMillis(aTimeout));
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 2);
+        initSpinGuard();
+        return spinAndSet(ptr, offset, expect, update, aUnit.toMillis(aSpinTime), aUnit.toMillis(aTimeout), spinGuard);
     }
 
     @Override
     public boolean spinAndSet(long offset, byte expect, byte update, long aSpinTime, long aTimeout, TimeUnit aUnit) {
-        lockForReadWrite(offset, 1);
-        try {
-            return spinAndSet(ptr, offset, expect, update, aUnit.toMillis(aSpinTime), aUnit.toMillis(aTimeout));
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 1);
+        initSpinGuard();
+        return spinAndSet(ptr, offset, expect, update, aUnit.toMillis(aSpinTime), aUnit.toMillis(aTimeout), spinGuard);
     }
 
     @Override
     public void spinAndSet(long offset, long expect, long update, long aSpinTime, TimeUnit aUnit) {
-        lockForReadWrite(offset, 8);
-        try {
-            spinAndSet(ptr, offset, expect, update, aUnit.toMillis(aSpinTime));
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 8);
+        initSpinGuard();
+        spinAndSet(ptr, offset, expect, update, aUnit.toMillis(aSpinTime), spinGuard);
     }
 
 
     @Override
     public void spinAndSet(long offset, int expect, int update, long aSpinTime, TimeUnit aUnit) {
-        lockForReadWrite(offset, 4);
-        try {
-            spinAndSet(ptr, offset, expect, update, aUnit.toMillis(aSpinTime));
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 4);
+        initSpinGuard();
+        spinAndSet(ptr, offset, expect, update, aUnit.toMillis(aSpinTime), spinGuard);
     }
 
     @Override
     public void spinAndSet(long offset, short expect, short update, long aSpinTime, TimeUnit aUnit) {
-        lockForReadWrite(offset, 2);
-        try {
-            spinAndSet(ptr, offset, expect, update, aUnit.toMillis(aSpinTime));
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 2);
+        initSpinGuard();
+        spinAndSet(ptr, offset, expect, update, aUnit.toMillis(aSpinTime), spinGuard);
     }
 
     @Override
     public void spinAndSet(long offset, byte expect, byte update, long aSpinTime, TimeUnit aUnit) {
-        lockForReadWrite(offset, 1);
-        try {
-            spinAndSet(ptr, offset, expect, update, aUnit.toMillis(aSpinTime));
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 1);
+        initSpinGuard();
+        spinAndSet(ptr, offset, expect, update, aUnit.toMillis(aSpinTime), spinGuard);
     }
 
     @Override
     public boolean spin(long offset, long expect, long aSpinTime, long aTimeout, TimeUnit aUnit) {
-        lockForRead(offset, 8);
-        try {
-            return spin(ptr, offset, expect, aUnit.toMillis(aSpinTime), aUnit.toMillis(aTimeout));
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 8);
+        initSpinGuard();
+        return spin(ptr, offset, expect, aUnit.toMillis(aSpinTime), aUnit.toMillis(aTimeout), spinGuard);
     }
 
 
@@ -1134,73 +948,49 @@ class JNINativeMemory implements NativeMemory {
 
     @Override
     public boolean spin(long offset, int expect, long aSpinTime, long aTimeout, TimeUnit aUnit) {
-        lockForRead(offset, 4);
-        try {
-            return spin(ptr, offset, expect, aUnit.toMillis(aSpinTime), aUnit.toMillis(aTimeout));
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 4);
+        return spin(ptr, offset, expect, aUnit.toMillis(aSpinTime), aUnit.toMillis(aTimeout), spinGuard);
     }
 
     @Override
     public boolean spin(long offset, short expect, long aSpinTime, long aTimeout, TimeUnit aUnit) {
-        lockForRead(offset, 2);
-        try {
-            return spin(ptr, offset, expect, aUnit.toMillis(aSpinTime), aUnit.toMillis(aTimeout));
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 2);
+        return spin(ptr, offset, expect, aUnit.toMillis(aSpinTime), aUnit.toMillis(aTimeout), spinGuard);
     }
 
     @Override
     public boolean spin(long offset, byte expect, long aSpinTime, long aTimeout, TimeUnit aUnit) {
-        lockForRead(offset, 1);
-        try {
-            return spin(ptr, offset, expect, aUnit.toMillis(aSpinTime), aUnit.toMillis(aTimeout));
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 1);
+        return spin(ptr, offset, expect, aUnit.toMillis(aSpinTime), aUnit.toMillis(aTimeout), spinGuard);
     }
 
     @Override
     public void spin(long offset, long expect, long aSpinTime, TimeUnit aUnit) {
-        lockForRead(offset, 8);
-        try {
-            spin(ptr, offset, expect, aUnit.toMillis(aSpinTime));
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 8);
+        initSpinGuard();
+        spin(ptr, offset, expect, aUnit.toMillis(aSpinTime), spinGuard);
     }
 
 
     @Override
     public void spin(long offset, int expect, long aSpinTime, TimeUnit aUnit) {
-        lockForRead(offset, 8);
-        try {
-            spin(ptr, offset, expect, aUnit.toMillis(aSpinTime));
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 8);
+        initSpinGuard();
+        spin(ptr, offset, expect, aUnit.toMillis(aSpinTime), spinGuard);
     }
 
     @Override
     public void spin(long offset, short expect, long aSpinTime, TimeUnit aUnit) {
-        lockForRead(offset, 8);
-        try {
-            spin(ptr, offset, expect, aUnit.toMillis(aSpinTime));
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 8);
+        initSpinGuard();
+        spin(ptr, offset, expect, aUnit.toMillis(aSpinTime), spinGuard);
     }
 
     @Override
     public void spin(long offset, byte expect, long aSpinTime, TimeUnit aUnit) {
-        lockForRead(offset, 8);
-        try {
-            spin(ptr, offset, expect, aUnit.toMillis(aSpinTime));
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 8);
+        initSpinGuard();
+        spin(ptr, offset, expect, aUnit.toMillis(aSpinTime), spinGuard);
     }
 
     @Override
@@ -1213,22 +1003,14 @@ class JNINativeMemory implements NativeMemory {
             throw new IllegalArgumentException(data.length + " != 32 (array length)");
         }
 
-        lockForReadWrite(offset, 16);
-        try {
-            return compareAndSet(ptr, offset, data);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 16);
+        return compareAndSet(ptr, offset, data);
     }
 
     @Override
     public long indexOf(long offset, byte value) {
-        lockForRead(offset, 1);
-        try {
-            return indexOf(ptr, offset, remaining(offset), value);
-        } finally {
-            rLock.unlock();
-        }
+        checkOffset(offset, 1);
+        return indexOf(ptr, offset, remaining(offset), value);
     }
 
     @Override
@@ -1245,24 +1027,15 @@ class JNINativeMemory implements NativeMemory {
             return 0;
         }
 
-        if (!read) {
-            throw new UnsupportedOperationException("memory does not support reading");
-        }
-
         if (offset < 0) {
             throw new IllegalArgumentException("out of bounds");
         }
 
-        rLock.lock();
-        try {
-            int max = (int) Math.min(remaining(offset), len);
-            if (max == 0) {
-                return 0;
-            }
-            return readUntilByte(ptr, offset, max, value, buffer, off);
-        } finally {
-            rLock.unlock();
+        int max = (int) Math.min(remaining(offset), len);
+        if (max == 0) {
+            return 0;
         }
+        return readUntilByte(ptr, offset, max, value, buffer, off);
     }
 
     @Override
@@ -1351,25 +1124,25 @@ class JNINativeMemory implements NativeMemory {
      */
     static native boolean compareAndSet(long ptr, long offset, byte[] data);
 
-    native boolean spinAndSet(long ptr, long offset, long expect, long update, long aSpinTime, long aTimeout);
-    native void spinAndSet(long ptr, long offset, long expect, long update, long aSpinTime);
-    native boolean spin(long ptr, long offset, long expect, long aSpinTime, long aTimeout);
-    native void spin(long ptr, long offset, long expect, long aSpinTime);
+    native boolean spinAndSet(long ptr, long offset, long expect, long update, long aSpinTime, long aTimeout, ByteBuffer spinGuard);
+    native void spinAndSet(long ptr, long offset, long expect, long update, long aSpinTime, ByteBuffer spinGuard);
+    native boolean spin(long ptr, long offset, long expect, long aSpinTime, long aTimeout, ByteBuffer spinGuard);
+    native void spin(long ptr, long offset, long expect, long aSpinTime, ByteBuffer spinGuard);
 
-    native boolean spinAndSet(long ptr, long offset, int expect, int update, long aSpinTime, long aTimeout);
-    native void spinAndSet(long ptr, long offset, int expect, int update, long aSpinTime);
-    native boolean spin(long ptr, long offset, int expect, long aSpinTime, long aTimeout);
-    native void spin(long ptr, long offset, int expect, long aSpinTime);
+    native boolean spinAndSet(long ptr, long offset, int expect, int update, long aSpinTime, long aTimeout, ByteBuffer spinGuard);
+    native void spinAndSet(long ptr, long offset, int expect, int update, long aSpinTime, ByteBuffer spinGuard);
+    native boolean spin(long ptr, long offset, int expect, long aSpinTime, long aTimeout, ByteBuffer spinGuard);
+    native void spin(long ptr, long offset, int expect, long aSpinTime, ByteBuffer spinGuard);
 
-    native boolean spinAndSet(long ptr, long offset, short expect, short update, long aSpinTime, long aTimeout);
-    native void spinAndSet(long ptr, long offset, short expect, short update, long aSpinTime);
-    native boolean spin(long ptr, long offset, short expect, long aSpinTime, long aTimeout);
-    native void spin(long ptr, long offset, short expect, long aSpinTime);
+    native boolean spinAndSet(long ptr, long offset, short expect, short update, long aSpinTime, long aTimeout, ByteBuffer spinGuard);
+    native void spinAndSet(long ptr, long offset, short expect, short update, long aSpinTime, ByteBuffer spinGuard);
+    native boolean spin(long ptr, long offset, short expect, long aSpinTime, long aTimeout, ByteBuffer spinGuard);
+    native void spin(long ptr, long offset, short expect, long aSpinTime, ByteBuffer spinGuard);
 
-    native boolean spinAndSet(long ptr, long offset, byte expect, byte update, long aSpinTime, long aTimeout);
-    native void spinAndSet(long ptr, long offset, byte expect, byte update, long aSpinTime);
-    native boolean spin(long ptr, long offset, byte expect, long aSpinTime, long aTimeout);
-    native void spin(long ptr, long offset, byte expect, long aSpinTime);
+    native boolean spinAndSet(long ptr, long offset, byte expect, byte update, long aSpinTime, long aTimeout, ByteBuffer spinGuard);
+    native void spinAndSet(long ptr, long offset, byte expect, byte update, long aSpinTime, ByteBuffer spinGuard);
+    native boolean spin(long ptr, long offset, byte expect, long aSpinTime, long aTimeout, ByteBuffer spinGuard);
+    native void spin(long ptr, long offset, byte expect, long aSpinTime, ByteBuffer spinGuard);
 
     static native void memmove(long ptr, long offset, long target, long len);
     static native void readBuffer(long ptr, long offset, ByteBuffer buffer, int off, int len);

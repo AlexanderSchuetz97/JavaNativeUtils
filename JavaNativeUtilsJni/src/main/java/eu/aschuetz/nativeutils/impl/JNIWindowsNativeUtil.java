@@ -78,11 +78,8 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
     public native long OpenFileMappingA(int dwDesiredAccess, boolean bInheritHandle, String lpName) throws UnknownNativeErrorException;
 
     @Override
-    public NativeMemory MapViewOfFileEx(long hFileMappingObject, int dwDesiredAccess, int dwFileOffsetHigh, int dwFileOffsetLow, int dwNumberOfBytesToMap, long lpBaseAddress) throws UnknownNativeErrorException {
-        long ptr = _MapViewOfFileEx(hFileMappingObject, dwDesiredAccess, dwFileOffsetHigh, dwFileOffsetLow, dwNumberOfBytesToMap, lpBaseAddress);
-        boolean read = (dwDesiredAccess & WinConst.FILE_MAP_READ) != 0;
-        boolean write = (dwDesiredAccess & WinConst.FILE_MAP_WRITE) != 0;
-        return new JNINativeMemory(ptr, dwNumberOfBytesToMap, read, write, MapViewOfFilePointerHandler.INSTANCE);
+    public long MapViewOfFileEx(long hFileMappingObject, int dwDesiredAccess, int dwFileOffsetHigh, int dwFileOffsetLow, int dwNumberOfBytesToMap, long lpBaseAddress) throws UnknownNativeErrorException {
+        return _MapViewOfFileEx(hFileMappingObject, dwDesiredAccess, dwFileOffsetHigh, dwFileOffsetLow, dwNumberOfBytesToMap, lpBaseAddress);
     }
 
     static native long _MapViewOfFileEx(long hFileMappingObject, int dwDesiredAccess, int dwFileOffsetHigh, int dwFileOffsetLow, int dwNumberOfBytesToMap, long lpBaseAddress);
@@ -137,47 +134,31 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
     public int DeviceIoControl(long hDevice, int dwIoControlCode, NativeMemory inBuffer, long inOff, int inLen, NativeMemory outBuffer, long outOff, int outLen) throws UnknownNativeErrorException {
         long inB = 0;
         long outB = 0;
-        ReentrantReadWriteLock.ReadLock inBL = null;
-        ReentrantReadWriteLock.ReadLock outBL = null;
-        try {
-            if (inBuffer != null) {
-                inBL = inBuffer.readLock();
-                inBL.lock();
-                if (inOff < 0 || inLen < 0) {
-                    throw new IllegalArgumentException("inBuffer offset/length");
-                }
-                if (!inBuffer.isReadable() || !inBuffer.isValid(inOff, inLen)) {
-                    throw new IllegalArgumentException("inBuffer offset/length out of bounds or not readable");
-                }
-
-
-                inB = inBuffer.getNativePointer();
+        if (inBuffer != null) {
+            if (inOff < 0 || inLen < 0) {
+                throw new IllegalArgumentException("inBuffer offset/length");
+            }
+            if (!inBuffer.isValid(inOff, inLen)) {
+                throw new IllegalArgumentException("inBuffer offset/length out of bounds");
             }
 
-            if (outBuffer != null) {
-                outBL = outBuffer.readLock();
-                outBL.lock();
-                if (inOff < 0 || inLen < 0) {
-                    throw new IllegalArgumentException("outBuffer offset/length");
-                }
-                if (!outBuffer.isWriteable() || !outBuffer.isValid(inOff, inLen)) {
-                    throw new IllegalArgumentException("outBuffer offset/length out of bounds or not writeable");
-                }
 
-
-                outB = outBuffer.getNativePointer();
-            }
-
-            return DeviceIoControl(hDevice, dwIoControlCode, inB, inOff, inLen, outB, outOff, outLen);
-        } finally {
-            if (inBL != null) {
-                inBL.unlock();
-            }
-
-            if (outBL != null) {
-                outBL.unlock();
-            }
+            inB = inBuffer.getNativePointer();
         }
+
+        if (outBuffer != null) {
+            if (inOff < 0 || inLen < 0) {
+                throw new IllegalArgumentException("outBuffer offset/length");
+            }
+            if (!outBuffer.isValid(inOff, inLen)) {
+                throw new IllegalArgumentException("outBuffer offset/length out of bounds");
+            }
+
+
+            outB = outBuffer.getNativePointer();
+        }
+
+        return DeviceIoControl(hDevice, dwIoControlCode, inB, inOff, inLen, outB, outOff, outLen);
     }
 
     protected static native int DeviceIoControl(long hDevice, int dwIoControlCode, long inBuffer, long inOff, int inLen, long outBuffer, long outOff, int outLen) throws UnknownNativeErrorException;
@@ -352,34 +333,22 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
 
     @Override
     public int ReadFile(long handle, NativeMemory buffer, long off, int len) throws InvalidFileDescriptorException, UnknownNativeErrorException {
-        ReentrantReadWriteLock.ReadLock readLock = buffer.readLock();
-        readLock.lock();
-        try {
-            if (!buffer.isValid(off, len) || !buffer.isReadable()) {
-                throw new IllegalArgumentException("buffer off/len out of bounds");
-            }
-
-            return ReadFile(handle, buffer.getNativePointer(off), len);
-        } finally {
-            readLock.unlock();
+        if (!buffer.isValid(off, len)) {
+            throw new IllegalArgumentException("buffer off/len out of bounds");
         }
+
+        return ReadFile(handle, buffer.getNativePointer(off), len);
     }
 
     native long ReadFile(long handle, long ptr, int len, long overlapped, long event) throws UnknownNativeErrorException;
 
     @Override
     public long ReadFile(long handle, NativeMemory buffer, long off, int len, long overlapped, long event) throws UnknownNativeErrorException {
-        ReentrantReadWriteLock.ReadLock readLock = buffer.readLock();
-        readLock.lock();
-        try {
-            if (!buffer.isValid(off, len) || !buffer.isReadable()) {
-                throw new IllegalArgumentException("buffer off/len out of bounds");
-            }
-
-            return ReadFile(handle, buffer.getNativePointer(off), len, overlapped, event);
-        } finally {
-            readLock.unlock();
+        if (!buffer.isValid(off, len)) {
+            throw new IllegalArgumentException("buffer off/len out of bounds");
         }
+
+        return ReadFile(handle, buffer.getNativePointer(off), len, overlapped, event);
     }
 
     @Override
@@ -441,34 +410,22 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
 
     @Override
     public int WriteFile(long handle, NativeMemory buffer, long off, int len) throws InvalidFileDescriptorException, UnknownNativeErrorException {
-        ReentrantReadWriteLock.ReadLock readLock = buffer.readLock();
-        readLock.lock();
-        try {
-            if (!buffer.isValid(off, len) || !buffer.isWriteable()) {
-                throw new IllegalArgumentException("buffer off/len invalid/out of bounds");
-            }
-
-            return WriteFile(handle, buffer.getNativePointer(off), len);
-        } finally {
-            readLock.unlock();
+        if (!buffer.isValid(off, len)) {
+            throw new IllegalArgumentException("buffer off/len invalid/out of bounds");
         }
+
+        return WriteFile(handle, buffer.getNativePointer(off), len);
     }
 
     native long WriteFile(long handle, long ptr, int len , long overlapped, long event) throws UnknownNativeErrorException;
 
     @Override
     public long WriteFile(long handle, NativeMemory buffer, long off, int len, long overlapped, long event) throws UnknownNativeErrorException {
-        ReentrantReadWriteLock.ReadLock readLock = buffer.readLock();
-        readLock.lock();
-        try {
-            if (!buffer.isValid(off, len) || !buffer.isWriteable()) {
-                throw new IllegalArgumentException("buffer off/len invalid/out of bounds");
-            }
-
-            return WriteFile(handle, buffer.getNativePointer(off), len, overlapped, event);
-        } finally {
-            readLock.unlock();
+        if (!buffer.isValid(off, len)) {
+            throw new IllegalArgumentException("buffer off/len invalid/out of bounds");
         }
+
+        return WriteFile(handle, buffer.getNativePointer(off), len, overlapped, event);
     }
 
     @Override
