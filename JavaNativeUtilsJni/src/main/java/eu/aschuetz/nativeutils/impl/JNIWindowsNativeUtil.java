@@ -500,6 +500,71 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
     public native long ReleaseSemaphore(long hSemaphore, long lReleaseCount) throws UnknownNativeErrorException;
 
     @Override
+    public native void SetupComm(long handle, int dwInQueue, int dwOutQueue) throws UnknownNativeErrorException;
+
+    @Override
+    public native void SetCommTimeouts(long handle, CommTimeouts timeouts) throws UnknownNativeErrorException;
+
+    @Override
+    public native int WaitCommEvent(long handle) throws UnknownNativeErrorException;
+
+    @Override
+    public native void TransmitCommChar(long handle, byte data) throws UnknownNativeErrorException;
+
+    @Override
+    public native void SetDefaultCommConfigA(String name, CommConfig config) throws UnknownNativeErrorException;
+
+    @Override
+    public native void SetCommState(long handle, DCB dcb) throws UnknownNativeErrorException;
+
+    @Override
+    public native void SetCommMask(long handle, int mask) throws UnknownNativeErrorException;
+
+    @Override
+    public native void SetCommConfig(long handle, CommConfig config) throws UnknownNativeErrorException;
+
+    @Override
+    public native void SetCommBreak(long handle) throws UnknownNativeErrorException;
+
+    @Override
+    public native void PurgeComm(long handle, int flags) throws UnknownNativeErrorException;
+
+    @Override
+    public native CommConfig GetDefaultCommConfigA(String name) throws UnknownNativeErrorException;
+
+    @Override
+    public native CommTimeouts GetCommTimeouts(long handle) throws UnknownNativeErrorException;
+
+    @Override
+    public native DCB GetCommState(long handle) throws UnknownNativeErrorException;
+
+    @Override
+    public native CommProp GetCommProperties(long handle) throws UnknownNativeErrorException;
+
+    @Override
+    public native int GetCommModemStatus(long handle) throws UnknownNativeErrorException;
+
+    @Override
+    public native int GetCommMask(long handle) throws UnknownNativeErrorException;
+
+    @Override
+    public native CommConfig GetCommConfig(long handle) throws UnknownNativeErrorException;
+
+    @Override
+    public native void EscapeCommFunction(long handle, int func) throws UnknownNativeErrorException;
+
+    @Override
+    public int ClearCommError(long handle) throws UnknownNativeErrorException {
+        return ClearCommError(handle, null);
+    }
+
+    @Override
+    public native int ClearCommError(long handle, ComStat stat) throws UnknownNativeErrorException;
+
+    @Override
+    public native void ClearCommBreak(long handle) throws UnknownNativeErrorException;
+
+    @Override
     public boolean isWindows() {
         return true;
     }

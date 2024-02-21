@@ -583,6 +583,15 @@ public class JNILinuxNativeUtil extends JNICommonNativeUtil implements LinuxNati
     public native void pthread_cond_init(long condition, long attributes) throws UnknownNativeErrorException;
 
     @Override
+    public native int memfd_create(String name, int flags) throws QuotaExceededException, PermissionDeniedException, UnknownNativeErrorException;
+
+    @Override
+    public native boolean malloc_trim(long pad);
+
+    @Override
+    public native void madvise(long ptr, long length, int advice) throws UnknownNativeErrorException, AccessDeniedException, IOException, PermissionDeniedException, ResourceTemporarilyUnavailableException, ResourceBusyException, MemoryFaultException;
+
+    @Override
     public native Stat lstat(String path) throws InvalidFileDescriptorException;
 
 

@@ -6,7 +6,7 @@
     <parent>
         <groupId>eu.aschuetz</groupId>
         <artifactId>JavaNativeUtils</artifactId>
-        <version>4.2</version>
+        <version>4.3</version>
     </parent>
 
     <artifactId>JavaNativeUtilsJni</artifactId>
@@ -67,6 +67,8 @@
                                         <header>#include &lt;linux/ioctl.h&gt;</header>
                                         <header>#include &lt;linux/sockios.h&gt;</header>
                                         <header>#include &lt;linux/fcntl.h&gt;</header>
+                                        <header>#include &lt;linux/memfd.h&gt;</header>
+
                                     </headers>
                                     <constFilters>
                                         <constFilter>O_ASYNC</constFilter>
@@ -205,6 +207,21 @@
                                 <struct>
                                     <classname>eu.aschuetz.nativeutils.api.structs.Sockaddr</classname>
                                 </struct>
+                                <struct>
+                                    <classname>eu.aschuetz.nativeutils.api.structs.CommConfig</classname>
+                                </struct>
+                                <struct>
+                                    <classname>eu.aschuetz.nativeutils.api.structs.CommProp</classname>
+                                </struct>
+                                <struct>
+                                    <classname>eu.aschuetz.nativeutils.api.structs.CommTimeouts</classname>
+                                </struct>
+                                <struct>
+                                    <classname>eu.aschuetz.nativeutils.api.structs.ComStat</classname>
+                                </struct>
+                                <struct>
+                                    <classname>eu.aschuetz.nativeutils.api.structs.DCB</classname>
+                                </struct>
                             </structs>
                             <exceptions>
                                 <exception>
@@ -319,6 +336,18 @@
                                 </exception>
                                 <exception>
                                     <classname>java.lang.UnsupportedOperationException</classname>
+                                </exception>
+                                <exception>
+                                    <classname>eu.aschuetz.nativeutils.api.exceptions.MemoryFaultException</classname>
+                                </exception>
+                                <exception>
+                                    <classname>eu.aschuetz.nativeutils.api.exceptions.MemoryPoisonedException</classname>
+                                </exception>
+                                <exception>
+                                    <classname>eu.aschuetz.nativeutils.api.exceptions.ResourceBusyException</classname>
+                                </exception>
+                                <exception>
+                                    <classname>eu.aschuetz.nativeutils.api.exceptions.ResourceTemporarilyUnavailableException</classname>
                                 </exception>
                             </exceptions>
                             <headerOutput>JavaNativeUtilsJni/src/main/native/common/jnigenerator.h</headerOutput>

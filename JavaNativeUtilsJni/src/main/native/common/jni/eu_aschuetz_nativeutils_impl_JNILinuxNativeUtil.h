@@ -937,6 +937,30 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_pthr
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    memfd_create
+ * Signature: (Ljava/lang/String;I)I
+ */
+JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_memfd_1create
+  (JNIEnv *, jobject, jstring, jint);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    malloc_trim
+ * Signature: (J)Z
+ */
+JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_malloc_1trim
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    madvise
+ * Signature: (JJI)V
+ */
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_madvise
+  (JNIEnv *, jobject, jlong, jlong, jint);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
  * Method:    lstat
  * Signature: (Ljava/lang/String;)Leu/aschuetz/nativeutils/api/structs/Stat;
  */

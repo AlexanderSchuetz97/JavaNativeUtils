@@ -29,6 +29,37 @@ public class StructHelper {
 
     private static final boolean BIG_ENDIAN = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN;
 
+    public static int byteSwapInt(int swap) {
+        return ((swap >>> 0) & 0xFF) << 24 | ((swap >>> 8) & 0xFF) << 16 | ((swap >>> 16) & 0xFF) << 8 | ((swap >>> 24) & 0xFF) << 0;
+    }
+
+    public static long byteSwapUInt(long swap) {
+        return ((swap >>> 0) & 0xFFL) << 24 | ((swap >>> 8) & 0xFFL) << 16 | ((swap >>> 16) & 0xFFL) << 8 | ((swap >>> 24) & 0xFFL) << 0;
+    }
+
+    public static long byteSwapLong(long swap) {
+        return  ((swap >>>  0) & 0xFFL) << 56 |
+                ((swap >>>  8) & 0xFFL) << 48 |
+                ((swap >>> 16) & 0xFFL) << 40 |
+                ((swap >>> 24) & 0xFFL) << 32 |
+                ((swap >>> 32) & 0xFFL) << 24 |
+                ((swap >>> 40) & 0xFFL) << 16 |
+                ((swap >>> 48) & 0xFFL) <<  8 |
+                ((swap >>> 56) & 0xFFL) <<  0 ;
+    }
+
+    public static short byteSwapShort(short swap) {
+        int value = ((swap >>>  0) & 0xFF) << 8 |
+                    ((swap >>>  8) & 0xFF) << 0 ;
+
+        return (short) value;
+    }
+
+    public static int byteSwapUShort(int swap) {
+        return  ((swap >>>  0) & 0xFF) << 8 |
+                ((swap >>>  8) & 0xFF) << 0 ;
+    }
+
     public static int readInt(byte[] buf, int off) {
         return BIG_ENDIAN ?
                 ((buf[off++] & 0xff) << 24) + ((buf[off++] & 0xff) << 16) + ((buf[off++] & 0xff) << 8) + ((buf[off] & 0xff) << 0)

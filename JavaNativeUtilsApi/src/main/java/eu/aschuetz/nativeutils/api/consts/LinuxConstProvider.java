@@ -285,5 +285,55 @@ public interface LinuxConstProvider {
     int PTHREAD_MUTEX_DEFAULT();
     int PTHREAD_MUTEX_NORMAL();
 
+    //memfd.h
+    int MFD_CLOEXEC();
+
+    int MFD_ALLOW_SEALING();
+
+    int MFD_HUGETLB();
+    int MFD_HUGE_64KB();
+    int MFD_HUGE_512KB();
+    int MFD_HUGE_1MB();
+    int MFD_HUGE_2MB();
+    int MFD_HUGE_8MB();
+    int MFD_HUGE_16MB();
+    int MFD_HUGE_256MB();
+    int MFD_HUGE_1GB();
+    int MFD_HUGE_2GB();
+    int MFD_HUGE_16GB();
+
+    int MADV_DONTNEED();
+
+    int MADV_NORMAL();
+
+    int MADV_RANDOM();
+
+    int MADV_SEQUENTIAL();
+
+    int MADV_WILLNEED();
+
+    int MADV_REMOVE();
+
+    int MADV_DONTFORK();
+
+    int MADV_DOFORK();
+
+    int MADV_HWPOISON();
+
+    int MADV_MERGEABLE();
+
+    int MADV_UNMERGEABLE();
+
+    int MADV_HUGEPAGE();
+
+    int MADV_NOHUGEPAGE();
+
+    int MADV_DONTDUMP();
+
+    int MADV_DODUMP();
+
+    int MADV_WIPEONFORK();
+
+    int MADV_KEEPONFORK();
 }
 

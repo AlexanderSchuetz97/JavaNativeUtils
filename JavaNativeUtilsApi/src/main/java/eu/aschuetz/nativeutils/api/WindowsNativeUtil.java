@@ -649,10 +649,45 @@ public interface WindowsNativeUtil extends NativeUtil {
      */
     long ReleaseSemaphore(long hSemaphore, long lReleaseCount) throws UnknownNativeErrorException;
 
+    void SetupComm(long handle, int dwInQueue, int dwOutQueue) throws UnknownNativeErrorException;
 
-    //TODO
-    //long CreateIpForwardEntry(MibIpForwardRow pRoute) throws UnknownNativeErrorException;
+    void SetCommTimeouts(long handle, CommTimeouts timeouts) throws UnknownNativeErrorException;
 
-    //long DeleteIpForwardEntry(MibIpForwardRow pRoute) throws UnknownNativeErrorException;
+    int WaitCommEvent(long handle) throws UnknownNativeErrorException;
+
+    void TransmitCommChar(long handle, byte data) throws UnknownNativeErrorException;
+
+    void SetDefaultCommConfigA(String name, CommConfig config) throws UnknownNativeErrorException;
+
+    void SetCommState(long handle, DCB dcb) throws UnknownNativeErrorException;
+
+    void SetCommMask(long handle, int mask) throws UnknownNativeErrorException;
+
+    void SetCommConfig(long handle, CommConfig config) throws UnknownNativeErrorException;
+
+    void SetCommBreak(long handle) throws UnknownNativeErrorException;
+
+    void PurgeComm(long handle, int flags) throws UnknownNativeErrorException;
+
+    CommConfig GetDefaultCommConfigA(String name) throws UnknownNativeErrorException;
+
+    CommTimeouts GetCommTimeouts(long handle) throws UnknownNativeErrorException;
+
+    DCB GetCommState(long handle) throws UnknownNativeErrorException;
+
+    CommProp GetCommProperties(long handle) throws UnknownNativeErrorException;
+
+    int GetCommModemStatus(long handle) throws UnknownNativeErrorException;
+
+    int GetCommMask(long handle) throws UnknownNativeErrorException;
+
+    CommConfig GetCommConfig(long handle) throws UnknownNativeErrorException;
+
+    void EscapeCommFunction(long handle, int func) throws UnknownNativeErrorException;
+
+    int ClearCommError(long handle) throws UnknownNativeErrorException;
+    int ClearCommError(long handle, ComStat stat) throws UnknownNativeErrorException;
+
+    void ClearCommBreak(long handle) throws UnknownNativeErrorException;
 
 }

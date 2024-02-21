@@ -23,6 +23,7 @@ import eu.aschuetz.nativeutils.api.NativeUtil;
 import eu.aschuetz.nativeutils.api.NativeUtils;
 import eu.aschuetz.nativeutils.test.common.*;
 import eu.aschuetz.nativeutils.test.linux.*;
+import eu.aschuetz.nativeutils.test.windows.EnumComTest;
 import eu.aschuetz.nativeutils.test.windows.WinMibTest;
 import eu.aschuetz.nativeutils.test.windows.WinMmapTest;
 import eu.aschuetz.nativeutils.test.windows.WinSemaTest;
@@ -54,6 +55,7 @@ public class Main {
             LinkLinkTests.class,
             LinuxStatTest.class,
             MMapTest.class,
+            MallocTrimTest.class,
             PTTest.class,
             SemTest.class,
             SocketTests.class,
@@ -62,12 +64,14 @@ public class Main {
             TestFifo.class,
             TestMBuf.class,
             UserTest.class,
+            MemfdTest.class,
             WordExp.class);
 
     private static List<Class> WINDOWS_TESTS = (List) Arrays.asList(
             WinSemaTest.class,
             WinMmapTest.class,
-            WinMibTest.class
+            WinMibTest.class,
+            EnumComTest.class
     );
 
 

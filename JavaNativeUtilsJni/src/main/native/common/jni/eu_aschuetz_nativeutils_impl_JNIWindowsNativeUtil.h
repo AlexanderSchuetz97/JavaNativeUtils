@@ -647,6 +647,166 @@ JNIEXPORT jlong JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_C
 JNIEXPORT jlong JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_ReleaseSemaphore
   (JNIEnv *, jobject, jlong, jlong);
 
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    SetupComm
+ * Signature: (JII)V
+ */
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_SetupComm
+  (JNIEnv *, jobject, jlong, jint, jint);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    SetCommTimeouts
+ * Signature: (JLeu/aschuetz/nativeutils/api/structs/CommTimeouts;)V
+ */
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_SetCommTimeouts
+  (JNIEnv *, jobject, jlong, jobject);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    WaitCommEvent
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_WaitCommEvent
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    TransmitCommChar
+ * Signature: (JB)V
+ */
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_TransmitCommChar
+  (JNIEnv *, jobject, jlong, jbyte);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    SetDefaultCommConfigA
+ * Signature: (Ljava/lang/String;Leu/aschuetz/nativeutils/api/structs/CommConfig;)V
+ */
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_SetDefaultCommConfigA
+  (JNIEnv *, jobject, jstring, jobject);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    SetCommState
+ * Signature: (JLeu/aschuetz/nativeutils/api/structs/DCB;)V
+ */
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_SetCommState
+  (JNIEnv *, jobject, jlong, jobject);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    SetCommMask
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_SetCommMask
+  (JNIEnv *, jobject, jlong, jint);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    SetCommConfig
+ * Signature: (JLeu/aschuetz/nativeutils/api/structs/CommConfig;)V
+ */
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_SetCommConfig
+  (JNIEnv *, jobject, jlong, jobject);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    SetCommBreak
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_SetCommBreak
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    PurgeComm
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_PurgeComm
+  (JNIEnv *, jobject, jlong, jint);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    GetDefaultCommConfigA
+ * Signature: (Ljava/lang/String;)Leu/aschuetz/nativeutils/api/structs/CommConfig;
+ */
+JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_GetDefaultCommConfigA
+  (JNIEnv *, jobject, jstring);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    GetCommTimeouts
+ * Signature: (J)Leu/aschuetz/nativeutils/api/structs/CommTimeouts;
+ */
+JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_GetCommTimeouts
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    GetCommState
+ * Signature: (J)Leu/aschuetz/nativeutils/api/structs/DCB;
+ */
+JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_GetCommState
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    GetCommProperties
+ * Signature: (J)Leu/aschuetz/nativeutils/api/structs/CommProp;
+ */
+JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_GetCommProperties
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    GetCommModemStatus
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_GetCommModemStatus
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    GetCommMask
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_GetCommMask
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    GetCommConfig
+ * Signature: (J)Leu/aschuetz/nativeutils/api/structs/CommConfig;
+ */
+JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_GetCommConfig
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    EscapeCommFunction
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_EscapeCommFunction
+  (JNIEnv *, jobject, jlong, jint);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    ClearCommError
+ * Signature: (JLeu/aschuetz/nativeutils/api/structs/ComStat;)I
+ */
+JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_ClearCommError
+  (JNIEnv *, jobject, jlong, jobject);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    ClearCommBreak
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_ClearCommBreak
+  (JNIEnv *, jobject, jlong);
+
 #ifdef __cplusplus
 }
 #endif

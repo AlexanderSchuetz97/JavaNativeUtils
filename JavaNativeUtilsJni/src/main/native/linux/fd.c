@@ -45,6 +45,7 @@
 #define _LARGEFILE64_SOURCE
 #endif
 
+#define _GNU_SOURCE
 #include <sys/mman.h>
 
 
@@ -1370,4 +1371,51 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_fsyn
 	}
 }
 
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    memfd_create
+ * Signature: (Ljava/lang/String;I)I
+ */
+JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_memfd_1create
+        (JNIEnv * env, jobject inst, jstring jname, jint flags) {
 
+    if (jname == NULL) {
+        jthrowCC_NullPointerException_1(env, "name");
+        return -1;
+    }
+
+    const char* name = (*env)->GetStringUTFChars(env, jname, NULL);
+    if (name == NULL) {
+        jthrowCC_NullPointerException_1(env, "name");
+        return -1;
+    }
+
+
+    int fd = memfd_create(name, (unsigned int) flags);
+    (*env)->ReleaseStringUTFChars(env, jname, name);
+    if (fd != -1) {
+        return fd;
+    }
+
+    int err = errno;
+    switch (err) {
+        case (EINVAL):
+            jthrowCC_IllegalArgumentException_1(env,"Either name is longer than 249 bytes or flags contained unknown bits or bits that cannot be combined (ex. both MFD_HUGETLB and MFD_ALLOW_SEALING cant be combined)");
+            return -1;
+        case (EMFILE):
+            jthrowCC_QuotaExceededException(env,"The per-process limit on the number of open file descriptors has been reached.");
+            return -1;
+        case (ENFILE):
+            jthrowCC_QuotaExceededException(env,"The system-wide limit on the total number of open files has been reached.");
+            return -1;
+        case (ENOMEM):
+            jthrowCC_OutOfMemoryError_1(env, "There was insufficient memory available to create a new anonymous file.");
+            return -1;
+        case (EPERM):
+            jthrowCC_PermissionDeniedException(env,"The MFD_HUGETLB flag was specified, but the caller was not privileged.");
+            return -1;
+        default:
+            jthrow_UnknownNativeErrorException_1(env, err);
+            return -1;
+    }
+}

@@ -778,4 +778,13 @@ public interface LinuxNativeUtil extends NativeUtil {
 
     void pthread_cond_init(long condition, long attributes) throws UnknownNativeErrorException;
 
+    int memfd_create(String name, int flags) throws QuotaExceededException, PermissionDeniedException, UnknownNativeErrorException;
+
+    /**
+     * Note: this method throws {@link UnsupportedOperationException} on libc musl!
+     */
+    boolean malloc_trim(long pad);
+
+    void madvise(long ptr, long length, int advice) throws AccessDeniedException, IOException, PermissionDeniedException, ResourceTemporarilyUnavailableException, ResourceBusyException, MemoryFaultException, UnknownNativeErrorException;
+
 }

@@ -33,6 +33,9 @@
 #include <unistd.h>
 #include <limits.h>
 #include <errno.h>
+#include <malloc.h>
+#include <sys/mman.h>
+
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
@@ -521,7 +524,72 @@ JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_u
 }
 
 
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    malloc_trim
+ * Signature: (J)Z
+ */
+JNIEXPORT jboolean JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_malloc_1trim
+        (JNIEnv * env, jobject inst, jlong pad) {
+#if defined(__MALLOC_HOOK_VOLATILE)
+    //GLIBC_C
+    return malloc_trim((size_t) pad) != 0;
+#else
+    //LIBC MUSL
+    jthrowCC_UnsupportedOperationException_1(env, "malloc_trim not supported by current libc");
+    return false;
+#endif
+}
 
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
+ * Method:    madvise
+ * Signature: (JJI)V
+ */
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_madvise
+        (JNIEnv *env, jobject inst, jlong ptr, jlong length, jint advice) {
+
+    if (madvise((void*) (uintptr_t) ptr, (size_t) length, (int) advice) == 0) {
+        return;
+    }
+    
+    int err = errno;
+    switch (err) {
+        case EACCES:
+            jthrowCC_AccessDeniedException(env, "advice is MADV_REMOVE, but the specified address range is not a shared writable mapping.");
+            return;
+        case EAGAIN:
+            jthrowCC_ResourceTemporarilyUnavailableException(env, "A kernel resource was temporarily unavailable.");
+            return;
+        case EBADF:
+            jthrow_InvalidFileDescriptorException(env);
+            return;
+        case EBUSY:
+            jthrowCC_ResourceBusyException(env, "Could not charge hugepage to cgroup because cgroup limit was exceeded.");
+            return;
+        case EFAULT:
+            jthrowCC_MemoryFaultException(env, "advice is MADV_POPULATE_READ or MADV_POPULATE_WRITE and populating page tables failed because a SIGBUS would have been generated on actual memory access and the reason is not a HW poisoned page.");
+            return;
+        case EINVAL:
+            jthrowCC_IllegalArgumentException_1(env, "An argument to madvise was not valid");
+            return;
+        case EIO:
+            jthrowCC_IOException_1(env, "Paging in this area would exceed the process's maximum resident set size.");
+            return;
+        case ENOMEM:
+            jthrowCC_OutOfMemoryError_1(env, "Not enough memory or huge pages available or addresses in the specified range are outside the address space of the process.");
+            return;
+        case EPERM:
+            jthrowCC_PermissionDeniedException(env, "advice is MADV_HWPOISON, but the caller does not have the CAP_SYS_ADMIN capability.");
+            return;
+        case EHWPOISON:
+            jthrowCC_MemoryPoisonedException(env, "advice is MADV_POPULATE_READ or MADV_POPULATE_WRITE and populating page tables failed because a HW poisoned page was encountered.");
+            return;
+        default:
+            jthrow_UnknownNativeErrorException_1(env, err);
+            return;
+    }
+}
 
 
 

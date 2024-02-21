@@ -81,6 +81,16 @@ jboolean jinstanceof_IllegalStateException(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, IllegalStateException);
 }
 
+static jclass ResourceTemporarilyUnavailableException = 0;
+jboolean jinstanceof_ResourceTemporarilyUnavailableException(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, ResourceTemporarilyUnavailableException);
+}
+
+static jclass CommConfig = 0;
+jboolean jinstanceof_CommConfig(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, CommConfig);
+}
+
 static jclass RegData = 0;
 jboolean jinstanceof_RegData(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, RegData);
@@ -119,6 +129,11 @@ jboolean jinstanceof_InetAddress(JNIEnv * env, jobject value) {
 static jclass UnrecoverableMutexException = 0;
 jboolean jinstanceof_UnrecoverableMutexException(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, UnrecoverableMutexException);
+}
+
+static jclass DCB = 0;
+jboolean jinstanceof_DCB(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, DCB);
 }
 
 static jclass Passwd = 0;
@@ -161,6 +176,11 @@ jboolean jinstanceof_Collection(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, Collection);
 }
 
+static jclass MemoryFaultException = 0;
+jboolean jinstanceof_MemoryFaultException(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, MemoryFaultException);
+}
+
 static jclass MibIpForwardRow2 = 0;
 jboolean jinstanceof_MibIpForwardRow2(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, MibIpForwardRow2);
@@ -174,6 +194,11 @@ jboolean jinstanceof_NotLinkException(JNIEnv * env, jobject value) {
 static jclass InconsistentMutexException = 0;
 jboolean jinstanceof_InconsistentMutexException(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, InconsistentMutexException);
+}
+
+static jclass CommProp = 0;
+jboolean jinstanceof_CommProp(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, CommProp);
 }
 
 static jclass InetSocketAddress = 0;
@@ -291,6 +316,11 @@ jboolean jinstanceof_Statvfs(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, Statvfs);
 }
 
+static jclass ComStat = 0;
+jboolean jinstanceof_ComStat(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, ComStat);
+}
+
 static jclass RegQueryInfoKeyResult = 0;
 jboolean jinstanceof_RegQueryInfoKeyResult(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, RegQueryInfoKeyResult);
@@ -299,6 +329,11 @@ jboolean jinstanceof_RegQueryInfoKeyResult(JNIEnv * env, jobject value) {
 static jclass UnsupportedOperationException = 0;
 jboolean jinstanceof_UnsupportedOperationException(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, UnsupportedOperationException);
+}
+
+static jclass ResourceBusyException = 0;
+jboolean jinstanceof_ResourceBusyException(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, ResourceBusyException);
 }
 
 static jclass Iovec = 0;
@@ -361,6 +396,11 @@ jboolean jinstanceof_OperationInProgressException(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, OperationInProgressException);
 }
 
+static jclass MemoryPoisonedException = 0;
+jboolean jinstanceof_MemoryPoisonedException(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, MemoryPoisonedException);
+}
+
 static jclass IfNameIndex = 0;
 jboolean jinstanceof_IfNameIndex(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, IfNameIndex);
@@ -374,6 +414,11 @@ jboolean jinstanceof_PollFD(JNIEnv * env, jobject value) {
 static jclass OutOfMemoryError = 0;
 jboolean jinstanceof_OutOfMemoryError(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, OutOfMemoryError);
+}
+
+static jclass CommTimeouts = 0;
+jboolean jinstanceof_CommTimeouts(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, CommTimeouts);
 }
 
 static jfieldID DefaultLinuxConstProvider_AF_UNSPEC = 0;
@@ -2050,6 +2095,276 @@ jint jget_DefaultLinuxConstProvider_PTHREAD_MUTEX_NORMAL(JNIEnv * env, jobject i
    return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_PTHREAD_MUTEX_NORMAL);
 }
 
+static jfieldID DefaultLinuxConstProvider_MFD_CLOEXEC = 0;
+void jset_DefaultLinuxConstProvider_MFD_CLOEXEC(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MFD_CLOEXEC, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MFD_CLOEXEC(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MFD_CLOEXEC);
+}
+
+static jfieldID DefaultLinuxConstProvider_MFD_ALLOW_SEALING = 0;
+void jset_DefaultLinuxConstProvider_MFD_ALLOW_SEALING(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MFD_ALLOW_SEALING, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MFD_ALLOW_SEALING(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MFD_ALLOW_SEALING);
+}
+
+static jfieldID DefaultLinuxConstProvider_MFD_HUGETLB = 0;
+void jset_DefaultLinuxConstProvider_MFD_HUGETLB(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MFD_HUGETLB, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MFD_HUGETLB(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MFD_HUGETLB);
+}
+
+static jfieldID DefaultLinuxConstProvider_MFD_HUGE_64KB = 0;
+void jset_DefaultLinuxConstProvider_MFD_HUGE_64KB(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MFD_HUGE_64KB, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MFD_HUGE_64KB(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MFD_HUGE_64KB);
+}
+
+static jfieldID DefaultLinuxConstProvider_MFD_HUGE_512KB = 0;
+void jset_DefaultLinuxConstProvider_MFD_HUGE_512KB(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MFD_HUGE_512KB, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MFD_HUGE_512KB(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MFD_HUGE_512KB);
+}
+
+static jfieldID DefaultLinuxConstProvider_MFD_HUGE_1MB = 0;
+void jset_DefaultLinuxConstProvider_MFD_HUGE_1MB(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MFD_HUGE_1MB, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MFD_HUGE_1MB(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MFD_HUGE_1MB);
+}
+
+static jfieldID DefaultLinuxConstProvider_MFD_HUGE_2MB = 0;
+void jset_DefaultLinuxConstProvider_MFD_HUGE_2MB(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MFD_HUGE_2MB, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MFD_HUGE_2MB(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MFD_HUGE_2MB);
+}
+
+static jfieldID DefaultLinuxConstProvider_MFD_HUGE_8MB = 0;
+void jset_DefaultLinuxConstProvider_MFD_HUGE_8MB(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MFD_HUGE_8MB, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MFD_HUGE_8MB(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MFD_HUGE_8MB);
+}
+
+static jfieldID DefaultLinuxConstProvider_MFD_HUGE_16MB = 0;
+void jset_DefaultLinuxConstProvider_MFD_HUGE_16MB(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MFD_HUGE_16MB, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MFD_HUGE_16MB(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MFD_HUGE_16MB);
+}
+
+static jfieldID DefaultLinuxConstProvider_MFD_HUGE_256MB = 0;
+void jset_DefaultLinuxConstProvider_MFD_HUGE_256MB(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MFD_HUGE_256MB, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MFD_HUGE_256MB(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MFD_HUGE_256MB);
+}
+
+static jfieldID DefaultLinuxConstProvider_MFD_HUGE_1GB = 0;
+void jset_DefaultLinuxConstProvider_MFD_HUGE_1GB(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MFD_HUGE_1GB, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MFD_HUGE_1GB(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MFD_HUGE_1GB);
+}
+
+static jfieldID DefaultLinuxConstProvider_MFD_HUGE_2GB = 0;
+void jset_DefaultLinuxConstProvider_MFD_HUGE_2GB(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MFD_HUGE_2GB, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MFD_HUGE_2GB(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MFD_HUGE_2GB);
+}
+
+static jfieldID DefaultLinuxConstProvider_MFD_HUGE_16GB = 0;
+void jset_DefaultLinuxConstProvider_MFD_HUGE_16GB(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MFD_HUGE_16GB, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MFD_HUGE_16GB(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MFD_HUGE_16GB);
+}
+
+static jfieldID DefaultLinuxConstProvider_MADV_DONTNEED = 0;
+void jset_DefaultLinuxConstProvider_MADV_DONTNEED(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MADV_DONTNEED, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MADV_DONTNEED(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MADV_DONTNEED);
+}
+
+static jfieldID DefaultLinuxConstProvider_MADV_NORMAL = 0;
+void jset_DefaultLinuxConstProvider_MADV_NORMAL(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MADV_NORMAL, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MADV_NORMAL(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MADV_NORMAL);
+}
+
+static jfieldID DefaultLinuxConstProvider_MADV_RANDOM = 0;
+void jset_DefaultLinuxConstProvider_MADV_RANDOM(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MADV_RANDOM, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MADV_RANDOM(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MADV_RANDOM);
+}
+
+static jfieldID DefaultLinuxConstProvider_MADV_SEQUENTIAL = 0;
+void jset_DefaultLinuxConstProvider_MADV_SEQUENTIAL(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MADV_SEQUENTIAL, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MADV_SEQUENTIAL(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MADV_SEQUENTIAL);
+}
+
+static jfieldID DefaultLinuxConstProvider_MADV_WILLNEED = 0;
+void jset_DefaultLinuxConstProvider_MADV_WILLNEED(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MADV_WILLNEED, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MADV_WILLNEED(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MADV_WILLNEED);
+}
+
+static jfieldID DefaultLinuxConstProvider_MADV_REMOVE = 0;
+void jset_DefaultLinuxConstProvider_MADV_REMOVE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MADV_REMOVE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MADV_REMOVE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MADV_REMOVE);
+}
+
+static jfieldID DefaultLinuxConstProvider_MADV_DONTFORK = 0;
+void jset_DefaultLinuxConstProvider_MADV_DONTFORK(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MADV_DONTFORK, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MADV_DONTFORK(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MADV_DONTFORK);
+}
+
+static jfieldID DefaultLinuxConstProvider_MADV_DOFORK = 0;
+void jset_DefaultLinuxConstProvider_MADV_DOFORK(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MADV_DOFORK, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MADV_DOFORK(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MADV_DOFORK);
+}
+
+static jfieldID DefaultLinuxConstProvider_MADV_HWPOISON = 0;
+void jset_DefaultLinuxConstProvider_MADV_HWPOISON(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MADV_HWPOISON, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MADV_HWPOISON(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MADV_HWPOISON);
+}
+
+static jfieldID DefaultLinuxConstProvider_MADV_MERGEABLE = 0;
+void jset_DefaultLinuxConstProvider_MADV_MERGEABLE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MADV_MERGEABLE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MADV_MERGEABLE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MADV_MERGEABLE);
+}
+
+static jfieldID DefaultLinuxConstProvider_MADV_UNMERGEABLE = 0;
+void jset_DefaultLinuxConstProvider_MADV_UNMERGEABLE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MADV_UNMERGEABLE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MADV_UNMERGEABLE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MADV_UNMERGEABLE);
+}
+
+static jfieldID DefaultLinuxConstProvider_MADV_HUGEPAGE = 0;
+void jset_DefaultLinuxConstProvider_MADV_HUGEPAGE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MADV_HUGEPAGE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MADV_HUGEPAGE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MADV_HUGEPAGE);
+}
+
+static jfieldID DefaultLinuxConstProvider_MADV_NOHUGEPAGE = 0;
+void jset_DefaultLinuxConstProvider_MADV_NOHUGEPAGE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MADV_NOHUGEPAGE, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MADV_NOHUGEPAGE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MADV_NOHUGEPAGE);
+}
+
+static jfieldID DefaultLinuxConstProvider_MADV_DONTDUMP = 0;
+void jset_DefaultLinuxConstProvider_MADV_DONTDUMP(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MADV_DONTDUMP, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MADV_DONTDUMP(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MADV_DONTDUMP);
+}
+
+static jfieldID DefaultLinuxConstProvider_MADV_DODUMP = 0;
+void jset_DefaultLinuxConstProvider_MADV_DODUMP(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MADV_DODUMP, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MADV_DODUMP(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MADV_DODUMP);
+}
+
+static jfieldID DefaultLinuxConstProvider_MADV_WIPEONFORK = 0;
+void jset_DefaultLinuxConstProvider_MADV_WIPEONFORK(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MADV_WIPEONFORK, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MADV_WIPEONFORK(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MADV_WIPEONFORK);
+}
+
+static jfieldID DefaultLinuxConstProvider_MADV_KEEPONFORK = 0;
+void jset_DefaultLinuxConstProvider_MADV_KEEPONFORK(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultLinuxConstProvider_MADV_KEEPONFORK, value);
+}
+
+jint jget_DefaultLinuxConstProvider_MADV_KEEPONFORK(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultLinuxConstProvider_MADV_KEEPONFORK);
+}
+
 static jmethodID DefaultLinuxConstProvider_C_0 = 0;
 jobject jnew_DefaultLinuxConstProvider(JNIEnv * env) {
     jobject obj = (*env) -> NewObject(env, DefaultLinuxConstProvider, DefaultLinuxConstProvider_C_0);
@@ -2154,6 +2469,91 @@ jint jcall_DefaultLinuxConstProvider_IFNAMSIZ(JNIEnv * env, jobject instance) {
     return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_IFNAMSIZ_0);
 }
 
+static jmethodID DefaultLinuxConstProvider_M_MADV_DODUMP_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MADV_DODUMP(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MADV_DODUMP_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MADV_DOFORK_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MADV_DOFORK(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MADV_DOFORK_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MADV_DONTDUMP_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MADV_DONTDUMP(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MADV_DONTDUMP_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MADV_DONTFORK_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MADV_DONTFORK(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MADV_DONTFORK_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MADV_DONTNEED_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MADV_DONTNEED(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MADV_DONTNEED_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MADV_HUGEPAGE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MADV_HUGEPAGE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MADV_HUGEPAGE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MADV_HWPOISON_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MADV_HWPOISON(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MADV_HWPOISON_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MADV_KEEPONFORK_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MADV_KEEPONFORK(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MADV_KEEPONFORK_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MADV_MERGEABLE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MADV_MERGEABLE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MADV_MERGEABLE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MADV_NOHUGEPAGE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MADV_NOHUGEPAGE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MADV_NOHUGEPAGE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MADV_NORMAL_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MADV_NORMAL(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MADV_NORMAL_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MADV_RANDOM_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MADV_RANDOM(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MADV_RANDOM_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MADV_REMOVE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MADV_REMOVE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MADV_REMOVE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MADV_SEQUENTIAL_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MADV_SEQUENTIAL(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MADV_SEQUENTIAL_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MADV_UNMERGEABLE_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MADV_UNMERGEABLE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MADV_UNMERGEABLE_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MADV_WILLNEED_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MADV_WILLNEED(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MADV_WILLNEED_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MADV_WIPEONFORK_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MADV_WIPEONFORK(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MADV_WIPEONFORK_0);
+}
+
 static jmethodID DefaultLinuxConstProvider_M_MAP_PRIVATE_0 = 0;
 jint jcall_DefaultLinuxConstProvider_MAP_PRIVATE(JNIEnv * env, jobject instance) {
     return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MAP_PRIVATE_0);
@@ -2162,6 +2562,71 @@ jint jcall_DefaultLinuxConstProvider_MAP_PRIVATE(JNIEnv * env, jobject instance)
 static jmethodID DefaultLinuxConstProvider_M_MAP_SHARED_0 = 0;
 jint jcall_DefaultLinuxConstProvider_MAP_SHARED(JNIEnv * env, jobject instance) {
     return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MAP_SHARED_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MFD_ALLOW_SEALING_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MFD_ALLOW_SEALING(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MFD_ALLOW_SEALING_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MFD_CLOEXEC_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MFD_CLOEXEC(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MFD_CLOEXEC_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MFD_HUGETLB_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MFD_HUGETLB(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MFD_HUGETLB_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MFD_HUGE_16GB_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MFD_HUGE_16GB(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MFD_HUGE_16GB_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MFD_HUGE_16MB_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MFD_HUGE_16MB(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MFD_HUGE_16MB_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MFD_HUGE_1GB_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MFD_HUGE_1GB(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MFD_HUGE_1GB_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MFD_HUGE_1MB_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MFD_HUGE_1MB(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MFD_HUGE_1MB_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MFD_HUGE_256MB_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MFD_HUGE_256MB(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MFD_HUGE_256MB_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MFD_HUGE_2GB_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MFD_HUGE_2GB(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MFD_HUGE_2GB_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MFD_HUGE_2MB_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MFD_HUGE_2MB(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MFD_HUGE_2MB_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MFD_HUGE_512KB_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MFD_HUGE_512KB(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MFD_HUGE_512KB_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MFD_HUGE_64KB_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MFD_HUGE_64KB(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MFD_HUGE_64KB_0);
+}
+
+static jmethodID DefaultLinuxConstProvider_M_MFD_HUGE_8MB_0 = 0;
+jint jcall_DefaultLinuxConstProvider_MFD_HUGE_8MB(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_MFD_HUGE_8MB_0);
 }
 
 static jmethodID DefaultLinuxConstProvider_M_NETLINK_ROUTE_0 = 0;
@@ -3064,6 +3529,1241 @@ jint jcall_Cmsghdr_getType(JNIEnv * env, jobject instance) {
 static jmethodID Cmsghdr_M_setPayload_0 = 0;
 void jcall_Cmsghdr_setPayload(JNIEnv * env, jobject instance, jbyteArray p0) {
     (*env) -> CallVoidMethod(env, instance, Cmsghdr_M_setPayload_0, p0);
+}
+
+static jfieldID ComStat_fCtsHold = 0;
+void jset_ComStat_fCtsHold(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, ComStat_fCtsHold, value);
+}
+
+jlong jget_ComStat_fCtsHold(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, ComStat_fCtsHold);
+}
+
+static jfieldID ComStat_fDsrHold = 0;
+void jset_ComStat_fDsrHold(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, ComStat_fDsrHold, value);
+}
+
+jlong jget_ComStat_fDsrHold(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, ComStat_fDsrHold);
+}
+
+static jfieldID ComStat_fRlsdHold = 0;
+void jset_ComStat_fRlsdHold(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, ComStat_fRlsdHold, value);
+}
+
+jlong jget_ComStat_fRlsdHold(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, ComStat_fRlsdHold);
+}
+
+static jfieldID ComStat_fXoffHold = 0;
+void jset_ComStat_fXoffHold(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, ComStat_fXoffHold, value);
+}
+
+jlong jget_ComStat_fXoffHold(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, ComStat_fXoffHold);
+}
+
+static jfieldID ComStat_fXoffSent = 0;
+void jset_ComStat_fXoffSent(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, ComStat_fXoffSent, value);
+}
+
+jlong jget_ComStat_fXoffSent(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, ComStat_fXoffSent);
+}
+
+static jfieldID ComStat_fEof = 0;
+void jset_ComStat_fEof(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, ComStat_fEof, value);
+}
+
+jlong jget_ComStat_fEof(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, ComStat_fEof);
+}
+
+static jfieldID ComStat_fTxim = 0;
+void jset_ComStat_fTxim(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, ComStat_fTxim, value);
+}
+
+jlong jget_ComStat_fTxim(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, ComStat_fTxim);
+}
+
+static jfieldID ComStat_cbInQue = 0;
+void jset_ComStat_cbInQue(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, ComStat_cbInQue, value);
+}
+
+jlong jget_ComStat_cbInQue(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, ComStat_cbInQue);
+}
+
+static jfieldID ComStat_cbOutQue = 0;
+void jset_ComStat_cbOutQue(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, ComStat_cbOutQue, value);
+}
+
+jlong jget_ComStat_cbOutQue(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, ComStat_cbOutQue);
+}
+
+static jmethodID ComStat_C_0 = 0;
+jobject jnew_ComStat(JNIEnv * env) {
+    jobject obj = (*env) -> NewObject(env, ComStat, ComStat_C_0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID ComStat_M_getCbInQue_0 = 0;
+jlong jcall_ComStat_getCbInQue(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, ComStat_M_getCbInQue_0);
+}
+
+static jmethodID ComStat_M_getCbOutQue_0 = 0;
+jlong jcall_ComStat_getCbOutQue(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, ComStat_M_getCbOutQue_0);
+}
+
+static jmethodID ComStat_M_getfCtsHold_0 = 0;
+jlong jcall_ComStat_getfCtsHold(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, ComStat_M_getfCtsHold_0);
+}
+
+static jmethodID ComStat_M_getfDsrHold_0 = 0;
+jlong jcall_ComStat_getfDsrHold(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, ComStat_M_getfDsrHold_0);
+}
+
+static jmethodID ComStat_M_getfEof_0 = 0;
+jlong jcall_ComStat_getfEof(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, ComStat_M_getfEof_0);
+}
+
+static jmethodID ComStat_M_getfRlsdHold_0 = 0;
+jlong jcall_ComStat_getfRlsdHold(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, ComStat_M_getfRlsdHold_0);
+}
+
+static jmethodID ComStat_M_getfTxim_0 = 0;
+jlong jcall_ComStat_getfTxim(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, ComStat_M_getfTxim_0);
+}
+
+static jmethodID ComStat_M_getfXoffHold_0 = 0;
+jlong jcall_ComStat_getfXoffHold(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, ComStat_M_getfXoffHold_0);
+}
+
+static jmethodID ComStat_M_getfXoffSent_0 = 0;
+jlong jcall_ComStat_getfXoffSent(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, ComStat_M_getfXoffSent_0);
+}
+
+static jmethodID ComStat_M_setCbInQue_0 = 0;
+void jcall_ComStat_setCbInQue(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, ComStat_M_setCbInQue_0, p0);
+}
+
+static jmethodID ComStat_M_setCbOutQue_0 = 0;
+void jcall_ComStat_setCbOutQue(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, ComStat_M_setCbOutQue_0, p0);
+}
+
+static jmethodID ComStat_M_setfCtsHold_0 = 0;
+void jcall_ComStat_setfCtsHold(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, ComStat_M_setfCtsHold_0, p0);
+}
+
+static jmethodID ComStat_M_setfDsrHold_0 = 0;
+void jcall_ComStat_setfDsrHold(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, ComStat_M_setfDsrHold_0, p0);
+}
+
+static jmethodID ComStat_M_setfEof_0 = 0;
+void jcall_ComStat_setfEof(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, ComStat_M_setfEof_0, p0);
+}
+
+static jmethodID ComStat_M_setfRlsdHold_0 = 0;
+void jcall_ComStat_setfRlsdHold(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, ComStat_M_setfRlsdHold_0, p0);
+}
+
+static jmethodID ComStat_M_setfTxim_0 = 0;
+void jcall_ComStat_setfTxim(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, ComStat_M_setfTxim_0, p0);
+}
+
+static jmethodID ComStat_M_setfXoffHold_0 = 0;
+void jcall_ComStat_setfXoffHold(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, ComStat_M_setfXoffHold_0, p0);
+}
+
+static jmethodID ComStat_M_setfXoffSent_0 = 0;
+void jcall_ComStat_setfXoffSent(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, ComStat_M_setfXoffSent_0, p0);
+}
+
+static jfieldID CommConfig_dwSize = 0;
+void jset_CommConfig_dwSize(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, CommConfig_dwSize, value);
+}
+
+jlong jget_CommConfig_dwSize(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, CommConfig_dwSize);
+}
+
+static jfieldID CommConfig_wVersion = 0;
+void jset_CommConfig_wVersion(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, CommConfig_wVersion, value);
+}
+
+jint jget_CommConfig_wVersion(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, CommConfig_wVersion);
+}
+
+static jfieldID CommConfig_dcb = 0;
+void jset_CommConfig_dcb(JNIEnv * env, jobject instance, jobject value) {
+   (*env)->SetObjectField(env, instance, CommConfig_dcb, value);
+}
+
+jobject jget_CommConfig_dcb(JNIEnv * env, jobject instance) {
+   return (*env)->GetObjectField(env, instance, CommConfig_dcb);
+}
+
+static jfieldID CommConfig_dwProviderSubType = 0;
+void jset_CommConfig_dwProviderSubType(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, CommConfig_dwProviderSubType, value);
+}
+
+jlong jget_CommConfig_dwProviderSubType(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, CommConfig_dwProviderSubType);
+}
+
+static jfieldID CommConfig_wcProviderData = 0;
+void jset_CommConfig_wcProviderData(JNIEnv * env, jobject instance, jbyteArray value) {
+   (*env)->SetObjectField(env, instance, CommConfig_wcProviderData, value);
+}
+
+jboolean jsetA_CommConfig_wcProviderData(JNIEnv * env, jobject instance, jbyte * value, jsize len) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,CommConfig_wcProviderData, 0);
+        return JNI_TRUE;
+    }
+    if (len < 0) {
+        len = 0;
+    }
+    jbyteArray tmp = (*env)->NewByteArray(env, len);
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewByteArray");
+        return JNI_FALSE;
+    }
+    if (len > 0) {
+        (*env)->SetByteArrayRegion(env, tmp, 0, len, (const jbyte*) value);
+    }
+    (*env)->SetObjectField(env, instance, CommConfig_wcProviderData, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jbyteArray jget_CommConfig_wcProviderData(JNIEnv * env, jobject instance) {
+   return (jbyteArray) (*env)->GetObjectField(env, instance, CommConfig_wcProviderData);
+}
+
+static jmethodID CommConfig_C_0 = 0;
+jobject jnew_CommConfig(JNIEnv * env) {
+    jobject obj = (*env) -> NewObject(env, CommConfig, CommConfig_C_0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID CommConfig_M_getDcb_0 = 0;
+jobject jcall_CommConfig_getDcb(JNIEnv * env, jobject instance) {
+    return (*env) -> CallObjectMethod(env, instance, CommConfig_M_getDcb_0);
+}
+
+static jmethodID CommConfig_M_getDwProviderSubType_0 = 0;
+jlong jcall_CommConfig_getDwProviderSubType(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, CommConfig_M_getDwProviderSubType_0);
+}
+
+static jmethodID CommConfig_M_getDwSize_0 = 0;
+jlong jcall_CommConfig_getDwSize(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, CommConfig_M_getDwSize_0);
+}
+
+static jmethodID CommConfig_M_getWcProviderData_0 = 0;
+jbyteArray jcall_CommConfig_getWcProviderData(JNIEnv * env, jobject instance) {
+    return (jbyteArray) (*env) -> CallObjectMethod(env, instance, CommConfig_M_getWcProviderData_0);
+}
+
+static jmethodID CommConfig_M_getwVersion_0 = 0;
+jint jcall_CommConfig_getwVersion(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, CommConfig_M_getwVersion_0);
+}
+
+static jmethodID CommConfig_M_setDcb_0 = 0;
+void jcall_CommConfig_setDcb(JNIEnv * env, jobject instance, jobject p0) {
+    (*env) -> CallVoidMethod(env, instance, CommConfig_M_setDcb_0, p0);
+}
+
+static jmethodID CommConfig_M_setDwProviderSubType_0 = 0;
+void jcall_CommConfig_setDwProviderSubType(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, CommConfig_M_setDwProviderSubType_0, p0);
+}
+
+static jmethodID CommConfig_M_setDwSize_0 = 0;
+void jcall_CommConfig_setDwSize(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, CommConfig_M_setDwSize_0, p0);
+}
+
+static jmethodID CommConfig_M_setWcProviderData_0 = 0;
+void jcall_CommConfig_setWcProviderData(JNIEnv * env, jobject instance, jbyteArray p0) {
+    (*env) -> CallVoidMethod(env, instance, CommConfig_M_setWcProviderData_0, p0);
+}
+
+static jmethodID CommConfig_M_setwVersion_0 = 0;
+void jcall_CommConfig_setwVersion(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, CommConfig_M_setwVersion_0, p0);
+}
+
+static jfieldID CommProp_wPacketLength = 0;
+void jset_CommProp_wPacketLength(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, CommProp_wPacketLength, value);
+}
+
+jint jget_CommProp_wPacketLength(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, CommProp_wPacketLength);
+}
+
+static jfieldID CommProp_wPacketVersion = 0;
+void jset_CommProp_wPacketVersion(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, CommProp_wPacketVersion, value);
+}
+
+jint jget_CommProp_wPacketVersion(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, CommProp_wPacketVersion);
+}
+
+static jfieldID CommProp_dwServiceMask = 0;
+void jset_CommProp_dwServiceMask(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, CommProp_dwServiceMask, value);
+}
+
+jlong jget_CommProp_dwServiceMask(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, CommProp_dwServiceMask);
+}
+
+static jfieldID CommProp_dwReserved1 = 0;
+void jset_CommProp_dwReserved1(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, CommProp_dwReserved1, value);
+}
+
+jlong jget_CommProp_dwReserved1(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, CommProp_dwReserved1);
+}
+
+static jfieldID CommProp_dwMaxTxQueue = 0;
+void jset_CommProp_dwMaxTxQueue(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, CommProp_dwMaxTxQueue, value);
+}
+
+jlong jget_CommProp_dwMaxTxQueue(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, CommProp_dwMaxTxQueue);
+}
+
+static jfieldID CommProp_dwMaxRxQueue = 0;
+void jset_CommProp_dwMaxRxQueue(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, CommProp_dwMaxRxQueue, value);
+}
+
+jlong jget_CommProp_dwMaxRxQueue(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, CommProp_dwMaxRxQueue);
+}
+
+static jfieldID CommProp_dwMaxBaud = 0;
+void jset_CommProp_dwMaxBaud(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, CommProp_dwMaxBaud, value);
+}
+
+jlong jget_CommProp_dwMaxBaud(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, CommProp_dwMaxBaud);
+}
+
+static jfieldID CommProp_dwProvSubType = 0;
+void jset_CommProp_dwProvSubType(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, CommProp_dwProvSubType, value);
+}
+
+jlong jget_CommProp_dwProvSubType(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, CommProp_dwProvSubType);
+}
+
+static jfieldID CommProp_dwProvCapabilities = 0;
+void jset_CommProp_dwProvCapabilities(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, CommProp_dwProvCapabilities, value);
+}
+
+jlong jget_CommProp_dwProvCapabilities(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, CommProp_dwProvCapabilities);
+}
+
+static jfieldID CommProp_dwSettableParams = 0;
+void jset_CommProp_dwSettableParams(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, CommProp_dwSettableParams, value);
+}
+
+jlong jget_CommProp_dwSettableParams(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, CommProp_dwSettableParams);
+}
+
+static jfieldID CommProp_dwSettableBaud = 0;
+void jset_CommProp_dwSettableBaud(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, CommProp_dwSettableBaud, value);
+}
+
+jlong jget_CommProp_dwSettableBaud(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, CommProp_dwSettableBaud);
+}
+
+static jfieldID CommProp_wSettableData = 0;
+void jset_CommProp_wSettableData(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, CommProp_wSettableData, value);
+}
+
+jint jget_CommProp_wSettableData(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, CommProp_wSettableData);
+}
+
+static jfieldID CommProp_wSettableStopParity = 0;
+void jset_CommProp_wSettableStopParity(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, CommProp_wSettableStopParity, value);
+}
+
+jint jget_CommProp_wSettableStopParity(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, CommProp_wSettableStopParity);
+}
+
+static jfieldID CommProp_dwCurrentTxQueue = 0;
+void jset_CommProp_dwCurrentTxQueue(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, CommProp_dwCurrentTxQueue, value);
+}
+
+jlong jget_CommProp_dwCurrentTxQueue(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, CommProp_dwCurrentTxQueue);
+}
+
+static jfieldID CommProp_dwCurrentRxQueue = 0;
+void jset_CommProp_dwCurrentRxQueue(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, CommProp_dwCurrentRxQueue, value);
+}
+
+jlong jget_CommProp_dwCurrentRxQueue(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, CommProp_dwCurrentRxQueue);
+}
+
+static jfieldID CommProp_dwProvSpec1 = 0;
+void jset_CommProp_dwProvSpec1(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, CommProp_dwProvSpec1, value);
+}
+
+jlong jget_CommProp_dwProvSpec1(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, CommProp_dwProvSpec1);
+}
+
+static jfieldID CommProp_dwProvSpec2 = 0;
+void jset_CommProp_dwProvSpec2(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, CommProp_dwProvSpec2, value);
+}
+
+jlong jget_CommProp_dwProvSpec2(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, CommProp_dwProvSpec2);
+}
+
+static jfieldID CommProp_wcProvChar = 0;
+void jset_CommProp_wcProvChar(JNIEnv * env, jobject instance, jcharArray value) {
+   (*env)->SetObjectField(env, instance, CommProp_wcProvChar, value);
+}
+
+jcharArray jget_CommProp_wcProvChar(JNIEnv * env, jobject instance) {
+   return (jcharArray) (*env)->GetObjectField(env, instance, CommProp_wcProvChar);
+}
+
+static jmethodID CommProp_C_0 = 0;
+jobject jnew_CommProp(JNIEnv * env) {
+    jobject obj = (*env) -> NewObject(env, CommProp, CommProp_C_0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID CommProp_M_getDwCurrentRxQueue_0 = 0;
+jlong jcall_CommProp_getDwCurrentRxQueue(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, CommProp_M_getDwCurrentRxQueue_0);
+}
+
+static jmethodID CommProp_M_getDwCurrentTxQueue_0 = 0;
+jlong jcall_CommProp_getDwCurrentTxQueue(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, CommProp_M_getDwCurrentTxQueue_0);
+}
+
+static jmethodID CommProp_M_getDwMaxBaud_0 = 0;
+jlong jcall_CommProp_getDwMaxBaud(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, CommProp_M_getDwMaxBaud_0);
+}
+
+static jmethodID CommProp_M_getDwMaxRxQueue_0 = 0;
+jlong jcall_CommProp_getDwMaxRxQueue(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, CommProp_M_getDwMaxRxQueue_0);
+}
+
+static jmethodID CommProp_M_getDwMaxTxQueue_0 = 0;
+jlong jcall_CommProp_getDwMaxTxQueue(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, CommProp_M_getDwMaxTxQueue_0);
+}
+
+static jmethodID CommProp_M_getDwProvCapabilities_0 = 0;
+jlong jcall_CommProp_getDwProvCapabilities(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, CommProp_M_getDwProvCapabilities_0);
+}
+
+static jmethodID CommProp_M_getDwProvSpec1_0 = 0;
+jlong jcall_CommProp_getDwProvSpec1(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, CommProp_M_getDwProvSpec1_0);
+}
+
+static jmethodID CommProp_M_getDwProvSpec2_0 = 0;
+jlong jcall_CommProp_getDwProvSpec2(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, CommProp_M_getDwProvSpec2_0);
+}
+
+static jmethodID CommProp_M_getDwProvSubType_0 = 0;
+jlong jcall_CommProp_getDwProvSubType(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, CommProp_M_getDwProvSubType_0);
+}
+
+static jmethodID CommProp_M_getDwReserved1_0 = 0;
+jlong jcall_CommProp_getDwReserved1(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, CommProp_M_getDwReserved1_0);
+}
+
+static jmethodID CommProp_M_getDwServiceMask_0 = 0;
+jlong jcall_CommProp_getDwServiceMask(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, CommProp_M_getDwServiceMask_0);
+}
+
+static jmethodID CommProp_M_getDwSettableBaud_0 = 0;
+jlong jcall_CommProp_getDwSettableBaud(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, CommProp_M_getDwSettableBaud_0);
+}
+
+static jmethodID CommProp_M_getDwSettableParams_0 = 0;
+jlong jcall_CommProp_getDwSettableParams(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, CommProp_M_getDwSettableParams_0);
+}
+
+static jmethodID CommProp_M_getWcProvChar_0 = 0;
+jcharArray jcall_CommProp_getWcProvChar(JNIEnv * env, jobject instance) {
+    return (jcharArray) (*env) -> CallObjectMethod(env, instance, CommProp_M_getWcProvChar_0);
+}
+
+static jmethodID CommProp_M_getwPacketLength_0 = 0;
+jint jcall_CommProp_getwPacketLength(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, CommProp_M_getwPacketLength_0);
+}
+
+static jmethodID CommProp_M_getwPacketVersion_0 = 0;
+jint jcall_CommProp_getwPacketVersion(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, CommProp_M_getwPacketVersion_0);
+}
+
+static jmethodID CommProp_M_getwSettableData_0 = 0;
+jint jcall_CommProp_getwSettableData(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, CommProp_M_getwSettableData_0);
+}
+
+static jmethodID CommProp_M_getwSettableStopParity_0 = 0;
+jint jcall_CommProp_getwSettableStopParity(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, CommProp_M_getwSettableStopParity_0);
+}
+
+static jmethodID CommProp_M_setDwCurrentRxQueue_0 = 0;
+void jcall_CommProp_setDwCurrentRxQueue(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, CommProp_M_setDwCurrentRxQueue_0, p0);
+}
+
+static jmethodID CommProp_M_setDwCurrentTxQueue_0 = 0;
+void jcall_CommProp_setDwCurrentTxQueue(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, CommProp_M_setDwCurrentTxQueue_0, p0);
+}
+
+static jmethodID CommProp_M_setDwMaxBaud_0 = 0;
+void jcall_CommProp_setDwMaxBaud(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, CommProp_M_setDwMaxBaud_0, p0);
+}
+
+static jmethodID CommProp_M_setDwMaxRxQueue_0 = 0;
+void jcall_CommProp_setDwMaxRxQueue(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, CommProp_M_setDwMaxRxQueue_0, p0);
+}
+
+static jmethodID CommProp_M_setDwMaxTxQueue_0 = 0;
+void jcall_CommProp_setDwMaxTxQueue(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, CommProp_M_setDwMaxTxQueue_0, p0);
+}
+
+static jmethodID CommProp_M_setDwProvCapabilities_0 = 0;
+void jcall_CommProp_setDwProvCapabilities(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, CommProp_M_setDwProvCapabilities_0, p0);
+}
+
+static jmethodID CommProp_M_setDwProvSpec1_0 = 0;
+void jcall_CommProp_setDwProvSpec1(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, CommProp_M_setDwProvSpec1_0, p0);
+}
+
+static jmethodID CommProp_M_setDwProvSpec2_0 = 0;
+void jcall_CommProp_setDwProvSpec2(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, CommProp_M_setDwProvSpec2_0, p0);
+}
+
+static jmethodID CommProp_M_setDwProvSubType_0 = 0;
+void jcall_CommProp_setDwProvSubType(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, CommProp_M_setDwProvSubType_0, p0);
+}
+
+static jmethodID CommProp_M_setDwReserved1_0 = 0;
+void jcall_CommProp_setDwReserved1(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, CommProp_M_setDwReserved1_0, p0);
+}
+
+static jmethodID CommProp_M_setDwServiceMask_0 = 0;
+void jcall_CommProp_setDwServiceMask(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, CommProp_M_setDwServiceMask_0, p0);
+}
+
+static jmethodID CommProp_M_setDwSettableBaud_0 = 0;
+void jcall_CommProp_setDwSettableBaud(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, CommProp_M_setDwSettableBaud_0, p0);
+}
+
+static jmethodID CommProp_M_setDwSettableParams_0 = 0;
+void jcall_CommProp_setDwSettableParams(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, CommProp_M_setDwSettableParams_0, p0);
+}
+
+static jmethodID CommProp_M_setWcProvChar_0 = 0;
+void jcall_CommProp_setWcProvChar(JNIEnv * env, jobject instance, jcharArray p0) {
+    (*env) -> CallVoidMethod(env, instance, CommProp_M_setWcProvChar_0, p0);
+}
+
+static jmethodID CommProp_M_setwPacketLength_0 = 0;
+void jcall_CommProp_setwPacketLength(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, CommProp_M_setwPacketLength_0, p0);
+}
+
+static jmethodID CommProp_M_setwPacketVersion_0 = 0;
+void jcall_CommProp_setwPacketVersion(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, CommProp_M_setwPacketVersion_0, p0);
+}
+
+static jmethodID CommProp_M_setwSettableData_0 = 0;
+void jcall_CommProp_setwSettableData(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, CommProp_M_setwSettableData_0, p0);
+}
+
+static jmethodID CommProp_M_setwSettableStopParity_0 = 0;
+void jcall_CommProp_setwSettableStopParity(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, CommProp_M_setwSettableStopParity_0, p0);
+}
+
+static jfieldID CommTimeouts_ReadIntervalTimeout = 0;
+void jset_CommTimeouts_ReadIntervalTimeout(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, CommTimeouts_ReadIntervalTimeout, value);
+}
+
+jlong jget_CommTimeouts_ReadIntervalTimeout(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, CommTimeouts_ReadIntervalTimeout);
+}
+
+static jfieldID CommTimeouts_ReadTotalTimeoutMultiplier = 0;
+void jset_CommTimeouts_ReadTotalTimeoutMultiplier(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, CommTimeouts_ReadTotalTimeoutMultiplier, value);
+}
+
+jlong jget_CommTimeouts_ReadTotalTimeoutMultiplier(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, CommTimeouts_ReadTotalTimeoutMultiplier);
+}
+
+static jfieldID CommTimeouts_ReadTotalTimeoutConstant = 0;
+void jset_CommTimeouts_ReadTotalTimeoutConstant(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, CommTimeouts_ReadTotalTimeoutConstant, value);
+}
+
+jlong jget_CommTimeouts_ReadTotalTimeoutConstant(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, CommTimeouts_ReadTotalTimeoutConstant);
+}
+
+static jfieldID CommTimeouts_WriteTotalTimeoutMultiplier = 0;
+void jset_CommTimeouts_WriteTotalTimeoutMultiplier(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, CommTimeouts_WriteTotalTimeoutMultiplier, value);
+}
+
+jlong jget_CommTimeouts_WriteTotalTimeoutMultiplier(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, CommTimeouts_WriteTotalTimeoutMultiplier);
+}
+
+static jfieldID CommTimeouts_WriteTotalTimeoutConstant = 0;
+void jset_CommTimeouts_WriteTotalTimeoutConstant(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, CommTimeouts_WriteTotalTimeoutConstant, value);
+}
+
+jlong jget_CommTimeouts_WriteTotalTimeoutConstant(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, CommTimeouts_WriteTotalTimeoutConstant);
+}
+
+static jmethodID CommTimeouts_C_0 = 0;
+jobject jnew_CommTimeouts(JNIEnv * env) {
+    jobject obj = (*env) -> NewObject(env, CommTimeouts, CommTimeouts_C_0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID CommTimeouts_M_getReadIntervalTimeout_0 = 0;
+jlong jcall_CommTimeouts_getReadIntervalTimeout(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, CommTimeouts_M_getReadIntervalTimeout_0);
+}
+
+static jmethodID CommTimeouts_M_getReadTotalTimeoutConstant_0 = 0;
+jlong jcall_CommTimeouts_getReadTotalTimeoutConstant(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, CommTimeouts_M_getReadTotalTimeoutConstant_0);
+}
+
+static jmethodID CommTimeouts_M_getReadTotalTimeoutMultiplier_0 = 0;
+jlong jcall_CommTimeouts_getReadTotalTimeoutMultiplier(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, CommTimeouts_M_getReadTotalTimeoutMultiplier_0);
+}
+
+static jmethodID CommTimeouts_M_getWriteTotalTimeoutConstant_0 = 0;
+jlong jcall_CommTimeouts_getWriteTotalTimeoutConstant(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, CommTimeouts_M_getWriteTotalTimeoutConstant_0);
+}
+
+static jmethodID CommTimeouts_M_getWriteTotalTimeoutMultiplier_0 = 0;
+jlong jcall_CommTimeouts_getWriteTotalTimeoutMultiplier(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, CommTimeouts_M_getWriteTotalTimeoutMultiplier_0);
+}
+
+static jmethodID CommTimeouts_M_setReadIntervalTimeout_0 = 0;
+void jcall_CommTimeouts_setReadIntervalTimeout(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, CommTimeouts_M_setReadIntervalTimeout_0, p0);
+}
+
+static jmethodID CommTimeouts_M_setReadTotalTimeoutConstant_0 = 0;
+void jcall_CommTimeouts_setReadTotalTimeoutConstant(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, CommTimeouts_M_setReadTotalTimeoutConstant_0, p0);
+}
+
+static jmethodID CommTimeouts_M_setReadTotalTimeoutMultiplier_0 = 0;
+void jcall_CommTimeouts_setReadTotalTimeoutMultiplier(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, CommTimeouts_M_setReadTotalTimeoutMultiplier_0, p0);
+}
+
+static jmethodID CommTimeouts_M_setWriteTotalTimeoutConstant_0 = 0;
+void jcall_CommTimeouts_setWriteTotalTimeoutConstant(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, CommTimeouts_M_setWriteTotalTimeoutConstant_0, p0);
+}
+
+static jmethodID CommTimeouts_M_setWriteTotalTimeoutMultiplier_0 = 0;
+void jcall_CommTimeouts_setWriteTotalTimeoutMultiplier(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, CommTimeouts_M_setWriteTotalTimeoutMultiplier_0, p0);
+}
+
+static jmethodID CommTimeouts_M_toString_0 = 0;
+jstring jcall_CommTimeouts_toString(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, CommTimeouts_M_toString_0);
+}
+
+static jfieldID DCB_BaudRate = 0;
+void jset_DCB_BaudRate(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, DCB_BaudRate, value);
+}
+
+jlong jget_DCB_BaudRate(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, DCB_BaudRate);
+}
+
+static jfieldID DCB_fBinary = 0;
+void jset_DCB_fBinary(JNIEnv * env, jobject instance, jboolean value) {
+   (*env)->SetBooleanField(env, instance, DCB_fBinary, value);
+}
+
+jboolean jget_DCB_fBinary(JNIEnv * env, jobject instance) {
+   return (*env)->GetBooleanField(env, instance, DCB_fBinary);
+}
+
+static jfieldID DCB_fParity = 0;
+void jset_DCB_fParity(JNIEnv * env, jobject instance, jboolean value) {
+   (*env)->SetBooleanField(env, instance, DCB_fParity, value);
+}
+
+jboolean jget_DCB_fParity(JNIEnv * env, jobject instance) {
+   return (*env)->GetBooleanField(env, instance, DCB_fParity);
+}
+
+static jfieldID DCB_fOutxCtsFlow = 0;
+void jset_DCB_fOutxCtsFlow(JNIEnv * env, jobject instance, jboolean value) {
+   (*env)->SetBooleanField(env, instance, DCB_fOutxCtsFlow, value);
+}
+
+jboolean jget_DCB_fOutxCtsFlow(JNIEnv * env, jobject instance) {
+   return (*env)->GetBooleanField(env, instance, DCB_fOutxCtsFlow);
+}
+
+static jfieldID DCB_fOutxDsrFlow = 0;
+void jset_DCB_fOutxDsrFlow(JNIEnv * env, jobject instance, jboolean value) {
+   (*env)->SetBooleanField(env, instance, DCB_fOutxDsrFlow, value);
+}
+
+jboolean jget_DCB_fOutxDsrFlow(JNIEnv * env, jobject instance) {
+   return (*env)->GetBooleanField(env, instance, DCB_fOutxDsrFlow);
+}
+
+static jfieldID DCB_fDtrControl = 0;
+void jset_DCB_fDtrControl(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, DCB_fDtrControl, value);
+}
+
+jlong jget_DCB_fDtrControl(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, DCB_fDtrControl);
+}
+
+static jfieldID DCB_fDsrSensitivity = 0;
+void jset_DCB_fDsrSensitivity(JNIEnv * env, jobject instance, jboolean value) {
+   (*env)->SetBooleanField(env, instance, DCB_fDsrSensitivity, value);
+}
+
+jboolean jget_DCB_fDsrSensitivity(JNIEnv * env, jobject instance) {
+   return (*env)->GetBooleanField(env, instance, DCB_fDsrSensitivity);
+}
+
+static jfieldID DCB_fTXContinueOnXoff = 0;
+void jset_DCB_fTXContinueOnXoff(JNIEnv * env, jobject instance, jboolean value) {
+   (*env)->SetBooleanField(env, instance, DCB_fTXContinueOnXoff, value);
+}
+
+jboolean jget_DCB_fTXContinueOnXoff(JNIEnv * env, jobject instance) {
+   return (*env)->GetBooleanField(env, instance, DCB_fTXContinueOnXoff);
+}
+
+static jfieldID DCB_fOutX = 0;
+void jset_DCB_fOutX(JNIEnv * env, jobject instance, jboolean value) {
+   (*env)->SetBooleanField(env, instance, DCB_fOutX, value);
+}
+
+jboolean jget_DCB_fOutX(JNIEnv * env, jobject instance) {
+   return (*env)->GetBooleanField(env, instance, DCB_fOutX);
+}
+
+static jfieldID DCB_fInX = 0;
+void jset_DCB_fInX(JNIEnv * env, jobject instance, jboolean value) {
+   (*env)->SetBooleanField(env, instance, DCB_fInX, value);
+}
+
+jboolean jget_DCB_fInX(JNIEnv * env, jobject instance) {
+   return (*env)->GetBooleanField(env, instance, DCB_fInX);
+}
+
+static jfieldID DCB_fErrorChar = 0;
+void jset_DCB_fErrorChar(JNIEnv * env, jobject instance, jboolean value) {
+   (*env)->SetBooleanField(env, instance, DCB_fErrorChar, value);
+}
+
+jboolean jget_DCB_fErrorChar(JNIEnv * env, jobject instance) {
+   return (*env)->GetBooleanField(env, instance, DCB_fErrorChar);
+}
+
+static jfieldID DCB_fNull = 0;
+void jset_DCB_fNull(JNIEnv * env, jobject instance, jboolean value) {
+   (*env)->SetBooleanField(env, instance, DCB_fNull, value);
+}
+
+jboolean jget_DCB_fNull(JNIEnv * env, jobject instance) {
+   return (*env)->GetBooleanField(env, instance, DCB_fNull);
+}
+
+static jfieldID DCB_fRtsControl = 0;
+void jset_DCB_fRtsControl(JNIEnv * env, jobject instance, jlong value) {
+   (*env)->SetLongField(env, instance, DCB_fRtsControl, value);
+}
+
+jlong jget_DCB_fRtsControl(JNIEnv * env, jobject instance) {
+   return (*env)->GetLongField(env, instance, DCB_fRtsControl);
+}
+
+static jfieldID DCB_fAbortOnError = 0;
+void jset_DCB_fAbortOnError(JNIEnv * env, jobject instance, jboolean value) {
+   (*env)->SetBooleanField(env, instance, DCB_fAbortOnError, value);
+}
+
+jboolean jget_DCB_fAbortOnError(JNIEnv * env, jobject instance) {
+   return (*env)->GetBooleanField(env, instance, DCB_fAbortOnError);
+}
+
+static jfieldID DCB_XonLim = 0;
+void jset_DCB_XonLim(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DCB_XonLim, value);
+}
+
+jint jget_DCB_XonLim(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DCB_XonLim);
+}
+
+static jfieldID DCB_XoffLim = 0;
+void jset_DCB_XoffLim(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DCB_XoffLim, value);
+}
+
+jint jget_DCB_XoffLim(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DCB_XoffLim);
+}
+
+static jfieldID DCB_ByteSize = 0;
+void jset_DCB_ByteSize(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DCB_ByteSize, value);
+}
+
+jint jget_DCB_ByteSize(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DCB_ByteSize);
+}
+
+static jfieldID DCB_Parity = 0;
+void jset_DCB_Parity(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DCB_Parity, value);
+}
+
+jint jget_DCB_Parity(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DCB_Parity);
+}
+
+static jfieldID DCB_StopBits = 0;
+void jset_DCB_StopBits(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DCB_StopBits, value);
+}
+
+jint jget_DCB_StopBits(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DCB_StopBits);
+}
+
+static jfieldID DCB_XonChar = 0;
+void jset_DCB_XonChar(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DCB_XonChar, value);
+}
+
+jint jget_DCB_XonChar(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DCB_XonChar);
+}
+
+static jfieldID DCB_XoffChar = 0;
+void jset_DCB_XoffChar(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DCB_XoffChar, value);
+}
+
+jint jget_DCB_XoffChar(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DCB_XoffChar);
+}
+
+static jfieldID DCB_ErrorChar = 0;
+void jset_DCB_ErrorChar(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DCB_ErrorChar, value);
+}
+
+jint jget_DCB_ErrorChar(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DCB_ErrorChar);
+}
+
+static jfieldID DCB_EofChar = 0;
+void jset_DCB_EofChar(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DCB_EofChar, value);
+}
+
+jint jget_DCB_EofChar(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DCB_EofChar);
+}
+
+static jfieldID DCB_EvtChar = 0;
+void jset_DCB_EvtChar(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DCB_EvtChar, value);
+}
+
+jint jget_DCB_EvtChar(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DCB_EvtChar);
+}
+
+static jmethodID DCB_C_0 = 0;
+jobject jnew_DCB(JNIEnv * env) {
+    jobject obj = (*env) -> NewObject(env, DCB, DCB_C_0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID DCB_M_getBaudRate_0 = 0;
+jlong jcall_DCB_getBaudRate(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, DCB_M_getBaudRate_0);
+}
+
+static jmethodID DCB_M_getByteSize_0 = 0;
+jint jcall_DCB_getByteSize(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DCB_M_getByteSize_0);
+}
+
+static jmethodID DCB_M_getEofChar_0 = 0;
+jint jcall_DCB_getEofChar(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DCB_M_getEofChar_0);
+}
+
+static jmethodID DCB_M_getErrorChar_0 = 0;
+jint jcall_DCB_getErrorChar(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DCB_M_getErrorChar_0);
+}
+
+static jmethodID DCB_M_getEvtChar_0 = 0;
+jint jcall_DCB_getEvtChar(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DCB_M_getEvtChar_0);
+}
+
+static jmethodID DCB_M_getParity_0 = 0;
+jint jcall_DCB_getParity(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DCB_M_getParity_0);
+}
+
+static jmethodID DCB_M_getStopBits_0 = 0;
+jint jcall_DCB_getStopBits(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DCB_M_getStopBits_0);
+}
+
+static jmethodID DCB_M_getXoffChar_0 = 0;
+jint jcall_DCB_getXoffChar(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DCB_M_getXoffChar_0);
+}
+
+static jmethodID DCB_M_getXoffLim_0 = 0;
+jint jcall_DCB_getXoffLim(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DCB_M_getXoffLim_0);
+}
+
+static jmethodID DCB_M_getXonChar_0 = 0;
+jint jcall_DCB_getXonChar(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DCB_M_getXonChar_0);
+}
+
+static jmethodID DCB_M_getXonLim_0 = 0;
+jint jcall_DCB_getXonLim(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DCB_M_getXonLim_0);
+}
+
+static jmethodID DCB_M_getfDtrControl_0 = 0;
+jlong jcall_DCB_getfDtrControl(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, DCB_M_getfDtrControl_0);
+}
+
+static jmethodID DCB_M_getfRtsControl_0 = 0;
+jlong jcall_DCB_getfRtsControl(JNIEnv * env, jobject instance) {
+    return (*env) -> CallLongMethod(env, instance, DCB_M_getfRtsControl_0);
+}
+
+static jmethodID DCB_M_isfAbortOnError_0 = 0;
+jboolean jcall_DCB_isfAbortOnError(JNIEnv * env, jobject instance) {
+    return (*env) -> CallBooleanMethod(env, instance, DCB_M_isfAbortOnError_0);
+}
+
+static jmethodID DCB_M_isfBinary_0 = 0;
+jboolean jcall_DCB_isfBinary(JNIEnv * env, jobject instance) {
+    return (*env) -> CallBooleanMethod(env, instance, DCB_M_isfBinary_0);
+}
+
+static jmethodID DCB_M_isfDsrSensitivity_0 = 0;
+jboolean jcall_DCB_isfDsrSensitivity(JNIEnv * env, jobject instance) {
+    return (*env) -> CallBooleanMethod(env, instance, DCB_M_isfDsrSensitivity_0);
+}
+
+static jmethodID DCB_M_isfErrorChar_0 = 0;
+jboolean jcall_DCB_isfErrorChar(JNIEnv * env, jobject instance) {
+    return (*env) -> CallBooleanMethod(env, instance, DCB_M_isfErrorChar_0);
+}
+
+static jmethodID DCB_M_isfInX_0 = 0;
+jboolean jcall_DCB_isfInX(JNIEnv * env, jobject instance) {
+    return (*env) -> CallBooleanMethod(env, instance, DCB_M_isfInX_0);
+}
+
+static jmethodID DCB_M_isfNull_0 = 0;
+jboolean jcall_DCB_isfNull(JNIEnv * env, jobject instance) {
+    return (*env) -> CallBooleanMethod(env, instance, DCB_M_isfNull_0);
+}
+
+static jmethodID DCB_M_isfOutX_0 = 0;
+jboolean jcall_DCB_isfOutX(JNIEnv * env, jobject instance) {
+    return (*env) -> CallBooleanMethod(env, instance, DCB_M_isfOutX_0);
+}
+
+static jmethodID DCB_M_isfOutxCtsFlow_0 = 0;
+jboolean jcall_DCB_isfOutxCtsFlow(JNIEnv * env, jobject instance) {
+    return (*env) -> CallBooleanMethod(env, instance, DCB_M_isfOutxCtsFlow_0);
+}
+
+static jmethodID DCB_M_isfOutxDsrFlow_0 = 0;
+jboolean jcall_DCB_isfOutxDsrFlow(JNIEnv * env, jobject instance) {
+    return (*env) -> CallBooleanMethod(env, instance, DCB_M_isfOutxDsrFlow_0);
+}
+
+static jmethodID DCB_M_isfParity_0 = 0;
+jboolean jcall_DCB_isfParity(JNIEnv * env, jobject instance) {
+    return (*env) -> CallBooleanMethod(env, instance, DCB_M_isfParity_0);
+}
+
+static jmethodID DCB_M_isfTXContinueOnXoff_0 = 0;
+jboolean jcall_DCB_isfTXContinueOnXoff(JNIEnv * env, jobject instance) {
+    return (*env) -> CallBooleanMethod(env, instance, DCB_M_isfTXContinueOnXoff_0);
+}
+
+static jmethodID DCB_M_setBaudRate_0 = 0;
+void jcall_DCB_setBaudRate(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, DCB_M_setBaudRate_0, p0);
+}
+
+static jmethodID DCB_M_setByteSize_0 = 0;
+void jcall_DCB_setByteSize(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, DCB_M_setByteSize_0, p0);
+}
+
+static jmethodID DCB_M_setEofChar_0 = 0;
+void jcall_DCB_setEofChar(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, DCB_M_setEofChar_0, p0);
+}
+
+static jmethodID DCB_M_setErrorChar_0 = 0;
+void jcall_DCB_setErrorChar(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, DCB_M_setErrorChar_0, p0);
+}
+
+static jmethodID DCB_M_setEvtChar_0 = 0;
+void jcall_DCB_setEvtChar(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, DCB_M_setEvtChar_0, p0);
+}
+
+static jmethodID DCB_M_setParity_0 = 0;
+void jcall_DCB_setParity(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, DCB_M_setParity_0, p0);
+}
+
+static jmethodID DCB_M_setStopBits_0 = 0;
+void jcall_DCB_setStopBits(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, DCB_M_setStopBits_0, p0);
+}
+
+static jmethodID DCB_M_setXoffChar_0 = 0;
+void jcall_DCB_setXoffChar(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, DCB_M_setXoffChar_0, p0);
+}
+
+static jmethodID DCB_M_setXoffLim_0 = 0;
+void jcall_DCB_setXoffLim(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, DCB_M_setXoffLim_0, p0);
+}
+
+static jmethodID DCB_M_setXonChar_0 = 0;
+void jcall_DCB_setXonChar(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, DCB_M_setXonChar_0, p0);
+}
+
+static jmethodID DCB_M_setXonLim_0 = 0;
+void jcall_DCB_setXonLim(JNIEnv * env, jobject instance, jint p0) {
+    (*env) -> CallVoidMethod(env, instance, DCB_M_setXonLim_0, p0);
+}
+
+static jmethodID DCB_M_setfAbortOnError_0 = 0;
+void jcall_DCB_setfAbortOnError(JNIEnv * env, jobject instance, jboolean p0) {
+    (*env) -> CallVoidMethod(env, instance, DCB_M_setfAbortOnError_0, p0);
+}
+
+static jmethodID DCB_M_setfBinary_0 = 0;
+void jcall_DCB_setfBinary(JNIEnv * env, jobject instance, jboolean p0) {
+    (*env) -> CallVoidMethod(env, instance, DCB_M_setfBinary_0, p0);
+}
+
+static jmethodID DCB_M_setfDsrSensitivity_0 = 0;
+void jcall_DCB_setfDsrSensitivity(JNIEnv * env, jobject instance, jboolean p0) {
+    (*env) -> CallVoidMethod(env, instance, DCB_M_setfDsrSensitivity_0, p0);
+}
+
+static jmethodID DCB_M_setfDtrControl_0 = 0;
+void jcall_DCB_setfDtrControl(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, DCB_M_setfDtrControl_0, p0);
+}
+
+static jmethodID DCB_M_setfErrorChar_0 = 0;
+void jcall_DCB_setfErrorChar(JNIEnv * env, jobject instance, jboolean p0) {
+    (*env) -> CallVoidMethod(env, instance, DCB_M_setfErrorChar_0, p0);
+}
+
+static jmethodID DCB_M_setfInX_0 = 0;
+void jcall_DCB_setfInX(JNIEnv * env, jobject instance, jboolean p0) {
+    (*env) -> CallVoidMethod(env, instance, DCB_M_setfInX_0, p0);
+}
+
+static jmethodID DCB_M_setfNull_0 = 0;
+void jcall_DCB_setfNull(JNIEnv * env, jobject instance, jboolean p0) {
+    (*env) -> CallVoidMethod(env, instance, DCB_M_setfNull_0, p0);
+}
+
+static jmethodID DCB_M_setfOutX_0 = 0;
+void jcall_DCB_setfOutX(JNIEnv * env, jobject instance, jboolean p0) {
+    (*env) -> CallVoidMethod(env, instance, DCB_M_setfOutX_0, p0);
+}
+
+static jmethodID DCB_M_setfOutxCtsFlow_0 = 0;
+void jcall_DCB_setfOutxCtsFlow(JNIEnv * env, jobject instance, jboolean p0) {
+    (*env) -> CallVoidMethod(env, instance, DCB_M_setfOutxCtsFlow_0, p0);
+}
+
+static jmethodID DCB_M_setfOutxDsrFlow_0 = 0;
+void jcall_DCB_setfOutxDsrFlow(JNIEnv * env, jobject instance, jboolean p0) {
+    (*env) -> CallVoidMethod(env, instance, DCB_M_setfOutxDsrFlow_0, p0);
+}
+
+static jmethodID DCB_M_setfParity_0 = 0;
+void jcall_DCB_setfParity(JNIEnv * env, jobject instance, jboolean p0) {
+    (*env) -> CallVoidMethod(env, instance, DCB_M_setfParity_0, p0);
+}
+
+static jmethodID DCB_M_setfRtsControl_0 = 0;
+void jcall_DCB_setfRtsControl(JNIEnv * env, jobject instance, jlong p0) {
+    (*env) -> CallVoidMethod(env, instance, DCB_M_setfRtsControl_0, p0);
+}
+
+static jmethodID DCB_M_setfTXContinueOnXoff_0 = 0;
+void jcall_DCB_setfTXContinueOnXoff(JNIEnv * env, jobject instance, jboolean p0) {
+    (*env) -> CallVoidMethod(env, instance, DCB_M_setfTXContinueOnXoff_0, p0);
+}
+
+static jmethodID DCB_M_toString_0 = 0;
+jstring jcall_DCB_toString(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, DCB_M_toString_0);
 }
 
 static jfieldID GUID_data1 = 0;
@@ -7847,6 +9547,52 @@ void jthrow_InvalidFileDescriptorException(JNIEnv * env) {
     (*env)->Throw(env, obj);
 }
 
+static jmethodID MemoryFaultException_EC_0 = 0;
+void jthrow_MemoryFaultException(JNIEnv * env, jstring p0) {
+    if ((*env) -> ExceptionCheck(env)) {
+        return;
+    }
+    jobject obj = (*env) -> NewObject(env, MemoryFaultException, MemoryFaultException_EC_0, p0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+        return;
+    }
+    (*env)->Throw(env, obj);
+}
+
+void jthrowC_MemoryFaultException(JNIEnv * env, char* p0) {
+    jthrowCC_MemoryFaultException(env, (const char*)p0);
+}
+
+void jthrowCC_MemoryFaultException(JNIEnv * env, const char* p0) {
+    if ((*env) -> ExceptionCheck(env)) {
+        return;
+    }
+    (*env) -> ThrowNew(env, MemoryFaultException, p0);
+}
+static jmethodID MemoryPoisonedException_EC_0 = 0;
+void jthrow_MemoryPoisonedException(JNIEnv * env, jstring p0) {
+    if ((*env) -> ExceptionCheck(env)) {
+        return;
+    }
+    jobject obj = (*env) -> NewObject(env, MemoryPoisonedException, MemoryPoisonedException_EC_0, p0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+        return;
+    }
+    (*env)->Throw(env, obj);
+}
+
+void jthrowC_MemoryPoisonedException(JNIEnv * env, char* p0) {
+    jthrowCC_MemoryPoisonedException(env, (const char*)p0);
+}
+
+void jthrowCC_MemoryPoisonedException(JNIEnv * env, const char* p0) {
+    if ((*env) -> ExceptionCheck(env)) {
+        return;
+    }
+    (*env) -> ThrowNew(env, MemoryPoisonedException, p0);
+}
 static jmethodID MutexAbandonedException_EC_0 = 0;
 void jthrow_MutexAbandonedException(JNIEnv * env, jlong p0) {
     if ((*env) -> ExceptionCheck(env)) {
@@ -8047,6 +9793,52 @@ void jthrowCC_QuotaExceededException_1(JNIEnv * env, const char* p0, const char*
     (*env)->Throw(env, obj);
 }
 
+static jmethodID ResourceBusyException_EC_0 = 0;
+void jthrow_ResourceBusyException(JNIEnv * env, jstring p0) {
+    if ((*env) -> ExceptionCheck(env)) {
+        return;
+    }
+    jobject obj = (*env) -> NewObject(env, ResourceBusyException, ResourceBusyException_EC_0, p0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+        return;
+    }
+    (*env)->Throw(env, obj);
+}
+
+void jthrowC_ResourceBusyException(JNIEnv * env, char* p0) {
+    jthrowCC_ResourceBusyException(env, (const char*)p0);
+}
+
+void jthrowCC_ResourceBusyException(JNIEnv * env, const char* p0) {
+    if ((*env) -> ExceptionCheck(env)) {
+        return;
+    }
+    (*env) -> ThrowNew(env, ResourceBusyException, p0);
+}
+static jmethodID ResourceTemporarilyUnavailableException_EC_0 = 0;
+void jthrow_ResourceTemporarilyUnavailableException(JNIEnv * env, jstring p0) {
+    if ((*env) -> ExceptionCheck(env)) {
+        return;
+    }
+    jobject obj = (*env) -> NewObject(env, ResourceTemporarilyUnavailableException, ResourceTemporarilyUnavailableException_EC_0, p0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+        return;
+    }
+    (*env)->Throw(env, obj);
+}
+
+void jthrowC_ResourceTemporarilyUnavailableException(JNIEnv * env, char* p0) {
+    jthrowCC_ResourceTemporarilyUnavailableException(env, (const char*)p0);
+}
+
+void jthrowCC_ResourceTemporarilyUnavailableException(JNIEnv * env, const char* p0) {
+    if ((*env) -> ExceptionCheck(env)) {
+        return;
+    }
+    (*env) -> ThrowNew(env, ResourceTemporarilyUnavailableException, p0);
+}
 static jmethodID SharingViolationException_EC_0 = 0;
 void jthrow_SharingViolationException(JNIEnv * env, jstring p0) {
     if ((*env) -> ExceptionCheck(env)) {
@@ -9315,6 +11107,20 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
+    ResourceTemporarilyUnavailableException = makeGlobalClassRef(env, "eu/aschuetz/nativeutils/api/exceptions/ResourceTemporarilyUnavailableException");
+    if (ResourceTemporarilyUnavailableException == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/exceptions/ResourceTemporarilyUnavailableException");
+        return JNI_FALSE;
+    }
+
+    CommConfig = makeGlobalClassRef(env, "eu/aschuetz/nativeutils/api/structs/CommConfig");
+    if (CommConfig == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommConfig");
+        return JNI_FALSE;
+    }
+
     RegData = makeGlobalClassRef(env, "eu/aschuetz/nativeutils/api/structs/RegData");
     if (RegData == 0) {
         (*env) -> ExceptionClear(env);
@@ -9368,6 +11174,13 @@ jboolean jnigenerator_init(JNIEnv * env) {
     if (UnrecoverableMutexException == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/exceptions/UnrecoverableMutexException");
+        return JNI_FALSE;
+    }
+
+    DCB = makeGlobalClassRef(env, "eu/aschuetz/nativeutils/api/structs/DCB");
+    if (DCB == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB");
         return JNI_FALSE;
     }
 
@@ -9427,6 +11240,13 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
+    MemoryFaultException = makeGlobalClassRef(env, "eu/aschuetz/nativeutils/api/exceptions/MemoryFaultException");
+    if (MemoryFaultException == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/exceptions/MemoryFaultException");
+        return JNI_FALSE;
+    }
+
     MibIpForwardRow2 = makeGlobalClassRef(env, "eu/aschuetz/nativeutils/api/structs/MibIpForwardRow2");
     if (MibIpForwardRow2 == 0) {
         (*env) -> ExceptionClear(env);
@@ -9445,6 +11265,13 @@ jboolean jnigenerator_init(JNIEnv * env) {
     if (InconsistentMutexException == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/exceptions/InconsistentMutexException");
+        return JNI_FALSE;
+    }
+
+    CommProp = makeGlobalClassRef(env, "eu/aschuetz/nativeutils/api/structs/CommProp");
+    if (CommProp == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp");
         return JNI_FALSE;
     }
 
@@ -9609,6 +11436,13 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
+    ComStat = makeGlobalClassRef(env, "eu/aschuetz/nativeutils/api/structs/ComStat");
+    if (ComStat == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat");
+        return JNI_FALSE;
+    }
+
     RegQueryInfoKeyResult = makeGlobalClassRef(env, "eu/aschuetz/nativeutils/api/structs/RegQueryInfoKeyResult");
     if (RegQueryInfoKeyResult == 0) {
         (*env) -> ExceptionClear(env);
@@ -9620,6 +11454,13 @@ jboolean jnigenerator_init(JNIEnv * env) {
     if (UnsupportedOperationException == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find java/lang/UnsupportedOperationException");
+        return JNI_FALSE;
+    }
+
+    ResourceBusyException = makeGlobalClassRef(env, "eu/aschuetz/nativeutils/api/exceptions/ResourceBusyException");
+    if (ResourceBusyException == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/exceptions/ResourceBusyException");
         return JNI_FALSE;
     }
 
@@ -9707,6 +11548,13 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
+    MemoryPoisonedException = makeGlobalClassRef(env, "eu/aschuetz/nativeutils/api/exceptions/MemoryPoisonedException");
+    if (MemoryPoisonedException == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/exceptions/MemoryPoisonedException");
+        return JNI_FALSE;
+    }
+
     IfNameIndex = makeGlobalClassRef(env, "eu/aschuetz/nativeutils/api/structs/IfNameIndex");
     if (IfNameIndex == 0) {
         (*env) -> ExceptionClear(env);
@@ -9725,6 +11573,13 @@ jboolean jnigenerator_init(JNIEnv * env) {
     if (OutOfMemoryError == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find java/lang/OutOfMemoryError");
+        return JNI_FALSE;
+    }
+
+    CommTimeouts = makeGlobalClassRef(env, "eu/aschuetz/nativeutils/api/structs/CommTimeouts");
+    if (CommTimeouts == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommTimeouts");
         return JNI_FALSE;
     }
 
@@ -11030,6 +12885,216 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
+    DefaultLinuxConstProvider_MFD_CLOEXEC = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MFD_CLOEXEC", "I");
+    if (DefaultLinuxConstProvider_MFD_CLOEXEC == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MFD_CLOEXEC_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MFD_ALLOW_SEALING = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MFD_ALLOW_SEALING", "I");
+    if (DefaultLinuxConstProvider_MFD_ALLOW_SEALING == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MFD_ALLOW_SEALING_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MFD_HUGETLB = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MFD_HUGETLB", "I");
+    if (DefaultLinuxConstProvider_MFD_HUGETLB == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MFD_HUGETLB_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MFD_HUGE_64KB = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MFD_HUGE_64KB", "I");
+    if (DefaultLinuxConstProvider_MFD_HUGE_64KB == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MFD_HUGE_64KB_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MFD_HUGE_512KB = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MFD_HUGE_512KB", "I");
+    if (DefaultLinuxConstProvider_MFD_HUGE_512KB == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MFD_HUGE_512KB_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MFD_HUGE_1MB = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MFD_HUGE_1MB", "I");
+    if (DefaultLinuxConstProvider_MFD_HUGE_1MB == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MFD_HUGE_1MB_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MFD_HUGE_2MB = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MFD_HUGE_2MB", "I");
+    if (DefaultLinuxConstProvider_MFD_HUGE_2MB == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MFD_HUGE_2MB_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MFD_HUGE_8MB = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MFD_HUGE_8MB", "I");
+    if (DefaultLinuxConstProvider_MFD_HUGE_8MB == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MFD_HUGE_8MB_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MFD_HUGE_16MB = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MFD_HUGE_16MB", "I");
+    if (DefaultLinuxConstProvider_MFD_HUGE_16MB == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MFD_HUGE_16MB_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MFD_HUGE_256MB = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MFD_HUGE_256MB", "I");
+    if (DefaultLinuxConstProvider_MFD_HUGE_256MB == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MFD_HUGE_256MB_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MFD_HUGE_1GB = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MFD_HUGE_1GB", "I");
+    if (DefaultLinuxConstProvider_MFD_HUGE_1GB == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MFD_HUGE_1GB_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MFD_HUGE_2GB = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MFD_HUGE_2GB", "I");
+    if (DefaultLinuxConstProvider_MFD_HUGE_2GB == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MFD_HUGE_2GB_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MFD_HUGE_16GB = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MFD_HUGE_16GB", "I");
+    if (DefaultLinuxConstProvider_MFD_HUGE_16GB == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MFD_HUGE_16GB_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MADV_DONTNEED = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MADV_DONTNEED", "I");
+    if (DefaultLinuxConstProvider_MADV_DONTNEED == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MADV_DONTNEED_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MADV_NORMAL = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MADV_NORMAL", "I");
+    if (DefaultLinuxConstProvider_MADV_NORMAL == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MADV_NORMAL_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MADV_RANDOM = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MADV_RANDOM", "I");
+    if (DefaultLinuxConstProvider_MADV_RANDOM == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MADV_RANDOM_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MADV_SEQUENTIAL = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MADV_SEQUENTIAL", "I");
+    if (DefaultLinuxConstProvider_MADV_SEQUENTIAL == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MADV_SEQUENTIAL_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MADV_WILLNEED = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MADV_WILLNEED", "I");
+    if (DefaultLinuxConstProvider_MADV_WILLNEED == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MADV_WILLNEED_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MADV_REMOVE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MADV_REMOVE", "I");
+    if (DefaultLinuxConstProvider_MADV_REMOVE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MADV_REMOVE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MADV_DONTFORK = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MADV_DONTFORK", "I");
+    if (DefaultLinuxConstProvider_MADV_DONTFORK == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MADV_DONTFORK_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MADV_DOFORK = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MADV_DOFORK", "I");
+    if (DefaultLinuxConstProvider_MADV_DOFORK == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MADV_DOFORK_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MADV_HWPOISON = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MADV_HWPOISON", "I");
+    if (DefaultLinuxConstProvider_MADV_HWPOISON == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MADV_HWPOISON_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MADV_MERGEABLE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MADV_MERGEABLE", "I");
+    if (DefaultLinuxConstProvider_MADV_MERGEABLE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MADV_MERGEABLE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MADV_UNMERGEABLE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MADV_UNMERGEABLE", "I");
+    if (DefaultLinuxConstProvider_MADV_UNMERGEABLE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MADV_UNMERGEABLE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MADV_HUGEPAGE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MADV_HUGEPAGE", "I");
+    if (DefaultLinuxConstProvider_MADV_HUGEPAGE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MADV_HUGEPAGE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MADV_NOHUGEPAGE = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MADV_NOHUGEPAGE", "I");
+    if (DefaultLinuxConstProvider_MADV_NOHUGEPAGE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MADV_NOHUGEPAGE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MADV_DONTDUMP = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MADV_DONTDUMP", "I");
+    if (DefaultLinuxConstProvider_MADV_DONTDUMP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MADV_DONTDUMP_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MADV_DODUMP = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MADV_DODUMP", "I");
+    if (DefaultLinuxConstProvider_MADV_DODUMP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MADV_DODUMP_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MADV_WIPEONFORK = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MADV_WIPEONFORK", "I");
+    if (DefaultLinuxConstProvider_MADV_WIPEONFORK == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MADV_WIPEONFORK_I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_MADV_KEEPONFORK = (*env) -> GetFieldID(env, DefaultLinuxConstProvider, "MADV_KEEPONFORK", "I");
+    if (DefaultLinuxConstProvider_MADV_KEEPONFORK == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider_MADV_KEEPONFORK_I");
+        return JNI_FALSE;
+    }
+
     DefaultLinuxConstProvider_C_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "<init>", "()V");
     if (DefaultLinuxConstProvider_C_0 == 0) {
         (*env) -> ExceptionClear(env);
@@ -11170,6 +13235,125 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
+    DefaultLinuxConstProvider_M_MADV_DODUMP_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MADV_DODUMP", "()I");
+    if (DefaultLinuxConstProvider_M_MADV_DODUMP_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MADV_DODUMP()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MADV_DOFORK_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MADV_DOFORK", "()I");
+    if (DefaultLinuxConstProvider_M_MADV_DOFORK_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MADV_DOFORK()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MADV_DONTDUMP_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MADV_DONTDUMP", "()I");
+    if (DefaultLinuxConstProvider_M_MADV_DONTDUMP_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MADV_DONTDUMP()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MADV_DONTFORK_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MADV_DONTFORK", "()I");
+    if (DefaultLinuxConstProvider_M_MADV_DONTFORK_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MADV_DONTFORK()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MADV_DONTNEED_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MADV_DONTNEED", "()I");
+    if (DefaultLinuxConstProvider_M_MADV_DONTNEED_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MADV_DONTNEED()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MADV_HUGEPAGE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MADV_HUGEPAGE", "()I");
+    if (DefaultLinuxConstProvider_M_MADV_HUGEPAGE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MADV_HUGEPAGE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MADV_HWPOISON_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MADV_HWPOISON", "()I");
+    if (DefaultLinuxConstProvider_M_MADV_HWPOISON_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MADV_HWPOISON()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MADV_KEEPONFORK_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MADV_KEEPONFORK", "()I");
+    if (DefaultLinuxConstProvider_M_MADV_KEEPONFORK_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MADV_KEEPONFORK()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MADV_MERGEABLE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MADV_MERGEABLE", "()I");
+    if (DefaultLinuxConstProvider_M_MADV_MERGEABLE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MADV_MERGEABLE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MADV_NOHUGEPAGE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MADV_NOHUGEPAGE", "()I");
+    if (DefaultLinuxConstProvider_M_MADV_NOHUGEPAGE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MADV_NOHUGEPAGE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MADV_NORMAL_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MADV_NORMAL", "()I");
+    if (DefaultLinuxConstProvider_M_MADV_NORMAL_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MADV_NORMAL()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MADV_RANDOM_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MADV_RANDOM", "()I");
+    if (DefaultLinuxConstProvider_M_MADV_RANDOM_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MADV_RANDOM()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MADV_REMOVE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MADV_REMOVE", "()I");
+    if (DefaultLinuxConstProvider_M_MADV_REMOVE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MADV_REMOVE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MADV_SEQUENTIAL_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MADV_SEQUENTIAL", "()I");
+    if (DefaultLinuxConstProvider_M_MADV_SEQUENTIAL_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MADV_SEQUENTIAL()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MADV_UNMERGEABLE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MADV_UNMERGEABLE", "()I");
+    if (DefaultLinuxConstProvider_M_MADV_UNMERGEABLE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MADV_UNMERGEABLE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MADV_WILLNEED_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MADV_WILLNEED", "()I");
+    if (DefaultLinuxConstProvider_M_MADV_WILLNEED_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MADV_WILLNEED()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MADV_WIPEONFORK_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MADV_WIPEONFORK", "()I");
+    if (DefaultLinuxConstProvider_M_MADV_WIPEONFORK_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MADV_WIPEONFORK()I");
+        return JNI_FALSE;
+    }
+
     DefaultLinuxConstProvider_M_MAP_PRIVATE_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MAP_PRIVATE", "()I");
     if (DefaultLinuxConstProvider_M_MAP_PRIVATE_0 == 0) {
         (*env) -> ExceptionClear(env);
@@ -11181,6 +13365,97 @@ jboolean jnigenerator_init(JNIEnv * env) {
     if (DefaultLinuxConstProvider_M_MAP_SHARED_0 == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MAP_SHARED()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MFD_ALLOW_SEALING_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MFD_ALLOW_SEALING", "()I");
+    if (DefaultLinuxConstProvider_M_MFD_ALLOW_SEALING_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MFD_ALLOW_SEALING()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MFD_CLOEXEC_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MFD_CLOEXEC", "()I");
+    if (DefaultLinuxConstProvider_M_MFD_CLOEXEC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MFD_CLOEXEC()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MFD_HUGETLB_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MFD_HUGETLB", "()I");
+    if (DefaultLinuxConstProvider_M_MFD_HUGETLB_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MFD_HUGETLB()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MFD_HUGE_16GB_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MFD_HUGE_16GB", "()I");
+    if (DefaultLinuxConstProvider_M_MFD_HUGE_16GB_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MFD_HUGE_16GB()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MFD_HUGE_16MB_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MFD_HUGE_16MB", "()I");
+    if (DefaultLinuxConstProvider_M_MFD_HUGE_16MB_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MFD_HUGE_16MB()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MFD_HUGE_1GB_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MFD_HUGE_1GB", "()I");
+    if (DefaultLinuxConstProvider_M_MFD_HUGE_1GB_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MFD_HUGE_1GB()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MFD_HUGE_1MB_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MFD_HUGE_1MB", "()I");
+    if (DefaultLinuxConstProvider_M_MFD_HUGE_1MB_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MFD_HUGE_1MB()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MFD_HUGE_256MB_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MFD_HUGE_256MB", "()I");
+    if (DefaultLinuxConstProvider_M_MFD_HUGE_256MB_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MFD_HUGE_256MB()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MFD_HUGE_2GB_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MFD_HUGE_2GB", "()I");
+    if (DefaultLinuxConstProvider_M_MFD_HUGE_2GB_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MFD_HUGE_2GB()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MFD_HUGE_2MB_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MFD_HUGE_2MB", "()I");
+    if (DefaultLinuxConstProvider_M_MFD_HUGE_2MB_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MFD_HUGE_2MB()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MFD_HUGE_512KB_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MFD_HUGE_512KB", "()I");
+    if (DefaultLinuxConstProvider_M_MFD_HUGE_512KB_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MFD_HUGE_512KB()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MFD_HUGE_64KB_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MFD_HUGE_64KB", "()I");
+    if (DefaultLinuxConstProvider_M_MFD_HUGE_64KB_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MFD_HUGE_64KB()I");
+        return JNI_FALSE;
+    }
+
+    DefaultLinuxConstProvider_M_MFD_HUGE_8MB_0 = (*env) -> GetMethodID(env, DefaultLinuxConstProvider, "MFD_HUGE_8MB", "()I");
+    if (DefaultLinuxConstProvider_M_MFD_HUGE_8MB_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.MFD_HUGE_8MB()I");
         return JNI_FALSE;
     }
 
@@ -12392,6 +14667,1336 @@ jboolean jnigenerator_init(JNIEnv * env) {
     if (Cmsghdr_M_setPayload_0 == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/Cmsghdr.setPayload([B)V");
+        return JNI_FALSE;
+    }
+
+    ComStat_fCtsHold = (*env) -> GetFieldID(env, ComStat, "fCtsHold", "J");
+    if (ComStat_fCtsHold == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat_fCtsHold_J");
+        return JNI_FALSE;
+    }
+
+    ComStat_fDsrHold = (*env) -> GetFieldID(env, ComStat, "fDsrHold", "J");
+    if (ComStat_fDsrHold == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat_fDsrHold_J");
+        return JNI_FALSE;
+    }
+
+    ComStat_fRlsdHold = (*env) -> GetFieldID(env, ComStat, "fRlsdHold", "J");
+    if (ComStat_fRlsdHold == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat_fRlsdHold_J");
+        return JNI_FALSE;
+    }
+
+    ComStat_fXoffHold = (*env) -> GetFieldID(env, ComStat, "fXoffHold", "J");
+    if (ComStat_fXoffHold == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat_fXoffHold_J");
+        return JNI_FALSE;
+    }
+
+    ComStat_fXoffSent = (*env) -> GetFieldID(env, ComStat, "fXoffSent", "J");
+    if (ComStat_fXoffSent == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat_fXoffSent_J");
+        return JNI_FALSE;
+    }
+
+    ComStat_fEof = (*env) -> GetFieldID(env, ComStat, "fEof", "J");
+    if (ComStat_fEof == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat_fEof_J");
+        return JNI_FALSE;
+    }
+
+    ComStat_fTxim = (*env) -> GetFieldID(env, ComStat, "fTxim", "J");
+    if (ComStat_fTxim == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat_fTxim_J");
+        return JNI_FALSE;
+    }
+
+    ComStat_cbInQue = (*env) -> GetFieldID(env, ComStat, "cbInQue", "J");
+    if (ComStat_cbInQue == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat_cbInQue_J");
+        return JNI_FALSE;
+    }
+
+    ComStat_cbOutQue = (*env) -> GetFieldID(env, ComStat, "cbOutQue", "J");
+    if (ComStat_cbOutQue == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat_cbOutQue_J");
+        return JNI_FALSE;
+    }
+
+    ComStat_C_0 = (*env) -> GetMethodID(env, ComStat, "<init>", "()V");
+    if (ComStat_C_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat.<init>()V");
+        return JNI_FALSE;
+    }
+
+    ComStat_M_getCbInQue_0 = (*env) -> GetMethodID(env, ComStat, "getCbInQue", "()J");
+    if (ComStat_M_getCbInQue_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat.getCbInQue()J");
+        return JNI_FALSE;
+    }
+
+    ComStat_M_getCbOutQue_0 = (*env) -> GetMethodID(env, ComStat, "getCbOutQue", "()J");
+    if (ComStat_M_getCbOutQue_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat.getCbOutQue()J");
+        return JNI_FALSE;
+    }
+
+    ComStat_M_getfCtsHold_0 = (*env) -> GetMethodID(env, ComStat, "getfCtsHold", "()J");
+    if (ComStat_M_getfCtsHold_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat.getfCtsHold()J");
+        return JNI_FALSE;
+    }
+
+    ComStat_M_getfDsrHold_0 = (*env) -> GetMethodID(env, ComStat, "getfDsrHold", "()J");
+    if (ComStat_M_getfDsrHold_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat.getfDsrHold()J");
+        return JNI_FALSE;
+    }
+
+    ComStat_M_getfEof_0 = (*env) -> GetMethodID(env, ComStat, "getfEof", "()J");
+    if (ComStat_M_getfEof_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat.getfEof()J");
+        return JNI_FALSE;
+    }
+
+    ComStat_M_getfRlsdHold_0 = (*env) -> GetMethodID(env, ComStat, "getfRlsdHold", "()J");
+    if (ComStat_M_getfRlsdHold_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat.getfRlsdHold()J");
+        return JNI_FALSE;
+    }
+
+    ComStat_M_getfTxim_0 = (*env) -> GetMethodID(env, ComStat, "getfTxim", "()J");
+    if (ComStat_M_getfTxim_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat.getfTxim()J");
+        return JNI_FALSE;
+    }
+
+    ComStat_M_getfXoffHold_0 = (*env) -> GetMethodID(env, ComStat, "getfXoffHold", "()J");
+    if (ComStat_M_getfXoffHold_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat.getfXoffHold()J");
+        return JNI_FALSE;
+    }
+
+    ComStat_M_getfXoffSent_0 = (*env) -> GetMethodID(env, ComStat, "getfXoffSent", "()J");
+    if (ComStat_M_getfXoffSent_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat.getfXoffSent()J");
+        return JNI_FALSE;
+    }
+
+    ComStat_M_setCbInQue_0 = (*env) -> GetMethodID(env, ComStat, "setCbInQue", "(J)V");
+    if (ComStat_M_setCbInQue_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat.setCbInQue(J)V");
+        return JNI_FALSE;
+    }
+
+    ComStat_M_setCbOutQue_0 = (*env) -> GetMethodID(env, ComStat, "setCbOutQue", "(J)V");
+    if (ComStat_M_setCbOutQue_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat.setCbOutQue(J)V");
+        return JNI_FALSE;
+    }
+
+    ComStat_M_setfCtsHold_0 = (*env) -> GetMethodID(env, ComStat, "setfCtsHold", "(I)V");
+    if (ComStat_M_setfCtsHold_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat.setfCtsHold(I)V");
+        return JNI_FALSE;
+    }
+
+    ComStat_M_setfDsrHold_0 = (*env) -> GetMethodID(env, ComStat, "setfDsrHold", "(I)V");
+    if (ComStat_M_setfDsrHold_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat.setfDsrHold(I)V");
+        return JNI_FALSE;
+    }
+
+    ComStat_M_setfEof_0 = (*env) -> GetMethodID(env, ComStat, "setfEof", "(I)V");
+    if (ComStat_M_setfEof_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat.setfEof(I)V");
+        return JNI_FALSE;
+    }
+
+    ComStat_M_setfRlsdHold_0 = (*env) -> GetMethodID(env, ComStat, "setfRlsdHold", "(I)V");
+    if (ComStat_M_setfRlsdHold_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat.setfRlsdHold(I)V");
+        return JNI_FALSE;
+    }
+
+    ComStat_M_setfTxim_0 = (*env) -> GetMethodID(env, ComStat, "setfTxim", "(I)V");
+    if (ComStat_M_setfTxim_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat.setfTxim(I)V");
+        return JNI_FALSE;
+    }
+
+    ComStat_M_setfXoffHold_0 = (*env) -> GetMethodID(env, ComStat, "setfXoffHold", "(I)V");
+    if (ComStat_M_setfXoffHold_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat.setfXoffHold(I)V");
+        return JNI_FALSE;
+    }
+
+    ComStat_M_setfXoffSent_0 = (*env) -> GetMethodID(env, ComStat, "setfXoffSent", "(I)V");
+    if (ComStat_M_setfXoffSent_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/ComStat.setfXoffSent(I)V");
+        return JNI_FALSE;
+    }
+
+    CommConfig_dwSize = (*env) -> GetFieldID(env, CommConfig, "dwSize", "J");
+    if (CommConfig_dwSize == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommConfig_dwSize_J");
+        return JNI_FALSE;
+    }
+
+    CommConfig_wVersion = (*env) -> GetFieldID(env, CommConfig, "wVersion", "I");
+    if (CommConfig_wVersion == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommConfig_wVersion_I");
+        return JNI_FALSE;
+    }
+
+    CommConfig_dcb = (*env) -> GetFieldID(env, CommConfig, "dcb", "Leu/aschuetz/nativeutils/api/structs/DCB;");
+    if (CommConfig_dcb == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommConfig_dcb_Leu/aschuetz/nativeutils/api/structs/DCB;");
+        return JNI_FALSE;
+    }
+
+    CommConfig_dwProviderSubType = (*env) -> GetFieldID(env, CommConfig, "dwProviderSubType", "J");
+    if (CommConfig_dwProviderSubType == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommConfig_dwProviderSubType_J");
+        return JNI_FALSE;
+    }
+
+    CommConfig_wcProviderData = (*env) -> GetFieldID(env, CommConfig, "wcProviderData", "[B");
+    if (CommConfig_wcProviderData == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommConfig_wcProviderData_[B");
+        return JNI_FALSE;
+    }
+
+    CommConfig_C_0 = (*env) -> GetMethodID(env, CommConfig, "<init>", "()V");
+    if (CommConfig_C_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommConfig.<init>()V");
+        return JNI_FALSE;
+    }
+
+    CommConfig_M_getDcb_0 = (*env) -> GetMethodID(env, CommConfig, "getDcb", "()Leu/aschuetz/nativeutils/api/structs/DCB;");
+    if (CommConfig_M_getDcb_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommConfig.getDcb()Leu/aschuetz/nativeutils/api/structs/DCB;");
+        return JNI_FALSE;
+    }
+
+    CommConfig_M_getDwProviderSubType_0 = (*env) -> GetMethodID(env, CommConfig, "getDwProviderSubType", "()J");
+    if (CommConfig_M_getDwProviderSubType_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommConfig.getDwProviderSubType()J");
+        return JNI_FALSE;
+    }
+
+    CommConfig_M_getDwSize_0 = (*env) -> GetMethodID(env, CommConfig, "getDwSize", "()J");
+    if (CommConfig_M_getDwSize_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommConfig.getDwSize()J");
+        return JNI_FALSE;
+    }
+
+    CommConfig_M_getWcProviderData_0 = (*env) -> GetMethodID(env, CommConfig, "getWcProviderData", "()[B");
+    if (CommConfig_M_getWcProviderData_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommConfig.getWcProviderData()[B");
+        return JNI_FALSE;
+    }
+
+    CommConfig_M_getwVersion_0 = (*env) -> GetMethodID(env, CommConfig, "getwVersion", "()I");
+    if (CommConfig_M_getwVersion_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommConfig.getwVersion()I");
+        return JNI_FALSE;
+    }
+
+    CommConfig_M_setDcb_0 = (*env) -> GetMethodID(env, CommConfig, "setDcb", "(Leu/aschuetz/nativeutils/api/structs/DCB;)V");
+    if (CommConfig_M_setDcb_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommConfig.setDcb(Leu/aschuetz/nativeutils/api/structs/DCB;)V");
+        return JNI_FALSE;
+    }
+
+    CommConfig_M_setDwProviderSubType_0 = (*env) -> GetMethodID(env, CommConfig, "setDwProviderSubType", "(J)V");
+    if (CommConfig_M_setDwProviderSubType_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommConfig.setDwProviderSubType(J)V");
+        return JNI_FALSE;
+    }
+
+    CommConfig_M_setDwSize_0 = (*env) -> GetMethodID(env, CommConfig, "setDwSize", "(J)V");
+    if (CommConfig_M_setDwSize_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommConfig.setDwSize(J)V");
+        return JNI_FALSE;
+    }
+
+    CommConfig_M_setWcProviderData_0 = (*env) -> GetMethodID(env, CommConfig, "setWcProviderData", "([B)V");
+    if (CommConfig_M_setWcProviderData_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommConfig.setWcProviderData([B)V");
+        return JNI_FALSE;
+    }
+
+    CommConfig_M_setwVersion_0 = (*env) -> GetMethodID(env, CommConfig, "setwVersion", "(I)V");
+    if (CommConfig_M_setwVersion_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommConfig.setwVersion(I)V");
+        return JNI_FALSE;
+    }
+
+    CommProp_wPacketLength = (*env) -> GetFieldID(env, CommProp, "wPacketLength", "I");
+    if (CommProp_wPacketLength == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp_wPacketLength_I");
+        return JNI_FALSE;
+    }
+
+    CommProp_wPacketVersion = (*env) -> GetFieldID(env, CommProp, "wPacketVersion", "I");
+    if (CommProp_wPacketVersion == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp_wPacketVersion_I");
+        return JNI_FALSE;
+    }
+
+    CommProp_dwServiceMask = (*env) -> GetFieldID(env, CommProp, "dwServiceMask", "J");
+    if (CommProp_dwServiceMask == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp_dwServiceMask_J");
+        return JNI_FALSE;
+    }
+
+    CommProp_dwReserved1 = (*env) -> GetFieldID(env, CommProp, "dwReserved1", "J");
+    if (CommProp_dwReserved1 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp_dwReserved1_J");
+        return JNI_FALSE;
+    }
+
+    CommProp_dwMaxTxQueue = (*env) -> GetFieldID(env, CommProp, "dwMaxTxQueue", "J");
+    if (CommProp_dwMaxTxQueue == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp_dwMaxTxQueue_J");
+        return JNI_FALSE;
+    }
+
+    CommProp_dwMaxRxQueue = (*env) -> GetFieldID(env, CommProp, "dwMaxRxQueue", "J");
+    if (CommProp_dwMaxRxQueue == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp_dwMaxRxQueue_J");
+        return JNI_FALSE;
+    }
+
+    CommProp_dwMaxBaud = (*env) -> GetFieldID(env, CommProp, "dwMaxBaud", "J");
+    if (CommProp_dwMaxBaud == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp_dwMaxBaud_J");
+        return JNI_FALSE;
+    }
+
+    CommProp_dwProvSubType = (*env) -> GetFieldID(env, CommProp, "dwProvSubType", "J");
+    if (CommProp_dwProvSubType == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp_dwProvSubType_J");
+        return JNI_FALSE;
+    }
+
+    CommProp_dwProvCapabilities = (*env) -> GetFieldID(env, CommProp, "dwProvCapabilities", "J");
+    if (CommProp_dwProvCapabilities == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp_dwProvCapabilities_J");
+        return JNI_FALSE;
+    }
+
+    CommProp_dwSettableParams = (*env) -> GetFieldID(env, CommProp, "dwSettableParams", "J");
+    if (CommProp_dwSettableParams == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp_dwSettableParams_J");
+        return JNI_FALSE;
+    }
+
+    CommProp_dwSettableBaud = (*env) -> GetFieldID(env, CommProp, "dwSettableBaud", "J");
+    if (CommProp_dwSettableBaud == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp_dwSettableBaud_J");
+        return JNI_FALSE;
+    }
+
+    CommProp_wSettableData = (*env) -> GetFieldID(env, CommProp, "wSettableData", "I");
+    if (CommProp_wSettableData == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp_wSettableData_I");
+        return JNI_FALSE;
+    }
+
+    CommProp_wSettableStopParity = (*env) -> GetFieldID(env, CommProp, "wSettableStopParity", "I");
+    if (CommProp_wSettableStopParity == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp_wSettableStopParity_I");
+        return JNI_FALSE;
+    }
+
+    CommProp_dwCurrentTxQueue = (*env) -> GetFieldID(env, CommProp, "dwCurrentTxQueue", "J");
+    if (CommProp_dwCurrentTxQueue == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp_dwCurrentTxQueue_J");
+        return JNI_FALSE;
+    }
+
+    CommProp_dwCurrentRxQueue = (*env) -> GetFieldID(env, CommProp, "dwCurrentRxQueue", "J");
+    if (CommProp_dwCurrentRxQueue == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp_dwCurrentRxQueue_J");
+        return JNI_FALSE;
+    }
+
+    CommProp_dwProvSpec1 = (*env) -> GetFieldID(env, CommProp, "dwProvSpec1", "J");
+    if (CommProp_dwProvSpec1 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp_dwProvSpec1_J");
+        return JNI_FALSE;
+    }
+
+    CommProp_dwProvSpec2 = (*env) -> GetFieldID(env, CommProp, "dwProvSpec2", "J");
+    if (CommProp_dwProvSpec2 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp_dwProvSpec2_J");
+        return JNI_FALSE;
+    }
+
+    CommProp_wcProvChar = (*env) -> GetFieldID(env, CommProp, "wcProvChar", "[C");
+    if (CommProp_wcProvChar == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp_wcProvChar_[C");
+        return JNI_FALSE;
+    }
+
+    CommProp_C_0 = (*env) -> GetMethodID(env, CommProp, "<init>", "()V");
+    if (CommProp_C_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.<init>()V");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_getDwCurrentRxQueue_0 = (*env) -> GetMethodID(env, CommProp, "getDwCurrentRxQueue", "()J");
+    if (CommProp_M_getDwCurrentRxQueue_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.getDwCurrentRxQueue()J");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_getDwCurrentTxQueue_0 = (*env) -> GetMethodID(env, CommProp, "getDwCurrentTxQueue", "()J");
+    if (CommProp_M_getDwCurrentTxQueue_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.getDwCurrentTxQueue()J");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_getDwMaxBaud_0 = (*env) -> GetMethodID(env, CommProp, "getDwMaxBaud", "()J");
+    if (CommProp_M_getDwMaxBaud_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.getDwMaxBaud()J");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_getDwMaxRxQueue_0 = (*env) -> GetMethodID(env, CommProp, "getDwMaxRxQueue", "()J");
+    if (CommProp_M_getDwMaxRxQueue_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.getDwMaxRxQueue()J");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_getDwMaxTxQueue_0 = (*env) -> GetMethodID(env, CommProp, "getDwMaxTxQueue", "()J");
+    if (CommProp_M_getDwMaxTxQueue_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.getDwMaxTxQueue()J");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_getDwProvCapabilities_0 = (*env) -> GetMethodID(env, CommProp, "getDwProvCapabilities", "()J");
+    if (CommProp_M_getDwProvCapabilities_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.getDwProvCapabilities()J");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_getDwProvSpec1_0 = (*env) -> GetMethodID(env, CommProp, "getDwProvSpec1", "()J");
+    if (CommProp_M_getDwProvSpec1_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.getDwProvSpec1()J");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_getDwProvSpec2_0 = (*env) -> GetMethodID(env, CommProp, "getDwProvSpec2", "()J");
+    if (CommProp_M_getDwProvSpec2_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.getDwProvSpec2()J");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_getDwProvSubType_0 = (*env) -> GetMethodID(env, CommProp, "getDwProvSubType", "()J");
+    if (CommProp_M_getDwProvSubType_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.getDwProvSubType()J");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_getDwReserved1_0 = (*env) -> GetMethodID(env, CommProp, "getDwReserved1", "()J");
+    if (CommProp_M_getDwReserved1_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.getDwReserved1()J");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_getDwServiceMask_0 = (*env) -> GetMethodID(env, CommProp, "getDwServiceMask", "()J");
+    if (CommProp_M_getDwServiceMask_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.getDwServiceMask()J");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_getDwSettableBaud_0 = (*env) -> GetMethodID(env, CommProp, "getDwSettableBaud", "()J");
+    if (CommProp_M_getDwSettableBaud_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.getDwSettableBaud()J");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_getDwSettableParams_0 = (*env) -> GetMethodID(env, CommProp, "getDwSettableParams", "()J");
+    if (CommProp_M_getDwSettableParams_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.getDwSettableParams()J");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_getWcProvChar_0 = (*env) -> GetMethodID(env, CommProp, "getWcProvChar", "()[C");
+    if (CommProp_M_getWcProvChar_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.getWcProvChar()[C");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_getwPacketLength_0 = (*env) -> GetMethodID(env, CommProp, "getwPacketLength", "()I");
+    if (CommProp_M_getwPacketLength_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.getwPacketLength()I");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_getwPacketVersion_0 = (*env) -> GetMethodID(env, CommProp, "getwPacketVersion", "()I");
+    if (CommProp_M_getwPacketVersion_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.getwPacketVersion()I");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_getwSettableData_0 = (*env) -> GetMethodID(env, CommProp, "getwSettableData", "()I");
+    if (CommProp_M_getwSettableData_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.getwSettableData()I");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_getwSettableStopParity_0 = (*env) -> GetMethodID(env, CommProp, "getwSettableStopParity", "()I");
+    if (CommProp_M_getwSettableStopParity_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.getwSettableStopParity()I");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_setDwCurrentRxQueue_0 = (*env) -> GetMethodID(env, CommProp, "setDwCurrentRxQueue", "(J)V");
+    if (CommProp_M_setDwCurrentRxQueue_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.setDwCurrentRxQueue(J)V");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_setDwCurrentTxQueue_0 = (*env) -> GetMethodID(env, CommProp, "setDwCurrentTxQueue", "(J)V");
+    if (CommProp_M_setDwCurrentTxQueue_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.setDwCurrentTxQueue(J)V");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_setDwMaxBaud_0 = (*env) -> GetMethodID(env, CommProp, "setDwMaxBaud", "(J)V");
+    if (CommProp_M_setDwMaxBaud_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.setDwMaxBaud(J)V");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_setDwMaxRxQueue_0 = (*env) -> GetMethodID(env, CommProp, "setDwMaxRxQueue", "(J)V");
+    if (CommProp_M_setDwMaxRxQueue_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.setDwMaxRxQueue(J)V");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_setDwMaxTxQueue_0 = (*env) -> GetMethodID(env, CommProp, "setDwMaxTxQueue", "(J)V");
+    if (CommProp_M_setDwMaxTxQueue_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.setDwMaxTxQueue(J)V");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_setDwProvCapabilities_0 = (*env) -> GetMethodID(env, CommProp, "setDwProvCapabilities", "(J)V");
+    if (CommProp_M_setDwProvCapabilities_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.setDwProvCapabilities(J)V");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_setDwProvSpec1_0 = (*env) -> GetMethodID(env, CommProp, "setDwProvSpec1", "(J)V");
+    if (CommProp_M_setDwProvSpec1_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.setDwProvSpec1(J)V");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_setDwProvSpec2_0 = (*env) -> GetMethodID(env, CommProp, "setDwProvSpec2", "(J)V");
+    if (CommProp_M_setDwProvSpec2_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.setDwProvSpec2(J)V");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_setDwProvSubType_0 = (*env) -> GetMethodID(env, CommProp, "setDwProvSubType", "(J)V");
+    if (CommProp_M_setDwProvSubType_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.setDwProvSubType(J)V");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_setDwReserved1_0 = (*env) -> GetMethodID(env, CommProp, "setDwReserved1", "(J)V");
+    if (CommProp_M_setDwReserved1_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.setDwReserved1(J)V");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_setDwServiceMask_0 = (*env) -> GetMethodID(env, CommProp, "setDwServiceMask", "(J)V");
+    if (CommProp_M_setDwServiceMask_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.setDwServiceMask(J)V");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_setDwSettableBaud_0 = (*env) -> GetMethodID(env, CommProp, "setDwSettableBaud", "(J)V");
+    if (CommProp_M_setDwSettableBaud_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.setDwSettableBaud(J)V");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_setDwSettableParams_0 = (*env) -> GetMethodID(env, CommProp, "setDwSettableParams", "(J)V");
+    if (CommProp_M_setDwSettableParams_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.setDwSettableParams(J)V");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_setWcProvChar_0 = (*env) -> GetMethodID(env, CommProp, "setWcProvChar", "([C)V");
+    if (CommProp_M_setWcProvChar_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.setWcProvChar([C)V");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_setwPacketLength_0 = (*env) -> GetMethodID(env, CommProp, "setwPacketLength", "(I)V");
+    if (CommProp_M_setwPacketLength_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.setwPacketLength(I)V");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_setwPacketVersion_0 = (*env) -> GetMethodID(env, CommProp, "setwPacketVersion", "(I)V");
+    if (CommProp_M_setwPacketVersion_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.setwPacketVersion(I)V");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_setwSettableData_0 = (*env) -> GetMethodID(env, CommProp, "setwSettableData", "(I)V");
+    if (CommProp_M_setwSettableData_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.setwSettableData(I)V");
+        return JNI_FALSE;
+    }
+
+    CommProp_M_setwSettableStopParity_0 = (*env) -> GetMethodID(env, CommProp, "setwSettableStopParity", "(I)V");
+    if (CommProp_M_setwSettableStopParity_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommProp.setwSettableStopParity(I)V");
+        return JNI_FALSE;
+    }
+
+    CommTimeouts_ReadIntervalTimeout = (*env) -> GetFieldID(env, CommTimeouts, "ReadIntervalTimeout", "J");
+    if (CommTimeouts_ReadIntervalTimeout == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommTimeouts_ReadIntervalTimeout_J");
+        return JNI_FALSE;
+    }
+
+    CommTimeouts_ReadTotalTimeoutMultiplier = (*env) -> GetFieldID(env, CommTimeouts, "ReadTotalTimeoutMultiplier", "J");
+    if (CommTimeouts_ReadTotalTimeoutMultiplier == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommTimeouts_ReadTotalTimeoutMultiplier_J");
+        return JNI_FALSE;
+    }
+
+    CommTimeouts_ReadTotalTimeoutConstant = (*env) -> GetFieldID(env, CommTimeouts, "ReadTotalTimeoutConstant", "J");
+    if (CommTimeouts_ReadTotalTimeoutConstant == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommTimeouts_ReadTotalTimeoutConstant_J");
+        return JNI_FALSE;
+    }
+
+    CommTimeouts_WriteTotalTimeoutMultiplier = (*env) -> GetFieldID(env, CommTimeouts, "WriteTotalTimeoutMultiplier", "J");
+    if (CommTimeouts_WriteTotalTimeoutMultiplier == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommTimeouts_WriteTotalTimeoutMultiplier_J");
+        return JNI_FALSE;
+    }
+
+    CommTimeouts_WriteTotalTimeoutConstant = (*env) -> GetFieldID(env, CommTimeouts, "WriteTotalTimeoutConstant", "J");
+    if (CommTimeouts_WriteTotalTimeoutConstant == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommTimeouts_WriteTotalTimeoutConstant_J");
+        return JNI_FALSE;
+    }
+
+    CommTimeouts_C_0 = (*env) -> GetMethodID(env, CommTimeouts, "<init>", "()V");
+    if (CommTimeouts_C_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommTimeouts.<init>()V");
+        return JNI_FALSE;
+    }
+
+    CommTimeouts_M_getReadIntervalTimeout_0 = (*env) -> GetMethodID(env, CommTimeouts, "getReadIntervalTimeout", "()J");
+    if (CommTimeouts_M_getReadIntervalTimeout_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommTimeouts.getReadIntervalTimeout()J");
+        return JNI_FALSE;
+    }
+
+    CommTimeouts_M_getReadTotalTimeoutConstant_0 = (*env) -> GetMethodID(env, CommTimeouts, "getReadTotalTimeoutConstant", "()J");
+    if (CommTimeouts_M_getReadTotalTimeoutConstant_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommTimeouts.getReadTotalTimeoutConstant()J");
+        return JNI_FALSE;
+    }
+
+    CommTimeouts_M_getReadTotalTimeoutMultiplier_0 = (*env) -> GetMethodID(env, CommTimeouts, "getReadTotalTimeoutMultiplier", "()J");
+    if (CommTimeouts_M_getReadTotalTimeoutMultiplier_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommTimeouts.getReadTotalTimeoutMultiplier()J");
+        return JNI_FALSE;
+    }
+
+    CommTimeouts_M_getWriteTotalTimeoutConstant_0 = (*env) -> GetMethodID(env, CommTimeouts, "getWriteTotalTimeoutConstant", "()J");
+    if (CommTimeouts_M_getWriteTotalTimeoutConstant_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommTimeouts.getWriteTotalTimeoutConstant()J");
+        return JNI_FALSE;
+    }
+
+    CommTimeouts_M_getWriteTotalTimeoutMultiplier_0 = (*env) -> GetMethodID(env, CommTimeouts, "getWriteTotalTimeoutMultiplier", "()J");
+    if (CommTimeouts_M_getWriteTotalTimeoutMultiplier_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommTimeouts.getWriteTotalTimeoutMultiplier()J");
+        return JNI_FALSE;
+    }
+
+    CommTimeouts_M_setReadIntervalTimeout_0 = (*env) -> GetMethodID(env, CommTimeouts, "setReadIntervalTimeout", "(J)V");
+    if (CommTimeouts_M_setReadIntervalTimeout_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommTimeouts.setReadIntervalTimeout(J)V");
+        return JNI_FALSE;
+    }
+
+    CommTimeouts_M_setReadTotalTimeoutConstant_0 = (*env) -> GetMethodID(env, CommTimeouts, "setReadTotalTimeoutConstant", "(J)V");
+    if (CommTimeouts_M_setReadTotalTimeoutConstant_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommTimeouts.setReadTotalTimeoutConstant(J)V");
+        return JNI_FALSE;
+    }
+
+    CommTimeouts_M_setReadTotalTimeoutMultiplier_0 = (*env) -> GetMethodID(env, CommTimeouts, "setReadTotalTimeoutMultiplier", "(J)V");
+    if (CommTimeouts_M_setReadTotalTimeoutMultiplier_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommTimeouts.setReadTotalTimeoutMultiplier(J)V");
+        return JNI_FALSE;
+    }
+
+    CommTimeouts_M_setWriteTotalTimeoutConstant_0 = (*env) -> GetMethodID(env, CommTimeouts, "setWriteTotalTimeoutConstant", "(J)V");
+    if (CommTimeouts_M_setWriteTotalTimeoutConstant_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommTimeouts.setWriteTotalTimeoutConstant(J)V");
+        return JNI_FALSE;
+    }
+
+    CommTimeouts_M_setWriteTotalTimeoutMultiplier_0 = (*env) -> GetMethodID(env, CommTimeouts, "setWriteTotalTimeoutMultiplier", "(J)V");
+    if (CommTimeouts_M_setWriteTotalTimeoutMultiplier_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommTimeouts.setWriteTotalTimeoutMultiplier(J)V");
+        return JNI_FALSE;
+    }
+
+    CommTimeouts_M_toString_0 = (*env) -> GetMethodID(env, CommTimeouts, "toString", "()Ljava/lang/String;");
+    if (CommTimeouts_M_toString_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/CommTimeouts.toString()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    DCB_BaudRate = (*env) -> GetFieldID(env, DCB, "BaudRate", "J");
+    if (DCB_BaudRate == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB_BaudRate_J");
+        return JNI_FALSE;
+    }
+
+    DCB_fBinary = (*env) -> GetFieldID(env, DCB, "fBinary", "Z");
+    if (DCB_fBinary == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB_fBinary_Z");
+        return JNI_FALSE;
+    }
+
+    DCB_fParity = (*env) -> GetFieldID(env, DCB, "fParity", "Z");
+    if (DCB_fParity == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB_fParity_Z");
+        return JNI_FALSE;
+    }
+
+    DCB_fOutxCtsFlow = (*env) -> GetFieldID(env, DCB, "fOutxCtsFlow", "Z");
+    if (DCB_fOutxCtsFlow == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB_fOutxCtsFlow_Z");
+        return JNI_FALSE;
+    }
+
+    DCB_fOutxDsrFlow = (*env) -> GetFieldID(env, DCB, "fOutxDsrFlow", "Z");
+    if (DCB_fOutxDsrFlow == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB_fOutxDsrFlow_Z");
+        return JNI_FALSE;
+    }
+
+    DCB_fDtrControl = (*env) -> GetFieldID(env, DCB, "fDtrControl", "J");
+    if (DCB_fDtrControl == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB_fDtrControl_J");
+        return JNI_FALSE;
+    }
+
+    DCB_fDsrSensitivity = (*env) -> GetFieldID(env, DCB, "fDsrSensitivity", "Z");
+    if (DCB_fDsrSensitivity == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB_fDsrSensitivity_Z");
+        return JNI_FALSE;
+    }
+
+    DCB_fTXContinueOnXoff = (*env) -> GetFieldID(env, DCB, "fTXContinueOnXoff", "Z");
+    if (DCB_fTXContinueOnXoff == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB_fTXContinueOnXoff_Z");
+        return JNI_FALSE;
+    }
+
+    DCB_fOutX = (*env) -> GetFieldID(env, DCB, "fOutX", "Z");
+    if (DCB_fOutX == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB_fOutX_Z");
+        return JNI_FALSE;
+    }
+
+    DCB_fInX = (*env) -> GetFieldID(env, DCB, "fInX", "Z");
+    if (DCB_fInX == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB_fInX_Z");
+        return JNI_FALSE;
+    }
+
+    DCB_fErrorChar = (*env) -> GetFieldID(env, DCB, "fErrorChar", "Z");
+    if (DCB_fErrorChar == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB_fErrorChar_Z");
+        return JNI_FALSE;
+    }
+
+    DCB_fNull = (*env) -> GetFieldID(env, DCB, "fNull", "Z");
+    if (DCB_fNull == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB_fNull_Z");
+        return JNI_FALSE;
+    }
+
+    DCB_fRtsControl = (*env) -> GetFieldID(env, DCB, "fRtsControl", "J");
+    if (DCB_fRtsControl == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB_fRtsControl_J");
+        return JNI_FALSE;
+    }
+
+    DCB_fAbortOnError = (*env) -> GetFieldID(env, DCB, "fAbortOnError", "Z");
+    if (DCB_fAbortOnError == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB_fAbortOnError_Z");
+        return JNI_FALSE;
+    }
+
+    DCB_XonLim = (*env) -> GetFieldID(env, DCB, "XonLim", "I");
+    if (DCB_XonLim == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB_XonLim_I");
+        return JNI_FALSE;
+    }
+
+    DCB_XoffLim = (*env) -> GetFieldID(env, DCB, "XoffLim", "I");
+    if (DCB_XoffLim == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB_XoffLim_I");
+        return JNI_FALSE;
+    }
+
+    DCB_ByteSize = (*env) -> GetFieldID(env, DCB, "ByteSize", "I");
+    if (DCB_ByteSize == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB_ByteSize_I");
+        return JNI_FALSE;
+    }
+
+    DCB_Parity = (*env) -> GetFieldID(env, DCB, "Parity", "I");
+    if (DCB_Parity == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB_Parity_I");
+        return JNI_FALSE;
+    }
+
+    DCB_StopBits = (*env) -> GetFieldID(env, DCB, "StopBits", "I");
+    if (DCB_StopBits == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB_StopBits_I");
+        return JNI_FALSE;
+    }
+
+    DCB_XonChar = (*env) -> GetFieldID(env, DCB, "XonChar", "I");
+    if (DCB_XonChar == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB_XonChar_I");
+        return JNI_FALSE;
+    }
+
+    DCB_XoffChar = (*env) -> GetFieldID(env, DCB, "XoffChar", "I");
+    if (DCB_XoffChar == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB_XoffChar_I");
+        return JNI_FALSE;
+    }
+
+    DCB_ErrorChar = (*env) -> GetFieldID(env, DCB, "ErrorChar", "I");
+    if (DCB_ErrorChar == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB_ErrorChar_I");
+        return JNI_FALSE;
+    }
+
+    DCB_EofChar = (*env) -> GetFieldID(env, DCB, "EofChar", "I");
+    if (DCB_EofChar == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB_EofChar_I");
+        return JNI_FALSE;
+    }
+
+    DCB_EvtChar = (*env) -> GetFieldID(env, DCB, "EvtChar", "I");
+    if (DCB_EvtChar == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB_EvtChar_I");
+        return JNI_FALSE;
+    }
+
+    DCB_C_0 = (*env) -> GetMethodID(env, DCB, "<init>", "()V");
+    if (DCB_C_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.<init>()V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_getBaudRate_0 = (*env) -> GetMethodID(env, DCB, "getBaudRate", "()J");
+    if (DCB_M_getBaudRate_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.getBaudRate()J");
+        return JNI_FALSE;
+    }
+
+    DCB_M_getByteSize_0 = (*env) -> GetMethodID(env, DCB, "getByteSize", "()I");
+    if (DCB_M_getByteSize_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.getByteSize()I");
+        return JNI_FALSE;
+    }
+
+    DCB_M_getEofChar_0 = (*env) -> GetMethodID(env, DCB, "getEofChar", "()I");
+    if (DCB_M_getEofChar_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.getEofChar()I");
+        return JNI_FALSE;
+    }
+
+    DCB_M_getErrorChar_0 = (*env) -> GetMethodID(env, DCB, "getErrorChar", "()I");
+    if (DCB_M_getErrorChar_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.getErrorChar()I");
+        return JNI_FALSE;
+    }
+
+    DCB_M_getEvtChar_0 = (*env) -> GetMethodID(env, DCB, "getEvtChar", "()I");
+    if (DCB_M_getEvtChar_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.getEvtChar()I");
+        return JNI_FALSE;
+    }
+
+    DCB_M_getParity_0 = (*env) -> GetMethodID(env, DCB, "getParity", "()I");
+    if (DCB_M_getParity_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.getParity()I");
+        return JNI_FALSE;
+    }
+
+    DCB_M_getStopBits_0 = (*env) -> GetMethodID(env, DCB, "getStopBits", "()I");
+    if (DCB_M_getStopBits_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.getStopBits()I");
+        return JNI_FALSE;
+    }
+
+    DCB_M_getXoffChar_0 = (*env) -> GetMethodID(env, DCB, "getXoffChar", "()I");
+    if (DCB_M_getXoffChar_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.getXoffChar()I");
+        return JNI_FALSE;
+    }
+
+    DCB_M_getXoffLim_0 = (*env) -> GetMethodID(env, DCB, "getXoffLim", "()I");
+    if (DCB_M_getXoffLim_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.getXoffLim()I");
+        return JNI_FALSE;
+    }
+
+    DCB_M_getXonChar_0 = (*env) -> GetMethodID(env, DCB, "getXonChar", "()I");
+    if (DCB_M_getXonChar_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.getXonChar()I");
+        return JNI_FALSE;
+    }
+
+    DCB_M_getXonLim_0 = (*env) -> GetMethodID(env, DCB, "getXonLim", "()I");
+    if (DCB_M_getXonLim_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.getXonLim()I");
+        return JNI_FALSE;
+    }
+
+    DCB_M_getfDtrControl_0 = (*env) -> GetMethodID(env, DCB, "getfDtrControl", "()J");
+    if (DCB_M_getfDtrControl_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.getfDtrControl()J");
+        return JNI_FALSE;
+    }
+
+    DCB_M_getfRtsControl_0 = (*env) -> GetMethodID(env, DCB, "getfRtsControl", "()J");
+    if (DCB_M_getfRtsControl_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.getfRtsControl()J");
+        return JNI_FALSE;
+    }
+
+    DCB_M_isfAbortOnError_0 = (*env) -> GetMethodID(env, DCB, "isfAbortOnError", "()Z");
+    if (DCB_M_isfAbortOnError_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.isfAbortOnError()Z");
+        return JNI_FALSE;
+    }
+
+    DCB_M_isfBinary_0 = (*env) -> GetMethodID(env, DCB, "isfBinary", "()Z");
+    if (DCB_M_isfBinary_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.isfBinary()Z");
+        return JNI_FALSE;
+    }
+
+    DCB_M_isfDsrSensitivity_0 = (*env) -> GetMethodID(env, DCB, "isfDsrSensitivity", "()Z");
+    if (DCB_M_isfDsrSensitivity_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.isfDsrSensitivity()Z");
+        return JNI_FALSE;
+    }
+
+    DCB_M_isfErrorChar_0 = (*env) -> GetMethodID(env, DCB, "isfErrorChar", "()Z");
+    if (DCB_M_isfErrorChar_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.isfErrorChar()Z");
+        return JNI_FALSE;
+    }
+
+    DCB_M_isfInX_0 = (*env) -> GetMethodID(env, DCB, "isfInX", "()Z");
+    if (DCB_M_isfInX_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.isfInX()Z");
+        return JNI_FALSE;
+    }
+
+    DCB_M_isfNull_0 = (*env) -> GetMethodID(env, DCB, "isfNull", "()Z");
+    if (DCB_M_isfNull_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.isfNull()Z");
+        return JNI_FALSE;
+    }
+
+    DCB_M_isfOutX_0 = (*env) -> GetMethodID(env, DCB, "isfOutX", "()Z");
+    if (DCB_M_isfOutX_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.isfOutX()Z");
+        return JNI_FALSE;
+    }
+
+    DCB_M_isfOutxCtsFlow_0 = (*env) -> GetMethodID(env, DCB, "isfOutxCtsFlow", "()Z");
+    if (DCB_M_isfOutxCtsFlow_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.isfOutxCtsFlow()Z");
+        return JNI_FALSE;
+    }
+
+    DCB_M_isfOutxDsrFlow_0 = (*env) -> GetMethodID(env, DCB, "isfOutxDsrFlow", "()Z");
+    if (DCB_M_isfOutxDsrFlow_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.isfOutxDsrFlow()Z");
+        return JNI_FALSE;
+    }
+
+    DCB_M_isfParity_0 = (*env) -> GetMethodID(env, DCB, "isfParity", "()Z");
+    if (DCB_M_isfParity_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.isfParity()Z");
+        return JNI_FALSE;
+    }
+
+    DCB_M_isfTXContinueOnXoff_0 = (*env) -> GetMethodID(env, DCB, "isfTXContinueOnXoff", "()Z");
+    if (DCB_M_isfTXContinueOnXoff_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.isfTXContinueOnXoff()Z");
+        return JNI_FALSE;
+    }
+
+    DCB_M_setBaudRate_0 = (*env) -> GetMethodID(env, DCB, "setBaudRate", "(J)V");
+    if (DCB_M_setBaudRate_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.setBaudRate(J)V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_setByteSize_0 = (*env) -> GetMethodID(env, DCB, "setByteSize", "(I)V");
+    if (DCB_M_setByteSize_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.setByteSize(I)V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_setEofChar_0 = (*env) -> GetMethodID(env, DCB, "setEofChar", "(I)V");
+    if (DCB_M_setEofChar_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.setEofChar(I)V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_setErrorChar_0 = (*env) -> GetMethodID(env, DCB, "setErrorChar", "(I)V");
+    if (DCB_M_setErrorChar_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.setErrorChar(I)V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_setEvtChar_0 = (*env) -> GetMethodID(env, DCB, "setEvtChar", "(I)V");
+    if (DCB_M_setEvtChar_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.setEvtChar(I)V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_setParity_0 = (*env) -> GetMethodID(env, DCB, "setParity", "(I)V");
+    if (DCB_M_setParity_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.setParity(I)V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_setStopBits_0 = (*env) -> GetMethodID(env, DCB, "setStopBits", "(I)V");
+    if (DCB_M_setStopBits_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.setStopBits(I)V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_setXoffChar_0 = (*env) -> GetMethodID(env, DCB, "setXoffChar", "(I)V");
+    if (DCB_M_setXoffChar_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.setXoffChar(I)V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_setXoffLim_0 = (*env) -> GetMethodID(env, DCB, "setXoffLim", "(I)V");
+    if (DCB_M_setXoffLim_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.setXoffLim(I)V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_setXonChar_0 = (*env) -> GetMethodID(env, DCB, "setXonChar", "(I)V");
+    if (DCB_M_setXonChar_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.setXonChar(I)V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_setXonLim_0 = (*env) -> GetMethodID(env, DCB, "setXonLim", "(I)V");
+    if (DCB_M_setXonLim_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.setXonLim(I)V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_setfAbortOnError_0 = (*env) -> GetMethodID(env, DCB, "setfAbortOnError", "(Z)V");
+    if (DCB_M_setfAbortOnError_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.setfAbortOnError(Z)V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_setfBinary_0 = (*env) -> GetMethodID(env, DCB, "setfBinary", "(Z)V");
+    if (DCB_M_setfBinary_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.setfBinary(Z)V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_setfDsrSensitivity_0 = (*env) -> GetMethodID(env, DCB, "setfDsrSensitivity", "(Z)V");
+    if (DCB_M_setfDsrSensitivity_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.setfDsrSensitivity(Z)V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_setfDtrControl_0 = (*env) -> GetMethodID(env, DCB, "setfDtrControl", "(J)V");
+    if (DCB_M_setfDtrControl_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.setfDtrControl(J)V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_setfErrorChar_0 = (*env) -> GetMethodID(env, DCB, "setfErrorChar", "(Z)V");
+    if (DCB_M_setfErrorChar_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.setfErrorChar(Z)V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_setfInX_0 = (*env) -> GetMethodID(env, DCB, "setfInX", "(Z)V");
+    if (DCB_M_setfInX_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.setfInX(Z)V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_setfNull_0 = (*env) -> GetMethodID(env, DCB, "setfNull", "(Z)V");
+    if (DCB_M_setfNull_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.setfNull(Z)V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_setfOutX_0 = (*env) -> GetMethodID(env, DCB, "setfOutX", "(Z)V");
+    if (DCB_M_setfOutX_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.setfOutX(Z)V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_setfOutxCtsFlow_0 = (*env) -> GetMethodID(env, DCB, "setfOutxCtsFlow", "(Z)V");
+    if (DCB_M_setfOutxCtsFlow_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.setfOutxCtsFlow(Z)V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_setfOutxDsrFlow_0 = (*env) -> GetMethodID(env, DCB, "setfOutxDsrFlow", "(Z)V");
+    if (DCB_M_setfOutxDsrFlow_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.setfOutxDsrFlow(Z)V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_setfParity_0 = (*env) -> GetMethodID(env, DCB, "setfParity", "(Z)V");
+    if (DCB_M_setfParity_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.setfParity(Z)V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_setfRtsControl_0 = (*env) -> GetMethodID(env, DCB, "setfRtsControl", "(J)V");
+    if (DCB_M_setfRtsControl_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.setfRtsControl(J)V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_setfTXContinueOnXoff_0 = (*env) -> GetMethodID(env, DCB, "setfTXContinueOnXoff", "(Z)V");
+    if (DCB_M_setfTXContinueOnXoff_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.setfTXContinueOnXoff(Z)V");
+        return JNI_FALSE;
+    }
+
+    DCB_M_toString_0 = (*env) -> GetMethodID(env, DCB, "toString", "()Ljava/lang/String;");
+    if (DCB_M_toString_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/DCB.toString()Ljava/lang/String;");
         return JNI_FALSE;
     }
 
@@ -16482,6 +20087,20 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
+    MemoryFaultException_EC_0 = (*env) -> GetMethodID(env, MemoryFaultException, "<init>", "(Ljava/lang/String;)V");
+    if (MemoryFaultException_EC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/exceptions/MemoryFaultException.<init>(Ljava/lang/String;)V");
+        return JNI_FALSE;
+    }
+
+    MemoryPoisonedException_EC_0 = (*env) -> GetMethodID(env, MemoryPoisonedException, "<init>", "(Ljava/lang/String;)V");
+    if (MemoryPoisonedException_EC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/exceptions/MemoryPoisonedException.<init>(Ljava/lang/String;)V");
+        return JNI_FALSE;
+    }
+
     MutexAbandonedException_EC_0 = (*env) -> GetMethodID(env, MutexAbandonedException, "<init>", "(J)V");
     if (MutexAbandonedException_EC_0 == 0) {
         (*env) -> ExceptionClear(env);
@@ -16528,6 +20147,20 @@ jboolean jnigenerator_init(JNIEnv * env) {
     if (QuotaExceededException_EC_1 == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/exceptions/QuotaExceededException.<init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
+        return JNI_FALSE;
+    }
+
+    ResourceBusyException_EC_0 = (*env) -> GetMethodID(env, ResourceBusyException, "<init>", "(Ljava/lang/String;)V");
+    if (ResourceBusyException_EC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/exceptions/ResourceBusyException.<init>(Ljava/lang/String;)V");
+        return JNI_FALSE;
+    }
+
+    ResourceTemporarilyUnavailableException_EC_0 = (*env) -> GetMethodID(env, ResourceTemporarilyUnavailableException, "<init>", "(Ljava/lang/String;)V");
+    if (ResourceTemporarilyUnavailableException_EC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/exceptions/ResourceTemporarilyUnavailableException.<init>(Ljava/lang/String;)V");
         return JNI_FALSE;
     }
 
@@ -16921,6 +20554,16 @@ void jnigenerator_destroy(JNIEnv * env) {
         IllegalStateException = 0;
     }
 
+    if (ResourceTemporarilyUnavailableException != 0) {
+        (*env) -> DeleteGlobalRef(env, ResourceTemporarilyUnavailableException);
+        ResourceTemporarilyUnavailableException = 0;
+    }
+
+    if (CommConfig != 0) {
+        (*env) -> DeleteGlobalRef(env, CommConfig);
+        CommConfig = 0;
+    }
+
     if (RegData != 0) {
         (*env) -> DeleteGlobalRef(env, RegData);
         RegData = 0;
@@ -16959,6 +20602,11 @@ void jnigenerator_destroy(JNIEnv * env) {
     if (UnrecoverableMutexException != 0) {
         (*env) -> DeleteGlobalRef(env, UnrecoverableMutexException);
         UnrecoverableMutexException = 0;
+    }
+
+    if (DCB != 0) {
+        (*env) -> DeleteGlobalRef(env, DCB);
+        DCB = 0;
     }
 
     if (Passwd != 0) {
@@ -17001,6 +20649,11 @@ void jnigenerator_destroy(JNIEnv * env) {
         Collection = 0;
     }
 
+    if (MemoryFaultException != 0) {
+        (*env) -> DeleteGlobalRef(env, MemoryFaultException);
+        MemoryFaultException = 0;
+    }
+
     if (MibIpForwardRow2 != 0) {
         (*env) -> DeleteGlobalRef(env, MibIpForwardRow2);
         MibIpForwardRow2 = 0;
@@ -17014,6 +20667,11 @@ void jnigenerator_destroy(JNIEnv * env) {
     if (InconsistentMutexException != 0) {
         (*env) -> DeleteGlobalRef(env, InconsistentMutexException);
         InconsistentMutexException = 0;
+    }
+
+    if (CommProp != 0) {
+        (*env) -> DeleteGlobalRef(env, CommProp);
+        CommProp = 0;
     }
 
     if (InetSocketAddress != 0) {
@@ -17131,6 +20789,11 @@ void jnigenerator_destroy(JNIEnv * env) {
         Statvfs = 0;
     }
 
+    if (ComStat != 0) {
+        (*env) -> DeleteGlobalRef(env, ComStat);
+        ComStat = 0;
+    }
+
     if (RegQueryInfoKeyResult != 0) {
         (*env) -> DeleteGlobalRef(env, RegQueryInfoKeyResult);
         RegQueryInfoKeyResult = 0;
@@ -17139,6 +20802,11 @@ void jnigenerator_destroy(JNIEnv * env) {
     if (UnsupportedOperationException != 0) {
         (*env) -> DeleteGlobalRef(env, UnsupportedOperationException);
         UnsupportedOperationException = 0;
+    }
+
+    if (ResourceBusyException != 0) {
+        (*env) -> DeleteGlobalRef(env, ResourceBusyException);
+        ResourceBusyException = 0;
     }
 
     if (Iovec != 0) {
@@ -17201,6 +20869,11 @@ void jnigenerator_destroy(JNIEnv * env) {
         OperationInProgressException = 0;
     }
 
+    if (MemoryPoisonedException != 0) {
+        (*env) -> DeleteGlobalRef(env, MemoryPoisonedException);
+        MemoryPoisonedException = 0;
+    }
+
     if (IfNameIndex != 0) {
         (*env) -> DeleteGlobalRef(env, IfNameIndex);
         IfNameIndex = 0;
@@ -17214,6 +20887,11 @@ void jnigenerator_destroy(JNIEnv * env) {
     if (OutOfMemoryError != 0) {
         (*env) -> DeleteGlobalRef(env, OutOfMemoryError);
         OutOfMemoryError = 0;
+    }
+
+    if (CommTimeouts != 0) {
+        (*env) -> DeleteGlobalRef(env, CommTimeouts);
+        CommTimeouts = 0;
     }
 
     DefaultLinuxConstProvider_AF_UNSPEC = 0;
@@ -17402,6 +21080,36 @@ void jnigenerator_destroy(JNIEnv * env) {
     DefaultLinuxConstProvider_PTHREAD_MUTEX_ERRORCHECK = 0;
     DefaultLinuxConstProvider_PTHREAD_MUTEX_DEFAULT = 0;
     DefaultLinuxConstProvider_PTHREAD_MUTEX_NORMAL = 0;
+    DefaultLinuxConstProvider_MFD_CLOEXEC = 0;
+    DefaultLinuxConstProvider_MFD_ALLOW_SEALING = 0;
+    DefaultLinuxConstProvider_MFD_HUGETLB = 0;
+    DefaultLinuxConstProvider_MFD_HUGE_64KB = 0;
+    DefaultLinuxConstProvider_MFD_HUGE_512KB = 0;
+    DefaultLinuxConstProvider_MFD_HUGE_1MB = 0;
+    DefaultLinuxConstProvider_MFD_HUGE_2MB = 0;
+    DefaultLinuxConstProvider_MFD_HUGE_8MB = 0;
+    DefaultLinuxConstProvider_MFD_HUGE_16MB = 0;
+    DefaultLinuxConstProvider_MFD_HUGE_256MB = 0;
+    DefaultLinuxConstProvider_MFD_HUGE_1GB = 0;
+    DefaultLinuxConstProvider_MFD_HUGE_2GB = 0;
+    DefaultLinuxConstProvider_MFD_HUGE_16GB = 0;
+    DefaultLinuxConstProvider_MADV_DONTNEED = 0;
+    DefaultLinuxConstProvider_MADV_NORMAL = 0;
+    DefaultLinuxConstProvider_MADV_RANDOM = 0;
+    DefaultLinuxConstProvider_MADV_SEQUENTIAL = 0;
+    DefaultLinuxConstProvider_MADV_WILLNEED = 0;
+    DefaultLinuxConstProvider_MADV_REMOVE = 0;
+    DefaultLinuxConstProvider_MADV_DONTFORK = 0;
+    DefaultLinuxConstProvider_MADV_DOFORK = 0;
+    DefaultLinuxConstProvider_MADV_HWPOISON = 0;
+    DefaultLinuxConstProvider_MADV_MERGEABLE = 0;
+    DefaultLinuxConstProvider_MADV_UNMERGEABLE = 0;
+    DefaultLinuxConstProvider_MADV_HUGEPAGE = 0;
+    DefaultLinuxConstProvider_MADV_NOHUGEPAGE = 0;
+    DefaultLinuxConstProvider_MADV_DONTDUMP = 0;
+    DefaultLinuxConstProvider_MADV_DODUMP = 0;
+    DefaultLinuxConstProvider_MADV_WIPEONFORK = 0;
+    DefaultLinuxConstProvider_MADV_KEEPONFORK = 0;
     DefaultLinuxConstProvider_C_0 = 0;
     DefaultLinuxConstProvider_M_AF_INET_0 = 0;
     DefaultLinuxConstProvider_M_AF_INET6_0 = 0;
@@ -17422,8 +21130,38 @@ void jnigenerator_destroy(JNIEnv * env) {
     DefaultLinuxConstProvider_M_IFF_UP_0 = 0;
     DefaultLinuxConstProvider_M_IFLA_IFNAME_0 = 0;
     DefaultLinuxConstProvider_M_IFNAMSIZ_0 = 0;
+    DefaultLinuxConstProvider_M_MADV_DODUMP_0 = 0;
+    DefaultLinuxConstProvider_M_MADV_DOFORK_0 = 0;
+    DefaultLinuxConstProvider_M_MADV_DONTDUMP_0 = 0;
+    DefaultLinuxConstProvider_M_MADV_DONTFORK_0 = 0;
+    DefaultLinuxConstProvider_M_MADV_DONTNEED_0 = 0;
+    DefaultLinuxConstProvider_M_MADV_HUGEPAGE_0 = 0;
+    DefaultLinuxConstProvider_M_MADV_HWPOISON_0 = 0;
+    DefaultLinuxConstProvider_M_MADV_KEEPONFORK_0 = 0;
+    DefaultLinuxConstProvider_M_MADV_MERGEABLE_0 = 0;
+    DefaultLinuxConstProvider_M_MADV_NOHUGEPAGE_0 = 0;
+    DefaultLinuxConstProvider_M_MADV_NORMAL_0 = 0;
+    DefaultLinuxConstProvider_M_MADV_RANDOM_0 = 0;
+    DefaultLinuxConstProvider_M_MADV_REMOVE_0 = 0;
+    DefaultLinuxConstProvider_M_MADV_SEQUENTIAL_0 = 0;
+    DefaultLinuxConstProvider_M_MADV_UNMERGEABLE_0 = 0;
+    DefaultLinuxConstProvider_M_MADV_WILLNEED_0 = 0;
+    DefaultLinuxConstProvider_M_MADV_WIPEONFORK_0 = 0;
     DefaultLinuxConstProvider_M_MAP_PRIVATE_0 = 0;
     DefaultLinuxConstProvider_M_MAP_SHARED_0 = 0;
+    DefaultLinuxConstProvider_M_MFD_ALLOW_SEALING_0 = 0;
+    DefaultLinuxConstProvider_M_MFD_CLOEXEC_0 = 0;
+    DefaultLinuxConstProvider_M_MFD_HUGETLB_0 = 0;
+    DefaultLinuxConstProvider_M_MFD_HUGE_16GB_0 = 0;
+    DefaultLinuxConstProvider_M_MFD_HUGE_16MB_0 = 0;
+    DefaultLinuxConstProvider_M_MFD_HUGE_1GB_0 = 0;
+    DefaultLinuxConstProvider_M_MFD_HUGE_1MB_0 = 0;
+    DefaultLinuxConstProvider_M_MFD_HUGE_256MB_0 = 0;
+    DefaultLinuxConstProvider_M_MFD_HUGE_2GB_0 = 0;
+    DefaultLinuxConstProvider_M_MFD_HUGE_2MB_0 = 0;
+    DefaultLinuxConstProvider_M_MFD_HUGE_512KB_0 = 0;
+    DefaultLinuxConstProvider_M_MFD_HUGE_64KB_0 = 0;
+    DefaultLinuxConstProvider_M_MFD_HUGE_8MB_0 = 0;
     DefaultLinuxConstProvider_M_NETLINK_ROUTE_0 = 0;
     DefaultLinuxConstProvider_M_NLMSG_DONE_0 = 0;
     DefaultLinuxConstProvider_M_NLMSG_ERROR_0 = 0;
@@ -17597,6 +21335,196 @@ void jnigenerator_destroy(JNIEnv * env) {
     Cmsghdr_M_getPayload_0 = 0;
     Cmsghdr_M_getType_0 = 0;
     Cmsghdr_M_setPayload_0 = 0;
+    ComStat_fCtsHold = 0;
+    ComStat_fDsrHold = 0;
+    ComStat_fRlsdHold = 0;
+    ComStat_fXoffHold = 0;
+    ComStat_fXoffSent = 0;
+    ComStat_fEof = 0;
+    ComStat_fTxim = 0;
+    ComStat_cbInQue = 0;
+    ComStat_cbOutQue = 0;
+    ComStat_C_0 = 0;
+    ComStat_M_getCbInQue_0 = 0;
+    ComStat_M_getCbOutQue_0 = 0;
+    ComStat_M_getfCtsHold_0 = 0;
+    ComStat_M_getfDsrHold_0 = 0;
+    ComStat_M_getfEof_0 = 0;
+    ComStat_M_getfRlsdHold_0 = 0;
+    ComStat_M_getfTxim_0 = 0;
+    ComStat_M_getfXoffHold_0 = 0;
+    ComStat_M_getfXoffSent_0 = 0;
+    ComStat_M_setCbInQue_0 = 0;
+    ComStat_M_setCbOutQue_0 = 0;
+    ComStat_M_setfCtsHold_0 = 0;
+    ComStat_M_setfDsrHold_0 = 0;
+    ComStat_M_setfEof_0 = 0;
+    ComStat_M_setfRlsdHold_0 = 0;
+    ComStat_M_setfTxim_0 = 0;
+    ComStat_M_setfXoffHold_0 = 0;
+    ComStat_M_setfXoffSent_0 = 0;
+    CommConfig_dwSize = 0;
+    CommConfig_wVersion = 0;
+    CommConfig_dcb = 0;
+    CommConfig_dwProviderSubType = 0;
+    CommConfig_wcProviderData = 0;
+    CommConfig_C_0 = 0;
+    CommConfig_M_getDcb_0 = 0;
+    CommConfig_M_getDwProviderSubType_0 = 0;
+    CommConfig_M_getDwSize_0 = 0;
+    CommConfig_M_getWcProviderData_0 = 0;
+    CommConfig_M_getwVersion_0 = 0;
+    CommConfig_M_setDcb_0 = 0;
+    CommConfig_M_setDwProviderSubType_0 = 0;
+    CommConfig_M_setDwSize_0 = 0;
+    CommConfig_M_setWcProviderData_0 = 0;
+    CommConfig_M_setwVersion_0 = 0;
+    CommProp_wPacketLength = 0;
+    CommProp_wPacketVersion = 0;
+    CommProp_dwServiceMask = 0;
+    CommProp_dwReserved1 = 0;
+    CommProp_dwMaxTxQueue = 0;
+    CommProp_dwMaxRxQueue = 0;
+    CommProp_dwMaxBaud = 0;
+    CommProp_dwProvSubType = 0;
+    CommProp_dwProvCapabilities = 0;
+    CommProp_dwSettableParams = 0;
+    CommProp_dwSettableBaud = 0;
+    CommProp_wSettableData = 0;
+    CommProp_wSettableStopParity = 0;
+    CommProp_dwCurrentTxQueue = 0;
+    CommProp_dwCurrentRxQueue = 0;
+    CommProp_dwProvSpec1 = 0;
+    CommProp_dwProvSpec2 = 0;
+    CommProp_wcProvChar = 0;
+    CommProp_C_0 = 0;
+    CommProp_M_getDwCurrentRxQueue_0 = 0;
+    CommProp_M_getDwCurrentTxQueue_0 = 0;
+    CommProp_M_getDwMaxBaud_0 = 0;
+    CommProp_M_getDwMaxRxQueue_0 = 0;
+    CommProp_M_getDwMaxTxQueue_0 = 0;
+    CommProp_M_getDwProvCapabilities_0 = 0;
+    CommProp_M_getDwProvSpec1_0 = 0;
+    CommProp_M_getDwProvSpec2_0 = 0;
+    CommProp_M_getDwProvSubType_0 = 0;
+    CommProp_M_getDwReserved1_0 = 0;
+    CommProp_M_getDwServiceMask_0 = 0;
+    CommProp_M_getDwSettableBaud_0 = 0;
+    CommProp_M_getDwSettableParams_0 = 0;
+    CommProp_M_getWcProvChar_0 = 0;
+    CommProp_M_getwPacketLength_0 = 0;
+    CommProp_M_getwPacketVersion_0 = 0;
+    CommProp_M_getwSettableData_0 = 0;
+    CommProp_M_getwSettableStopParity_0 = 0;
+    CommProp_M_setDwCurrentRxQueue_0 = 0;
+    CommProp_M_setDwCurrentTxQueue_0 = 0;
+    CommProp_M_setDwMaxBaud_0 = 0;
+    CommProp_M_setDwMaxRxQueue_0 = 0;
+    CommProp_M_setDwMaxTxQueue_0 = 0;
+    CommProp_M_setDwProvCapabilities_0 = 0;
+    CommProp_M_setDwProvSpec1_0 = 0;
+    CommProp_M_setDwProvSpec2_0 = 0;
+    CommProp_M_setDwProvSubType_0 = 0;
+    CommProp_M_setDwReserved1_0 = 0;
+    CommProp_M_setDwServiceMask_0 = 0;
+    CommProp_M_setDwSettableBaud_0 = 0;
+    CommProp_M_setDwSettableParams_0 = 0;
+    CommProp_M_setWcProvChar_0 = 0;
+    CommProp_M_setwPacketLength_0 = 0;
+    CommProp_M_setwPacketVersion_0 = 0;
+    CommProp_M_setwSettableData_0 = 0;
+    CommProp_M_setwSettableStopParity_0 = 0;
+    CommTimeouts_ReadIntervalTimeout = 0;
+    CommTimeouts_ReadTotalTimeoutMultiplier = 0;
+    CommTimeouts_ReadTotalTimeoutConstant = 0;
+    CommTimeouts_WriteTotalTimeoutMultiplier = 0;
+    CommTimeouts_WriteTotalTimeoutConstant = 0;
+    CommTimeouts_C_0 = 0;
+    CommTimeouts_M_getReadIntervalTimeout_0 = 0;
+    CommTimeouts_M_getReadTotalTimeoutConstant_0 = 0;
+    CommTimeouts_M_getReadTotalTimeoutMultiplier_0 = 0;
+    CommTimeouts_M_getWriteTotalTimeoutConstant_0 = 0;
+    CommTimeouts_M_getWriteTotalTimeoutMultiplier_0 = 0;
+    CommTimeouts_M_setReadIntervalTimeout_0 = 0;
+    CommTimeouts_M_setReadTotalTimeoutConstant_0 = 0;
+    CommTimeouts_M_setReadTotalTimeoutMultiplier_0 = 0;
+    CommTimeouts_M_setWriteTotalTimeoutConstant_0 = 0;
+    CommTimeouts_M_setWriteTotalTimeoutMultiplier_0 = 0;
+    CommTimeouts_M_toString_0 = 0;
+    DCB_BaudRate = 0;
+    DCB_fBinary = 0;
+    DCB_fParity = 0;
+    DCB_fOutxCtsFlow = 0;
+    DCB_fOutxDsrFlow = 0;
+    DCB_fDtrControl = 0;
+    DCB_fDsrSensitivity = 0;
+    DCB_fTXContinueOnXoff = 0;
+    DCB_fOutX = 0;
+    DCB_fInX = 0;
+    DCB_fErrorChar = 0;
+    DCB_fNull = 0;
+    DCB_fRtsControl = 0;
+    DCB_fAbortOnError = 0;
+    DCB_XonLim = 0;
+    DCB_XoffLim = 0;
+    DCB_ByteSize = 0;
+    DCB_Parity = 0;
+    DCB_StopBits = 0;
+    DCB_XonChar = 0;
+    DCB_XoffChar = 0;
+    DCB_ErrorChar = 0;
+    DCB_EofChar = 0;
+    DCB_EvtChar = 0;
+    DCB_C_0 = 0;
+    DCB_M_getBaudRate_0 = 0;
+    DCB_M_getByteSize_0 = 0;
+    DCB_M_getEofChar_0 = 0;
+    DCB_M_getErrorChar_0 = 0;
+    DCB_M_getEvtChar_0 = 0;
+    DCB_M_getParity_0 = 0;
+    DCB_M_getStopBits_0 = 0;
+    DCB_M_getXoffChar_0 = 0;
+    DCB_M_getXoffLim_0 = 0;
+    DCB_M_getXonChar_0 = 0;
+    DCB_M_getXonLim_0 = 0;
+    DCB_M_getfDtrControl_0 = 0;
+    DCB_M_getfRtsControl_0 = 0;
+    DCB_M_isfAbortOnError_0 = 0;
+    DCB_M_isfBinary_0 = 0;
+    DCB_M_isfDsrSensitivity_0 = 0;
+    DCB_M_isfErrorChar_0 = 0;
+    DCB_M_isfInX_0 = 0;
+    DCB_M_isfNull_0 = 0;
+    DCB_M_isfOutX_0 = 0;
+    DCB_M_isfOutxCtsFlow_0 = 0;
+    DCB_M_isfOutxDsrFlow_0 = 0;
+    DCB_M_isfParity_0 = 0;
+    DCB_M_isfTXContinueOnXoff_0 = 0;
+    DCB_M_setBaudRate_0 = 0;
+    DCB_M_setByteSize_0 = 0;
+    DCB_M_setEofChar_0 = 0;
+    DCB_M_setErrorChar_0 = 0;
+    DCB_M_setEvtChar_0 = 0;
+    DCB_M_setParity_0 = 0;
+    DCB_M_setStopBits_0 = 0;
+    DCB_M_setXoffChar_0 = 0;
+    DCB_M_setXoffLim_0 = 0;
+    DCB_M_setXonChar_0 = 0;
+    DCB_M_setXonLim_0 = 0;
+    DCB_M_setfAbortOnError_0 = 0;
+    DCB_M_setfBinary_0 = 0;
+    DCB_M_setfDsrSensitivity_0 = 0;
+    DCB_M_setfDtrControl_0 = 0;
+    DCB_M_setfErrorChar_0 = 0;
+    DCB_M_setfInX_0 = 0;
+    DCB_M_setfNull_0 = 0;
+    DCB_M_setfOutX_0 = 0;
+    DCB_M_setfOutxCtsFlow_0 = 0;
+    DCB_M_setfOutxDsrFlow_0 = 0;
+    DCB_M_setfParity_0 = 0;
+    DCB_M_setfRtsControl_0 = 0;
+    DCB_M_setfTXContinueOnXoff_0 = 0;
+    DCB_M_toString_0 = 0;
     GUID_data1 = 0;
     GUID_data2 = 0;
     GUID_data3 = 0;
@@ -18224,6 +22152,8 @@ void jnigenerator_destroy(JNIEnv * env) {
     FileIsDirectoryException_EC_0 = 0;
     InconsistentMutexException_EC_0 = 0;
     InvalidFileDescriptorException_EC_0 = 0;
+    MemoryFaultException_EC_0 = 0;
+    MemoryPoisonedException_EC_0 = 0;
     MutexAbandonedException_EC_0 = 0;
     OperationInProgressException_EC_0 = 0;
     OperationInProgressException_EC_1 = 0;
@@ -18231,6 +22161,8 @@ void jnigenerator_destroy(JNIEnv * env) {
     PermissionDeniedException_EC_1 = 0;
     QuotaExceededException_EC_0 = 0;
     QuotaExceededException_EC_1 = 0;
+    ResourceBusyException_EC_0 = 0;
+    ResourceTemporarilyUnavailableException_EC_0 = 0;
     SharingViolationException_EC_0 = 0;
     SharingViolationException_EC_1 = 0;
     ShellExecuteException_EC_0 = 0;

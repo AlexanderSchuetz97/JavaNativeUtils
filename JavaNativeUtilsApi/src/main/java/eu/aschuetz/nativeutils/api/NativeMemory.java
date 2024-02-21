@@ -240,6 +240,10 @@ public interface NativeMemory extends AutoCloseable {
      */
     void writeInt(long offset, int aInt);
 
+    void writeIntBE(long offset, int aInt);
+
+    void writeIntLE(long offset, int aInt);
+
     /**
      * writes 8 bytes to the offset address.
      */
@@ -249,6 +253,10 @@ public interface NativeMemory extends AutoCloseable {
      * writes 8 bytes to the offset address.
      */
     void writeLong(long offset, long aLong);
+
+    void writeLongBE(long offset, long aLong);
+
+    void writeLongLE(long offset, long aLong);
 
     /**
      * writes 4 bytes to the offset address.
@@ -286,6 +294,14 @@ public interface NativeMemory extends AutoCloseable {
      */
     void writeShort(long offset, int aShort);
 
+    void writeShortBE(long offset, int aShort);
+
+    void writeShortLE(long offset, int aShort);
+
+    void writeShortBE(long offset, short aShort);
+
+    void writeShortLE(long offset, short aShort);
+
     /**
      * reads len bytes from the offset address and stores them into the buffer starting at bufferOffset.
      */
@@ -315,16 +331,34 @@ public interface NativeMemory extends AutoCloseable {
     int readInt(long offset);
 
     /**
+     * read 4 bytes from the offset address and assume whatever value was read is big endian.
+     */
+    int readIntBE(long offset);
+
+    /**
+     * read 4 bytes from the offset address and assume whatever value was read is big endian.
+     */
+    int readIntLE(long offset);
+
+    /**
      * read 4 bytes from the offset address.
      * The return value x always satisfies: x >= 0 && x <= 0xFFFFFFFF
      * Note: this is always equivalent to readInt(offset) & 0xFFFFFFFF
      */
     long readUnsignedInt(long offset);
 
+    long readUnsignedIntBE(long offset);
+
+    long readUnsignedIntLE(long offset);
+
     /**
      * read 8 bytes from the offset address.
      */
     long readLong(long offset);
+
+    long readLongBE(long offset);
+
+    long readLongLE(long offset);
 
     /**
      * read a pointer from the given offset. Either a 32 bit or 64 bit read.
@@ -346,11 +380,19 @@ public interface NativeMemory extends AutoCloseable {
      */
     short readShort(long offset);
 
+    short readShortBE(long offset);
+
+    short readShortLE(long offset);
+
     /**
      * reads 2 bytes from the offset address and treats them as a unsigned short.
      * Note this is always equivalent to readShort(offset) & 0xFFFF
      */
     int readUnsignedShort(long offset);
+
+    int readUnsignedShortBE(long offset);
+
+    int readUnsignedShortLE(long offset);
 
     /**
      * read 1 byte from the offset address.

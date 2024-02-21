@@ -14,12 +14,12 @@ Maven:
 <dependency>
     <groupId>eu.aschuetz</groupId>
     <artifactId>JavaNativeUtilsApi</artifactId>
-    <version>4.2</version>
+    <version>4.3</version>
 </dependency>
 <dependency>
     <groupId>eu.aschuetz</groupId>
     <artifactId>JavaNativeUtilsJni</artifactId>
-    <version>4.2</version>
+    <version>4.3</version>
 </dependency>
 ````
 Note: for versions older than 4.0 use groupId io.github.alexanderschuetz97 artifactId JavaNativeUtils
@@ -85,6 +85,9 @@ if (NativeUtils.isWindows()) {
 * shm_unlink
 * ftruncate
 * truncate
+* memfd_create
+* malloc_trim (only glibc)
+* madvise
 * pthread_condattr_destroy
 * pthread_condattr_init
 * pthread_mutexattr_destroy
@@ -176,6 +179,26 @@ if (NativeUtils.isWindows()) {
 * FlushFileBuffers
 * ReleaseSemaphore
 * CreateSemaphoreExA
+* SetupComm
+* SetCommTimeouts
+* WaitCommEvent
+* TransmitCommChar
+* SetDefaultCommConfigA
+* SetCommState
+* SetCommMask
+* SetCommConfig
+* SetCommBreak
+* PurgeComm
+* GetDefaultCommConfigA
+* GetCommTimeouts
+* GetCommState
+* GetCommProperties
+* GetCommModemStatus
+* GetCommMask
+* GetCommConfig
+* EscapeCommFunction
+* ClearCommError
+* ClearCommBreak
 
 
 ### List of exposed JNI Functions (All OS)

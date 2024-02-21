@@ -64,13 +64,16 @@ LINUX_BUILD_DIR_S390X_COMMON=$(LINUX_BUILD_DIR_S390X)/common
 
 TARGET_DIR=../resources
 
-WINDOWS_CFLAGS=-O3 -ggdb -g3 -I. -I$(WINDOWS_JDK)/include -I$(WINDOWS_JDK)/include/win32
+#DEBUG_FLAGS=-ggdb -g3
+DEBUG_FLAGS=-g0
 
-LINUX_CFLAGS=-O3 -ggdb -g3 -I. -I$(LINUX_JDK)/include -I$(LINUX_JDK)/include/linux -fPIC $(LINUX_ADDITIONAL_CC_FLAGS)
+WINDOWS_CFLAGS=-O3 $(DEBUG_FLAGS) -Werror -I. -I$(WINDOWS_JDK)/include -I$(WINDOWS_JDK)/include/win32
+
+LINUX_CFLAGS=-O3 $(DEBUG_FLAGS) -Werror -I. -I$(LINUX_JDK)/include -I$(LINUX_JDK)/include/linux -fPIC $(LINUX_ADDITIONAL_CC_FLAGS)
 
 WINDOWS_LIBS=-lhid -lsetupapi -liphlpapi
 
-LINUX_LIBS=-lrt
+LINUX_LIBS=-lrt -lc
 
 
 COMMON_SOURCES=$(shell find common -name "*.c")

@@ -263,6 +263,59 @@ public class DefaultLinuxConstProvider implements LinuxConstProvider {
     int PTHREAD_MUTEX_DEFAULT = 0;
     int PTHREAD_MUTEX_NORMAL = 0;
 
+    int MFD_CLOEXEC = 0x0001;
+
+    int MFD_ALLOW_SEALING = 0x0002;
+
+    int MFD_HUGETLB = 0x0004;
+    int MFD_HUGE_64KB;
+    int MFD_HUGE_512KB;
+    int MFD_HUGE_1MB;
+    int MFD_HUGE_2MB;
+    int MFD_HUGE_8MB;
+    int MFD_HUGE_16MB;
+    int MFD_HUGE_256MB;
+    int MFD_HUGE_1GB;
+    int MFD_HUGE_2GB;
+    int MFD_HUGE_16GB;
+
+    int MADV_DONTNEED;
+
+    int MADV_NORMAL;
+
+    int MADV_RANDOM;
+
+    int MADV_SEQUENTIAL;
+
+    int MADV_WILLNEED;
+
+
+    int MADV_REMOVE;
+
+    int MADV_DONTFORK;
+
+    int MADV_DOFORK;
+
+    int MADV_HWPOISON;
+
+    int MADV_MERGEABLE;
+
+    int MADV_UNMERGEABLE;
+
+
+    int MADV_HUGEPAGE;
+
+    int MADV_NOHUGEPAGE;
+
+    int MADV_DONTDUMP;
+
+    int MADV_DODUMP;
+
+    int MADV_WIPEONFORK;
+
+    int MADV_KEEPONFORK;
+
+
     @Override
     public int AF_UNSPEC() {
         return AF_UNSPEC;
@@ -1191,5 +1244,137 @@ public class DefaultLinuxConstProvider implements LinuxConstProvider {
     @Override
     public int PTHREAD_MUTEX_NORMAL() {
         return PTHREAD_MUTEX_NORMAL;
+    }
+
+    @Override
+    public int MFD_CLOEXEC() {
+        return MFD_CLOEXEC;
+    }
+
+    @Override
+    public int MFD_ALLOW_SEALING() {
+        return MFD_ALLOW_SEALING;
+    }
+
+    @Override
+    public int MFD_HUGETLB() {
+        return MFD_HUGETLB;
+    }
+
+    @Override
+    public int MFD_HUGE_64KB() {
+        return MFD_HUGE_64KB;
+    }
+
+    @Override
+    public int MFD_HUGE_512KB() {
+        return MFD_HUGE_512KB;
+    }
+
+    @Override
+    public int MFD_HUGE_1MB() {
+        return MFD_HUGE_1MB;
+    }
+
+    @Override
+    public int MFD_HUGE_2MB() {
+        return MFD_HUGE_2MB;
+    }
+
+    @Override
+    public int MFD_HUGE_8MB() {
+        return MFD_HUGE_8MB;
+    }
+
+    @Override
+    public int MFD_HUGE_16MB() {
+        return MFD_HUGE_16MB;
+    }
+
+    @Override
+    public int MFD_HUGE_256MB() {
+        return MFD_HUGE_256MB;
+    }
+
+    @Override
+    public int MFD_HUGE_1GB() {
+        return MFD_HUGE_1GB;
+    }
+
+    @Override
+    public int MFD_HUGE_2GB() {
+        return MFD_HUGE_2GB;
+    }
+    @Override
+    public int MFD_HUGE_16GB() {
+        return MFD_HUGE_16GB;
+    }
+    @Override
+    public int MADV_DONTNEED() {
+        return MADV_DONTNEED;
+    }
+    @Override
+    public int MADV_NORMAL() {
+        return MADV_NORMAL;
+    }
+    @Override
+    public int MADV_RANDOM() {
+        return MADV_RANDOM;
+    }
+    @Override
+    public int MADV_SEQUENTIAL() {
+        return MADV_SEQUENTIAL;
+    }
+    @Override
+    public int MADV_WILLNEED() {
+        return MADV_WILLNEED;
+    }
+    @Override
+    public int MADV_REMOVE() {
+        return MADV_REMOVE;
+    }
+    @Override
+    public int MADV_DONTFORK() {
+        return MADV_DONTFORK;
+    }
+    @Override
+    public int MADV_DOFORK() {
+        return MADV_DOFORK;
+    }
+    @Override
+    public int MADV_HWPOISON() {
+        return MADV_HWPOISON;
+    }
+    @Override
+    public int MADV_MERGEABLE() {
+        return MADV_MERGEABLE;
+    }
+    @Override
+    public int MADV_UNMERGEABLE() {
+        return MADV_UNMERGEABLE;
+    }
+    @Override
+    public int MADV_HUGEPAGE() {
+        return MADV_HUGEPAGE;
+    }
+    @Override
+    public int MADV_NOHUGEPAGE() {
+        return MADV_NOHUGEPAGE;
+    }
+    @Override
+    public int MADV_DONTDUMP() {
+        return MADV_DONTDUMP;
+    }
+    @Override
+    public int MADV_DODUMP() {
+        return MADV_DODUMP;
+    }
+    @Override
+    public int MADV_WIPEONFORK() {
+        return MADV_WIPEONFORK;
+    }
+    @Override
+    public int MADV_KEEPONFORK() {
+        return MADV_KEEPONFORK;
     }
 }

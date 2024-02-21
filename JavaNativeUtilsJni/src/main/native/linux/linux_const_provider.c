@@ -14,6 +14,7 @@
 #include <linux/ioctl.h>
 #include <linux/sockios.h>
 #include <linux/fcntl.h>
+#include <linux/memfd.h>
 
 void jfetchconst_DefaultLinuxConstProvider(JNIEnv * env, jobject instance) {
    jset_DefaultLinuxConstProvider_AF_UNSPEC(env, instance, (jint) AF_UNSPEC);
@@ -197,4 +198,34 @@ void jfetchconst_DefaultLinuxConstProvider(JNIEnv * env, jobject instance) {
    jset_DefaultLinuxConstProvider_PTHREAD_MUTEX_ERRORCHECK(env, instance, (jint) PTHREAD_MUTEX_ERRORCHECK);
    jset_DefaultLinuxConstProvider_PTHREAD_MUTEX_DEFAULT(env, instance, (jint) PTHREAD_MUTEX_DEFAULT);
    jset_DefaultLinuxConstProvider_PTHREAD_MUTEX_NORMAL(env, instance, (jint) PTHREAD_MUTEX_NORMAL);
+   jset_DefaultLinuxConstProvider_MFD_CLOEXEC(env, instance, (jint) MFD_CLOEXEC);
+   jset_DefaultLinuxConstProvider_MFD_ALLOW_SEALING(env, instance, (jint) MFD_ALLOW_SEALING);
+   jset_DefaultLinuxConstProvider_MFD_HUGETLB(env, instance, (jint) MFD_HUGETLB);
+   jset_DefaultLinuxConstProvider_MFD_HUGE_64KB(env, instance, (jint) MFD_HUGE_64KB);
+   jset_DefaultLinuxConstProvider_MFD_HUGE_512KB(env, instance, (jint) MFD_HUGE_512KB);
+   jset_DefaultLinuxConstProvider_MFD_HUGE_1MB(env, instance, (jint) MFD_HUGE_1MB);
+   jset_DefaultLinuxConstProvider_MFD_HUGE_2MB(env, instance, (jint) MFD_HUGE_2MB);
+   jset_DefaultLinuxConstProvider_MFD_HUGE_8MB(env, instance, (jint) MFD_HUGE_8MB);
+   jset_DefaultLinuxConstProvider_MFD_HUGE_16MB(env, instance, (jint) MFD_HUGE_16MB);
+   jset_DefaultLinuxConstProvider_MFD_HUGE_256MB(env, instance, (jint) MFD_HUGE_256MB);
+   jset_DefaultLinuxConstProvider_MFD_HUGE_1GB(env, instance, (jint) MFD_HUGE_1GB);
+   jset_DefaultLinuxConstProvider_MFD_HUGE_2GB(env, instance, (jint) MFD_HUGE_2GB);
+   jset_DefaultLinuxConstProvider_MFD_HUGE_16GB(env, instance, (jint) MFD_HUGE_16GB);
+   jset_DefaultLinuxConstProvider_MADV_DONTNEED(env, instance, (jint) MADV_DONTNEED);
+   jset_DefaultLinuxConstProvider_MADV_NORMAL(env, instance, (jint) MADV_NORMAL);
+   jset_DefaultLinuxConstProvider_MADV_RANDOM(env, instance, (jint) MADV_RANDOM);
+   jset_DefaultLinuxConstProvider_MADV_SEQUENTIAL(env, instance, (jint) MADV_SEQUENTIAL);
+   jset_DefaultLinuxConstProvider_MADV_WILLNEED(env, instance, (jint) MADV_WILLNEED);
+   jset_DefaultLinuxConstProvider_MADV_REMOVE(env, instance, (jint) MADV_REMOVE);
+   jset_DefaultLinuxConstProvider_MADV_DONTFORK(env, instance, (jint) MADV_DONTFORK);
+   jset_DefaultLinuxConstProvider_MADV_DOFORK(env, instance, (jint) MADV_DOFORK);
+   jset_DefaultLinuxConstProvider_MADV_HWPOISON(env, instance, (jint) MADV_HWPOISON);
+   jset_DefaultLinuxConstProvider_MADV_MERGEABLE(env, instance, (jint) MADV_MERGEABLE);
+   jset_DefaultLinuxConstProvider_MADV_UNMERGEABLE(env, instance, (jint) MADV_UNMERGEABLE);
+   jset_DefaultLinuxConstProvider_MADV_HUGEPAGE(env, instance, (jint) MADV_HUGEPAGE);
+   jset_DefaultLinuxConstProvider_MADV_NOHUGEPAGE(env, instance, (jint) MADV_NOHUGEPAGE);
+   jset_DefaultLinuxConstProvider_MADV_DONTDUMP(env, instance, (jint) MADV_DONTDUMP);
+   jset_DefaultLinuxConstProvider_MADV_DODUMP(env, instance, (jint) MADV_DODUMP);
+   jset_DefaultLinuxConstProvider_MADV_WIPEONFORK(env, instance, (jint) MADV_WIPEONFORK);
+   jset_DefaultLinuxConstProvider_MADV_KEEPONFORK(env, instance, (jint) MADV_KEEPONFORK);
 }

@@ -22,9 +22,11 @@ package eu.aschuetz.nativeutils.impl;
 import eu.aschuetz.nativeutils.api.NativeBuffer;
 import eu.aschuetz.nativeutils.api.NativeMemory;
 import eu.aschuetz.nativeutils.api.PointerHandler;
+import eu.aschuetz.nativeutils.api.StructHelper;
 
 import java.io.SyncFailedException;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLongFieldUpdater;
@@ -44,6 +46,9 @@ class JNINativeMemory implements NativeMemory {
         NO_SPIN_GUARD.put(0, (byte) 1);
     }
     private volatile ByteBuffer spinGuard;
+
+    private static final boolean BE = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN;
+    private static final boolean LE = ByteOrder.nativeOrder() == ByteOrder.LITTLE_ENDIAN;
 
     JNINativeMemory(long ptr, long size, PointerHandler handler) {
         this.ptr = ptr;
@@ -582,6 +587,26 @@ class JNINativeMemory implements NativeMemory {
     }
 
     @Override
+    public void writeIntBE(long offset, int aInt) {
+        if (BE) {
+            writeInt(offset, aInt);
+            return;
+        }
+
+        writeInt(offset, StructHelper.byteSwapInt(aInt));
+    }
+
+    @Override
+    public void writeIntLE(long offset, int aInt) {
+        if (LE) {
+            writeInt(offset, aInt);
+            return;
+        }
+
+        writeInt(offset, StructHelper.byteSwapInt(aInt));
+    }
+
+    @Override
     public void write(long offset, long aLong) {
         checkOffset(offset, 8);
         write(ptr, offset, aLong);
@@ -590,6 +615,26 @@ class JNINativeMemory implements NativeMemory {
     @Override
     public void writeLong(long offset, long aLong) {
         write(offset, aLong);
+    }
+
+    @Override
+    public void writeLongBE(long offset, long aLong) {
+        if (BE) {
+            writeLong(offset, aLong);
+            return;
+        }
+
+        writeLong(offset, StructHelper.byteSwapLong(aLong));
+    }
+
+    @Override
+    public void writeLongLE(long offset, long aLong) {
+        if (LE) {
+            writeLong(offset, aLong);
+            return;
+        }
+
+        writeLong(offset, StructHelper.byteSwapLong(aLong));
     }
 
     @Override
@@ -631,6 +676,46 @@ class JNINativeMemory implements NativeMemory {
     }
 
     @Override
+    public void writeShortBE(long offset, int aShort) {
+        if (BE) {
+            writeShort(offset, aShort);
+            return;
+        }
+
+        writeShort(offset, StructHelper.byteSwapUShort(aShort));
+    }
+
+    @Override
+    public void writeShortLE(long offset, int aShort) {
+        if (LE) {
+            writeShort(offset, aShort);
+            return;
+        }
+
+        writeShort(offset, StructHelper.byteSwapUShort(aShort));
+    }
+
+    @Override
+    public void writeShortBE(long offset, short aShort) {
+        if (BE) {
+            writeShort(offset, aShort);
+            return;
+        }
+
+        writeShort(offset, StructHelper.byteSwapShort(aShort));
+    }
+
+    @Override
+    public void writeShortLE(long offset, short aShort) {
+        if (LE) {
+            writeShort(offset, aShort);
+            return;
+        }
+
+        writeShort(offset, StructHelper.byteSwapShort(aShort));
+    }
+
+    @Override
     public void read(long offset, byte[] buffer, int bufferOffset, int len) {
         if (buffer == null) {
             throw new NullPointerException();
@@ -660,14 +745,73 @@ class JNINativeMemory implements NativeMemory {
     }
 
     @Override
+    public int readIntBE(long offset) {
+        if (BE) {
+            return readInt(offset);
+        }
+
+
+        return StructHelper.byteSwapInt(readInt(offset));
+    }
+
+    @Override
+    public int readIntLE(long offset) {
+        if (LE) {
+            return readInt(offset);
+        }
+
+        return StructHelper.byteSwapInt(readInt(offset));
+    }
+
+    @Override
     public long readUnsignedInt(long offset) {
         return ((long)readInt(offset)) & 0xffffffffL;
+    }
+
+    @Override
+    public long readUnsignedIntBE(long offset) {
+        if (BE) {
+            return readUnsignedInt(offset);
+        }
+
+
+        return StructHelper.byteSwapUInt(readUnsignedInt(offset));
+    }
+
+    @Override
+    public long readUnsignedIntLE(long offset) {
+        if (LE) {
+            return readUnsignedInt(offset);
+        }
+
+
+        return StructHelper.byteSwapUInt(readUnsignedInt(offset));
     }
 
     @Override
     public long readLong(long offset) {
         checkOffset(offset, 8);
         return readLong(ptr, offset);
+    }
+
+    @Override
+    public long readLongBE(long offset) {
+        if (BE) {
+            return readLong(offset);
+        }
+
+
+        return StructHelper.byteSwapLong(readLong(offset));
+    }
+
+    @Override
+    public long readLongLE(long offset) {
+        if (LE) {
+            return readLong(offset);
+        }
+
+
+        return StructHelper.byteSwapLong(readLong(offset));
     }
 
     @Override
@@ -698,8 +842,48 @@ class JNINativeMemory implements NativeMemory {
     }
 
     @Override
+    public short readShortBE(long offset) {
+        if (BE) {
+            return readShort(offset);
+        }
+
+
+        return StructHelper.byteSwapShort(readShort(offset));
+    }
+
+    @Override
+    public short readShortLE(long offset) {
+        if (LE) {
+            return readShort(offset);
+        }
+
+
+        return StructHelper.byteSwapShort(readShort(offset));
+    }
+
+    @Override
     public int readUnsignedShort(long offset) {
         return readShort(offset) & 0xffff;
+    }
+
+    @Override
+    public int readUnsignedShortBE(long offset) {
+        if (BE) {
+            return readUnsignedShort(offset);
+        }
+
+
+        return StructHelper.byteSwapUShort(readUnsignedShort(offset));
+    }
+
+    @Override
+    public int readUnsignedShortLE(long offset) {
+        if (LE) {
+            return readUnsignedShort(offset);
+        }
+
+
+        return StructHelper.byteSwapUShort(readUnsignedShort(offset));
     }
 
     @Override
