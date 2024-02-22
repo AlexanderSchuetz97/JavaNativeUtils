@@ -361,6 +361,14 @@ JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    RegEnumValueA
+ * Signature: (JI)Leu/aschuetz/nativeutils/api/structs/RegEnumValueResult;
+ */
+JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_RegEnumValueA
+  (JNIEnv *, jobject, jlong, jint);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
  * Method:    GetCurrentThread
  * Signature: ()J
  */

@@ -417,6 +417,8 @@ public interface WindowsNativeUtil extends NativeUtil {
      */
     RegEnumKeyExResult RegEnumKeyExA(long hkey, int index, int maxSubKeyLen, int maxClassLen) throws UnknownNativeErrorException;
 
+    RegEnumValueResult RegEnumValueA(long hkey, int index) throws UnknownNativeErrorException;
+
     /**
      * Convenience method that returns an iterable over all subkeys of a hkey.
      */

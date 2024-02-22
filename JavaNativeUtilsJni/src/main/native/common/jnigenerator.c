@@ -126,6 +126,11 @@ jboolean jinstanceof_InetAddress(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, InetAddress);
 }
 
+static jclass RegEnumValueResult = 0;
+jboolean jinstanceof_RegEnumValueResult(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, RegEnumValueResult);
+}
+
 static jclass UnrecoverableMutexException = 0;
 jboolean jinstanceof_UnrecoverableMutexException(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, UnrecoverableMutexException);
@@ -7523,6 +7528,116 @@ jstring jcall_RegEnumKeyExResult_toString(JNIEnv * env, jobject instance) {
     return (jstring) (*env) -> CallObjectMethod(env, instance, RegEnumKeyExResult_M_toString_0);
 }
 
+static jfieldID RegEnumValueResult_name = 0;
+void jset_RegEnumValueResult_name(JNIEnv * env, jobject instance, jstring value) {
+   (*env)->SetObjectField(env, instance, RegEnumValueResult_name, value);
+}
+
+jboolean jsetC_RegEnumValueResult_name(JNIEnv * env, jobject instance, char * value) {
+    return jsetCC_RegEnumValueResult_name(env, instance, (char*) value);
+}
+
+jboolean jsetCC_RegEnumValueResult_name(JNIEnv * env, jobject instance, const char * value) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,RegEnumValueResult_name, 0);
+        return JNI_TRUE;
+    }
+    jstring tmp = (*env)->NewStringUTF(env, value);
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewStringUTF");
+        return JNI_FALSE;
+    }
+    (*env)->SetObjectField(env, instance, RegEnumValueResult_name, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jboolean jsetWC_RegEnumValueResult_name(JNIEnv * env, jobject instance, wchar_t * value) {
+    if (value == 0) {
+        (*env)->SetObjectField(env, instance,RegEnumValueResult_name, 0);
+        return JNI_TRUE;
+    }
+    
+    jsize i = 0;
+    while (value[i] != 0) {
+        i++;
+    }
+    
+    jstring tmp;
+    if (sizeof(wchar_t) == sizeof(jchar)) {
+        tmp = (*env) -> NewString(env, (const jchar*) value, i);
+    } else {
+        jchar tBuf[i];
+        for (jsize j = 0; j < i; j++) {
+            tBuf[j] = (jchar) value[j];
+        }
+        tmp = (*env) -> NewString(env, (const jchar*) tBuf, i);
+    }
+    if (tmp == 0) {
+        throw_internal_OutOfMemoryError(env, "NewByteArray");
+        return JNI_FALSE;
+    }
+    (*env)->SetObjectField(env, instance, RegEnumValueResult_name, tmp);
+    (*env)->DeleteLocalRef(env, tmp);
+    return JNI_TRUE;
+}
+
+jstring jget_RegEnumValueResult_name(JNIEnv * env, jobject instance) {
+   return (jstring) (*env)->GetObjectField(env, instance, RegEnumValueResult_name);
+}
+
+static jfieldID RegEnumValueResult_data = 0;
+void jset_RegEnumValueResult_data(JNIEnv * env, jobject instance, jobject value) {
+   (*env)->SetObjectField(env, instance, RegEnumValueResult_data, value);
+}
+
+jobject jget_RegEnumValueResult_data(JNIEnv * env, jobject instance) {
+   return (*env)->GetObjectField(env, instance, RegEnumValueResult_data);
+}
+
+static jmethodID RegEnumValueResult_C_0 = 0;
+jobject jnew_RegEnumValueResult(JNIEnv * env) {
+    jobject obj = (*env) -> NewObject(env, RegEnumValueResult, RegEnumValueResult_C_0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID RegEnumValueResult_C_1 = 0;
+jobject jnew_RegEnumValueResult_1(JNIEnv * env, jstring p0, jobject p1) {
+    jobject obj = (*env) -> NewObject(env, RegEnumValueResult, RegEnumValueResult_C_1, p0, p1);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID RegEnumValueResult_M_getData_0 = 0;
+jobject jcall_RegEnumValueResult_getData(JNIEnv * env, jobject instance) {
+    return (*env) -> CallObjectMethod(env, instance, RegEnumValueResult_M_getData_0);
+}
+
+static jmethodID RegEnumValueResult_M_getName_0 = 0;
+jstring jcall_RegEnumValueResult_getName(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, RegEnumValueResult_M_getName_0);
+}
+
+static jmethodID RegEnumValueResult_M_setData_0 = 0;
+void jcall_RegEnumValueResult_setData(JNIEnv * env, jobject instance, jobject p0) {
+    (*env) -> CallVoidMethod(env, instance, RegEnumValueResult_M_setData_0, p0);
+}
+
+static jmethodID RegEnumValueResult_M_setName_0 = 0;
+void jcall_RegEnumValueResult_setName(JNIEnv * env, jobject instance, jstring p0) {
+    (*env) -> CallVoidMethod(env, instance, RegEnumValueResult_M_setName_0, p0);
+}
+
+static jmethodID RegEnumValueResult_M_toString_0 = 0;
+jstring jcall_RegEnumValueResult_toString(JNIEnv * env, jobject instance) {
+    return (jstring) (*env) -> CallObjectMethod(env, instance, RegEnumValueResult_M_toString_0);
+}
+
 static jfieldID RegQueryInfoKeyResult_keyClass = 0;
 void jset_RegQueryInfoKeyResult_keyClass(JNIEnv * env, jobject instance, jstring value) {
    (*env)->SetObjectField(env, instance, RegQueryInfoKeyResult_keyClass, value);
@@ -11167,6 +11282,13 @@ jboolean jnigenerator_init(JNIEnv * env) {
     if (InetAddress == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find java/net/InetAddress");
+        return JNI_FALSE;
+    }
+
+    RegEnumValueResult = makeGlobalClassRef(env, "eu/aschuetz/nativeutils/api/structs/RegEnumValueResult");
+    if (RegEnumValueResult == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/RegEnumValueResult");
         return JNI_FALSE;
     }
 
@@ -17688,10 +17810,17 @@ jboolean jnigenerator_init(JNIEnv * env) {
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLIN_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
-    PollFD$PollEvent_POLLIN = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLIN);
-    if (PollFD$PollEvent_POLLIN == 0) {
+    jobject enum_field_init_local_PollFD$PollEvent_POLLIN = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLIN);
+    if (enum_field_init_local_PollFD$PollEvent_POLLIN == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant get enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLIN_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
+        return JNI_FALSE;
+    }
+    PollFD$PollEvent_POLLIN = (*env)->NewGlobalRef(env, enum_field_init_local_PollFD$PollEvent_POLLIN);
+    (*env)->DeleteLocalRef(env, enum_field_init_local_PollFD$PollEvent_POLLIN);
+    if (PollFD$PollEvent_POLLIN == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant create global ref to enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLIN_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
     
@@ -17703,10 +17832,17 @@ jboolean jnigenerator_init(JNIEnv * env) {
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLPRI_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
-    PollFD$PollEvent_POLLPRI = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLPRI);
-    if (PollFD$PollEvent_POLLPRI == 0) {
+    jobject enum_field_init_local_PollFD$PollEvent_POLLPRI = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLPRI);
+    if (enum_field_init_local_PollFD$PollEvent_POLLPRI == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant get enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLPRI_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
+        return JNI_FALSE;
+    }
+    PollFD$PollEvent_POLLPRI = (*env)->NewGlobalRef(env, enum_field_init_local_PollFD$PollEvent_POLLPRI);
+    (*env)->DeleteLocalRef(env, enum_field_init_local_PollFD$PollEvent_POLLPRI);
+    if (PollFD$PollEvent_POLLPRI == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant create global ref to enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLPRI_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
     
@@ -17718,10 +17854,17 @@ jboolean jnigenerator_init(JNIEnv * env) {
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLOUT_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
-    PollFD$PollEvent_POLLOUT = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLOUT);
-    if (PollFD$PollEvent_POLLOUT == 0) {
+    jobject enum_field_init_local_PollFD$PollEvent_POLLOUT = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLOUT);
+    if (enum_field_init_local_PollFD$PollEvent_POLLOUT == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant get enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLOUT_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
+        return JNI_FALSE;
+    }
+    PollFD$PollEvent_POLLOUT = (*env)->NewGlobalRef(env, enum_field_init_local_PollFD$PollEvent_POLLOUT);
+    (*env)->DeleteLocalRef(env, enum_field_init_local_PollFD$PollEvent_POLLOUT);
+    if (PollFD$PollEvent_POLLOUT == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant create global ref to enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLOUT_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
     
@@ -17733,10 +17876,17 @@ jboolean jnigenerator_init(JNIEnv * env) {
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLRDNORM_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
-    PollFD$PollEvent_POLLRDNORM = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLRDNORM);
-    if (PollFD$PollEvent_POLLRDNORM == 0) {
+    jobject enum_field_init_local_PollFD$PollEvent_POLLRDNORM = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLRDNORM);
+    if (enum_field_init_local_PollFD$PollEvent_POLLRDNORM == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant get enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLRDNORM_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
+        return JNI_FALSE;
+    }
+    PollFD$PollEvent_POLLRDNORM = (*env)->NewGlobalRef(env, enum_field_init_local_PollFD$PollEvent_POLLRDNORM);
+    (*env)->DeleteLocalRef(env, enum_field_init_local_PollFD$PollEvent_POLLRDNORM);
+    if (PollFD$PollEvent_POLLRDNORM == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant create global ref to enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLRDNORM_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
     
@@ -17748,10 +17898,17 @@ jboolean jnigenerator_init(JNIEnv * env) {
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLRDBAND_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
-    PollFD$PollEvent_POLLRDBAND = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLRDBAND);
-    if (PollFD$PollEvent_POLLRDBAND == 0) {
+    jobject enum_field_init_local_PollFD$PollEvent_POLLRDBAND = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLRDBAND);
+    if (enum_field_init_local_PollFD$PollEvent_POLLRDBAND == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant get enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLRDBAND_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
+        return JNI_FALSE;
+    }
+    PollFD$PollEvent_POLLRDBAND = (*env)->NewGlobalRef(env, enum_field_init_local_PollFD$PollEvent_POLLRDBAND);
+    (*env)->DeleteLocalRef(env, enum_field_init_local_PollFD$PollEvent_POLLRDBAND);
+    if (PollFD$PollEvent_POLLRDBAND == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant create global ref to enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLRDBAND_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
     
@@ -17763,10 +17920,17 @@ jboolean jnigenerator_init(JNIEnv * env) {
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLWRNORM_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
-    PollFD$PollEvent_POLLWRNORM = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLWRNORM);
-    if (PollFD$PollEvent_POLLWRNORM == 0) {
+    jobject enum_field_init_local_PollFD$PollEvent_POLLWRNORM = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLWRNORM);
+    if (enum_field_init_local_PollFD$PollEvent_POLLWRNORM == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant get enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLWRNORM_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
+        return JNI_FALSE;
+    }
+    PollFD$PollEvent_POLLWRNORM = (*env)->NewGlobalRef(env, enum_field_init_local_PollFD$PollEvent_POLLWRNORM);
+    (*env)->DeleteLocalRef(env, enum_field_init_local_PollFD$PollEvent_POLLWRNORM);
+    if (PollFD$PollEvent_POLLWRNORM == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant create global ref to enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLWRNORM_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
     
@@ -17778,10 +17942,17 @@ jboolean jnigenerator_init(JNIEnv * env) {
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLWRBAND_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
-    PollFD$PollEvent_POLLWRBAND = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLWRBAND);
-    if (PollFD$PollEvent_POLLWRBAND == 0) {
+    jobject enum_field_init_local_PollFD$PollEvent_POLLWRBAND = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLWRBAND);
+    if (enum_field_init_local_PollFD$PollEvent_POLLWRBAND == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant get enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLWRBAND_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
+        return JNI_FALSE;
+    }
+    PollFD$PollEvent_POLLWRBAND = (*env)->NewGlobalRef(env, enum_field_init_local_PollFD$PollEvent_POLLWRBAND);
+    (*env)->DeleteLocalRef(env, enum_field_init_local_PollFD$PollEvent_POLLWRBAND);
+    if (PollFD$PollEvent_POLLWRBAND == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant create global ref to enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLWRBAND_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
     
@@ -17793,10 +17964,17 @@ jboolean jnigenerator_init(JNIEnv * env) {
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLMSG_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
-    PollFD$PollEvent_POLLMSG = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLMSG);
-    if (PollFD$PollEvent_POLLMSG == 0) {
+    jobject enum_field_init_local_PollFD$PollEvent_POLLMSG = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLMSG);
+    if (enum_field_init_local_PollFD$PollEvent_POLLMSG == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant get enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLMSG_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
+        return JNI_FALSE;
+    }
+    PollFD$PollEvent_POLLMSG = (*env)->NewGlobalRef(env, enum_field_init_local_PollFD$PollEvent_POLLMSG);
+    (*env)->DeleteLocalRef(env, enum_field_init_local_PollFD$PollEvent_POLLMSG);
+    if (PollFD$PollEvent_POLLMSG == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant create global ref to enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLMSG_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
     
@@ -17808,10 +17986,17 @@ jboolean jnigenerator_init(JNIEnv * env) {
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLREMOVE_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
-    PollFD$PollEvent_POLLREMOVE = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLREMOVE);
-    if (PollFD$PollEvent_POLLREMOVE == 0) {
+    jobject enum_field_init_local_PollFD$PollEvent_POLLREMOVE = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLREMOVE);
+    if (enum_field_init_local_PollFD$PollEvent_POLLREMOVE == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant get enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLREMOVE_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
+        return JNI_FALSE;
+    }
+    PollFD$PollEvent_POLLREMOVE = (*env)->NewGlobalRef(env, enum_field_init_local_PollFD$PollEvent_POLLREMOVE);
+    (*env)->DeleteLocalRef(env, enum_field_init_local_PollFD$PollEvent_POLLREMOVE);
+    if (PollFD$PollEvent_POLLREMOVE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant create global ref to enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLREMOVE_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
     
@@ -17823,10 +18008,17 @@ jboolean jnigenerator_init(JNIEnv * env) {
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLRDHUP_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
-    PollFD$PollEvent_POLLRDHUP = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLRDHUP);
-    if (PollFD$PollEvent_POLLRDHUP == 0) {
+    jobject enum_field_init_local_PollFD$PollEvent_POLLRDHUP = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLRDHUP);
+    if (enum_field_init_local_PollFD$PollEvent_POLLRDHUP == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant get enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLRDHUP_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
+        return JNI_FALSE;
+    }
+    PollFD$PollEvent_POLLRDHUP = (*env)->NewGlobalRef(env, enum_field_init_local_PollFD$PollEvent_POLLRDHUP);
+    (*env)->DeleteLocalRef(env, enum_field_init_local_PollFD$PollEvent_POLLRDHUP);
+    if (PollFD$PollEvent_POLLRDHUP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant create global ref to enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLRDHUP_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
     
@@ -17838,10 +18030,17 @@ jboolean jnigenerator_init(JNIEnv * env) {
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLERR_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
-    PollFD$PollEvent_POLLERR = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLERR);
-    if (PollFD$PollEvent_POLLERR == 0) {
+    jobject enum_field_init_local_PollFD$PollEvent_POLLERR = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLERR);
+    if (enum_field_init_local_PollFD$PollEvent_POLLERR == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant get enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLERR_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
+        return JNI_FALSE;
+    }
+    PollFD$PollEvent_POLLERR = (*env)->NewGlobalRef(env, enum_field_init_local_PollFD$PollEvent_POLLERR);
+    (*env)->DeleteLocalRef(env, enum_field_init_local_PollFD$PollEvent_POLLERR);
+    if (PollFD$PollEvent_POLLERR == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant create global ref to enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLERR_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
     
@@ -17853,10 +18052,17 @@ jboolean jnigenerator_init(JNIEnv * env) {
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLHUP_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
-    PollFD$PollEvent_POLLHUP = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLHUP);
-    if (PollFD$PollEvent_POLLHUP == 0) {
+    jobject enum_field_init_local_PollFD$PollEvent_POLLHUP = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLHUP);
+    if (enum_field_init_local_PollFD$PollEvent_POLLHUP == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant get enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLHUP_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
+        return JNI_FALSE;
+    }
+    PollFD$PollEvent_POLLHUP = (*env)->NewGlobalRef(env, enum_field_init_local_PollFD$PollEvent_POLLHUP);
+    (*env)->DeleteLocalRef(env, enum_field_init_local_PollFD$PollEvent_POLLHUP);
+    if (PollFD$PollEvent_POLLHUP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant create global ref to enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLHUP_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
     
@@ -17868,10 +18074,17 @@ jboolean jnigenerator_init(JNIEnv * env) {
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLNVAL_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
-    PollFD$PollEvent_POLLNVAL = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLNVAL);
-    if (PollFD$PollEvent_POLLNVAL == 0) {
+    jobject enum_field_init_local_PollFD$PollEvent_POLLNVAL = (*env) -> GetStaticObjectField(env, PollFD$PollEvent, enum_field_init_PollFD$PollEvent_POLLNVAL);
+    if (enum_field_init_local_PollFD$PollEvent_POLLNVAL == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant get enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLNVAL_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
+        return JNI_FALSE;
+    }
+    PollFD$PollEvent_POLLNVAL = (*env)->NewGlobalRef(env, enum_field_init_local_PollFD$PollEvent_POLLNVAL);
+    (*env)->DeleteLocalRef(env, enum_field_init_local_PollFD$PollEvent_POLLNVAL);
+    if (PollFD$PollEvent_POLLNVAL == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant create global ref to enum value of eu/aschuetz/nativeutils/api/structs/PollFD$PollEvent_POLLNVAL_Leu/aschuetz/nativeutils/api/structs/PollFD$PollEvent;");
         return JNI_FALSE;
     }
     
@@ -17933,10 +18146,10 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
-    RegData_C_2 = (*env) -> GetMethodID(env, RegData, "<init>", "(Ljava/lang/Object;Leu/aschuetz/nativeutils/api/structs/RegData$RegType;)V");
+    RegData_C_2 = (*env) -> GetMethodID(env, RegData, "<init>", "(Ljava/lang/Object;Ljava/lang/Object;)V");
     if (RegData_C_2 == 0) {
         (*env) -> ExceptionClear(env);
-        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/RegData.<init>(Ljava/lang/Object;Leu/aschuetz/nativeutils/api/structs/RegData$RegType;)V");
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/RegData.<init>(Ljava/lang/Object;Ljava/lang/Object;)V");
         return JNI_FALSE;
     }
 
@@ -18011,10 +18224,17 @@ jboolean jnigenerator_init(JNIEnv * env) {
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/RegData$RegType_REG_BINARY_Leu/aschuetz/nativeutils/api/structs/RegData$RegType;");
         return JNI_FALSE;
     }
-    RegData$RegType_REG_BINARY = (*env) -> GetStaticObjectField(env, RegData$RegType, enum_field_init_RegData$RegType_REG_BINARY);
-    if (RegData$RegType_REG_BINARY == 0) {
+    jobject enum_field_init_local_RegData$RegType_REG_BINARY = (*env) -> GetStaticObjectField(env, RegData$RegType, enum_field_init_RegData$RegType_REG_BINARY);
+    if (enum_field_init_local_RegData$RegType_REG_BINARY == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant get enum value of eu/aschuetz/nativeutils/api/structs/RegData$RegType_REG_BINARY_Leu/aschuetz/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+    RegData$RegType_REG_BINARY = (*env)->NewGlobalRef(env, enum_field_init_local_RegData$RegType_REG_BINARY);
+    (*env)->DeleteLocalRef(env, enum_field_init_local_RegData$RegType_REG_BINARY);
+    if (RegData$RegType_REG_BINARY == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant create global ref to enum value of eu/aschuetz/nativeutils/api/structs/RegData$RegType_REG_BINARY_Leu/aschuetz/nativeutils/api/structs/RegData$RegType;");
         return JNI_FALSE;
     }
     
@@ -18026,10 +18246,17 @@ jboolean jnigenerator_init(JNIEnv * env) {
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/RegData$RegType_REG_DWORD_Leu/aschuetz/nativeutils/api/structs/RegData$RegType;");
         return JNI_FALSE;
     }
-    RegData$RegType_REG_DWORD = (*env) -> GetStaticObjectField(env, RegData$RegType, enum_field_init_RegData$RegType_REG_DWORD);
-    if (RegData$RegType_REG_DWORD == 0) {
+    jobject enum_field_init_local_RegData$RegType_REG_DWORD = (*env) -> GetStaticObjectField(env, RegData$RegType, enum_field_init_RegData$RegType_REG_DWORD);
+    if (enum_field_init_local_RegData$RegType_REG_DWORD == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant get enum value of eu/aschuetz/nativeutils/api/structs/RegData$RegType_REG_DWORD_Leu/aschuetz/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+    RegData$RegType_REG_DWORD = (*env)->NewGlobalRef(env, enum_field_init_local_RegData$RegType_REG_DWORD);
+    (*env)->DeleteLocalRef(env, enum_field_init_local_RegData$RegType_REG_DWORD);
+    if (RegData$RegType_REG_DWORD == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant create global ref to enum value of eu/aschuetz/nativeutils/api/structs/RegData$RegType_REG_DWORD_Leu/aschuetz/nativeutils/api/structs/RegData$RegType;");
         return JNI_FALSE;
     }
     
@@ -18041,10 +18268,17 @@ jboolean jnigenerator_init(JNIEnv * env) {
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/RegData$RegType_REG_EXPAND_SZ_Leu/aschuetz/nativeutils/api/structs/RegData$RegType;");
         return JNI_FALSE;
     }
-    RegData$RegType_REG_EXPAND_SZ = (*env) -> GetStaticObjectField(env, RegData$RegType, enum_field_init_RegData$RegType_REG_EXPAND_SZ);
-    if (RegData$RegType_REG_EXPAND_SZ == 0) {
+    jobject enum_field_init_local_RegData$RegType_REG_EXPAND_SZ = (*env) -> GetStaticObjectField(env, RegData$RegType, enum_field_init_RegData$RegType_REG_EXPAND_SZ);
+    if (enum_field_init_local_RegData$RegType_REG_EXPAND_SZ == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant get enum value of eu/aschuetz/nativeutils/api/structs/RegData$RegType_REG_EXPAND_SZ_Leu/aschuetz/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+    RegData$RegType_REG_EXPAND_SZ = (*env)->NewGlobalRef(env, enum_field_init_local_RegData$RegType_REG_EXPAND_SZ);
+    (*env)->DeleteLocalRef(env, enum_field_init_local_RegData$RegType_REG_EXPAND_SZ);
+    if (RegData$RegType_REG_EXPAND_SZ == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant create global ref to enum value of eu/aschuetz/nativeutils/api/structs/RegData$RegType_REG_EXPAND_SZ_Leu/aschuetz/nativeutils/api/structs/RegData$RegType;");
         return JNI_FALSE;
     }
     
@@ -18056,10 +18290,17 @@ jboolean jnigenerator_init(JNIEnv * env) {
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/RegData$RegType_REG_LINK_Leu/aschuetz/nativeutils/api/structs/RegData$RegType;");
         return JNI_FALSE;
     }
-    RegData$RegType_REG_LINK = (*env) -> GetStaticObjectField(env, RegData$RegType, enum_field_init_RegData$RegType_REG_LINK);
-    if (RegData$RegType_REG_LINK == 0) {
+    jobject enum_field_init_local_RegData$RegType_REG_LINK = (*env) -> GetStaticObjectField(env, RegData$RegType, enum_field_init_RegData$RegType_REG_LINK);
+    if (enum_field_init_local_RegData$RegType_REG_LINK == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant get enum value of eu/aschuetz/nativeutils/api/structs/RegData$RegType_REG_LINK_Leu/aschuetz/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+    RegData$RegType_REG_LINK = (*env)->NewGlobalRef(env, enum_field_init_local_RegData$RegType_REG_LINK);
+    (*env)->DeleteLocalRef(env, enum_field_init_local_RegData$RegType_REG_LINK);
+    if (RegData$RegType_REG_LINK == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant create global ref to enum value of eu/aschuetz/nativeutils/api/structs/RegData$RegType_REG_LINK_Leu/aschuetz/nativeutils/api/structs/RegData$RegType;");
         return JNI_FALSE;
     }
     
@@ -18071,10 +18312,17 @@ jboolean jnigenerator_init(JNIEnv * env) {
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/RegData$RegType_REG_MULTI_SZ_Leu/aschuetz/nativeutils/api/structs/RegData$RegType;");
         return JNI_FALSE;
     }
-    RegData$RegType_REG_MULTI_SZ = (*env) -> GetStaticObjectField(env, RegData$RegType, enum_field_init_RegData$RegType_REG_MULTI_SZ);
-    if (RegData$RegType_REG_MULTI_SZ == 0) {
+    jobject enum_field_init_local_RegData$RegType_REG_MULTI_SZ = (*env) -> GetStaticObjectField(env, RegData$RegType, enum_field_init_RegData$RegType_REG_MULTI_SZ);
+    if (enum_field_init_local_RegData$RegType_REG_MULTI_SZ == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant get enum value of eu/aschuetz/nativeutils/api/structs/RegData$RegType_REG_MULTI_SZ_Leu/aschuetz/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+    RegData$RegType_REG_MULTI_SZ = (*env)->NewGlobalRef(env, enum_field_init_local_RegData$RegType_REG_MULTI_SZ);
+    (*env)->DeleteLocalRef(env, enum_field_init_local_RegData$RegType_REG_MULTI_SZ);
+    if (RegData$RegType_REG_MULTI_SZ == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant create global ref to enum value of eu/aschuetz/nativeutils/api/structs/RegData$RegType_REG_MULTI_SZ_Leu/aschuetz/nativeutils/api/structs/RegData$RegType;");
         return JNI_FALSE;
     }
     
@@ -18086,10 +18334,17 @@ jboolean jnigenerator_init(JNIEnv * env) {
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/RegData$RegType_REG_NONE_Leu/aschuetz/nativeutils/api/structs/RegData$RegType;");
         return JNI_FALSE;
     }
-    RegData$RegType_REG_NONE = (*env) -> GetStaticObjectField(env, RegData$RegType, enum_field_init_RegData$RegType_REG_NONE);
-    if (RegData$RegType_REG_NONE == 0) {
+    jobject enum_field_init_local_RegData$RegType_REG_NONE = (*env) -> GetStaticObjectField(env, RegData$RegType, enum_field_init_RegData$RegType_REG_NONE);
+    if (enum_field_init_local_RegData$RegType_REG_NONE == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant get enum value of eu/aschuetz/nativeutils/api/structs/RegData$RegType_REG_NONE_Leu/aschuetz/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+    RegData$RegType_REG_NONE = (*env)->NewGlobalRef(env, enum_field_init_local_RegData$RegType_REG_NONE);
+    (*env)->DeleteLocalRef(env, enum_field_init_local_RegData$RegType_REG_NONE);
+    if (RegData$RegType_REG_NONE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant create global ref to enum value of eu/aschuetz/nativeutils/api/structs/RegData$RegType_REG_NONE_Leu/aschuetz/nativeutils/api/structs/RegData$RegType;");
         return JNI_FALSE;
     }
     
@@ -18101,10 +18356,17 @@ jboolean jnigenerator_init(JNIEnv * env) {
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/RegData$RegType_REG_QWORD_Leu/aschuetz/nativeutils/api/structs/RegData$RegType;");
         return JNI_FALSE;
     }
-    RegData$RegType_REG_QWORD = (*env) -> GetStaticObjectField(env, RegData$RegType, enum_field_init_RegData$RegType_REG_QWORD);
-    if (RegData$RegType_REG_QWORD == 0) {
+    jobject enum_field_init_local_RegData$RegType_REG_QWORD = (*env) -> GetStaticObjectField(env, RegData$RegType, enum_field_init_RegData$RegType_REG_QWORD);
+    if (enum_field_init_local_RegData$RegType_REG_QWORD == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant get enum value of eu/aschuetz/nativeutils/api/structs/RegData$RegType_REG_QWORD_Leu/aschuetz/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+    RegData$RegType_REG_QWORD = (*env)->NewGlobalRef(env, enum_field_init_local_RegData$RegType_REG_QWORD);
+    (*env)->DeleteLocalRef(env, enum_field_init_local_RegData$RegType_REG_QWORD);
+    if (RegData$RegType_REG_QWORD == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant create global ref to enum value of eu/aschuetz/nativeutils/api/structs/RegData$RegType_REG_QWORD_Leu/aschuetz/nativeutils/api/structs/RegData$RegType;");
         return JNI_FALSE;
     }
     
@@ -18116,10 +18378,17 @@ jboolean jnigenerator_init(JNIEnv * env) {
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/RegData$RegType_REG_SZ_Leu/aschuetz/nativeutils/api/structs/RegData$RegType;");
         return JNI_FALSE;
     }
-    RegData$RegType_REG_SZ = (*env) -> GetStaticObjectField(env, RegData$RegType, enum_field_init_RegData$RegType_REG_SZ);
-    if (RegData$RegType_REG_SZ == 0) {
+    jobject enum_field_init_local_RegData$RegType_REG_SZ = (*env) -> GetStaticObjectField(env, RegData$RegType, enum_field_init_RegData$RegType_REG_SZ);
+    if (enum_field_init_local_RegData$RegType_REG_SZ == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant get enum value of eu/aschuetz/nativeutils/api/structs/RegData$RegType_REG_SZ_Leu/aschuetz/nativeutils/api/structs/RegData$RegType;");
+        return JNI_FALSE;
+    }
+    RegData$RegType_REG_SZ = (*env)->NewGlobalRef(env, enum_field_init_local_RegData$RegType_REG_SZ);
+    (*env)->DeleteLocalRef(env, enum_field_init_local_RegData$RegType_REG_SZ);
+    if (RegData$RegType_REG_SZ == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant create global ref to enum value of eu/aschuetz/nativeutils/api/structs/RegData$RegType_REG_SZ_Leu/aschuetz/nativeutils/api/structs/RegData$RegType;");
         return JNI_FALSE;
     }
     
@@ -18215,6 +18484,69 @@ jboolean jnigenerator_init(JNIEnv * env) {
     if (RegEnumKeyExResult_M_toString_0 == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/RegEnumKeyExResult.toString()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    RegEnumValueResult_name = (*env) -> GetFieldID(env, RegEnumValueResult, "name", "Ljava/lang/String;");
+    if (RegEnumValueResult_name == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/RegEnumValueResult_name_Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    RegEnumValueResult_data = (*env) -> GetFieldID(env, RegEnumValueResult, "data", "Leu/aschuetz/nativeutils/api/structs/RegData;");
+    if (RegEnumValueResult_data == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/RegEnumValueResult_data_Leu/aschuetz/nativeutils/api/structs/RegData;");
+        return JNI_FALSE;
+    }
+
+    RegEnumValueResult_C_0 = (*env) -> GetMethodID(env, RegEnumValueResult, "<init>", "()V");
+    if (RegEnumValueResult_C_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/RegEnumValueResult.<init>()V");
+        return JNI_FALSE;
+    }
+
+    RegEnumValueResult_C_1 = (*env) -> GetMethodID(env, RegEnumValueResult, "<init>", "(Ljava/lang/String;Leu/aschuetz/nativeutils/api/structs/RegData;)V");
+    if (RegEnumValueResult_C_1 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/RegEnumValueResult.<init>(Ljava/lang/String;Leu/aschuetz/nativeutils/api/structs/RegData;)V");
+        return JNI_FALSE;
+    }
+
+    RegEnumValueResult_M_getData_0 = (*env) -> GetMethodID(env, RegEnumValueResult, "getData", "()Leu/aschuetz/nativeutils/api/structs/RegData;");
+    if (RegEnumValueResult_M_getData_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/RegEnumValueResult.getData()Leu/aschuetz/nativeutils/api/structs/RegData;");
+        return JNI_FALSE;
+    }
+
+    RegEnumValueResult_M_getName_0 = (*env) -> GetMethodID(env, RegEnumValueResult, "getName", "()Ljava/lang/String;");
+    if (RegEnumValueResult_M_getName_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/RegEnumValueResult.getName()Ljava/lang/String;");
+        return JNI_FALSE;
+    }
+
+    RegEnumValueResult_M_setData_0 = (*env) -> GetMethodID(env, RegEnumValueResult, "setData", "(Leu/aschuetz/nativeutils/api/structs/RegData;)V");
+    if (RegEnumValueResult_M_setData_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/RegEnumValueResult.setData(Leu/aschuetz/nativeutils/api/structs/RegData;)V");
+        return JNI_FALSE;
+    }
+
+    RegEnumValueResult_M_setName_0 = (*env) -> GetMethodID(env, RegEnumValueResult, "setName", "(Ljava/lang/String;)V");
+    if (RegEnumValueResult_M_setName_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/RegEnumValueResult.setName(Ljava/lang/String;)V");
+        return JNI_FALSE;
+    }
+
+    RegEnumValueResult_M_toString_0 = (*env) -> GetMethodID(env, RegEnumValueResult, "toString", "()Ljava/lang/String;");
+    if (RegEnumValueResult_M_toString_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/structs/RegEnumValueResult.toString()Ljava/lang/String;");
         return JNI_FALSE;
     }
 
@@ -20599,6 +20931,11 @@ void jnigenerator_destroy(JNIEnv * env) {
         InetAddress = 0;
     }
 
+    if (RegEnumValueResult != 0) {
+        (*env) -> DeleteGlobalRef(env, RegEnumValueResult);
+        RegEnumValueResult = 0;
+    }
+
     if (UnrecoverableMutexException != 0) {
         (*env) -> DeleteGlobalRef(env, UnrecoverableMutexException);
         UnrecoverableMutexException = 0;
@@ -21885,6 +22222,15 @@ void jnigenerator_destroy(JNIEnv * env) {
     RegEnumKeyExResult_M_getName_0 = 0;
     RegEnumKeyExResult_M_hashCode_0 = 0;
     RegEnumKeyExResult_M_toString_0 = 0;
+    RegEnumValueResult_name = 0;
+    RegEnumValueResult_data = 0;
+    RegEnumValueResult_C_0 = 0;
+    RegEnumValueResult_C_1 = 0;
+    RegEnumValueResult_M_getData_0 = 0;
+    RegEnumValueResult_M_getName_0 = 0;
+    RegEnumValueResult_M_setData_0 = 0;
+    RegEnumValueResult_M_setName_0 = 0;
+    RegEnumValueResult_M_toString_0 = 0;
     RegQueryInfoKeyResult_keyClass = 0;
     RegQueryInfoKeyResult_subKeys = 0;
     RegQueryInfoKeyResult_maxSubKeyLen = 0;

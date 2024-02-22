@@ -237,6 +237,9 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
     public native RegEnumKeyExResult RegEnumKeyExA(long hkey, int index, int nameSize, int classSize) throws UnknownNativeErrorException;
 
     @Override
+    public native RegEnumValueResult RegEnumValueA(long hkey, int index) throws UnknownNativeErrorException;
+
+    @Override
     public Iterable<RegEnumKeyExResult> iterateRegistrySubKeys(long hkey) throws UnknownNativeErrorException {
 
         RegQueryInfoKeyResult info = RegQueryInfoKeyA(hkey);

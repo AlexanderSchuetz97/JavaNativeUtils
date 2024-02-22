@@ -41,6 +41,7 @@ export WINDOWS_JDK=/windowsJDK/jdk8u292-b10
 export BUILD_TARGETS="all"
 #export BUILD_TARGETS="linux_riscv64"
 #export BUILD_TARGETS="linux_aarch64"
+#export BUILD_TARGETS="windows_amd64"
 #windows_amd64 windows_i386
 export LINUX_ADDITIONAL_CC_FLAGS="-D_FILE_OFFSET_BITS=64"
 #Cleanup

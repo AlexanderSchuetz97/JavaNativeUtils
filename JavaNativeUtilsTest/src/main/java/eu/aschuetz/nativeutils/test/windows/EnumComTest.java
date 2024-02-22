@@ -25,6 +25,8 @@ import eu.aschuetz.nativeutils.api.WindowsNativeUtil;
 import eu.aschuetz.nativeutils.api.exceptions.UnknownNativeErrorException;
 import eu.aschuetz.nativeutils.api.structs.CommTimeouts;
 import eu.aschuetz.nativeutils.api.structs.DCB;
+import eu.aschuetz.nativeutils.api.structs.RegEnumKeyExResult;
+import eu.aschuetz.nativeutils.api.structs.RegEnumValueResult;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -38,18 +40,25 @@ public class EnumComTest {
     public void test() throws Exception {
         Set<String> ports = new LinkedHashSet<>();
         WindowsNativeUtil wnu = NativeUtils.getWindowsUtil();
-        for (int i = 0; i <= 255; i++) {
+        try {
+            long hkey = wnu.RegOpenKeyExA(WinConst.HKEY_LOCAL_MACHINE, "HARDWARE\\DEVICEMAP\\SERIALCOMM", 0, WinConst.KEY_READ | WinConst.KEY_QUERY_VALUE);
             try {
-                long l = wnu.CreateFileA("COM" + i, 0, true, true, true, WindowsNativeUtil.CreateFileA_createMode.OPEN_EXISTING, 0);
-                wnu.CloseHandle(l);
-                System.out.println("COM port COM" + i + " exists");
-                ports.add("COM" + i);
-            } catch (UnknownNativeErrorException e) {
-                if (e.intCode() == 2) {
-                    continue;
+                int i = 0;
+                while(true) {
+                    RegEnumValueResult regEnumValueResult = wnu.RegEnumValueA(hkey, i++);
+                    if (regEnumValueResult == null) {
+                        break;
+                    }
+
+                    ports.add(regEnumValueResult.getData().string());
                 }
-                Assert.fail(wnu.FormatMessageA(e.intCode()));
+
+            } finally {
+                wnu.RegCloseKey(hkey);
             }
+        } catch (UnknownNativeErrorException e) {
+            e.printStackTrace();
+            Assert.fail(wnu.FormatMessageA(e.intCode()));
         }
 
         Thread.sleep(200);

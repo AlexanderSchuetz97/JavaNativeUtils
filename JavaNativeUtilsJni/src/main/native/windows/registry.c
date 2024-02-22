@@ -242,6 +242,235 @@ JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
+ * Method:    RegEnumValueA
+ * Signature: (JI)Leu/aschuetz/nativeutils/api/structs/RegEnumValueResult;
+ */
+JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_RegEnumValueA
+        (JNIEnv * env, jobject inst, jlong hkey, jint index) {
+
+    jbyteArray bytes = NULL;
+    jstring str = NULL;
+    jstring jname = NULL;
+
+    void * vdata = NULL;
+    jobject retValue = NULL;
+    jobject regData = NULL;
+
+    DWORD type = 0;
+    DWORD nameLen = 4096;
+    char * name = (char*) malloc(nameLen+1);
+    if (name == NULL) {
+        jthrowCC_OutOfMemoryError_1(env, "malloc");
+        return NULL;
+    }
+    memset((void*)name, 0, nameLen+1);
+
+    void * data = (void*) "";
+    DWORD dataLen = 0;
+    LONG result = RegEnumValueA((HKEY) (uintptr_t) hkey, (DWORD) index, (LPSTR) name, &nameLen,NULL,&type,(LPBYTE)data,&dataLen);
+    if (result == ERROR_SUCCESS) {
+        goto parse;
+    }
+
+    if (result == ERROR_NO_MORE_ITEMS) {
+        goto clean;
+    }
+
+    if (result != ERROR_MORE_DATA) {
+        jthrow_UnknownNativeErrorException_1(env, (jlong) result);
+        goto clean;
+    }
+
+    if (dataLen != 0) {
+        vdata = malloc(dataLen+1);
+        memset(vdata, 0, dataLen+1);
+        if (vdata == NULL) {
+            jthrowCC_OutOfMemoryError_1(env, "malloc");
+            goto clean;
+        }
+        data = vdata;
+    }
+
+    if (nameLen != 0) {
+        free(name);
+        name = (char*) malloc(nameLen+1);
+        if (name == NULL) {
+            jthrowCC_OutOfMemoryError_1(env, "malloc");
+            goto clean;
+        }
+        memset((void*)name, 0, nameLen+1);
+    }
+
+    DWORD dataLenBase = dataLen;
+
+    while(true) {
+        result = RegEnumValueA((HKEY) (uintptr_t) hkey, (DWORD) index, (LPSTR) name, &nameLen,NULL,&type,(LPBYTE)data,&dataLen);
+        if (result == ERROR_SUCCESS) {
+            goto parse;
+        }
+
+        if (result == ERROR_MORE_DATA) {
+            if (dataLenBase != dataLen) {
+                free(vdata);
+                vdata = malloc(dataLen+1);
+                if (vdata == NULL) {
+                    jthrowCC_OutOfMemoryError_1(env, "malloc");
+                    goto clean;
+                }
+
+                memset((void*) vdata, 0, dataLen+1);
+
+                data = vdata;
+                dataLenBase = dataLen;
+            }
+
+            if (nameLen > 0x10000) {
+                jthrow_UnknownNativeErrorException_1(env, (jlong) result);
+                goto clean;
+            }
+            free(name);
+
+
+            nameLen+=4096;
+            name = (char*) malloc(nameLen+1);
+            if (name == NULL) {
+                jthrowCC_OutOfMemoryError_1(env, "malloc");
+                goto clean;
+            }
+            memset((void*)name, 0, nameLen+1);
+            continue;
+        }
+
+
+        jthrow_UnknownNativeErrorException_1(env, (jlong) result);
+        goto clean;
+
+    }
+
+
+parse:
+    switch(type) {
+        //TODO ENDIAN SUPPORT ?
+        case REG_MULTI_SZ: {
+            const char * charBuf = (const char*) data;
+            int count = 0;
+
+            for (int i = 0; i < dataLen; i++) {
+                if (charBuf[i] == 0) {
+                    count++;
+                }
+            }
+
+            jobjectArray stringArray = jStringArray(env, count);
+            if (stringArray == NULL) {
+                jthrowCC_OutOfMemoryError_1(env, "NewObjectArray");
+                goto clean;
+            }
+
+            int off = 0;
+            for (int i = 0; i < count; i++) {
+                jstring nstring = (*env)->NewStringUTF(env, &charBuf[off]);
+                if (nstring == NULL) {
+                    jthrowCC_OutOfMemoryError_1(env, "NewStringUTF");
+                    goto clean;
+                }
+                off = strlen(&charBuf[off]+1);
+                if (off >= dataLen) {
+                    break;
+                }
+
+                (*env)->SetObjectArrayElement(env, stringArray, i, nstring);
+                (*env)->DeleteLocalRef(env, nstring);
+            }
+
+            regData = jnew_RegData_2(env, stringArray, jenum_RegData$RegType_REG_MULTI_SZ());
+            goto assemble;
+        }
+        case REG_EXPAND_SZ:
+            str = (*env)->NewStringUTF(env, (const char*) data);
+            if (str == NULL) {
+                jthrowCC_OutOfMemoryError_1(env, "NewStringUTF");
+                goto clean;
+            }
+
+            regData = jnew_RegData_2(env, str, jenum_RegData$RegType_REG_EXPAND_SZ());
+            goto assemble;
+        case REG_LINK:
+            str = (*env)->NewStringUTF(env, (const char*) data);
+            if (str == NULL) {
+                jthrowCC_OutOfMemoryError_1(env, "NewStringUTF");
+                goto clean;
+            }
+            regData = jnew_RegData_2(env, str, jenum_RegData$RegType_REG_LINK());
+            goto assemble;
+        case REG_SZ:
+            str = (*env)->NewStringUTF(env, (const char*) data);
+            if (str == NULL) {
+                jthrowCC_OutOfMemoryError_1(env, "NewStringUTF");
+                goto clean;
+            }
+
+            regData = jnew_RegData_2(env, str, jenum_RegData$RegType_REG_SZ());
+            goto assemble;
+        case REG_QWORD:
+            if (dataLen < 8) {
+                jthrow_UnknownNativeErrorException_1(env, ERROR_INVALID_USER_BUFFER);
+                goto clean;
+            }
+            jlong* lptr = (jlong*) data;
+            regData = jnew_RegData_1(env, *lptr);
+            goto assemble;
+        case REG_DWORD:
+            if (dataLen < 4) {
+                jthrow_UnknownNativeErrorException_1(env, ERROR_INVALID_USER_BUFFER);
+                goto clean;
+            }
+            jint* iptr = (jint*) data;
+            regData = jnew_RegData(env, *iptr);
+            goto assemble;
+        case REG_BINARY:
+            bytes = jarrayB(env, (jbyte*) data, (jsize) dataLen);
+            if (bytes == NULL) {
+                goto clean;
+            }
+
+            regData = jnew_RegData_2(env, bytes, jenum_RegData$RegType_REG_BINARY());
+            goto assemble;
+        case REG_NONE:
+        default:
+            bytes = jarrayB(env, (jbyte*) data, (jsize) dataLen);
+            if (bytes == NULL) {
+                goto clean;
+            }
+
+            regData = jnew_RegData_2(env, bytes, jenum_RegData$RegType_REG_NONE());
+            goto assemble;
+    }
+
+assemble:
+    if (regData == NULL) {
+        goto clean;
+    }
+
+    jname = (*env)->NewStringUTF(env, (const char*) name);
+    if (jname == NULL) {
+        goto clean;
+    }
+    retValue = jnew_RegEnumValueResult_1(env, jname, regData);
+    goto clean;
+clean:
+    if (vdata != NULL) {
+        free(vdata);
+    }
+
+    if (name != NULL) {
+        free(name);
+    }
+    return retValue;
+}
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
  * Method:    RegQueryInfoKeyA
  * Signature: (J)Leu/aschuetz/nativeutils/api/structs/RegQueryInfoKeyResult;
  */

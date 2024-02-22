@@ -14,12 +14,12 @@ Maven:
 <dependency>
     <groupId>eu.aschuetz</groupId>
     <artifactId>JavaNativeUtilsApi</artifactId>
-    <version>4.3</version>
+    <version>4.4</version>
 </dependency>
 <dependency>
     <groupId>eu.aschuetz</groupId>
     <artifactId>JavaNativeUtilsJni</artifactId>
-    <version>4.3</version>
+    <version>4.4</version>
 </dependency>
 ````
 Note: for versions older than 4.0 use groupId io.github.alexanderschuetz97 artifactId JavaNativeUtils

@@ -6,7 +6,7 @@
     <parent>
         <groupId>eu.aschuetz</groupId>
         <artifactId>JavaNativeUtils</artifactId>
-        <version>4.3</version>
+        <version>4.4</version>
     </parent>
 
     <artifactId>JavaNativeUtilsJni</artifactId>
@@ -148,6 +148,9 @@
                                 </struct>
                                 <struct>
                                     <classname>eu.aschuetz.nativeutils.api.structs.PollFD$PollEvent</classname>
+                                </struct>
+                                <struct>
+                                    <classname>eu.aschuetz.nativeutils.api.structs.RegEnumValueResult</classname>
                                 </struct>
                                 <struct>
                                     <classname>java.net.InetAddress</classname>

@@ -49,8 +49,8 @@ public class RegData {
         this.value = value;
     }
 
-    public RegData(Object data, RegType type) {
-        this.type = type;
+    public RegData(Object data, Object type) {
+        this.type = (RegType) type;
         this.value = data;
     }
 
@@ -109,7 +109,6 @@ public class RegData {
             vString = Objects.toString(value);
         }
 
-        return  type + " | " +
-                vString;
+        return  type + " | " + vString;
     }
 }
