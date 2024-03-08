@@ -6,7 +6,7 @@
 
     <groupId>eu.aschuetz</groupId>
     <artifactId>JavaNativeUtils</artifactId>
-    <version>4.4</version>
+    <version>4.5</version>
     <packaging>pom</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>

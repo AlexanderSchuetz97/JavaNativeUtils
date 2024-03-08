@@ -23,10 +23,7 @@ import eu.aschuetz.nativeutils.api.NativeUtil;
 import eu.aschuetz.nativeutils.api.NativeUtils;
 import eu.aschuetz.nativeutils.test.common.*;
 import eu.aschuetz.nativeutils.test.linux.*;
-import eu.aschuetz.nativeutils.test.windows.EnumComTest;
-import eu.aschuetz.nativeutils.test.windows.WinMibTest;
-import eu.aschuetz.nativeutils.test.windows.WinMmapTest;
-import eu.aschuetz.nativeutils.test.windows.WinSemaTest;
+import eu.aschuetz.nativeutils.test.windows.*;
 import org.junit.runner.Description;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
@@ -71,7 +68,8 @@ public class Main {
             WinSemaTest.class,
             WinMmapTest.class,
             WinMibTest.class,
-            EnumComTest.class
+            EnumComTest.class,
+            WinErrorTest.class
     );
 
 

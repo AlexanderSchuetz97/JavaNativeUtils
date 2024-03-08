@@ -56,23 +56,54 @@ JNIEXPORT jstring JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
  */
 JNIEXPORT jstring JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_FormatMessageA
   (JNIEnv * env, jobject inst, jint code) {
-	const char* buffer = NULL;
+    const char* buffer = NULL;
 
-	FormatMessageA(
+	DWORD result = FormatMessageA(
 		FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS | FORMAT_MESSAGE_ARGUMENT_ARRAY | FORMAT_MESSAGE_ALLOCATE_BUFFER,
 		NULL,
 		code,
 		MAKELANGID(LANG_ENGLISH, SUBLANG_DEFAULT),
-		(LPTSTR) &buffer,
+        (LPSTR) &buffer,
 		0,
 		NULL);
 
-	if (buffer == NULL) {
-		return (*env) -> NewStringUTF(env, "FormatMessageA failed to allocate buffer");
-	}
+    if (result != 0 && buffer != NULL) {
+        jstring str = (*env) -> NewStringUTF(env, buffer);
+        LocalFree((void*)buffer);
+        return str;
+    }
 
-	jstring str = (*env) -> NewStringUTF(env, buffer);
-	LocalFree((void*)buffer);
-	return str;
+    if (buffer != NULL) {
+        LocalFree((void*)buffer);
+    }
+
+    DWORD size = 0;
+    while(size < 0xFFFF) {
+        size+=1024;
+        buffer = malloc(size+1);
+        if (buffer == NULL) {
+            jthrowCC_OutOfMemoryError_1(env, "malloc");
+            return NULL;
+        }
+        memset((void*) buffer, 0, size+1);
+
+        result = FormatMessageA(
+                FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS | FORMAT_MESSAGE_ARGUMENT_ARRAY,
+                NULL,
+                code,
+                MAKELANGID(LANG_ENGLISH, SUBLANG_DEFAULT),
+                (LPSTR) buffer,
+                size,
+                NULL);
+
+        if (result == 0) {
+            free((void*)buffer);
+            continue;
+        }
+
+        jstring str = (*env) -> NewStringUTF(env, buffer);
+        free((void*)buffer);
+        return str;
+    }
 }
 
