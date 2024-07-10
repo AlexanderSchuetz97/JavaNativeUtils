@@ -1,6 +1,7 @@
 package eu.aschuetz.nativeutils.test.common;
 
 import eu.aschuetz.nativeutils.api.NativeMemory;
+import eu.aschuetz.nativeutils.api.NativeMethod;
 import eu.aschuetz.nativeutils.api.NativeUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -8,9 +9,17 @@ import org.junit.Test;
 
 public class MemCmpXchgTest {
 
+    private static NativeMemory alloc(int sz) {
+        if (NativeUtils.isFreeBSD()) {
+            return NativeUtils.getFreeBSDUtil().malloc(sz);
+        }
+
+        return NativeUtils.get().isWindows() ? NativeUtils.getWindowsUtil().malloc(sz) : NativeUtils.getLinuxUtil().malloc(sz);
+    }
+
     @Test
     public void test1B() {
-        NativeMemory memory = NativeUtils.get().isWindows() ? NativeUtils.getWindowsUtil().malloc(4096) : NativeUtils.getLinuxUtil().malloc(4096);
+        NativeMemory memory = alloc(4096);
 
         memory.zero();
 
@@ -92,7 +101,7 @@ public class MemCmpXchgTest {
 
     @Test
     public void test2B() {
-        NativeMemory memory = NativeUtils.get().isWindows() ? NativeUtils.getWindowsUtil().malloc(4096) : NativeUtils.getLinuxUtil().malloc(4096);
+        NativeMemory memory = alloc(4096);
 
         memory.zero();
 
@@ -174,7 +183,7 @@ public class MemCmpXchgTest {
 
     @Test
     public void test4B() {
-        NativeMemory memory = NativeUtils.get().isWindows() ? NativeUtils.getWindowsUtil().malloc(4096) : NativeUtils.getLinuxUtil().malloc(4096);
+        NativeMemory memory = alloc(4096);
 
         memory.zero();
 
@@ -257,7 +266,7 @@ public class MemCmpXchgTest {
 
     @Test
     public void test8B() {
-        NativeMemory memory = NativeUtils.get().isWindows() ? NativeUtils.getWindowsUtil().malloc(4096) : NativeUtils.getLinuxUtil().malloc(4096);
+        NativeMemory memory = alloc(4096);
 
         memory.zero();
 

@@ -42,4 +42,9 @@ public class NoopNativeUtil implements NativeUtil {
         return true;
     }
 
+    @Override
+    public boolean isFreeBSD() {
+        return false;
+    }
+
 }

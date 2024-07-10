@@ -294,7 +294,7 @@ public class PTTest {
             }
         }
 
-        int r = new ProcessBuilder("gcc", cfileName, "-lpthread", "-lrt").directory(tdir).start().waitFor();
+        int r = new ProcessBuilder("gcc", cfileName, "-lpthread", "-lrt").inheritIO().directory(tdir).start().waitFor();
         Assert.assertEquals(0, r);
         System.out.println("RUNNING C PROGRAM " + cfileName + " " + Arrays.toString(args));
         List<String> str = new ArrayList<>();
@@ -356,6 +356,9 @@ public class PTTest {
         });
 
         Thread.sleep(5000);
+        if (submit.isDone()) {
+            submit.get();
+        }
         Assert.assertFalse(submit.isDone());
         lnu.pthread_mutex_unlock(mutex);
 

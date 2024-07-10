@@ -577,5 +577,10 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
         return false;
     }
 
+    @Override
+    public boolean isFreeBSD() {
+        return false;
+    }
+
 
 }

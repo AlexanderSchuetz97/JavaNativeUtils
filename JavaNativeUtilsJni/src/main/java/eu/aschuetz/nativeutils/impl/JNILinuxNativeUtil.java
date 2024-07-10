@@ -40,7 +40,7 @@ import java.nio.file.NotLinkException;
 import java.nio.file.ReadOnlyFileSystemException;
 import java.util.Collection;
 
-public class JNILinuxNativeUtil extends JNICommonNativeUtil implements LinuxNativeUtil {
+public class JNILinuxNativeUtil extends JNIPosixNativeUtil implements LinuxNativeUtil {
 
     public static native void _getConst(DefaultLinuxConstProvider provider);
 
@@ -65,8 +65,10 @@ public class JNILinuxNativeUtil extends JNICommonNativeUtil implements LinuxNati
         return true;
     }
 
-
-
+    @Override
+    public boolean isFreeBSD() {
+        return false;
+    }
 
 
     @Override
@@ -337,9 +339,6 @@ public class JNILinuxNativeUtil extends JNICommonNativeUtil implements LinuxNati
 
     @Override
     public native void link(String target, String linkpath) throws IOException, InvalidPathException, ReadOnlyFileSystemException, AccessDeniedException, FileAlreadyExistsException, UnknownNativeErrorException;
-
-    @Override
-    public native Stat stat(String path);
 
     @Override
     public native Statvfs statvfs(String path) throws AccessDeniedException, IOException, FileSystemLoopException, FileNotFoundException, UnknownNativeErrorException;

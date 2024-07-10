@@ -329,14 +329,6 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_link
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
- * Method:    stat
- * Signature: (Ljava/lang/String;)Leu/aschuetz/nativeutils/api/structs/Stat;
- */
-JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_stat
-  (JNIEnv *, jobject, jstring);
-
-/*
- * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
  * Method:    statvfs
  * Signature: (Ljava/lang/String;)Leu/aschuetz/nativeutils/api/structs/Statvfs;
  */

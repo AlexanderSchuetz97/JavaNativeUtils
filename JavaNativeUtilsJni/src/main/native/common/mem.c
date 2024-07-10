@@ -2233,6 +2233,8 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_writeEx
  */
 JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_writeExpandedShortArray
 	(JNIEnv * env, jclass clazz, jlong ptr, jlong off, jshortArray array, jint size, jint arrayOff, jint arrayLen) {
+
+
 	void * vptr = (void *) (uintptr_t) ptr;
 	if (vptr == NULL) {
 		jthrowCC_NullPointerException_1(env, "ptr");

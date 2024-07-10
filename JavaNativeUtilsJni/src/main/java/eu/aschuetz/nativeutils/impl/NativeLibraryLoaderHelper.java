@@ -100,6 +100,7 @@ public class NativeLibraryLoaderHelper {
         theMap.put("java_native_utils_s390x.so", readLib("/java_native_utils_s390x.so"));
         theMap.put("java_native_utils_amd64.dll", readLib("/java_native_utils_amd64.dll"));
         theMap.put("java_native_utils_i386.dll", readLib("/java_native_utils_i386.dll"));
+        theMap.put("java_native_utils_amd64_freebsd.so", readLib("/java_native_utils_amd64_freebsd.so"));
 
         return theMap;
     }
@@ -268,8 +269,14 @@ public class NativeLibraryLoaderHelper {
                     throw new UnsatisfiedLinkError("Processor architecture is not supported on Windows! Value: " + tempArch);
                 }
                 loadLib(tempFile, "java_native_utils_" + tempArch + ".dll");
+            } else if ("freebsd".equalsIgnoreCase(tempOS)) {
+                if (!"amd64".equals(tempArch)) {
+                    throw new UnsatisfiedLinkError("Processor architecture is not supported on FreeBSD! Value: " + tempArch);
+                }
+
+                loadLib(tempFile, "java_native_utils_amd64_freebsd.so");
             } else {
-                throw new UnsatisfiedLinkError("Operating system is not windows or linux and thus not supported! Value: " + tempOS);
+                throw new UnsatisfiedLinkError("Operating system is not windows, linux or freebsd and thus not supported! Value: " + tempOS);
             }
         } catch (IOException e) {
             throw new LinkageError("IO Error while writing native library to a temporary file!", e);

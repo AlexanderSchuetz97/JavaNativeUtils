@@ -26,5 +26,13 @@
 #define LITTLE_ENDIAN 1234
 #define BIG_ENDIAN 4321
 #define BYTE_ORDER 1234
+#elif defined(__FreeBSD__)
+#include <endian.h>
+#elif defined(__NetBSD__)
+#error
+#elif defined(__OpenBSD__)
+#error
+#else
+#error
 #endif
 

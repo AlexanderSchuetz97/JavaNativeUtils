@@ -44,4 +44,10 @@ public interface NativeUtil {
      */
     boolean isNoop();
 
+    /**
+     * returns true if this NativeUtil is instanceof {@link FreeBSDNativeUtil}  and supports the FreeBSD API functions.
+     * @return
+     */
+    boolean isFreeBSD();
+
 }

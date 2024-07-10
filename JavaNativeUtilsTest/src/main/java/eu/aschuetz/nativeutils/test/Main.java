@@ -22,6 +22,7 @@ package eu.aschuetz.nativeutils.test;
 import eu.aschuetz.nativeutils.api.NativeUtil;
 import eu.aschuetz.nativeutils.api.NativeUtils;
 import eu.aschuetz.nativeutils.test.common.*;
+import eu.aschuetz.nativeutils.test.freebsd.FreeBSDStatTest;
 import eu.aschuetz.nativeutils.test.linux.*;
 import eu.aschuetz.nativeutils.test.windows.*;
 import org.junit.runner.Description;
@@ -44,6 +45,10 @@ public class Main {
             TestMonitor.class,
             ReflectionTests.class,
             MemCmpXchgTest.class);
+
+    private static List<Class> FREEBSD_TESTS = (List) Arrays.asList(
+            FreeBSDStatTest.class);
+
     private static List<Class> LINUX_TESTS = (List) Arrays.asList(
             ChdirTests.class,
             ChmodTest.class,
@@ -75,7 +80,7 @@ public class Main {
 
     public static Result runTests(String test) {
         NativeUtil nativeUtil = NativeUtils.get();
-        if (!nativeUtil.isLinux() && ! nativeUtil.isWindows()) {
+        if (!nativeUtil.isLinux() && ! nativeUtil.isWindows() && !nativeUtil.isFreeBSD()) {
             System.err.println("Lib failed to load!");
             System.exit(-1);
         }
@@ -143,6 +148,16 @@ public class Main {
             ar.addAll(WINDOWS_TESTS);
 
             return junit.run(ar.toArray(new Class[0]));
+        }
+
+        if (nativeUtil.isFreeBSD()) {
+            System.out.println("FREE BSD");
+            ArrayList<Class> ar = new ArrayList();
+            ar.addAll(COMMON_TESTS);
+            ar.addAll(FREEBSD_TESTS);
+
+            return junit.run(ar.toArray(new Class[0]));
+
         }
 
         return null;

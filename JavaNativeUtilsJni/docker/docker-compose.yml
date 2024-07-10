@@ -11,5 +11,3 @@ services:
     volumes:
       - ../../:/project
     entrypoint: /bin/bash /project/JavaNativeUtilsJni/compile_docker.sh
-
-

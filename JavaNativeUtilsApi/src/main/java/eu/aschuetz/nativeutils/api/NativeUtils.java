@@ -54,6 +54,10 @@ public final class NativeUtils {
         return get().isJVM();
     }
 
+    public static boolean isFreeBSD() {
+        return get().isFreeBSD();
+    }
+
     public static JVMNativeUtil getJVMUtil() {
         NativeUtil util = get();
         if (util instanceof JVMNativeUtil) {
@@ -79,6 +83,15 @@ public final class NativeUtils {
         }
 
         throw new UnsupportedOperationException("Windows functions not supported.");
+    }
+
+    public static FreeBSDNativeUtil getFreeBSDUtil() {
+        NativeUtil util = get();
+        if (util instanceof FreeBSDNativeUtil) {
+            return (FreeBSDNativeUtil) util;
+        }
+
+        throw new UnsupportedOperationException("FreeBSD functions not supported.");
     }
 
     static NativeUtilsProvider getProvider() {

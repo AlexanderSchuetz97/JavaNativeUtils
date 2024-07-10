@@ -37,10 +37,18 @@ if (NativeUtils.isWindows()) {
     System.out.println(util._stat64("C:\\Windows"));
     return;
 }
+
+if (NativeUtils.isFreeBSD()) {
+    FreeBSDNativeUtil util = NativeUtils.getFreeBSDUtil()
+    System.out.println(util.stat("/tmp"));
+    return;
+}
+
 ````
 
 ## List of supported Syscalls
 #### Linux
+* malloc & free
 * open
 * fcntl
 * ioctl
@@ -112,9 +120,10 @@ if (NativeUtils.isWindows()) {
 * pthread_cond_wait
 * pthread_cond_timedwait
 * pthread_cond_destroy
-* pthread_cond_init 
+* pthread_cond_init
 
 #### Windows
+* malloc & free
 * _locking
 * _stat64
 * LockFileEx
@@ -200,6 +209,9 @@ if (NativeUtils.isWindows()) {
 * ClearCommError
 * ClearCommBreak
 
+#### FreeBSD
+* malloc & free
+* stat
 
 ### List of exposed JNI Functions (All OS)
 ### Reflection
@@ -246,12 +258,12 @@ Only amd64 architecture is tested!
 #### Linux
 
 GLIBC 2.17 or newer:
-* i386 
-* amd64 
-* armel 
-* armhf 
-* aarch64 
-* riscv64 
+* i386
+* amd64
+* armel
+* armhf
+* aarch64
+* riscv64
 * mips64el
 * ppc64le
 * s390x
@@ -259,10 +271,24 @@ GLIBC 2.17 or newer:
 musl libc (Alpine Linux):
 * amd64
 
-Only amd64 i386 and riscv64 architecture is tested with real hardware!
+Only amd64 i386 armhf aarch64 and riscv64 architecture is tested with real hardware!
+The others are only tested using qemu usermode emulation.
 
-If an unsupported operating system or processor architecture is used then getWindowsUtil() or getLinuxUtil() throws an exception.
-To check if the current system supports linux or windows syscalls use the isLinux() or isWindows() method.
+#### FreeBSD (14.1)
+* amd64
+
+INFO: FreeBSD support in this library is pretty rudimentary. In its current state it is mainly useful for access to 
+the JNI Reflection. I may port over some posix compliant syscalls from the linux specific implementation 
+to freebsd in the future, should I require them for my future projects. 
+For my current needs the JNI Reflection is sufficient.
+
+I currently use freebsd 14.1 to cross compile and test. 
+The library may or may not work with earlier or later versions of freebsd.
+
+### Unsupported OS
+
+If an unsupported operating system or processor architecture is used then getWindowsUtil() getLinuxUtil() or getFreeBSDUtil() throws an exception.
+To check if the current system supports linux or windows syscalls use the isLinux() isWindows() of isFreeBSD() method.
 
 ### INFO: Linux using pthread_mutex and pthread_cond for IPC with a C Program
 Note that pthread_mutex and pthread_cond in shared memory for IPC with a C program will only work

@@ -34,16 +34,20 @@ export LINUX_CC_RISCV64=/usr/bin/riscv64-linux-gnu-gcc
 export LINUX_CC_MIPS64EL=/usr/bin/mips64el-linux-gnuabi64-gcc
 export LINUX_CC_PPC64LE=/usr/bin/powerpc64le-linux-gnu-gcc
 export LINUX_CC_S390X=/usr/bin/s390x-linux-gnu-gcc
+
 export LINUX_JDK=/usr/lib/jvm/java-8-openjdk-amd64
 export WINDOWS_CC_AMD64=/usr/bin/x86_64-w64-mingw32-gcc-win32
 export WINDOWS_CC_I386=/usr/bin/i686-w64-mingw32-gcc
 export WINDOWS_JDK=/windowsJDK/jdk8u292-b10
+
+
+
+export LINUX_ADDITIONAL_CC_FLAGS="-D_FILE_OFFSET_BITS=64"
 export BUILD_TARGETS="all"
 #export BUILD_TARGETS="linux_riscv64"
 #export BUILD_TARGETS="linux_aarch64"
 #export BUILD_TARGETS="windows_amd64"
 #windows_amd64 windows_i386
-export LINUX_ADDITIONAL_CC_FLAGS="-D_FILE_OFFSET_BITS=64"
 #Cleanup
 rm -rf src/main/native/common/jni
 mkdir -p src/main/native/common/jni
@@ -59,6 +63,7 @@ $JAVAH_COMMAND -cp /project/JavaNativeUtilsJni/src/main/java:/project/JavaNative
 $JAVAH_COMMAND -cp /project/JavaNativeUtilsJni/src/main/java:/project/JavaNativeUtilsApi/src/main/java -d src/main/native/common/jni eu.aschuetz.nativeutils.impl.JNINativeField
 $JAVAH_COMMAND -cp /project/JavaNativeUtilsJni/src/main/java:/project/JavaNativeUtilsApi/src/main/java -d src/main/native/common/jni eu.aschuetz.nativeutils.impl.JNINativeMemory
 $JAVAH_COMMAND -cp /project/JavaNativeUtilsJni/src/main/java:/project/JavaNativeUtilsApi/src/main/java -d src/main/native/common/jni eu.aschuetz.nativeutils.impl.JNINativeMethod
+$JAVAH_COMMAND -cp /project/JavaNativeUtilsJni/src/main/java:/project/JavaNativeUtilsApi/src/main/java -d src/main/native/common/jni eu.aschuetz.nativeutils.impl.JNIPosixNativeUtil
 
 chmod -R 777 src/main/native/common/jni
 
@@ -192,7 +197,6 @@ if [[ $BUILD_TARGETS == *"linux_s390x"* ]] || [[ $BUILD_TARGETS == "all" ]]; the
     fi
 fi
 
-cp -r * ../../../target/classes
 
 
 cd ../../../
