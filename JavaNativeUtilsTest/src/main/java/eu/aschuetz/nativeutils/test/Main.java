@@ -22,7 +22,9 @@ package eu.aschuetz.nativeutils.test;
 import eu.aschuetz.nativeutils.api.NativeUtil;
 import eu.aschuetz.nativeutils.api.NativeUtils;
 import eu.aschuetz.nativeutils.test.common.*;
-import eu.aschuetz.nativeutils.test.freebsd.FreeBSDStatTest;
+import eu.aschuetz.nativeutils.test.freebsd.FBSDCPUIDTest;
+import eu.aschuetz.nativeutils.test.freebsd.FBSDLinkTests;
+import eu.aschuetz.nativeutils.test.freebsd.FBSDStatTest;
 import eu.aschuetz.nativeutils.test.linux.*;
 import eu.aschuetz.nativeutils.test.windows.*;
 import org.junit.runner.Description;
@@ -47,7 +49,10 @@ public class Main {
             MemCmpXchgTest.class);
 
     private static List<Class> FREEBSD_TESTS = (List) Arrays.asList(
-            FreeBSDStatTest.class);
+            FBSDStatTest.class,
+            FBSDLinkTests.class,
+            FBSDCPUIDTest.class
+            );
 
     private static List<Class> LINUX_TESTS = (List) Arrays.asList(
             ChdirTests.class,

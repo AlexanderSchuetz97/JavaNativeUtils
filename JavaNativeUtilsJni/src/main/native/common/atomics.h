@@ -98,10 +98,10 @@ static inline bool cmpxchg16b(void* ptr, uint64_t* value) {
 #define ATOMIC_ALIGNMENT_cmpxchg8b 8
 #define ATOMIC_OPTIONAL_cmpxchg8b
 #define ATOMIC_ALIGNED_cmpxchg8b
-#elif (defined(__riscv))
+#elif (defined(__riscv) || defined(__aarch64__))
 #define ATOMIC_ALIGNMENT_cmpxchg8b 8
 #define ATOMIC_ALIGNED_cmpxchg8b
-#elif (defined(__amd64__) || defined(__aarch64__))
+#elif (defined(__amd64__))
 #define ATOMIC_ALIGNMENT_cmpxchg8b 1
 #else
 #define ATOMIC_ALIGNMENT_cmpxchg8b 1
@@ -131,7 +131,7 @@ static inline bool supports_cmpxchg8b() {
 }
 
 static inline bool aligned_cmpxchg8b(uint64_t* ptr) {
-#if (defined(__i386__) || (defined(__riscv)))
+#if (defined(__i386__) || (defined(__riscv)) || (defined(__aarch64__)))
     if ((((uintptr_t) ptr) & 0x7) != 0) {
         return false;
     }
@@ -220,7 +220,8 @@ static inline bool cmpxchg8b(uint64_t* ptr, uint64_t expect, uint64_t update) {
 #define ATOMIC_ALIGNED_cmpxchg4b
 #define ATOMIC_ALIGNMENT_cmpxchg4b 4
 #elif (defined(__aarch64__))
-#define ATOMIC_ALIGNMENT_cmpxchg4b 1
+#define ATOMIC_ALIGNED_cmpxchg4b
+#define ATOMIC_ALIGNMENT_cmpxchg4b 4
 #elif (defined(__amd64__))
 #define ATOMIC_ALIGNMENT_cmpxchg4b 1
 #else
@@ -239,7 +240,7 @@ static inline bool supports_cmpxchg4b() {
 }
 
 static inline bool aligned_cmpxchg4b(uint32_t* ptr) {
-#if defined(__riscv)
+#if defined(__riscv) || defined(__aarch64__)
     if ((((uintptr_t) ptr) & 0x3) != 0) {
         return false;
     }

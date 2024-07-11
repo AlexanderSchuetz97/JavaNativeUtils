@@ -313,14 +313,6 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_chdi
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
- * Method:    symlink
- * Signature: (Ljava/lang/String;Ljava/lang/String;)V
- */
-JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_symlink
-  (JNIEnv *, jobject, jstring, jstring);
-
-/*
- * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
  * Method:    link
  * Signature: (Ljava/lang/String;Ljava/lang/String;)V
  */

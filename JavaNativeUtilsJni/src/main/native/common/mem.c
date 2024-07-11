@@ -203,8 +203,12 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_write__
 		return;
 	}
 	vptr+=(uintptr_t) off;
-	volatile jint* dptr = (jint*) vptr;
+#if (defined(__mips64))
+    memcpy(vptr, (void*) &value, 4);
+#else
+    volatile jint* dptr = (jint*) vptr;
 	*(dptr) = value;
+#endif
 }
 
 /*
@@ -220,8 +224,17 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_write__
 		return;
 	}
 	vptr+=(uintptr_t) off;
-	volatile jlong* dptr = (jlong*) vptr;
-	*(dptr) = value;
+
+#if (defined(__arm__) || defined(__mips64))
+    memcpy(vptr, (void*) &value, 8);
+#else
+    //Causes SIGBUS on arm 32 bit.
+    volatile jlong* dptr = (jlong*) vptr;
+    *(dptr) = value;
+
+#endif
+
+
 }
 
 /*
@@ -236,9 +249,16 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_write__
 		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
-	vptr+=(uintptr_t) off;
-	volatile jfloat* dptr = (jfloat*) vptr;
-	*(dptr) = value;
+    vptr+=(uintptr_t) off;
+
+#if (defined(__arm__) || defined(__mips64))
+    memcpy(vptr, (void*) &value, 4);
+#else
+    //Causes SIGBUS on arm 32 bit.
+    volatile jfloat* dptr = (jfloat*) vptr;
+    *(dptr) = value;
+#endif
+
 }
 
 /*
@@ -253,9 +273,19 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_write__
 		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
-	vptr+=(uintptr_t) off;
-	volatile jdouble* dptr = (jdouble*) vptr;
-	*(dptr) = value;
+
+    vptr+=(uintptr_t) off;
+#if (defined(__arm__) || defined(__mips64))
+    memcpy(vptr, (void*) &value, 8);
+#else
+    //Causes SIGBUS on arm 32 bit.
+    volatile jdouble* dptr = (jdouble*) vptr;
+    *(dptr) = value;
+#endif
+
+
+
+
 }
 
 /*
@@ -270,9 +300,13 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_write__
 		jthrowCC_NullPointerException_1(env, "ptr");
 		return;
 	}
-	vptr+=(uintptr_t) off;
+    vptr+=(uintptr_t) off;
+#if (defined(__mips64))
+    memcpy(vptr, (void*) &value, 2);
+#else
 	volatile jshort* dptr = (jshort*) vptr;
 	*(dptr) = value;
+#endif
 }
 
 /*
@@ -304,9 +338,15 @@ JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_readInt
 		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
-	vptr+=(uintptr_t) off;
+    vptr+=(uintptr_t) off;
+#if (defined(__mips64))
+    jint result;
+    memcpy((void*) &result, vptr, 4);
+    return result;
+#else
 	volatile jint* dptr = (jint*) vptr;
 	return *dptr;
+#endif
 }
 
 /*
@@ -321,9 +361,20 @@ JNIEXPORT jlong JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_readLo
 		jthrowCC_NullPointerException_1(env, "ptr");
 		return 0;
 	}
-	vptr+=(uintptr_t) off;
-	volatile jlong* dptr = (jlong*) vptr;
-	return *dptr;
+
+    vptr+=(uintptr_t) off;
+
+#if (defined(__arm__) || defined(__mips64))
+    jlong result;
+    memcpy((void*) &result, vptr, 8);
+    return result;
+#else
+    //Causes SIGBUS on arm 32 bit.
+    volatile jlong* dptr = (jlong*) vptr;
+    return *dptr;
+#endif
+
+
 }
 
 /*
@@ -339,8 +390,17 @@ JNIEXPORT jfloat JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_readF
 		return 0;
 	}
 	vptr+=(uintptr_t) off;
-	volatile jfloat* dptr = (jfloat*) vptr;
-	return *dptr;
+#if (defined(__arm__) || defined(__mips64))
+    jfloat result;
+    memcpy((void*) &result, vptr, 4);
+    return result;
+#else
+    //Causes SIGBUS on arm 32 bit.
+    volatile jfloat* dptr = (jfloat*) vptr;
+    return *dptr;
+#endif
+
+
 }
 
 /*
@@ -356,8 +416,16 @@ JNIEXPORT jdouble JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_read
 		return 0;
 	}
 	vptr+=(uintptr_t) off;
-	volatile jdouble* dptr = (jdouble*) vptr;
-	return *dptr;
+#if (defined(__arm__) || defined(__mips64))
+    jdouble result;
+    memcpy((void*) &result, vptr, 8);
+    return result;
+#else
+    //Causes SIGBUS on arm 32 bit.
+    volatile jdouble* dptr = (jdouble*) vptr;
+    return *dptr;
+#endif
+
 }
 
 /*
@@ -373,8 +441,14 @@ JNIEXPORT jshort JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_readS
 		return 0;
 	}
 	vptr+=(uintptr_t) off;
-	volatile jshort* dptr = (jshort*) vptr;
+#if (defined(__mips64))
+    jshort result;
+    memcpy((void*) &result, vptr, 2);
+    return result;
+#else
+    volatile jshort* dptr = (jshort*) vptr;
 	return *dptr;
+#endif
 }
 
 /*
@@ -2183,6 +2257,18 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_writeEx
 
 	vptr += off;
 	if (size == 2) {
+#if (defined(__mips64))
+        if ((((uintptr_t )vptr) & 0x1) != 0) {
+            jshort* carray = (*env)->GetCharArrayElements(env, array, NULL);
+            if (carray == NULL) {
+                jthrowCC_OutOfMemoryError_1(env, "GetCharArrayElements");
+                return;
+            }
+            memcpy(vptr, (void*) &carray[arrayOff], arrayLen*2);
+            (*env)->ReleaseCharArrayElements(env, array, carray, JNI_ABORT);
+            return;
+        }
+#endif
 		(*env)->GetCharArrayRegion(env, array, arrayOff, arrayLen, (jchar*) vptr);
 		return;
 	}
@@ -2215,7 +2301,12 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_writeEx
     }
 #elif BYTE_ORDER == LITTLE_ENDIAN
     for (jsize i = 0; i < arrayLen; i++) {
+#if (defined(__mips64))
+        memcpy(vptr, (void*) &bPtr[arrayOff+i], valSize);
+#else
+        //Causes SIGBUS on mips.
         *((jchar*)vptr) = bPtr[arrayOff+i];
+#endif
         vptr+=valSize;
         memset(vptr, 0, psize);
         vptr+=psize;
@@ -2253,6 +2344,18 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_writeEx
 
 	vptr += off;
 	if (size == 2) {
+#if (defined(__mips64))
+        if ((((uintptr_t )vptr) & 0x1) != 0) {
+            jshort* carray = (*env)->GetShortArrayElements(env, array, NULL);
+            if (carray == NULL) {
+                jthrowCC_OutOfMemoryError_1(env, "GetShortArrayElements");
+                return;
+            }
+            memcpy(vptr, (void*) &carray[arrayOff], arrayLen*2);
+            (*env)->ReleaseShortArrayElements(env, array, carray, JNI_ABORT);
+            return;
+        }
+#endif
 		(*env)->GetShortArrayRegion(env, array, arrayOff, arrayLen, (jshort*) vptr);
 		return;
 	}
@@ -2287,7 +2390,13 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_writeEx
     }
 #elif BYTE_ORDER == LITTLE_ENDIAN
     for (jsize i = 0; i < arrayLen; i++) {
+#if (defined(__mips64))
+        memcpy(vptr, (void*) &bPtr[arrayOff+i], valSize);
+#else
+        //Causes SIGBUS on mips.
         *((jshort*)vptr) = bPtr[arrayOff+i];
+#endif
+
         vptr+=valSize;
         memset(vptr, 0, psize);
         vptr+=psize;
@@ -2324,6 +2433,18 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_writeEx
 
 	vptr += off;
 	if (size == 4) {
+#if (defined(__mips64))
+        if ((((uintptr_t )vptr) & 0x3) != 0) {
+            jint* carray = (*env)->GetIntArrayElements(env, array, NULL);
+            if (carray == NULL) {
+                jthrowCC_OutOfMemoryError_1(env, "GetIntArrayElements");
+                return;
+            }
+            memcpy(vptr, (void*) &carray[arrayOff], arrayLen*4);
+            (*env)->ReleaseIntArrayElements(env, array, carray, JNI_ABORT);
+            return;
+        }
+#endif
 		(*env)->GetIntArrayRegion(env, array, arrayOff, arrayLen, (jint*) vptr);
 		return;
 	}
@@ -2347,6 +2468,18 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_writeEx
 			return;
 		}
 		case (2): {
+#if (defined(__mips64))
+            if ((((uintptr_t)vptr) & 0x1) != 0) {
+                uint8_t* pptr = (uint8_t *) vptr;
+                for (jsize i, c = 0; i < arrayLen*2; i+=2) {
+                    uint32_t acc = (uint32_t) bPtr[arrayOff+c++];
+                    pptr[i+0] = (uint8_t) ((acc >> 0) & 0xFF);
+                    pptr[i+1] = (uint8_t) ((acc >> 8) & 0xFF);
+                }
+                (*env)->ReleaseIntArrayElements(env, array, bPtr, JNI_ABORT);
+			    return;
+            }
+#endif
 			uint16_t* pptr = (uint16_t*) vptr;
 			for (jsize i = 0; i < arrayLen; i++) {
 				pptr[i] = (uint16_t) bPtr[arrayOff+i];
@@ -2356,6 +2489,17 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_writeEx
 			return;
 		}
 		case (3): {
+#if (defined(__mips64))
+            uint8_t* pptr = (uint8_t *) vptr;
+            for (jsize i, c = 0; i < arrayLen*3; i+=3) {
+                uint32_t acc = (uint32_t) bPtr[arrayOff+c++];
+                pptr[i+0] = (uint8_t) ((acc >>  0) & 0xFF);
+                pptr[i+1] = (uint8_t) ((acc >>  8) & 0xFF);
+                pptr[i+2] = (uint8_t) ((acc >> 16) & 0xFF);
+            }
+            (*env)->ReleaseIntArrayElements(env, array, bPtr, JNI_ABORT);
+            return;
+#else
 			for (jsize i = 0; i < arrayLen; i++) {
 				uint32_t u32 = (uint32_t) bPtr[arrayOff+i];
 #if BYTE_ORDER == LITTLE_ENDIAN
@@ -2372,6 +2516,7 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_writeEx
 
 			(*env)->ReleaseIntArrayElements(env, array, bPtr, JNI_ABORT);
 			return;
+#endif
 		}
         default:
             break;
@@ -2390,7 +2535,13 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_writeEx
     }
 #elif BYTE_ORDER == LITTLE_ENDIAN
     for (jsize i = 0; i < arrayLen; i++) {
+#if (defined(__mips64))
+        memcpy(vptr, (void*) &bPtr[arrayOff+i], valSize);
+#else
+        //Causes SIGBUS on mips.
         *((jint*)vptr) = bPtr[arrayOff+i];
+#endif
+
         vptr+=valSize;
         memset(vptr, 0, psize);
         vptr+=psize;
@@ -2426,6 +2577,19 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_writeEx
 
     vptr += off;
     if (size == 8) {
+#if (defined(__arm__) || defined(__mips64))
+        if ((((uintptr_t )vptr) & 0x7) != 0) {
+            jlong* carray = (*env)->GetLongArrayElements(env, array, NULL);
+            if (carray == NULL) {
+                jthrowCC_OutOfMemoryError_1(env, "GetLongArrayElements");
+                return;
+            }
+            memcpy(vptr, (void*) &carray[arrayOff], arrayLen*8);
+            (*env)->ReleaseLongArrayElements(env, array, carray, JNI_ABORT);
+            return;
+        }
+
+#endif
         (*env)->GetLongArrayRegion(env, array, arrayOff, arrayLen, (jlong*) vptr);
         return;
     }
@@ -2448,17 +2612,40 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_writeEx
 			return;
 		}
 		case (2): {
-			uint16_t* pptr = (uint16_t*) vptr;
-			for (jsize i = 0; i < arrayLen; i++) {
-				pptr[i] = (uint16_t) bPtr[arrayOff+i];
-			}
+#if (defined(__mips64))
+            if ((((uintptr_t)vptr) & 0x1) != 0) {
+                uint8_t* pptr = (uint8_t *) vptr;
+                for (jsize i, c = 0; i < arrayLen*2; i+=2) {
+                    uint64_t acc = (uint64_t) bPtr[arrayOff+c++];
+                    pptr[i+0] = (uint8_t) ((acc >> 0) & 0xFF);
+                    pptr[i+1] = (uint8_t) ((acc >> 8) & 0xFF);
+                }
+                (*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_ABORT);
+			    return;
+            }
+#endif
+            uint16_t* pptr = (uint16_t*) vptr;
+            for (jsize i = 0; i < arrayLen; i++) {
+                pptr[i] = (uint16_t) bPtr[arrayOff+i];
+            }
 
 			(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_ABORT);
 			return;
 		}
 		case (3): {
-			for (jsize i = 0; i < arrayLen; i++) {
-				uint32_t u32 = (uint32_t) bPtr[arrayOff+i];
+#if (defined(__mips64))
+            uint8_t* pptr = (uint8_t *) vptr;
+            for (jsize i, c = 0; i < arrayLen*3; i+=3) {
+                uint64_t acc = (uint64_t) bPtr[arrayOff+c++];
+                pptr[i+0] = (uint8_t) ((acc >>  0) & 0xFF);
+                pptr[i+1] = (uint8_t) ((acc >>  8) & 0xFF);
+                pptr[i+2] = (uint8_t) ((acc >> 16) & 0xFF);
+            }
+            (*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_ABORT);
+            return;
+#else
+            for (jsize i = 0; i < arrayLen; i++) {
+                uint32_t u32 = (uint32_t) bPtr[arrayOff+i];
 #if BYTE_ORDER == LITTLE_ENDIAN
                 *((uint16_t*) (vptr+0)) = (uint16_t) u32;
                 *((uint8_t*)  (vptr+2)) = (uint8_t) (u32 >> 16);
@@ -2469,12 +2656,27 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_writeEx
                 #error
 #endif
                 vptr+=3;
-			}
+            }
 
-			(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_ABORT);
-			return;
+            (*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_ABORT);
+            return;
+#endif
 		}
 		case (4): {
+#if (defined(__mips64))
+            if ((((uintptr_t)vptr) & 0x3) != 0) {
+                uint8_t* pptr = (uint8_t *) vptr;
+                for (jsize i, c = 0; i < arrayLen*4; i+=4) {
+                    uint64_t acc = (uint64_t) bPtr[arrayOff+c++];
+                    pptr[i+0] = (uint8_t) ((acc >>  0) & 0xFF);
+                    pptr[i+1] = (uint8_t) ((acc >>  8) & 0xFF);
+                    pptr[i+2] = (uint8_t) ((acc >> 16) & 0xFF);
+                    pptr[i+3] = (uint8_t) ((acc >> 24) & 0xFF);
+                }
+                (*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_ABORT);
+			    return;
+            }
+#endif
 			uint32_t* pptr = (uint32_t*) vptr;
 			for (jsize i = 0; i < arrayLen; i++) {
 				pptr[i] = (uint32_t) bPtr[arrayOff+i];
@@ -2484,6 +2686,19 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_writeEx
 			return;
 		}
 		case (5): {
+#if (defined(__mips64))
+            uint8_t* pptr = (uint8_t *) vptr;
+            for (jsize i, c = 0; i < arrayLen*5; i+=5) {
+                uint64_t acc = (uint64_t) bPtr[arrayOff+c++];
+                pptr[i+0] = (uint8_t) ((acc >>  0) & 0xFF);
+                pptr[i+1] = (uint8_t) ((acc >>  8) & 0xFF);
+                pptr[i+2] = (uint8_t) ((acc >> 16) & 0xFF);
+                pptr[i+3] = (uint8_t) ((acc >> 24) & 0xFF);
+                pptr[i+4] = (uint8_t) ((acc >> 32) & 0xFF);
+            }
+            (*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_ABORT);
+            return;
+#else
 			for (jsize i = 0; i < arrayLen; i++) {
 				uint64_t u64 = (uint64_t) bPtr[arrayOff+i];
 #if BYTE_ORDER == LITTLE_ENDIAN
@@ -2500,11 +2715,25 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_writeEx
 
 			(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_ABORT);
 			return;
+#endif
 		}
 		case (6): {
+#if (defined(__mips64))
+            uint8_t* pptr = (uint8_t *) vptr;
+            for (jsize i, c = 0; i < arrayLen*6; i+=6) {
+                uint64_t acc = (uint64_t) bPtr[arrayOff+c++];
+                pptr[i+0] = (uint8_t) ((acc >>  0) & 0xFF);
+                pptr[i+1] = (uint8_t) ((acc >>  8) & 0xFF);
+                pptr[i+2] = (uint8_t) ((acc >> 16) & 0xFF);
+                pptr[i+3] = (uint8_t) ((acc >> 24) & 0xFF);
+                pptr[i+4] = (uint8_t) ((acc >> 32) & 0xFF);
+                pptr[i+5] = (uint8_t) ((acc >> 40) & 0xFF);
+            }
+            (*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_ABORT);
+            return;
+#else
 			uint8_t* pptr = (uint8_t*) vptr;
-			jsize x = 0;
-			for (jsize i = 0; i < arrayLen; i++) {
+            for (jsize i = 0; i < arrayLen; i++) {
 				uint64_t u64 = (uint64_t) bPtr[arrayOff+i];
 #if BYTE_ORDER == LITTLE_ENDIAN
                 *((uint32_t*) (vptr+0)) = (uint32_t) u64;
@@ -2520,11 +2749,26 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_writeEx
 
 			(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_ABORT);
 			return;
+#endif
 		}
 		case (7): {
+#if (defined(__mips64))
+            uint8_t* pptr = (uint8_t *) vptr;
+            for (jsize i, c = 0; i < arrayLen*7; i+=7) {
+                uint64_t acc = (uint64_t) bPtr[arrayOff+c++];
+                pptr[i+0] = (uint8_t) ((acc >>  0) & 0xFF);
+                pptr[i+1] = (uint8_t) ((acc >>  8) & 0xFF);
+                pptr[i+2] = (uint8_t) ((acc >> 16) & 0xFF);
+                pptr[i+3] = (uint8_t) ((acc >> 24) & 0xFF);
+                pptr[i+4] = (uint8_t) ((acc >> 32) & 0xFF);
+                pptr[i+5] = (uint8_t) ((acc >> 40) & 0xFF);
+                pptr[i+6] = (uint8_t) ((acc >> 48) & 0xFF);
+            }
+            (*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_ABORT);
+            return;
+#else
 			uint8_t* pptr = (uint8_t*) vptr;
-			jsize x = 0;
-			for (jsize i = 0; i < arrayLen; i++) {
+            for (jsize i = 0; i < arrayLen; i++) {
 				uint64_t u64 = (uint64_t) bPtr[arrayOff+i];
 #if BYTE_ORDER == LITTLE_ENDIAN
                 *((uint32_t*) (vptr+0)) = (uint32_t) u64;
@@ -2542,6 +2786,7 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_writeEx
 
 			(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_ABORT);
 			return;
+#endif
 		}
 	}
 
@@ -2557,7 +2802,14 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_writeEx
     }
 #elif BYTE_ORDER == LITTLE_ENDIAN
     for (jsize i = 0; i < arrayLen; i++) {
+
+#if (defined(__arm__) || defined(__mips64))
+        memcpy(vptr, (void*) &bPtr[arrayOff+i], valSize);
+#else
+        //Causes SIGBUS on arm 32 bit.
         *((jlong*)vptr) = bPtr[arrayOff+i];
+#endif
+
         vptr+=valSize;
         memset(vptr, 0, psize);
         vptr+=psize;
@@ -2702,6 +2954,18 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_readExp
 
 	vptr += off;
 	if (size == 2) {
+#if (defined(__mips64))
+        if ((((uintptr_t )vptr) & 0x1) != 0) {
+            jshort* carray = (*env)->GetCharArrayElements(env, array, NULL);
+            if (carray == NULL) {
+                jthrowCC_OutOfMemoryError_1(env, "GetCharArrayElements");
+                return;
+            }
+            memcpy((void*) &carray[arrayOff], vptr, arrayLen*2);
+            (*env)->ReleaseCharArrayElements(env, array, carray, JNI_OK);
+            return;
+        }
+#endif
 		(*env)->SetCharArrayRegion(env, array, arrayOff, arrayLen, (jchar*) vptr);
 		return;
 	}
@@ -2729,8 +2993,14 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_readExp
 #endif
 
 	for (jsize i = 0; i < arrayLen; i++) {
-		jchar* pptr = (jchar*) vptr;
-		bPtr[arrayOff+i] = pptr[0];
+#if (defined(__mips64))
+        memcpy((void*) &bPtr[arrayOff+i], vptr, 2);
+#else
+        //Causes SIGBUS on mips.
+        jchar* pptr = (jchar*) vptr;
+        bPtr[arrayOff+i] = pptr[0];
+#endif
+
 		vptr+=size;
 	}
 
@@ -2762,6 +3032,18 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_readExp
 
 	vptr += off;
 	if (size == 2) {
+#if (defined(__mips64))
+        if ((((uintptr_t )vptr) & 0x1) != 0) {
+            jshort* carray = (*env)->GetShortArrayElements(env, array, NULL);
+            if (carray == NULL) {
+                jthrowCC_OutOfMemoryError_1(env, "GetShortArrayElements");
+                return;
+            }
+            memcpy((void*) &carray[arrayOff], vptr, arrayLen*2);
+            (*env)->ReleaseShortArrayElements(env, array, carray, JNI_OK);
+            return;
+        }
+#endif
 		(*env)->SetShortArrayRegion(env, array, arrayOff, arrayLen, (jshort*) vptr);
 		return;
 	}
@@ -2789,8 +3071,14 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_readExp
 #endif
 
 	for (jsize i = 0; i < arrayLen; i++) {
-		jshort* pptr = (jshort*) vptr;
-		bPtr[arrayOff+i] = pptr[0];
+#if (defined(__mips64))
+        memcpy((void*) &bPtr[arrayOff+i], vptr, 2);
+#else
+        //Causes SIGBUS on mips.
+        jshort* pptr = (jshort*) vptr;
+        bPtr[arrayOff+i] = pptr[0];
+#endif
+
 		vptr+=size;
 	}
 
@@ -2822,6 +3110,18 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_readExp
 
 	vptr += off;
 	if (size == 4) {
+#if (defined(__mips64))
+        if ((((uintptr_t )vptr) & 0x3) != 0) {
+            jint* carray = (*env)->GetIntArrayElements(env, array, NULL);
+            if (carray == NULL) {
+                jthrowCC_OutOfMemoryError_1(env, "GetIntArrayElements");
+                return;
+            }
+            memcpy((void*) &carray[arrayOff], vptr, arrayLen*4);
+            (*env)->ReleaseIntArrayElements(env, array, carray, JNI_OK);
+            return;
+        }
+#endif
 		(*env)->SetIntArrayRegion(env, array, arrayOff, arrayLen, (jint*) vptr);
 		return;
 	}
@@ -2845,6 +3145,16 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_readExp
 			return;
 		}
 		case (2): {
+#if (defined(__mips64))
+            if ((((uintptr_t)vptr) & 0x1) != 0) {
+                uint8_t* pptr = (uint8_t *) vptr;
+                for (jsize i, c = 0; i < arrayLen*2; i+=2) {
+                    bPtr[arrayOff+c++] = (jlong) ((((uint64_t) pptr[i+1]) << 8) | ((uint64_t) pptr[i]));
+                }
+                (*env)->ReleaseIntArrayElements(env, array, bPtr, JNI_OK);
+                return;
+            }
+#endif
             uint16_t* pptr = (uint16_t *) vptr;
 			for (jsize i = 0; i < arrayLen; i++) {
 				bPtr[arrayOff+i] = (jint) pptr[i];
@@ -2854,6 +3164,14 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_readExp
 			return;
 		}
 		case (3): {
+#if (defined(__mips64))
+            uint8_t* pptr = (uint8_t *) vptr;
+            for (jsize i, c = 0; i < arrayLen*3; i+=3) {
+                bPtr[arrayOff+c++] = (jint) ((((uint32_t) pptr[i+2]) << 16) | (((uint32_t) pptr[i+1]) << 8) | ((uint32_t) pptr[i]));
+            }
+            (*env)->ReleaseIntArrayElements(env, array, bPtr, JNI_OK);
+            return;
+#else
 			for (jsize i = 0; i < arrayLen; i++) {
 #if BYTE_ORDER == LITTLE_ENDIAN
                 bPtr[arrayOff+i] = (jint) (((uint32_t) *((uint16_t*)(vptr+0))) | (((uint32_t) *((uint8_t*)(vptr+2))) << 16));
@@ -2867,6 +3185,7 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_readExp
 
 			(*env)->ReleaseIntArrayElements(env, array, bPtr, JNI_OK);
 			return;
+#endif
 		}
 	}
 
@@ -2875,8 +3194,13 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_readExp
     #endif
 
 	for (jsize i = 0; i < arrayLen; i++) {
-		jint* pptr = (jint*) vptr;
-		bPtr[arrayOff+i] = pptr[0];
+#if (defined(__mips64))
+        memcpy((void*) &bPtr[arrayOff+i], vptr, 4);
+#else
+        //Causes SIGBUS on mips.
+        jint* pptr = (jint*) vptr;
+        bPtr[arrayOff+i] = pptr[0];
+#endif
 		vptr+=size;
 	}
 
@@ -2908,8 +3232,20 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_readExp
 	}
 
 	vptr += off;
-	if (size == 8) {
-		(*env)->SetLongArrayRegion(env, array, arrayOff, arrayLen, (jlong*) vptr);
+    if (size == 8) {
+#if (defined(__arm__) || defined(__mips64))
+        if ((((uintptr_t )vptr) & 0x7) != 0) {
+            jlong* carray = (*env)->GetLongArrayElements(env, array, NULL);
+            if (carray == NULL) {
+                jthrowCC_OutOfMemoryError_1(env, "GetLongArrayElements");
+                return;
+            }
+            memcpy((void*) &carray[arrayOff], vptr, arrayLen*8);
+            (*env)->ReleaseLongArrayElements(env, array, carray, JNI_OK);
+            return;
+        }
+#endif
+        (*env)->SetLongArrayRegion(env, array, arrayOff, arrayLen, (jlong*) vptr);
 		return;
 	}
 
@@ -2932,17 +3268,35 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_readExp
 			return;
 		}
 		case (2): {
+#if (defined(__mips64))
+            if ((((uintptr_t)vptr) & 0x1) != 0) {
+                uint8_t* pptr = (uint8_t *) vptr;
+                for (jsize i, c = 0; i < arrayLen*2; i+=2) {
+                    bPtr[arrayOff+c++] = (jlong) ((((uint64_t) pptr[i+1]) << 8) | ((uint64_t) pptr[i]));
+                }
+                (*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_OK);
+                return;
+            }
+#endif
             uint16_t* pptr = (uint16_t *) vptr;
-			for (jsize i = 0; i < arrayLen; i++) {
-				bPtr[arrayOff+i] = (jlong) pptr[i];
-			}
+            for (jsize i = 0; i < arrayLen; i++) {
+                bPtr[arrayOff+i] = (jlong) pptr[i];
+            }
 
-			(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_OK);
-			return;
+            (*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_OK);
+            return;
 		}
 		case (3): {
-			jsize x = 0;
-			for (jsize i = 0; i < arrayLen; i++) {
+#if (defined(__mips64))
+            uint8_t* pptr = (uint8_t *) vptr;
+            for (jsize i, c = 0; i < arrayLen*3; i+=3) {
+                bPtr[arrayOff+c++] = (jlong) ((((uint64_t) pptr[i+2]) << 16) | (((uint64_t) pptr[i+1]) << 8) | ((uint64_t) pptr[i]));
+            }
+            (*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_OK);
+            return;
+#else
+            jsize x = 0;
+            for (jsize i = 0; i < arrayLen; i++) {
 #if BYTE_ORDER == LITTLE_ENDIAN
                 bPtr[arrayOff+i] = (jlong) (((uint32_t) *((uint16_t*)(vptr+0))) | (((uint32_t) *((uint8_t*)(vptr+2))) << 16));
 #elif BYTE_ORDER == BIG_ENDIAN
@@ -2951,12 +3305,23 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_readExp
 #error
 #endif
                 vptr+=3;
-			}
+            }
 
-			(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_OK);
-			return;
+            (*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_OK);
+            return;
+#endif
 		}
 		case (4): {
+#if (defined(__mips64))
+            if ((((uintptr_t)vptr) & 0x3) != 0) {
+                uint8_t* pptr = (uint8_t *) vptr;
+                for (jsize i, c = 0; i < arrayLen*4; i+=4) {
+                    bPtr[arrayOff+c++] = (jlong) ((((uint64_t) pptr[i+3]) << 24) | (((uint64_t) pptr[i+2]) << 16) | (((uint64_t) pptr[i+1]) << 8) | ((uint64_t) pptr[i]));
+                }
+                (*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_OK);
+                return;
+            }
+#endif
             uint32_t* pptr = (uint32_t *) vptr;
 			for (jsize i = 0; i < arrayLen; i++) {
 				bPtr[arrayOff+i] = (jlong) pptr[i];
@@ -2966,7 +3331,15 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_readExp
 			return;
 		}
 		case (5): {
-			for (jsize i = 0; i < arrayLen; i++) {
+#if (defined(__mips64))
+            uint8_t* pptr = (uint8_t *) vptr;
+            for (jsize i, c = 0; i < arrayLen*5; i+=5) {
+                bPtr[arrayOff+c++] = (jlong) ((((uint64_t) pptr[i+4]) << 32) | (((uint64_t) pptr[i+3]) << 24) | (((uint64_t) pptr[i+2]) << 16) | (((uint64_t) pptr[i+1]) << 8) | ((uint64_t) pptr[i]));
+            }
+            (*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_OK);
+            return;
+#else
+            for (jsize i = 0; i < arrayLen; i++) {
 #if BYTE_ORDER == LITTLE_ENDIAN
                 bPtr[arrayOff+i] = (jlong) (((uint64_t) *((uint32_t*)(vptr+0))) | (((uint64_t) *((uint8_t*)(vptr+4))) << 32));
 #elif BYTE_ORDER == BIG_ENDIAN
@@ -2974,13 +3347,23 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_readExp
 #else
 #error
 #endif
-				vptr+=5;
-			}
+                vptr+=5;
+            }
 
-			(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_OK);
-			return;
+            (*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_OK);
+            return;
+#endif
+
 		}
 		case (6): {
+#if (defined(__mips64))
+            uint8_t* pptr = (uint8_t *) vptr;
+            for (jsize i, c = 0; i < arrayLen*6; i+=6) {
+                bPtr[arrayOff+c++] = (jlong) ((((uint64_t) pptr[i+5]) << 40) | (((uint64_t) pptr[i+4]) << 32) | (((uint64_t) pptr[i+3]) << 24) | (((uint64_t) pptr[i+2]) << 16) | (((uint64_t) pptr[i+1]) << 8) | ((uint64_t) pptr[i]));
+            }
+            (*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_OK);
+            return;
+#else
 			for (jsize i = 0; i < arrayLen; i++) {
 #if BYTE_ORDER == LITTLE_ENDIAN
                 bPtr[arrayOff+i] = (jlong) (((uint64_t) *((uint32_t*)(vptr+0))) | (((uint64_t) *((uint16_t*)(vptr+4))) << 32));
@@ -2994,8 +3377,17 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_readExp
 
 			(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_OK);
 			return;
+#endif
 		}
 		case (7): {
+#if (defined(__mips64))
+            uint8_t* pptr = (uint8_t *) vptr;
+            for (jsize i, c = 0; i < arrayLen*7; i+=7) {
+                bPtr[arrayOff+c++] = (jlong) ((((uint64_t) pptr[i+6]) << 48) | (((uint64_t) pptr[i+5]) << 40) | (((uint64_t) pptr[i+4]) << 32) | (((uint64_t) pptr[i+3]) << 24) | (((uint64_t) pptr[i+2]) << 16) | (((uint64_t) pptr[i+1]) << 8) | ((uint64_t) pptr[i]));
+            }
+            (*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_OK);
+            return;
+#else
 			for (jsize i = 0; i < arrayLen; i++) {
 #if BYTE_ORDER == LITTLE_ENDIAN
                 bPtr[arrayOff+i] = (jlong) (((uint64_t) *((uint32_t*)(vptr+0))) | (((uint64_t) *((uint16_t*)(vptr+4))) << 32) | (((uint64_t) *((uint8_t*)(vptr+6))) << 48));
@@ -3009,6 +3401,7 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_readExp
 
 			(*env)->ReleaseLongArrayElements(env, array, bPtr, JNI_OK);
 			return;
+#endif
 		}
         default:
             break;
@@ -3019,8 +3412,14 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNINativeMemory_readExp
 #endif
 
 	for (jsize i = 0; i < arrayLen; i++) {
-		jlong* pptr = (jlong*) vptr;
-		bPtr[arrayOff+i] = pptr[0];
+#if (defined(__arm__) || defined(__mips64))
+        memcpy((void*) &bPtr[arrayOff+i], vptr, 8);
+#else
+        //Causes SIGBUS on arm 32 bit.
+        jlong* pptr = (jlong*) vptr;
+        bPtr[arrayOff+i] = pptr[0];
+#endif
+
 		vptr+=size;
 	}
 

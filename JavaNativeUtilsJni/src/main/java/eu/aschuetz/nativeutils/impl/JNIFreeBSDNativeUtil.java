@@ -1,8 +1,6 @@
 package eu.aschuetz.nativeutils.impl;
 
 import eu.aschuetz.nativeutils.api.FreeBSDNativeUtil;
-import eu.aschuetz.nativeutils.api.LinuxNativeUtil;
-import eu.aschuetz.nativeutils.api.NativeUtil;
 
 public class JNIFreeBSDNativeUtil extends JNIPosixNativeUtil implements FreeBSDNativeUtil {
     @Override

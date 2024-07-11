@@ -335,9 +335,6 @@ public class JNILinuxNativeUtil extends JNIPosixNativeUtil implements LinuxNativ
     public native void chdir(String path) throws FileNotFoundException, NotDirectoryException, InvalidPathException, AccessDeniedException, FileSystemLoopException, IOException, UnknownNativeErrorException;
 
     @Override
-    public native void symlink(String targetPath, String sourcePath) throws IOException, UnknownNativeErrorException;
-
-    @Override
     public native void link(String target, String linkpath) throws IOException, InvalidPathException, ReadOnlyFileSystemException, AccessDeniedException, FileAlreadyExistsException, UnknownNativeErrorException;
 
     @Override

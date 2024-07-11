@@ -82,6 +82,7 @@ public interface LinuxNativeUtil extends NativeUtil {
     /**
      * Returns the CPU Model string.
      * Example for Intel CPU's would be "GenuineIntel"
+     * Note: on non X86/AMD64 this will always return null.
      */
     String __get_cpuid_count_model();
 
@@ -408,6 +409,19 @@ public interface LinuxNativeUtil extends NativeUtil {
      * @throws QuotaExceededException If any os enforced quota limit is violated by creating the link.
      */
     void symlink(String target, String linkpath) throws IOException, InvalidPathException, ReadOnlyFileSystemException, AccessDeniedException, FileAlreadyExistsException, UnknownNativeErrorException;
+
+    /**
+     * Unlinks a link
+     *
+     * @param path specifies the path to the link to unlink.
+     * @throws IOException If an IOError occurs when unlinking
+     * @throws AccessDeniedException If EACCESS occurs
+     * @throws ResourceBusyException if EBUSY occurs
+     * @throws FileIsDirectoryException If path is a directory and not a symlink (Linux Only)
+     * @throws FileSystemLoopException If the path contains a loop of symbolic links
+     * @throws ReadOnlyFileSystemException If the file system is read only
+     */
+    void unlink(String path) throws IOException, AccessDeniedException, ResourceBusyException, FileIsDirectoryException, FileSystemLoopException, ReadOnlyFileSystemException;
 
     /**
      * Creates a hard link pointing to target. The symlink is placed at "linkpath".

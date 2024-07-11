@@ -21,11 +21,8 @@
 package eu.aschuetz.nativeutils.test.freebsd;
 
 import eu.aschuetz.nativeutils.api.FreeBSDNativeUtil;
-import eu.aschuetz.nativeutils.api.LinuxNativeUtil;
 import eu.aschuetz.nativeutils.api.NativeUtils;
-import eu.aschuetz.nativeutils.api.exceptions.UnknownNativeErrorException;
 import eu.aschuetz.nativeutils.api.structs.Stat;
-import eu.aschuetz.nativeutils.api.structs.Statvfs;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -33,11 +30,9 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Random;
 
-public class FreeBSDStatTest {
+public class FBSDStatTest {
 
     String path1;
 

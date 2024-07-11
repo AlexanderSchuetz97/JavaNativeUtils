@@ -15,6 +15,22 @@ extern "C" {
 JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil_stat
   (JNIEnv *, jobject, jstring);
 
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil
+ * Method:    symlink
+ * Signature: (Ljava/lang/String;Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil_symlink
+  (JNIEnv *, jobject, jstring, jstring);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil
+ * Method:    unlink
+ * Signature: (Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil_unlink
+  (JNIEnv *, jobject, jstring);
+
 #ifdef __cplusplus
 }
 #endif

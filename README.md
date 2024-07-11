@@ -1,4 +1,4 @@
-# JavaNativeUtils
+l# JavaNativeUtils
 JavaNativeUtils is a library containing a jni wrapper for various operating system specific syscalls.
 Purpose of this library is to allow for direct interaction with the operating system from Java 
 without having to write a JNI wrapper every single time.
@@ -14,12 +14,12 @@ Maven:
 <dependency>
     <groupId>eu.aschuetz</groupId>
     <artifactId>JavaNativeUtilsApi</artifactId>
-    <version>4.5</version>
+    <version>4.6</version>
 </dependency>
 <dependency>
     <groupId>eu.aschuetz</groupId>
     <artifactId>JavaNativeUtilsJni</artifactId>
-    <version>4.5</version>
+    <version>4.6</version>
 </dependency>
 ````
 Note: for versions older than 4.0 use groupId io.github.alexanderschuetz97 artifactId JavaNativeUtils
@@ -54,6 +54,7 @@ if (NativeUtils.isFreeBSD()) {
 * ioctl
 * symlink
 * link
+* unlink
 * stat
 * statvfs
 * fstat
@@ -212,6 +213,8 @@ if (NativeUtils.isFreeBSD()) {
 #### FreeBSD
 * malloc & free
 * stat
+* symlink
+* unlink
 
 ### List of exposed JNI Functions (All OS)
 ### Reflection
@@ -312,7 +315,7 @@ the symbols for pthread_cond and pthread_mutex are the same on the c program and
 of JavaNativeUtils.
 
 
-## Building
+## Building and Development
 #### Windows:
 Building JavaNativeUtils on Windows is currently not possible.
 #### Linux:
@@ -345,12 +348,38 @@ To run non amd64 tests you may use the run bash script dockertest.sh in the repo
    - "docker run --rm -it arm64v8/debian:bookworm" is a good way to test this.
 5. run dockertest.sh (exit code 0 = no error)
 
+### How to debug the native part
+1. Edit the makefile and uncomment `#DEBUG_FLAGS=-ggdb -g3` and comment the `DEBUG_FLAGS=-g0` line underneath.
+2. Start the jvm with gdbserver and a java remote debugger in attach mode, suspend=y is recommended.
+3. Connect your native remote debugger (I use CLion)
+4. Place a java breakpoint in a java IDE (Eclipse or IntelliJ will work) after the call to System.load in NativeLibraryLoaderHelper
+5. Connect your java remote debugger
+6. You might have to instruct gdb to NOT stop on SIGSEGV and possibly other signals too as the JVM uses this signal internally for garbage collection
+7. Wait until the java breakpoint is hit
+8. Your should now be able to place your native breakpoints in the native debugger as the shared object should now have been loaded.
+9. Hit resume in your java debugger. After this you can detatch the java debugger.
+10. Wait until your native breakpoints are hit.
+
+#### Further debugging tips
+
+You can preempt NativeLibraryLoaderHelper by calling System.load to your debug so/dll before the first
+usage of NativeUtils in your program. This allows for easy debugging of the native part without
+recompiling your program with a custom .jar of JavaNativeUtils. This is especially useful if you 
+cannot compile JavaNativeUtils locally for whatever reason, since you can just compile a debug so/dll
+in a Virtual Machine and just "move" a single shared object file to your actual development machine.
+
+For debugging the windows native part I use gdbserver.exe to start the jvm. It should also be possible to attach 
+proprietary debuggers on windows or build a PDB for them by adjusting the makefile 
+and building a custom debug dll manually. I have never compiled JavaNativeUtils with anything 
+other than Clang or GCC, using for example the MSVC may work, 
+but will probably require significant modification of the makefile.
+
 ## Will this library be obsoleted by the Java FFI Interface (Project Panama)
-Probably yes. The Java FFI Interface allows a java developer to perform most of the actions
-that this library permits expect for bypassing the "Reflection" checks. 
-It will however require a significant amount of java code to be written by the user 
+Probably yes. The Java FFI Interface allows a Java developer to perform most of the actions
+that this library permits without writing C code. The only exception would be bypassing the "Reflection" checks. 
+It will however require a significant amount of Java code to be written by the developer 
 to perform the same things this library does. 
-The main advantage of the FFI vs this library is probably going to be that it can work with any .dll/.so file
+The main advantage of the FFI Interface vs this library is probably going to be that it can work with any .dll/.so file
 and on any CPU architecture.
 
 My conclusion from looking at early benchmarks of the Java FFI Interface vs JNI is that the FFI interface

@@ -25,12 +25,6 @@ int main(int argc, char* argv[]) {
         abort();
     }
 
-    struct memlayout {
-        pthread_mutexattr_t attr;
-        pthread_mutex_t mut1;
-
-    } __attribute__((packed));
-
     printf("mmap\n");
     fflush(stdout);
 
@@ -40,16 +34,17 @@ int main(int argc, char* argv[]) {
         abort();
     }
 
-    struct memlayout * lay = (struct memlayout *) mem;
+    pthread_mutexattr_t * attr = (pthread_mutexattr_t *) mem;
+    pthread_mutex_t * mut = (pthread_mutex_t *) (mem + 256);
 
     printf("pthread_mutex_lock\n");
     fflush(stdout);
-    if (pthread_mutex_lock(&lay->mut1) != 0) {
+    if (pthread_mutex_lock(mut) != 0) {
         abort();
     }
     printf("LOCKED\n");
     fflush(stdout);
-    if (pthread_mutex_unlock(&lay->mut1) != 0) {
+    if (pthread_mutex_unlock(mut) != 0) {
         abort();
     }
     printf("Done\n");

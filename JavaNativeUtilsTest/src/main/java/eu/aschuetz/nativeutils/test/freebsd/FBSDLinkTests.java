@@ -17,8 +17,9 @@
 // in the COPYING & COPYING.LESSER files in top level directory of JavaNativeUtils.
 // If not, see <https://www.gnu.org/licenses/>.
 //
-package eu.aschuetz.nativeutils.test.linux;
+package eu.aschuetz.nativeutils.test.freebsd;
 
+import eu.aschuetz.nativeutils.api.FreeBSDNativeUtil;
 import eu.aschuetz.nativeutils.api.LinuxNativeUtil;
 import eu.aschuetz.nativeutils.api.NativeUtils;
 import org.junit.After;
@@ -35,7 +36,7 @@ import java.nio.file.FileSystemLoopException;
 import java.nio.file.InvalidPathException;
 import java.util.Random;
 
-public class LinkLinkTests {
+public class FBSDLinkTests {
 
     String path1;
     String path2;
@@ -60,7 +61,7 @@ public class LinkLinkTests {
         try( FileOutputStream faos = new FileOutputStream(path1)) {
             faos.write(0x69);
         }
-        LinuxNativeUtil utils = NativeUtils.getLinuxUtil();
+        FreeBSDNativeUtil utils = NativeUtils.getFreeBSDUtil();
         utils.symlink(path1, path2);
 
         File f2 = new File(path2);
@@ -75,7 +76,7 @@ public class LinkLinkTests {
 
     @Test
     public void testLoop() throws Exception {
-        LinuxNativeUtil utils = NativeUtils.getLinuxUtil();
+        FreeBSDNativeUtil utils = NativeUtils.getFreeBSDUtil();
         utils.symlink(path1, path2);
         utils.symlink(path2, path1);
 
@@ -89,7 +90,7 @@ public class LinkLinkTests {
 
     @Test
     public void testInvalidPath() throws Exception {
-        LinuxNativeUtil utils = NativeUtils.getLinuxUtil();
+        FreeBSDNativeUtil utils = NativeUtils.getFreeBSDUtil();
         try {
             utils.symlink(path1, path2 + "/wupp");
             Assert.fail("InvalidPathException expected");
@@ -101,7 +102,7 @@ public class LinkLinkTests {
     @Test
     public void testExists() throws Exception {
         new File(path1).createNewFile();
-        LinuxNativeUtil utils = NativeUtils.getLinuxUtil();
+        FreeBSDNativeUtil utils = NativeUtils.getFreeBSDUtil();
         try {
             utils.symlink("/tmp", path1);
             Assert.fail("FileAlreadyExistsException expected");
@@ -113,7 +114,7 @@ public class LinkLinkTests {
     @Test
     public void testAccess() throws Exception {
         //Will not be green as root user...
-        LinuxNativeUtil utils = NativeUtils.getLinuxUtil();
+        FreeBSDNativeUtil utils = NativeUtils.getFreeBSDUtil();
         try {
             utils.symlink("/tmp", "/root/meep");
             //someone ran this as root...

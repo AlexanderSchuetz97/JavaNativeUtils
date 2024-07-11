@@ -433,14 +433,41 @@ public class MemTest {
     }
 
     @Test
+    public void testSingleFloatWriteAndRead() throws Throwable {
+        mkRandom();
+
+        for (int value2 : randomInts) {
+            float value = Float.intBitsToFloat(value2);
+            for (long i = 0; i + 3 < memory.size(); i++) {
+                memory.write(i, value);
+                Assert.assertEquals(value2, Float.floatToIntBits(memory.readFloat(i)));
+                Assert.assertEquals(value2, memory.readInt(i));
+            }
+        }
+    }
+
+    @Test
     public void testSingleLongWriteAndRead() throws Throwable {
         mkRandom();
 
         for (long value : randomLongs) {
             for (long i = 0; i + 7 < memory.size(); i++) {
-                //System.out.println(i);
                 memory.write(i, value);
                 Assert.assertEquals(value, memory.readLong(i));
+            }
+        }
+    }
+
+    @Test
+    public void testSingleDoubleWriteAndRead() throws Throwable {
+        mkRandom();
+
+        for (long value2 : randomLongs) {
+            double value = Double.longBitsToDouble(value2);
+            for (long i = 0; i + 7 < memory.size(); i++) {
+                memory.write(i, value);
+                Assert.assertEquals(value2, Double.doubleToLongBits(memory.readDouble(i)));
+                Assert.assertEquals(value2, memory.readLong(i));
             }
         }
     }
@@ -1749,275 +1776,321 @@ public class MemTest {
 
     @Test
     public void testExInt1() {
-        int[] x = new int[]{0x24, 0xFE77};
-        memory.writeByte(3, 1);
-        memory.write(0, x, 1, 0, 2);
-        x = new int[]{0x24, 0x77};
-        byte[] x2 = new byte[]{0x24, 0x77};
-        byte[] x3 = new byte[2];
-        int[] r2 = new int[2];
-        memory.read(0, r2, 1, 0, 2);
-        memory.read(0, x3);
-        Assert.assertArrayEquals(x, r2);
-        Assert.assertArrayEquals(x2, x3);
-        Assert.assertEquals(1, memory.read(3));
+        for (int i = 0; i < 16; i++) {
+            int[] x = new int[]{0x24, 0xFE77};
+            memory.writeByte(i+3, 1);
+            memory.write(i+0, x, 1, 0, 2);
+            x = new int[]{0x24, 0x77};
+            byte[] x2 = new byte[]{0x24, 0x77};
+            byte[] x3 = new byte[2];
+            int[] r2 = new int[2];
+            memory.read(i+0, r2, 1, 0, 2);
+            memory.read(i+0, x3);
+            Assert.assertArrayEquals(x, r2);
+            Assert.assertArrayEquals(x2, x3);
+            Assert.assertEquals(1, memory.read(i+3));
+        }
     }
 
     @Test
     public void testExInt2() {
-        int[] x = new int[]{0x24, 0x77FE};
-        memory.writeByte(4, 1);
-        memory.write(0, x, 2, 0, 2);
-        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
-                new byte[]{0x00, 0x24, 0x77, (byte) 0xFE} :
-                new byte[]{0x24, 0x00, (byte) 0xFE, 0x77};
-        byte[] x3 = new byte[4];
-        memory.read(0, x3);
-        int[] r2 = new int[2];
-        memory.read(0, r2, 2, 0, 2);
-        Assert.assertArrayEquals(x, r2);
-        Assert.assertEquals(1, memory.read(4));
-        Assert.assertArrayEquals(x2, x3);
+        for (int i = 0; i < 16; i++) {
+            int[] x = new int[]{0x24, 0x77FE};
+            memory.writeByte(i+4, 1);
+            memory.write(i+0, x, 2, 0, 2);
+            byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                    new byte[]{0x00, 0x24, 0x77, (byte) 0xFE} :
+                    new byte[]{0x24, 0x00, (byte) 0xFE, 0x77};
+            byte[] x3 = new byte[4];
+            memory.read(i+0, x3);
+            int[] r2 = new int[2];
+            memory.read(i+0, r2, 2, 0, 2);
+            Assert.assertArrayEquals(x, r2);
+            Assert.assertEquals(1, memory.read(i+4));
+            Assert.assertArrayEquals(x2, x3);
+        }
     }
 
     @Test
     public void testExInt3() {
-        int[] x = new int[]{0x24, 0x77FE};
-        memory.writeByte(6, 1);
-        memory.write(0, x, 3, 0, 2);
-        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
-                new byte[]{0x00, 0x00, 0x24, 0x00, 0x77, (byte) 0xFE} :
-                new byte[]{0x24, 0x00, 0x00, (byte) 0xFE, 0x77, 0x00};
-        byte[] x3 = new byte[6];
-        memory.read(0, x3);
-        int[] r2 = new int[2];
-        memory.read(0, r2, 3, 0, 2);
-        Assert.assertArrayEquals(x, r2);
-        Assert.assertEquals(1, memory.read(6));
-        Assert.assertArrayEquals(x2, x3);
+        for (int i = 0; i < 16; i++) {
+            int[] x = new int[]{0x24, 0x77FE};
+            memory.writeByte(i+6, 1);
+            memory.write(i+0, x, 3, 0, 2);
+            byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                    new byte[]{0x00, 0x00, 0x24, 0x00, 0x77, (byte) 0xFE} :
+                    new byte[]{0x24, 0x00, 0x00, (byte) 0xFE, 0x77, 0x00};
+            byte[] x3 = new byte[6];
+            memory.read(i+0, x3);
+            int[] r2 = new int[2];
+            memory.read(i+0, r2, 3, 0, 2);
+            Assert.assertArrayEquals(x, r2);
+            Assert.assertEquals(1, memory.read(i+6));
+            Assert.assertArrayEquals(x2, x3);
+        }
     }
 
     @Test
     public void testExInt4() {
-        int[] x = new int[]{0x24, 0x77FE};
-        memory.writeByte(8, 1);
-        memory.write(0, x, 4, 0, 2);
-        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
-                new byte[]{0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x77, (byte) 0xFE} :
-                new byte[]{0x24, 0x00, 0x00, 0x00, (byte) 0xFE, 0x77, 0x00, 0x00};
-        byte[] x3 = new byte[8];
-        memory.read(0, x3);
-        int[] r2 = new int[2];
-        memory.read(0, r2, 4, 0, 2);
-        Assert.assertArrayEquals(x, r2);
-        Assert.assertEquals(1, memory.read(8));
-        Assert.assertArrayEquals(x2, x3);
+        for (int i = 0; i < 16; i++) {
+            int[] x = new int[]{0x24, 0x77FE};
+            memory.writeByte(i+8, 1);
+            memory.write(i+0, x, 4, 0, 2);
+            byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                    new byte[]{0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x77, (byte) 0xFE} :
+                    new byte[]{0x24, 0x00, 0x00, 0x00, (byte) 0xFE, 0x77, 0x00, 0x00};
+            byte[] x3 = new byte[8];
+            memory.read(i+0, x3);
+            int[] r2 = new int[2];
+            memory.read(i+0, r2, 4, 0, 2);
+            Assert.assertArrayEquals(x, r2);
+            Assert.assertEquals(1, memory.read(i+8));
+            Assert.assertArrayEquals(x2, x3);
+        }
     }
 
     @Test
     public void testExInt5() {
-        int[] x = new int[]{0x24, 0x77FE};
-        memory.writeByte(10, 1);
-        memory.write(0, x, 5, 0, 2);
-        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
-                new byte[]{0x00, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE} :
-                new byte[]{0x24, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, 0x77, 0x00, 0x00, 0x00};
-        byte[] x3 = new byte[10];
-        memory.read(0, x3);
-        int[] r2 = new int[2];
-        memory.read(0, r2, 5, 0, 2);
-        Assert.assertArrayEquals(x, r2);
-        Assert.assertEquals(1, memory.read(10));
-        Assert.assertArrayEquals(x2, x3);
+        for (int i = 0; i < 16; i++) {
+            int[] x = new int[]{0x24, 0x77FE};
+            memory.writeByte(i+10, 1);
+            memory.write(i+0, x, 5, 0, 2);
+            byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                    new byte[]{0x00, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE} :
+                    new byte[]{0x24, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, 0x77, 0x00, 0x00, 0x00};
+            byte[] x3 = new byte[10];
+            memory.read(i+0, x3);
+            int[] r2 = new int[2];
+            memory.read(i+0, r2, 5, 0, 2);
+            Assert.assertArrayEquals(x, r2);
+            Assert.assertEquals(1, memory.read(i+10));
+            Assert.assertArrayEquals(x2, x3);
+        }
     }
 
     @Test
     public void testExInt6() {
-        int[] x = new int[]{0x24, 0x77FE};
-        memory.writeByte(12, 1);
-        memory.write(0, x, 6, 0, 2);
-        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
-                new byte[]{0x00, 0x00, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE} :
-                new byte[]{0x24, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, 0x77, 0x00, 0x00, 0x00, 0x00};
-        byte[] x3 = new byte[12];
-        memory.read(0, x3);
-        int[] r2 = new int[2];
-        memory.read(0, r2, 6, 0, 2);
-        Assert.assertArrayEquals(x, r2);
-        Assert.assertEquals(1, memory.read(12));
-        Assert.assertArrayEquals(x2, x3);
+        for (int i = 0; i < 16; i++) {
+            int[] x = new int[]{0x24, 0x77FE};
+            memory.writeByte(i+12, 1);
+            memory.write(i+0, x, 6, 0, 2);
+            byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                    new byte[]{0x00, 0x00, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE} :
+                    new byte[]{0x24, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, 0x77, 0x00, 0x00, 0x00, 0x00};
+            byte[] x3 = new byte[12];
+            memory.read(i+0, x3);
+            int[] r2 = new int[2];
+            memory.read(i+0, r2, 6, 0, 2);
+            Assert.assertArrayEquals(x, r2);
+            Assert.assertEquals(1, memory.read(i+12));
+            Assert.assertArrayEquals(x2, x3);
+        }
     }
 
     @Test
     public void testExLong1() {
-        long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
-        memory.writeByte(4, 1);
-        memory.write(0, x, 1, 0, 3);
-        x = new long[]{0x24, 0x77, 0x42};
-        byte[] x2 = new byte[]{0x24, 0x77, 0x42};
-        byte[] x3 = new byte[3];
-        long[] r2 = new long[3];
-        memory.read(0, r2, 1, 0, 3);
-        memory.read(0, x3);
-        Assert.assertArrayEquals(x, r2);
-        Assert.assertArrayEquals(x2, x3);
-        Assert.assertEquals(1, memory.read(4));
+        for (int i = 0; i < 16; i++) {
+            long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
+            memory.writeByte(i+4, 1);
+            memory.write(i+0, x, 1, 0, 3);
+            x = new long[]{0x24, 0x77, 0x42};
+            byte[] x2 = new byte[]{0x24, 0x77, 0x42};
+            byte[] x3 = new byte[3];
+            long[] r2 = new long[3];
+            memory.read(i+0, r2, 1, 0, 3);
+            memory.read(i+0, x3);
+            Assert.assertArrayEquals(x, r2);
+            Assert.assertArrayEquals(x2, x3);
+            Assert.assertEquals(1, memory.read(i+4));
+        }
     }
 
     @Test
     public void testExLong2() {
-        long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
-        memory.writeByte(6, 1);
-        memory.write(0, x, 2, 0, 3);
-        x = new long[]{0x24, 0xFE77, 0xAA42L};
-        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
-                new byte[]{0x00, 0x24, (byte) 0xFE, 0x77, (byte) 0xAA, 0x42} :
-                new byte[]{0x24, 0x00, 0x77, (byte) 0xFE, 0x42, (byte) 0xAA};
-        byte[] x3 = new byte[6];
-        memory.read(0, x3);
-        long[] r2 = new long[3];
-        memory.read(0, r2, 2, 0, 3);
-        Assert.assertArrayEquals(x, r2);
-        Assert.assertEquals(1, memory.read(6));
-        Assert.assertArrayEquals(x2, x3);
+        for (int i = 0; i < 16; i++) {
+            System.out.println("testExLong2 1 " + i);
+            memory.zero();
+            long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
+            memory.writeByte(i+6, 1);
+            System.out.println("testExLong2 2 " + i);
+
+            memory.write(i+0, x, 2, 0, 3);
+            System.out.println("testExLong2 3 " + i);
+            x = new long[]{0x24, 0xFE77, 0xAA42L};
+            byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                    new byte[]{0x00, 0x24, (byte) 0xFE, 0x77, (byte) 0xAA, 0x42} :
+                    new byte[]{0x24, 0x00, 0x77, (byte) 0xFE, 0x42, (byte) 0xAA};
+            byte[] x3 = new byte[6];
+            memory.read(i+0, x3);
+            System.out.println("testExLong2 4 " + i + " " + Arrays.toString(x3) + " " + Arrays.toString(x2));
+            Assert.assertArrayEquals(x2, x3);
+            long[] r2 = new long[3];
+            memory.read(i+0, r2, 2, 0, 3);
+            System.out.println("testExLong2 5 " + i + " " + Arrays.toString(r2) + " " + Arrays.toString(x));
+            Assert.assertArrayEquals(x, r2);
+
+            Assert.assertEquals(1, memory.read(i+6));
+            System.out.println("testExLong2 6 " + i);
+
+        }
     }
 
     @Test
     public void testExLong3() {
-        long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
-        memory.writeByte(9, 1);
-        memory.write(0, x, 3, 0, 3);
-        x = new long[]{0x24, 0xFE77, 0xC0AA42L};
-        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
-                new byte[]{0x00, 0x00, 0x24, 0x00, (byte) 0xFE, 0x77, (byte) 0xC0, (byte) 0xAA, 0x42} :
-                new byte[]{0x24, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x42, (byte) 0xAA, (byte) 0xC0};
-        byte[] x3 = new byte[9];
-        memory.read(0, x3);
-        long[] r2 = new long[3];
-        memory.read(0, r2, 3, 0, 3);
-        Assert.assertArrayEquals(x, r2);
-        Assert.assertEquals(1, memory.read(9));
-        Assert.assertArrayEquals(x2, x3);
+        for (int i = 0; i < 16; i++) {
+            memory.zero();
+            long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
+            memory.writeByte(i+9, 1);
+            memory.write(i+0, x, 3, 0, 3);
+            x = new long[]{0x24, 0xFE77, 0xC0AA42L};
+            byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                    new byte[]{0x00, 0x00, 0x24, 0x00, (byte) 0xFE, 0x77, (byte) 0xC0, (byte) 0xAA, 0x42} :
+                    new byte[]{0x24, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x42, (byte) 0xAA, (byte) 0xC0};
+            byte[] x3 = new byte[9];
+            memory.read(i+0, x3);
+            long[] r2 = new long[3];
+            memory.read(i+0, r2, 3, 0, 3);
+            Assert.assertArrayEquals(x, r2);
+            Assert.assertEquals(1, memory.read(i+9));
+            Assert.assertArrayEquals(x2, x3);
+        }
+
     }
 
     @Test
     public void testExLong4() {
-        long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
-        memory.writeByte(12, 1);
-        memory.write(0, x, 4, 0, 3);
-        x = new long[]{0x24, 0xFE77, 0xABC0AA42L};
-        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
-                new byte[]{0x00, 0x00, 0x00, 0x24, 0x00, 0x00, (byte) 0xFE, 0x77, (byte) 0xAB, (byte) 0xC0, (byte) 0xAA, 0x42} :
-                new byte[]{0x24, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x00, 0x42, (byte) 0xAA, (byte) 0xC0, (byte) 0xAB};
-        byte[] x3 = new byte[12];
-        memory.read(0, x3);
-        long[] r2 = new long[3];
-        memory.read(0, r2, 4, 0, 3);
-        Assert.assertArrayEquals(x, r2);
-        Assert.assertEquals(1, memory.read(12));
-        Assert.assertArrayEquals(x2, x3);
+        for (int i = 0; i < 16; i++) {
+            long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
+            memory.writeByte(i+12, 1);
+            memory.write(i+0, x, 4, 0, 3);
+            x = new long[]{0x24, 0xFE77, 0xABC0AA42L};
+            byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                    new byte[]{0x00, 0x00, 0x00, 0x24, 0x00, 0x00, (byte) 0xFE, 0x77, (byte) 0xAB, (byte) 0xC0, (byte) 0xAA, 0x42} :
+                    new byte[]{0x24, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x00, 0x42, (byte) 0xAA, (byte) 0xC0, (byte) 0xAB};
+            byte[] x3 = new byte[12];
+            memory.read(i+0, x3);
+            long[] r2 = new long[3];
+            memory.read(i+0, r2, 4, 0, 3);
+            Assert.assertArrayEquals(x, r2);
+            Assert.assertEquals(1, memory.read(i+12));
+            Assert.assertArrayEquals(x2, x3);
+        }
     }
 
     @Test
     public void testExLong5() {
-        long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
-        memory.writeByte(15, 1);
-        memory.write(0, x, 5, 0, 3);
-        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
-                new byte[]{0x00, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, (byte) 0xFE, 0x77, (byte) 0xFE, (byte) 0xAB, (byte) 0xC0, (byte) 0xAA, 0x42} :
-                new byte[]{0x24, 0x00, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x00, 0x00, 0x42, (byte) 0xAA, (byte) 0xC0, (byte) 0xAB, (byte) 0xFE};
-        byte[] x3 = new byte[15];
-        memory.read(0, x3);
-        long[] r2 = new long[3];
-        memory.read(0, r2, 5, 0, 3);
-        Assert.assertArrayEquals(x, r2);
-        Assert.assertEquals(1, memory.read(15));
-        Assert.assertArrayEquals(x2, x3);
+        for (int i = 0; i < 16; i++) {
+            long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
+            memory.writeByte(i+15, 1);
+            memory.write(i+0, x, 5, 0, 3);
+            byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                    new byte[]{0x00, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, (byte) 0xFE, 0x77, (byte) 0xFE, (byte) 0xAB, (byte) 0xC0, (byte) 0xAA, 0x42} :
+                    new byte[]{0x24, 0x00, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x00, 0x00, 0x42, (byte) 0xAA, (byte) 0xC0, (byte) 0xAB, (byte) 0xFE};
+            byte[] x3 = new byte[15];
+            memory.read(i+0, x3);
+            long[] r2 = new long[3];
+            memory.read(i+0, r2, 5, 0, 3);
+            Assert.assertArrayEquals(x, r2);
+            Assert.assertEquals(1, memory.read(i+15));
+            Assert.assertArrayEquals(x2, x3);
+        }
     }
 
     @Test
     public void testExLong6() {
-        long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
-        memory.writeByte(18, 1);
-        memory.write(0, x, 6, 0, 3);
-        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
-                new byte[]{0x00, 0x00, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, 0x77, 0x00, (byte) 0xFE, (byte) 0xAB, (byte) 0xC0, (byte) 0xAA, 0x42} :
-                new byte[]{0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x00, 0x00, 0x00, 0x42, (byte) 0xAA, (byte) 0xC0, (byte) 0xAB, (byte) 0xFE, 0x00};
-        byte[] x3 = new byte[18];
-        memory.read(0, x3);
-        long[] r2 = new long[3];
-        memory.read(0, r2, 6, 0, 3);
-        Assert.assertArrayEquals(x, r2);
-        Assert.assertEquals(1, memory.read(18));
-        Assert.assertArrayEquals(x2, x3);
+        for (int i = 0; i < 16; i++) {
+            long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
+            memory.writeByte(i+18, 1);
+            memory.write(i+0, x, 6, 0, 3);
+            byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                    new byte[]{0x00, 0x00, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, 0x77, 0x00, (byte) 0xFE, (byte) 0xAB, (byte) 0xC0, (byte) 0xAA, 0x42} :
+                    new byte[]{0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x00, 0x00, 0x00, 0x42, (byte) 0xAA, (byte) 0xC0, (byte) 0xAB, (byte) 0xFE, 0x00};
+            byte[] x3 = new byte[18];
+            memory.read(i+0, x3);
+            long[] r2 = new long[3];
+            memory.read(i+0, r2, 6, 0, 3);
+            Assert.assertArrayEquals(x, r2);
+            Assert.assertEquals(1, memory.read(i+18));
+            Assert.assertArrayEquals(x2, x3);
+        }
     }
 
     @Test
     public void testExLong7() {
-        long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
-        memory.writeByte(21, 1);
-        memory.write(0, x, 7, 0, 3);
-        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
-                new byte[]{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, 0x77, 0x00, 0x00, (byte) 0xFE, (byte) 0xAB, (byte) 0xC0, (byte) 0xAA, 0x42} :
-                new byte[]{0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x42, (byte) 0xAA, (byte) 0xC0, (byte) 0xAB, (byte) 0xFE, 0x00, 0x00};
-        byte[] x3 = new byte[21];
-        memory.read(0, x3);
-        long[] r2 = new long[3];
-        memory.read(0, r2, 7, 0, 3);
-        Assert.assertArrayEquals(x, r2);
-        Assert.assertEquals(1, memory.read(21));
-        Assert.assertArrayEquals(x2, x3);
+        for (int i = 0; i < 16; i++) {
+            long[] x = new long[]{0x123, 0x24, 0xFE77, 0xFEABC0AA42L};
+            memory.writeByte(i+21, 1);
+            memory.write(i+0, x, 7, 1, 3);
+            byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                    new byte[]{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, 0x77, 0x00, 0x00, (byte) 0xFE, (byte) 0xAB, (byte) 0xC0, (byte) 0xAA, 0x42} :
+                    new byte[]{0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x42, (byte) 0xAA, (byte) 0xC0, (byte) 0xAB, (byte) 0xFE, 0x00, 0x00};
+            byte[] x3 = new byte[21];
+            memory.read(i+0, x3);
+            long[] r2 = new long[4];
+            r2[0] = 0x123;
+            memory.read(i+0, r2, 7, 1, 3);
+            Assert.assertArrayEquals(x, r2);
+            Assert.assertEquals(1, memory.read(i+21));
+            Assert.assertArrayEquals(x2, x3);
+        }
     }
 
     @Test
     public void testExLong8() {
-        long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
-        memory.writeByte(24, 1);
-        memory.write(0, x, 8, 0, 3);
-        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
-                new byte[]{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, 0x77, 0x00, 0x00, 0x00, (byte) 0xFE, (byte) 0xAB, (byte) 0xC0, (byte) 0xAA, 0x42} :
-                new byte[]{0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x42, (byte) 0xAA, (byte) 0xC0, (byte) 0xAB, (byte) 0xFE, 0x00, 0x00, 0x00};
-        byte[] x3 = new byte[24];
-        memory.read(0, x3);
-        long[] r2 = new long[3];
-        memory.read(0, r2, 8, 0, 3);
-        Assert.assertArrayEquals(x, r2);
-        Assert.assertEquals(1, memory.read(24));
-        Assert.assertArrayEquals(x2, x3);
+        for (int i = 0; i < 16; i++) {
+            memory.zero();
+            long[] x = new long[]{0, 0x24, 0xFE77, 0xFEABC0AA42L};
+            memory.writeByte(i+24, 1);
+            memory.write(i+0, x, 8, 1, 3);
+            byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                    new byte[]{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, 0x77, 0x00, 0x00, 0x00, (byte) 0xFE, (byte) 0xAB, (byte) 0xC0, (byte) 0xAA, 0x42} :
+                    new byte[]{0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x42, (byte) 0xAA, (byte) 0xC0, (byte) 0xAB, (byte) 0xFE, 0x00, 0x00, 0x00};
+            byte[] x3 = new byte[24];
+            memory.read(i+0, x3);
+            long[] r2 = new long[4];
+            memory.read(i+0, r2, 8, 1, 3);
+            Assert.assertArrayEquals(x, r2);
+            Assert.assertEquals(1, memory.read(i+24));
+            Assert.assertArrayEquals(x2, x3);
+        }
     }
 
     @Test
     public void testExLong9() {
-        long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
-        memory.writeByte(27, 1);
-        memory.write(0, x, 9, 0, 3);
-        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
-                new byte[]{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, 0x77, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, (byte) 0xAB, (byte) 0xC0, (byte) 0xAA, 0x42} :
-                new byte[]{0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x42, (byte) 0xAA, (byte) 0xC0, (byte) 0xAB, (byte) 0xFE, 0x00, 0x00, 0x00, 0x00};
-        byte[] x3 = new byte[27];
-        memory.read(0, x3);
-        long[] r2 = new long[3];
-        memory.read(0, r2, 9, 0, 3);
-        Assert.assertArrayEquals(x, r2);
-        Assert.assertEquals(1, memory.read(27));
-        Assert.assertArrayEquals(x2, x3);
+        for (int i = 0; i < 16; i++) {
+            long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
+            memory.writeByte(i+27, 1);
+            memory.write(i+0, x, 9, 0, 3);
+            byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                    new byte[]{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, 0x77, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, (byte) 0xAB, (byte) 0xC0, (byte) 0xAA, 0x42} :
+                    new byte[]{0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x42, (byte) 0xAA, (byte) 0xC0, (byte) 0xAB, (byte) 0xFE, 0x00, 0x00, 0x00, 0x00};
+            byte[] x3 = new byte[27];
+            memory.read(i+0, x3);
+            long[] r2 = new long[3];
+            memory.read(i+0, r2, 9, 0, 3);
+            Assert.assertArrayEquals(x, r2);
+            Assert.assertEquals(1, memory.read(i+27));
+            Assert.assertArrayEquals(x2, x3);
+        }
     }
 
     @Test
     public void testExLong10() {
-        long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
-        memory.writeByte(30, 1);
-        memory.write(0, x, 10, 0, 3);
-        byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
-                new byte[]{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, 0x77, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, (byte) 0xAB, (byte) 0xC0, (byte) 0xAA, 0x42} :
-                new byte[]{0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x42, (byte) 0xAA, (byte) 0xC0, (byte) 0xAB, (byte) 0xFE, 0x00, 0x00, 0x00, 0x00, 0x00};
-        byte[] x3 = new byte[30];
-        memory.read(0, x3);
-        long[] r2 = new long[3];
-        memory.read(0, r2, 10, 0, 3);
-        Assert.assertArrayEquals(x, r2);
-        Assert.assertEquals(1, memory.read(30));
-        Assert.assertArrayEquals(x2, x3);
+        for (int i = 0; i < 16; i++) {
+            long[] x = new long[]{0x24, 0xFE77, 0xFEABC0AA42L};
+            memory.writeByte(i+30, 1);
+            memory.write(i+0, x, 10, 0, 3);
+            byte[] x2 = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ?
+                    new byte[]{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, 0x77, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0xFE, (byte) 0xAB, (byte) 0xC0, (byte) 0xAA, 0x42} :
+                    new byte[]{0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77, (byte) 0xFE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x42, (byte) 0xAA, (byte) 0xC0, (byte) 0xAB, (byte) 0xFE, 0x00, 0x00, 0x00, 0x00, 0x00};
+            byte[] x3 = new byte[30];
+            memory.read(i+0, x3);
+            long[] r2 = new long[3];
+            memory.read(i+0, r2, 10, 0, 3);
+            Assert.assertArrayEquals(x, r2);
+            Assert.assertEquals(1, memory.read(i+30));
+            Assert.assertArrayEquals(x2, x3);
+        }
     }
 
     @Test

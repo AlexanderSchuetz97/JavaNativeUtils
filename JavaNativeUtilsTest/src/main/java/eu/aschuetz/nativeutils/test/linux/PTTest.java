@@ -101,10 +101,11 @@ public class PTTest {
 
         final LinuxNativeUtil lnu = NativeUtils.getLinuxUtil();
         NativeMemory mem = lnu.malloc(4096);
+        mem.zero();
         final long mutex_attr = mem.getNativePointer(0);
-        final long mutex = mem.getNativePointer(lnu.sizeof_pthread_condattr_t());
-        final long cond_attr = mem.getNativePointer(lnu.sizeof_pthread_condattr_t() + lnu.sizeof_pthread_mutex_t());
-        final long cond = mem.getNativePointer(lnu.sizeof_pthread_condattr_t() + lnu.sizeof_pthread_mutex_t() + lnu.sizeof_pthread_condattr_t());
+        final long mutex = mem.getNativePointer(256);
+        final long cond_attr = mem.getNativePointer(512);
+        final long cond = mem.getNativePointer(768);
 
 
         lnu.pthread_mutexattr_init(mutex_attr);
@@ -214,7 +215,7 @@ public class PTTest {
 
         NativeMemory mem = lnu.pointer(mmap, 4096, ptr);
         final long mutex_attr = mem.getNativePointer(0);
-        final long mutex = mem.getNativePointer(lnu.sizeof_pthread_condattr_t());
+        final long mutex = mem.getNativePointer(256);
 
         try {
             lnu.pthread_mutexattr_init(mutex_attr);
@@ -241,7 +242,7 @@ public class PTTest {
 
             NativeMemory mem2 = lnu.pointer(mmap, 4096, ptr);
             final long mutex_attr2 = mem2.getNativePointer(0);
-            final long mutex2 = mem2.getNativePointer(lnu.sizeof_pthread_condattr_t());
+            final long mutex2 = mem2.getNativePointer(256);
 
             lnu.pthread_mutex_lock(mutex2);
             Object o = ex.submit(new Callable<Object>() {
@@ -337,7 +338,7 @@ public class PTTest {
         NativeMemory mem = lnu.pointer(mmap, 4096, ptr);
         mem.zero();
         final long mutex_attr = mem.getNativePointer(0);
-        final long mutex = mem.getNativePointer(lnu.sizeof_pthread_condattr_t());
+        final long mutex = mem.getNativePointer(256);
 
         lnu.pthread_mutexattr_init(mutex_attr);
         if (!"riscv64".equalsIgnoreCase(System.getenv("QARCH"))) {
