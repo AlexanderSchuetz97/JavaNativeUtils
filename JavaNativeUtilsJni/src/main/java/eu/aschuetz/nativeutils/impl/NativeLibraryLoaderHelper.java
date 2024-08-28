@@ -38,7 +38,7 @@ import java.util.UUID;
  */
 public class NativeLibraryLoaderHelper {
 
-    private static final int EXPECTED_NATIVE_LIB_VERSION = 10;
+    private static final int EXPECTED_NATIVE_LIB_VERSION = 11;
 
     /**
      * Flag to indicate if already loaded.
@@ -275,8 +275,14 @@ public class NativeLibraryLoaderHelper {
                 }
 
                 loadLib(tempFile, "java_native_utils_amd64_freebsd.so");
+            } else if ("netbsd".equalsIgnoreCase(tempOS)) {
+                if (!"amd64".equals(tempArch)) {
+                    throw new UnsatisfiedLinkError("Processor architecture is not supported on NetBSD! Value: " + tempArch);
+                }
+
+                loadLib(tempFile, "java_native_utils_amd64_netbsd.so");
             } else {
-                throw new UnsatisfiedLinkError("Operating system is not windows, linux or freebsd and thus not supported! Value: " + tempOS);
+                throw new UnsatisfiedLinkError("Operating system is not windows, linux, netbsd or freebsd and thus not supported! Value: " + tempOS);
             }
         } catch (IOException e) {
             throw new LinkageError("IO Error while writing native library to a temporary file!", e);

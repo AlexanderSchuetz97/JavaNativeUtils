@@ -31,6 +31,14 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil_syml
 JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil_unlink
   (JNIEnv *, jobject, jstring);
 
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil
+ * Method:    uname
+ * Signature: ()Leu/aschuetz/nativeutils/api/structs/Utsname;
+ */
+JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil_uname
+  (JNIEnv *, jobject);
+
 #ifdef __cplusplus
 }
 #endif

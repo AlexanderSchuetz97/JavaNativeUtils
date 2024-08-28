@@ -18,10 +18,11 @@
 // in the COPYING & COPYING.LESSER files in top level directory of JavaNativeUtils.
 // If not, see <https://www.gnu.org/licenses/>.
 //
-package eu.aschuetz.nativeutils.test.freebsd;
+package eu.aschuetz.nativeutils.test.posix;
 
 import eu.aschuetz.nativeutils.api.FreeBSDNativeUtil;
 import eu.aschuetz.nativeutils.api.NativeUtils;
+import eu.aschuetz.nativeutils.api.PosixNativeUtil;
 import eu.aschuetz.nativeutils.api.structs.Stat;
 import org.junit.After;
 import org.junit.Assert;
@@ -32,7 +33,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Random;
 
-public class FBSDStatTest {
+public class PosixStatTest {
 
     String path1;
 
@@ -49,7 +50,7 @@ public class FBSDStatTest {
 
     @Test
     public void testToString() throws Exception{
-        FreeBSDNativeUtil util = NativeUtils.getFreeBSDUtil();
+        PosixNativeUtil util = NativeUtils.getPosixUtil();
         Stat stat = util.stat("/tmp");
         String str = stat.toString();
         System.out.println(str);
@@ -58,7 +59,7 @@ public class FBSDStatTest {
 
     @Test
     public void testNotFound() throws Exception {
-        FreeBSDNativeUtil util = NativeUtils.getFreeBSDUtil();
+        PosixNativeUtil util = NativeUtils.getPosixUtil();
         try {
             util.stat(path1);
             Assert.fail("FileNotFoundException expected");
@@ -70,11 +71,15 @@ public class FBSDStatTest {
 
     @Test
     public void testSimple() throws Exception {
-        FreeBSDNativeUtil util = NativeUtils.getFreeBSDUtil();
+        PosixNativeUtil util = NativeUtils.getPosixUtil();
         new File(path1).createNewFile();
         Stat s = util.stat(path1);
         Assert.assertEquals(0, s.getSize());
-        Assert.assertEquals(1, s.getBlocks()); //ZFS
+        if (util.isFreeBSD()) {
+            Assert.assertEquals(1, s.getBlocks()); //ZFS
+        } else {
+            Assert.assertEquals(0, s.getBlocks());
+        }
         Assert.assertTrue(s.getDev() != 0);
         Assert.assertTrue(s.getIno() != 0);
         Assert.assertTrue(s.getAtime() > 0);

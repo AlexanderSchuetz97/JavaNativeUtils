@@ -47,4 +47,14 @@ public class NoopNativeUtil implements NativeUtil {
         return false;
     }
 
+    @Override
+    public boolean isNetBSD() {
+        return false;
+    }
+
+    @Override
+    public boolean isPosix() {
+        return false;
+    }
+
 }

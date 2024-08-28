@@ -58,6 +58,14 @@ public final class NativeUtils {
         return get().isFreeBSD();
     }
 
+    public static boolean isNetBSD() {
+        return get().isNetBSD();
+    }
+
+    public static boolean isPosix() {
+        return get().isPosix();
+    }
+
     public static JVMNativeUtil getJVMUtil() {
         NativeUtil util = get();
         if (util instanceof JVMNativeUtil) {
@@ -92,6 +100,24 @@ public final class NativeUtils {
         }
 
         throw new UnsupportedOperationException("FreeBSD functions not supported.");
+    }
+
+    public static NetBSDNativeUtil getNetBSDUtil() {
+        NativeUtil util = get();
+        if (util instanceof NetBSDNativeUtil) {
+            return (NetBSDNativeUtil) util;
+        }
+
+        throw new UnsupportedOperationException("NetBSD functions not supported.");
+    }
+
+    public static PosixNativeUtil getPosixUtil() {
+        NativeUtil util = get();
+        if (util instanceof PosixNativeUtil) {
+            return (PosixNativeUtil) util;
+        }
+
+        throw new UnsupportedOperationException("Posix functions not supported.");
     }
 
     static NativeUtilsProvider getProvider() {

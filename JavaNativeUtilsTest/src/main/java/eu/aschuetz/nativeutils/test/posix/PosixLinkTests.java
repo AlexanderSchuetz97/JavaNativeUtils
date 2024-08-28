@@ -17,11 +17,11 @@
 // in the COPYING & COPYING.LESSER files in top level directory of JavaNativeUtils.
 // If not, see <https://www.gnu.org/licenses/>.
 //
-package eu.aschuetz.nativeutils.test.freebsd;
+package eu.aschuetz.nativeutils.test.posix;
 
 import eu.aschuetz.nativeutils.api.FreeBSDNativeUtil;
-import eu.aschuetz.nativeutils.api.LinuxNativeUtil;
 import eu.aschuetz.nativeutils.api.NativeUtils;
+import eu.aschuetz.nativeutils.api.PosixNativeUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -36,7 +36,7 @@ import java.nio.file.FileSystemLoopException;
 import java.nio.file.InvalidPathException;
 import java.util.Random;
 
-public class FBSDLinkTests {
+public class PosixLinkTests {
 
     String path1;
     String path2;
@@ -61,7 +61,7 @@ public class FBSDLinkTests {
         try( FileOutputStream faos = new FileOutputStream(path1)) {
             faos.write(0x69);
         }
-        FreeBSDNativeUtil utils = NativeUtils.getFreeBSDUtil();
+        PosixNativeUtil utils = NativeUtils.getPosixUtil();
         utils.symlink(path1, path2);
 
         File f2 = new File(path2);
@@ -76,7 +76,7 @@ public class FBSDLinkTests {
 
     @Test
     public void testLoop() throws Exception {
-        FreeBSDNativeUtil utils = NativeUtils.getFreeBSDUtil();
+        PosixNativeUtil utils = NativeUtils.getPosixUtil();
         utils.symlink(path1, path2);
         utils.symlink(path2, path1);
 
@@ -90,7 +90,7 @@ public class FBSDLinkTests {
 
     @Test
     public void testInvalidPath() throws Exception {
-        FreeBSDNativeUtil utils = NativeUtils.getFreeBSDUtil();
+        PosixNativeUtil utils = NativeUtils.getPosixUtil();
         try {
             utils.symlink(path1, path2 + "/wupp");
             Assert.fail("InvalidPathException expected");
@@ -102,7 +102,7 @@ public class FBSDLinkTests {
     @Test
     public void testExists() throws Exception {
         new File(path1).createNewFile();
-        FreeBSDNativeUtil utils = NativeUtils.getFreeBSDUtil();
+        PosixNativeUtil utils = NativeUtils.getPosixUtil();
         try {
             utils.symlink("/tmp", path1);
             Assert.fail("FileAlreadyExistsException expected");
@@ -114,7 +114,7 @@ public class FBSDLinkTests {
     @Test
     public void testAccess() throws Exception {
         //Will not be green as root user...
-        FreeBSDNativeUtil utils = NativeUtils.getFreeBSDUtil();
+        PosixNativeUtil utils = NativeUtils.getPosixUtil();
         try {
             utils.symlink("/tmp", "/root/meep");
             //someone ran this as root...

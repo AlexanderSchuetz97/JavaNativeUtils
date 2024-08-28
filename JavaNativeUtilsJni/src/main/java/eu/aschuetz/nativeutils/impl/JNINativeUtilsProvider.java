@@ -40,6 +40,8 @@ public class JNINativeUtilsProvider implements NativeUtilsProvider {
             return new JNIWindowsNativeUtil();
         } else if ("freebsd".equalsIgnoreCase(tempOS)) {
             return new JNIFreeBSDNativeUtil();
+        } else if ("netbsd".equalsIgnoreCase(tempOS)) {
+            return new JNINetBSDNativeUtil();
         } else {
             return new NoopNativeUtil();
         }

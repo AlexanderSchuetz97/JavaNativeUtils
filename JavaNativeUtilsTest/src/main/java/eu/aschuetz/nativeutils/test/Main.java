@@ -22,10 +22,11 @@ package eu.aschuetz.nativeutils.test;
 import eu.aschuetz.nativeutils.api.NativeUtil;
 import eu.aschuetz.nativeutils.api.NativeUtils;
 import eu.aschuetz.nativeutils.test.common.*;
-import eu.aschuetz.nativeutils.test.freebsd.FBSDCPUIDTest;
-import eu.aschuetz.nativeutils.test.freebsd.FBSDLinkTests;
-import eu.aschuetz.nativeutils.test.freebsd.FBSDStatTest;
+import eu.aschuetz.nativeutils.test.posix.PosixCPUIDTest;
+import eu.aschuetz.nativeutils.test.posix.PosixLinkTests;
+import eu.aschuetz.nativeutils.test.posix.PosixStatTest;
 import eu.aschuetz.nativeutils.test.linux.*;
+import eu.aschuetz.nativeutils.test.posix.UnameTest;
 import eu.aschuetz.nativeutils.test.windows.*;
 import org.junit.runner.Description;
 import org.junit.runner.JUnitCore;
@@ -49,10 +50,18 @@ public class Main {
             MemCmpXchgTest.class);
 
     private static List<Class> FREEBSD_TESTS = (List) Arrays.asList(
-            FBSDStatTest.class,
-            FBSDLinkTests.class,
-            FBSDCPUIDTest.class
+            PosixStatTest.class,
+            PosixLinkTests.class,
+            PosixCPUIDTest.class,
+            UnameTest.class
             );
+
+    private static List<Class> NETBSD_TESTS = (List) Arrays.asList(
+            PosixStatTest.class,
+            PosixLinkTests.class,
+            PosixCPUIDTest.class,
+            UnameTest.class
+    );
 
     private static List<Class> LINUX_TESTS = (List) Arrays.asList(
             ChdirTests.class,
@@ -72,7 +81,9 @@ public class Main {
             TestMBuf.class,
             UserTest.class,
             MemfdTest.class,
-            WordExp.class);
+            WordExp.class,
+            UnameTest.class
+            );
 
     private static List<Class> WINDOWS_TESTS = (List) Arrays.asList(
             WinSemaTest.class,
@@ -85,7 +96,7 @@ public class Main {
 
     public static Result runTests(String test) {
         NativeUtil nativeUtil = NativeUtils.get();
-        if (!nativeUtil.isLinux() && ! nativeUtil.isWindows() && !nativeUtil.isFreeBSD()) {
+        if (!nativeUtil.isLinux() && ! nativeUtil.isWindows() && !nativeUtil.isFreeBSD() && !nativeUtil.isNetBSD()) {
             System.err.println("Lib failed to load!");
             System.exit(-1);
         }
@@ -162,7 +173,15 @@ public class Main {
             ar.addAll(FREEBSD_TESTS);
 
             return junit.run(ar.toArray(new Class[0]));
+        }
 
+        if (nativeUtil.isNetBSD()) {
+            System.out.println("NET BSD");
+            ArrayList<Class> ar = new ArrayList();
+            ar.addAll(COMMON_TESTS);
+            ar.addAll(NETBSD_TESTS);
+
+            return junit.run(ar.toArray(new Class[0]));
         }
 
         return null;

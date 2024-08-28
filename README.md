@@ -14,12 +14,12 @@ Maven:
 <dependency>
     <groupId>eu.aschuetz</groupId>
     <artifactId>JavaNativeUtilsApi</artifactId>
-    <version>4.6</version>
+    <version>4.7</version>
 </dependency>
 <dependency>
     <groupId>eu.aschuetz</groupId>
     <artifactId>JavaNativeUtilsJni</artifactId>
-    <version>4.6</version>
+    <version>4.7</version>
 </dependency>
 ````
 Note: for versions older than 4.0 use groupId io.github.alexanderschuetz97 artifactId JavaNativeUtils
@@ -40,6 +40,12 @@ if (NativeUtils.isWindows()) {
 
 if (NativeUtils.isFreeBSD()) {
     FreeBSDNativeUtil util = NativeUtils.getFreeBSDUtil()
+    System.out.println(util.stat("/tmp"));
+    return;
+}
+
+if (NativeUtils.isNetBSD()) {
+    NetBSDNativeUtil util = NativeUtils.getNetBSDUtil()
     System.out.println(util.stat("/tmp"));
     return;
 }
@@ -210,11 +216,13 @@ if (NativeUtils.isFreeBSD()) {
 * ClearCommError
 * ClearCommBreak
 
-#### FreeBSD
+#### FreeBSD & Netbsd
 * malloc & free
+* __get_cpuid_count (from cpuid.h)
 * stat
 * symlink
 * unlink
+* uname
 
 ### List of exposed JNI Functions (All OS)
 ### Reflection
@@ -280,18 +288,19 @@ The others are only tested using qemu usermode emulation.
 #### FreeBSD (14.1)
 * amd64
 
-INFO: FreeBSD support in this library is pretty rudimentary. In its current state it is mainly useful for access to 
-the JNI Reflection. I may port over some posix compliant syscalls from the linux specific implementation 
-to freebsd in the future, should I require them for my future projects. 
-For my current needs the JNI Reflection is sufficient.
-
 I currently use freebsd 14.1 to cross compile and test. 
 The library may or may not work with earlier or later versions of freebsd.
 
+#### NetBSD (10.0)
+* amd64
+
+I currently use netbsd 10.0 to cross compile and test.
+The library may or may not work with earlier or later versions of netbsd.
+
 ### Unsupported OS
 
-If an unsupported operating system or processor architecture is used then getWindowsUtil() getLinuxUtil() or getFreeBSDUtil() throws an exception.
-To check if the current system supports linux or windows syscalls use the isLinux() isWindows() of isFreeBSD() method.
+If an unsupported operating system or processor architecture is used then getWindowsUtil() getLinuxUtil() getNetBSDUtil() or getFreeBSDUtil() throws an exception.
+To check if the current system supports linux or windows syscalls use the isLinux() isWindows() isNetBSD() or isFreeBSD() method.
 
 ### INFO: Linux using pthread_mutex and pthread_cond for IPC with a C Program
 Note that pthread_mutex and pthread_cond in shared memory for IPC with a C program will only work
@@ -317,7 +326,10 @@ of JavaNativeUtils.
 
 ## Building and Development
 #### Windows:
-Building JavaNativeUtils on Windows is currently not possible.
+Building JavaNativeUtils on Windows natively is not possible.
+You may have some luck using WSL2, however building in for example a Debian VM is probably
+a more useful way to spend your time compared getting docker+qemu+binfmt_misc to work in WSL2.
+
 #### Linux:
 Requirements:
 * bash
@@ -390,3 +402,24 @@ default. A lot of applications still rely on java 8, and I personally doubt that
 will disappear in the next 10 years. Just for those versions alone I intend to keep working on this library.
 I also do not expect major adoption of the first LTS release after 21 that will presumably contain the "full" FFI 
 to happen in the next 6 years.
+
+## Future work
+This is just a list of things I am considering working on.
+I make no promises as to when or If or when I will be able to implement them.
+
+#### Split the JNI native libraries into separate dependencies.
+Some of the shared objects contained within this library are relatively large and probably do not see much use.
+It would probably be a good idea to move those to their own dependency so that each java project can only include
+what it actually uses in its bom/assembly.
+
+#### OSX support
+I am considering adding amd64 support for OSX.
+
+#### Windows aarch64
+I am considering adding aarch64 support for windows.
+
+#### Write an additional implementation of this library that uses the Java FFI interface
+I am planning to release an additional implementation of JavaNativeUtils
+that uses the Java FFI Interface instead of shared objects loaded via JNI to 
+achieve "most" tasks. There will be no implementation of the JVMNativeUtils as those
+functions are not provided by the Java FFI Interface.

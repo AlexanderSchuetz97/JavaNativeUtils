@@ -55,10 +55,7 @@ public class JNILinuxNativeUtil extends JNIPosixNativeUtil implements LinuxNativ
         return theConst;
     }
 
-    @Override
-    public boolean isWindows() {
-        return false;
-    }
+
 
     @Override
     public boolean isLinux() {
@@ -67,6 +64,11 @@ public class JNILinuxNativeUtil extends JNIPosixNativeUtil implements LinuxNativ
 
     @Override
     public boolean isFreeBSD() {
+        return false;
+    }
+
+    @Override
+    public boolean isNetBSD() {
         return false;
     }
 
@@ -357,9 +359,6 @@ public class JNILinuxNativeUtil extends JNIPosixNativeUtil implements LinuxNativ
 
     @Override
     public native String[] wordexp(String expression, boolean allowCommands, boolean useStdErr, boolean allowUndef);
-
-    @Override
-    public native Utsname uname();
 
     @Override
     public native long geteuid();

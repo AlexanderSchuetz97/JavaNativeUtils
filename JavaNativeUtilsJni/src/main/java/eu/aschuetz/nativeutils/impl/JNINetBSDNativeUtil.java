@@ -1,9 +1,8 @@
 package eu.aschuetz.nativeutils.impl;
 
-import eu.aschuetz.nativeutils.api.FreeBSDNativeUtil;
+import eu.aschuetz.nativeutils.api.NetBSDNativeUtil;
 
-public class JNIFreeBSDNativeUtil extends JNIPosixNativeUtil implements FreeBSDNativeUtil {
-
+public class JNINetBSDNativeUtil extends JNIPosixNativeUtil implements NetBSDNativeUtil {
     @Override
     public boolean isLinux() {
         return false;
@@ -11,11 +10,11 @@ public class JNIFreeBSDNativeUtil extends JNIPosixNativeUtil implements FreeBSDN
 
     @Override
     public boolean isFreeBSD() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isNetBSD() {
-        return false;
+        return true;
     }
 }

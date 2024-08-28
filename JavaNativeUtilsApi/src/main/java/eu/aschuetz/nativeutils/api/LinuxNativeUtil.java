@@ -37,7 +37,7 @@ import java.nio.file.NotLinkException;
 import java.nio.file.ReadOnlyFileSystemException;
 import java.util.Collection;
 
-public interface LinuxNativeUtil extends NativeUtil {
+public interface LinuxNativeUtil extends PosixNativeUtil {
 
     LinuxConstProvider getLinuxConstProvider();
 
@@ -535,11 +535,6 @@ public interface LinuxNativeUtil extends NativeUtil {
      * @throws IllegalArgumentException if the argument has invalid syntax, contains commands when not allowed or contains undefined variable when not allowed.
      */
     String[] wordexp(String expression, boolean allowCommands, boolean useStdErr, boolean allowUndef) throws IllegalArgumentException;
-
-    /**
-     * gets information about the unix system.
-     */
-    Utsname uname();
 
     /**
      * returns the effective uid of the user running the process.

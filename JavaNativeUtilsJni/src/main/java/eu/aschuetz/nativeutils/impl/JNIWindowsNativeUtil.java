@@ -582,5 +582,15 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
         return false;
     }
 
+    @Override
+    public boolean isNetBSD() {
+        return false;
+    }
+
+    @Override
+    public boolean isPosix() {
+        return false;
+    }
+
 
 }

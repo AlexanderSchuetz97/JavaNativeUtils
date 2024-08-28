@@ -377,14 +377,6 @@ JNIEXPORT jobjectArray JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeU
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
- * Method:    uname
- * Signature: ()Leu/aschuetz/nativeutils/api/structs/Utsname;
- */
-JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_uname
-  (JNIEnv *, jobject);
-
-/*
- * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
  * Method:    geteuid
  * Signature: ()J
  */

@@ -29,7 +29,6 @@
 #include <endian.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <sys/utsname.h>
 #include <unistd.h>
 #include <limits.h>
 #include <errno.h>
@@ -474,54 +473,7 @@ JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_getp
 	return (jint) getpagesize();
 }
 
-#ifndef _UTSNAME_LENGTH
-#define _UTSNAME_LENGTH 65
-#endif
 
-/*
- * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
- * Method:    uname
- * Signature: ()Leu/aschuetz/nativeutils/api/structs/Utsname;
- */
-JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_uname
-  (JNIEnv * env, jobject inst) {
-
-	struct utsname uts;
-	memset(&uts, 0, sizeof(struct utsname));
-	uname(&uts);
-	uts.machine[_UTSNAME_LENGTH-1] = 0;
-	uts.nodename[_UTSNAME_LENGTH-1] = 0;
-	uts.release[_UTSNAME_LENGTH-1] = 0;
-	uts.sysname[_UTSNAME_LENGTH-1] = 0;
-	uts.version[_UTSNAME_LENGTH-1] = 0;
-
-	jobject utsname = jnew_Utsname(env);
-	if (utsname == NULL) {
-		return NULL;
-	}
-
-	if (!jsetC_Utsname_sysname(env, utsname, (char*) &uts.sysname)) {
-		return NULL;
-	}
-
-	if (!jsetC_Utsname_machine(env, utsname, (char*) &uts.machine)) {
-		return NULL;
-	}
-
-	if (!jsetC_Utsname_nodename(env, utsname, (char*) &uts.nodename)) {
-		return NULL;
-	}
-
-	if (!jsetC_Utsname_release(env, utsname, (char*) &uts.release)) {
-		return NULL;
-	}
-
-	if (!jsetC_Utsname_version(env, utsname, (char*) &uts.version)) {
-		return NULL;
-	}
-
-	return utsname;
-}
 
 
 /*

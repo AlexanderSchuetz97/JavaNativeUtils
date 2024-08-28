@@ -63,11 +63,11 @@ public class MemTest {
     }
 
     private static NativeMemory alloc(int sz) {
-        if (NativeUtils.isFreeBSD()) {
-            return NativeUtils.getFreeBSDUtil().malloc(sz);
+        if (NativeUtils.isPosix()) {
+            return NativeUtils.getPosixUtil().malloc(sz);
         }
 
-        return NativeUtils.get().isWindows() ? NativeUtils.getWindowsUtil().malloc(sz) : NativeUtils.getLinuxUtil().malloc(sz);
+        return NativeUtils.getWindowsUtil().malloc(sz);
     }
 
     protected void mkmemory() {

@@ -1,17 +1,16 @@
-package eu.aschuetz.nativeutils.test.freebsd;
+package eu.aschuetz.nativeutils.test.posix;
 
 import eu.aschuetz.nativeutils.api.CpuConst;
 import eu.aschuetz.nativeutils.api.FreeBSDNativeUtil;
-import eu.aschuetz.nativeutils.api.LinuxNativeUtil;
 import eu.aschuetz.nativeutils.api.NativeUtils;
+import eu.aschuetz.nativeutils.api.PosixNativeUtil;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
-public class FBSDCPUIDTest {
+public class PosixCPUIDTest {
 
 
-    private final FreeBSDNativeUtil util = NativeUtils.getFreeBSDUtil();
+    private final PosixNativeUtil util = NativeUtils.getPosixUtil();
 
     //@Ignore
     @Test //You probably need to try reasonably hard to run this teston a CPU without CPUID_FEAT_ECX_CX16.

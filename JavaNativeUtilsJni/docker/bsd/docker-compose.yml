@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  java-native-utils-builder-bsd:
+    build:
+      context: image
+    container_name: java-native-utils-builder-bsd
+    environment:
+      - SOMETHING=123
+    volumes:
+      - ../../../:/project
+    entrypoint: /bin/bash /project/JavaNativeUtilsJni/compile_docker_bsd.sh
+
+
