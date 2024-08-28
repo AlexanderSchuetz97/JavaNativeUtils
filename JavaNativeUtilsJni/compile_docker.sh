@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright Alexander Schütz, 2021-2022
+# Copyright Alexander Schütz, 2021-2024
 #
 # This file is part of JavaNativeUtils.
 #
