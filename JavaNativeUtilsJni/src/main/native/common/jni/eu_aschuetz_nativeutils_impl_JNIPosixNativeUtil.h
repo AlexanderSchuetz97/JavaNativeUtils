@@ -65,6 +65,38 @@ JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil_open
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil
+ * Method:    read
+ * Signature: (I[BII)I
+ */
+JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil_read__I_3BII
+  (JNIEnv *, jobject, jint, jbyteArray, jint, jint);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil
+ * Method:    read
+ * Signature: (IJI)I
+ */
+JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil_read__IJI
+  (JNIEnv *, jobject, jint, jlong, jint);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil
+ * Method:    write
+ * Signature: (I[BII)I
+ */
+JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil_write__I_3BII
+  (JNIEnv *, jobject, jint, jbyteArray, jint, jint);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil
+ * Method:    write
+ * Signature: (IJI)I
+ */
+JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil_write__IJI
+  (JNIEnv *, jobject, jint, jlong, jint);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil
  * Method:    close
  * Signature: (I)V
  */

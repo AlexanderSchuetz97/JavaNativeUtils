@@ -121,43 +121,11 @@ JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_poll
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
- * Method:    read
- * Signature: (I[BII)I
- */
-JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_read__I_3BII
-  (JNIEnv *, jobject, jint, jbyteArray, jint, jint);
-
-/*
- * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
- * Method:    read
- * Signature: (IJI)I
- */
-JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_read__IJI
-  (JNIEnv *, jobject, jint, jlong, jint);
-
-/*
- * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
  * Method:    fsync
  * Signature: (I)V
  */
 JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_fsync
   (JNIEnv *, jobject, jint);
-
-/*
- * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
- * Method:    write
- * Signature: (I[BII)I
- */
-JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_write__I_3BII
-  (JNIEnv *, jobject, jint, jbyteArray, jint, jint);
-
-/*
- * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
- * Method:    write
- * Signature: (IJI)I
- */
-JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_write__IJI
-  (JNIEnv *, jobject, jint, jlong, jint);
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil

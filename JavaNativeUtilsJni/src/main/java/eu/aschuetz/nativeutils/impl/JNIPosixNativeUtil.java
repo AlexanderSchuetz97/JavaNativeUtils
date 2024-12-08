@@ -19,19 +19,18 @@
 //
 package eu.aschuetz.nativeutils.impl;
 
+import eu.aschuetz.nativeutils.api.NativeMemory;
 import eu.aschuetz.nativeutils.api.PosixNativeUtil;
 import eu.aschuetz.nativeutils.api.consts.DefaultLinuxConstProvider;
 import eu.aschuetz.nativeutils.api.consts.DefaultPosixConstProvider;
 import eu.aschuetz.nativeutils.api.consts.PosixConstProvider;
-import eu.aschuetz.nativeutils.api.exceptions.FileIsDirectoryException;
-import eu.aschuetz.nativeutils.api.exceptions.QuotaExceededException;
-import eu.aschuetz.nativeutils.api.exceptions.ResourceBusyException;
-import eu.aschuetz.nativeutils.api.exceptions.UnknownNativeErrorException;
+import eu.aschuetz.nativeutils.api.exceptions.*;
 import eu.aschuetz.nativeutils.api.structs.Stat;
 import eu.aschuetz.nativeutils.api.structs.Utsname;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.FileSystemLoopException;
 import java.nio.file.InvalidPathException;
@@ -79,6 +78,141 @@ public abstract class JNIPosixNativeUtil extends JNICommonNativeUtil implements 
 
     @Override
     public native int open(String path, int flags, int mode) throws AccessDeniedException, QuotaExceededException, IOException, FileSystemLoopException, InvalidPathException, FileNotFoundException, ReadOnlyFileSystemException, UnknownNativeErrorException;
+
+    @Override
+    public native int read(int fd, byte[] buffer, int off, int len);
+
+    protected native int read(int fd, long ptr, int len);
+
+    @Override
+    public int read(int fd, NativeMemory mem, long off, int len) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException {
+        if (!mem.isValid(off, len)) {
+            throw new IllegalArgumentException("out of bounds");
+        }
+
+        return read(fd, mem.getNativePointer(off), len);
+    }
+
+    @Override
+    public int read(int fd, ByteBuffer buf, int len) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException {
+        if (buf.isReadOnly()) {
+            throw new IllegalArgumentException("buffer is read only");
+        }
+
+        if (len < 0) {
+            throw new IllegalArgumentException("len < 0");
+        }
+        if (len == 0) {
+            return 0;
+        }
+
+        if (buf.remaining() < len) {
+            throw new IllegalArgumentException("buffer.remaining() < len");
+        }
+
+        if (!buf.isDirect()) {
+            if (!buf.hasArray()) {
+                byte[] bbuf = new byte[len];
+                int x = read(fd, bbuf, 0, len);
+                if (x > 0) {
+                    buf.put(bbuf, 0, x);
+                }
+
+                return x;
+            }
+
+            byte[] bbuf = buf.array();
+            int x = read(fd, bbuf, buf.position(), len);
+            if (x > 0) {
+                buf.position(buf.position() + x);
+            }
+            return x;
+
+        }
+
+        long addr = GetDirectBufferAddress(buf);
+        if (addr == 0) {
+            throw new IllegalStateException("Not a direct buffer even tho buffer.isDirect() returned true");
+        }
+
+        int pos = buf.position();
+        if (pos > 0) {
+            addr = pointerAdd(addr, pos);
+        }
+        int r = read(fd, addr, len);
+        if (r > 0) {
+            buf.position(buf.position() + r);
+        }
+        return r;
+    }
+
+
+    @Override
+    public native int write(int fd, byte[] buffer, int off, int len) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException;
+
+    @Override
+    public int write(int fd, ByteBuffer buf, int len) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException {
+        if (buf.remaining() < len) {
+            throw new IllegalArgumentException("buffer.remaining() < len");
+        }
+
+        if (len < 0) {
+            throw new IllegalArgumentException("len < 0");
+        }
+        if (len == 0) {
+            return 0;
+        }
+
+        if (!buf.isDirect()) {
+            if (!buf.hasArray()) {
+                byte[] bbuf = new byte[len];
+                int pos = buf.position();
+                buf.get(bbuf);
+                buf.position(pos);
+                int x = write(fd, bbuf, 0, len);
+
+                if (x > 0) {
+                    buf.position(pos+x);
+                }
+
+                return x;
+            }
+
+            byte[] bbuf = buf.array();
+            int x = write(fd, bbuf, buf.position(), len);
+            if (x > 0) {
+                buf.position(buf.position() + x);
+            }
+            return x;
+
+        }
+
+        long addr = GetDirectBufferAddress(buf);
+        if (addr == 0) {
+            throw new IllegalStateException("Not a direct buffer even tho buffer.isDirect() returned true");
+        }
+
+        int pos = buf.position();
+        if (pos > 0) {
+            addr = pointerAdd(addr, pos);
+        }
+        int r = write(fd, addr, len);
+        if (r > 0) {
+            buf.position(buf.position() + r);
+        }
+        return r;
+    }
+
+    protected native int write(int fd, long ptr, int len);
+
+    @Override
+    public int write(int fd, NativeMemory mem, long off, int len) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException {
+        if (!mem.isValid(off, len)) {
+            throw new IllegalArgumentException("out of bounds");
+        }
+
+        return write(fd, mem.getNativePointer(off), len);
+    }
 
     @Override
     public native void close(int fd);

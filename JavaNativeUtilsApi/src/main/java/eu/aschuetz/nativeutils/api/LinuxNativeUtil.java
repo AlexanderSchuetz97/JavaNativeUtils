@@ -168,47 +168,7 @@ public interface LinuxNativeUtil extends PosixNativeUtil {
      */
     int poll(PollFD[] fds, int timeout) throws IllegalArgumentException, UnknownNativeErrorException;
 
-    /**
-     * Reads from a file descriptor. Returns the number of bytes read into the buffer. Will read up to "len" bytes.
-     * May return 0 for non blocking file descriptors that do not have data available.
-     */
-    int read(int fd, byte[] buffer, int off, int len) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException;
-
-    /**
-     * Reads from a file descriptor. Returns the number of bytes read into the buffer. Will read up to "len" bytes.
-     * May return 0 for non blocking file descriptors that do not have data available.
-     */
-    int read(int fd, NativeMemory mem, long off, int len) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException;
-
-    /**
-     * Reads from a file descriptor. Returns the number of bytes read into the buffer. Will read up to "len" bytes.
-     * May return 0 for non blocking file descriptors that do not have data available.
-     */
-    int read(int fd, ByteBuffer buf, int len) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException;
-
-
     void fsync(int fd) throws InvalidFileDescriptorException, IOException, ReadOnlyFileSystemException;
-
-    /**
-     * Write to a file descriptor
-     * returns the number of bytes written from the buffer.
-     * may return 0 for non blocking file descriptors that are not ready to write data.
-     */
-    int write(int fd, byte[] buffer, int off, int len) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException;
-
-    /**
-     * Write to a file descriptor
-     * returns the number of bytes written from the buffer.
-     * may return 0 for non blocking file descriptors that are not ready to write data.
-     */
-    int write(int fd, NativeMemory mem, long off, int len) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException;
-
-    /**
-     * Write to a file descriptor
-     * returns the number of bytes written from the buffer.
-     * may return 0 for non blocking file descriptors that are not ready to write data.
-     */
-    int write(int fd, ByteBuffer buf, int len) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException;
 
     /**
      * The Output parameter sockaddr may be null if you are not interested in this information.

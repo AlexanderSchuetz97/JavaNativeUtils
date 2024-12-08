@@ -269,3 +269,239 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil_clos
         }
     }
 }
+
+
+jint handle_read_error(JNIEnv * env, int err) {
+    switch(err) {
+#if EAGAIN != EWOULDBLOCK
+        case(EWOULDBLOCK):
+#endif
+        case(EAGAIN):
+            return 0;
+        case(EBADF):
+            jthrow_InvalidFileDescriptorException(env);
+            return -1;
+        case EINVAL:
+            jthrowCC_IllegalArgumentException_1(env, "file descriptor is unsuitable for reading or buffer size does not match the required buffer size");
+            return -1;
+        case EIO:
+            jthrowC_IOException_1(env, "I/O error");
+            return -1;
+        case EISDIR:
+            jthrowCC_IllegalArgumentException_1(env, "file descriptor refers to a directory");
+            return -1;
+        default:
+            jthrow_UnknownNativeErrorException_1(env, err);
+            return -1;
+    }
+}
+
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil
+ * Method:    read
+ * Signature: (IJI)I
+ */
+JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil_read__IJI
+        (JNIEnv * env, jobject inst, jint fd, jlong ptr, jint len) {
+    void * buf = (void *) (uintptr_t) ptr;
+    if (buf == NULL) {
+        jthrowCC_NullPointerException_1(env, "buffer");
+        return -1;
+    }
+
+    if (len < 0) {
+        jthrowCC_IllegalArgumentException_1(env, "length");
+        return -1;
+    }
+
+    while(true) {
+        ssize_t r = read(fd, buf, len);
+        if (r == 0) {
+            return -1;
+        }
+
+        if (r > 0) {
+            return (jint) r;
+        }
+
+        int err = errno;
+        if (err == EINTR) {
+            continue;
+        }
+
+        return handle_read_error(env, err);
+    }
+}
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil
+ * Method:    read
+ * Signature: (I[BII)I
+ */
+JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil_read__I_3BII
+        (JNIEnv * env, jobject inst, jint fd, jbyteArray jbuf, jint off, jint len) {
+    if (jbuf == NULL) {
+        jthrowCC_NullPointerException_1(env, "buffer");
+        return -1;
+    }
+
+    jsize alen = (*env)->GetArrayLength(env, jbuf);
+
+    if (off < 0 || len < 0 || len+off > alen) {
+        jthrowCC_IllegalArgumentException_1(env, "offset+lengths");
+        return -1;
+    }
+
+    void* data = (*env)->GetByteArrayElements(env, jbuf, NULL);
+    if (data == NULL) {
+        jthrowCC_OutOfMemoryError_1(env, "GetByteArrayElements");
+        return -1;
+    }
+
+    while(true) {
+        ssize_t r = read(fd, data+off, len);
+
+        if (r == 0) {
+            //EOF
+            (*env)->ReleaseByteArrayElements(env, jbuf, data, JNI_ABORT);
+            return -1;
+        }
+
+        if (r > 0) {
+            (*env)->ReleaseByteArrayElements(env, jbuf, data, JNI_OK);
+            return r;
+        }
+
+        int err = errno;
+        if (err == EINTR) {
+            continue;
+        }
+
+        (*env)->ReleaseByteArrayElements(env, jbuf, data, JNI_ABORT);
+
+        return handle_read_error(env, err);
+    }
+}
+
+
+
+jint handle_write_error(JNIEnv * env, int err) {
+    switch(err) {
+#if EAGAIN != EWOULDBLOCK
+        case(EWOULDBLOCK):
+#endif
+        case(EAGAIN):
+            return 0;
+        case(EBADF):
+            jthrow_InvalidFileDescriptorException(env);
+            return -1;
+        case(EDESTADDRREQ):
+            jthrowCC_IllegalStateException_1(env, "file descriptor refers to a datagram socket for which a peer address has not been set using connect.");
+            return -1;
+        case(EDQUOT):
+            jthrowCC_QuotaExceededException_1(env, NULL, NULL, "The user's quota of disk blocks on the filesystem containing the file referred to by the file descriptor has been exhausted.");
+            return -1;
+        case(EFBIG):
+            jthrowC_IOException_1(env, "An attempt was made to write a file that exceeds the implementation-defined maximum file size or the process's file size limit, or to write at a position past the maximum allowed offset.");
+            return -1;
+        case EINVAL:
+            jthrowCC_IllegalArgumentException_1(env, "file descriptor is unsuitable for writing or the file/buffer position/length is not properly aligned.");
+            return -1;
+        case EIO:
+            jthrowC_IOException_1(env, "I/O error");
+            return -1;
+        case EPERM:
+            jthrowCC_AccessDeniedException_1(env, NULL, NULL, "Operation was prevented by a file seal");
+            return -1;
+        case EPIPE:
+            jthrowC_IOException_1(env, "Broken pipe");
+            return -1;
+        case ENOSPC:
+            jthrowC_IOException_1(env, "The device containing the file referred to by fd has no room for the data.");
+            return -1;
+        case EISDIR:
+            jthrowCC_IllegalArgumentException_1(env, "file descriptor refers to a directory");
+            return -1;
+        default:
+            jthrow_UnknownNativeErrorException_1(env, err);
+            return -1;
+    }
+}
+
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil
+ * Method:    write
+ * Signature: (IJI)I
+ */
+JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil_write__IJI
+        (JNIEnv * env, jobject inst, jint fd, jlong jptr, jint len) {
+    void *buf = (void*) (uintptr_t) jptr;
+    if (buf == NULL) {
+        jthrowCC_NullPointerException_1(env, "buffer");
+        return -1;
+    }
+
+    if (len < 0) {
+        jthrowCC_IllegalArgumentException_1(env, "len");
+        return -1;
+    }
+
+    while(true) {
+        ssize_t r = write(fd, buf, len);
+        if (r >= 0) {
+            return (jint) r;
+        }
+
+        int err = errno;
+        if (err == EINTR) {
+            continue;
+        }
+
+        return handle_write_error(env, err);
+    }
+}
+
+
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil
+ * Method:    write
+ * Signature: (I[BII)I
+ */
+JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil_write__I_3BII
+        (JNIEnv * env, jobject inst, jint fd, jbyteArray jbuf, jint off, jint len) {
+    if (jbuf == NULL) {
+        jthrowCC_NullPointerException_1(env, "buffer");
+        return -1;
+    }
+
+    jsize alen = (*env)->GetArrayLength(env, jbuf);
+
+    if (off < 0 || len < 0 || len+off > alen) {
+        jthrowCC_IllegalArgumentException_1(env, "offset+lengths");
+        return -1;
+    }
+
+    while(true) {
+        void* data = (*env)->GetByteArrayElements(env, jbuf, NULL);
+
+        ssize_t r = write(fd, data+off, len);
+
+        if (r >= 0) {
+            (*env)->ReleaseByteArrayElements(env, jbuf, data, JNI_OK);
+            return (jint) r;
+        }
+
+        int err = errno;
+        (*env)->ReleaseByteArrayElements(env, jbuf, data, JNI_ABORT);
+
+        if (err == EINTR) {
+            continue;
+        }
+
+        return handle_write_error(env, err);
+
+    }
+}

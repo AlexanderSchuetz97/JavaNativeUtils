@@ -22,11 +22,8 @@ package eu.aschuetz.nativeutils.test;
 import eu.aschuetz.nativeutils.api.NativeUtil;
 import eu.aschuetz.nativeutils.api.NativeUtils;
 import eu.aschuetz.nativeutils.test.common.*;
-import eu.aschuetz.nativeutils.test.posix.PosixCPUIDTest;
-import eu.aschuetz.nativeutils.test.posix.PosixLinkTests;
-import eu.aschuetz.nativeutils.test.posix.PosixStatTest;
+import eu.aschuetz.nativeutils.test.posix.*;
 import eu.aschuetz.nativeutils.test.linux.*;
-import eu.aschuetz.nativeutils.test.posix.UnameTest;
 import eu.aschuetz.nativeutils.test.windows.*;
 import org.junit.runner.Description;
 import org.junit.runner.JUnitCore;
@@ -53,14 +50,16 @@ public class Main {
             PosixStatTest.class,
             PosixLinkTests.class,
             PosixCPUIDTest.class,
-            UnameTest.class
+            UnameTest.class,
+            OpenWriteReadTest.class
             );
 
     private static List<Class> NETBSD_TESTS = (List) Arrays.asList(
             PosixStatTest.class,
             PosixLinkTests.class,
             PosixCPUIDTest.class,
-            UnameTest.class
+            UnameTest.class,
+            OpenWriteReadTest.class
     );
 
     private static List<Class> LINUX_TESTS = (List) Arrays.asList(
@@ -82,7 +81,8 @@ public class Main {
             UserTest.class,
             MemfdTest.class,
             WordExp.class,
-            UnameTest.class
+            UnameTest.class,
+            OpenWriteReadTest.class
             );
 
     private static List<Class> WINDOWS_TESTS = (List) Arrays.asList(
