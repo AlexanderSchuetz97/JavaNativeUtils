@@ -231,6 +231,11 @@ jboolean jinstanceof_Group(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, Group);
 }
 
+static jclass DefaultPosixConstProvider = 0;
+jboolean jinstanceof_DefaultPosixConstProvider(JNIEnv * env, jobject value) {
+   return (*env)->IsInstanceOf(env, value, DefaultPosixConstProvider);
+}
+
 static jclass SpDeviceInfoData = 0;
 jboolean jinstanceof_SpDeviceInfoData(JNIEnv * env, jobject value) {
    return (*env)->IsInstanceOf(env, value, SpDeviceInfoData);
@@ -3457,6 +3462,421 @@ jint jcall_DefaultLinuxConstProvider_TUNSETIFF(JNIEnv * env, jobject instance) {
 static jmethodID DefaultLinuxConstProvider_M_TUNSETPERSIST_0 = 0;
 jint jcall_DefaultLinuxConstProvider_TUNSETPERSIST(JNIEnv * env, jobject instance) {
     return (*env) -> CallIntMethod(env, instance, DefaultLinuxConstProvider_M_TUNSETPERSIST_0);
+}
+
+static jfieldID DefaultPosixConstProvider_O_ACCMODE = 0;
+void jset_DefaultPosixConstProvider_O_ACCMODE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_O_ACCMODE, value);
+}
+
+jint jget_DefaultPosixConstProvider_O_ACCMODE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_O_ACCMODE);
+}
+
+static jfieldID DefaultPosixConstProvider_O_RDONLY = 0;
+void jset_DefaultPosixConstProvider_O_RDONLY(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_O_RDONLY, value);
+}
+
+jint jget_DefaultPosixConstProvider_O_RDONLY(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_O_RDONLY);
+}
+
+static jfieldID DefaultPosixConstProvider_O_WRONLY = 0;
+void jset_DefaultPosixConstProvider_O_WRONLY(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_O_WRONLY, value);
+}
+
+jint jget_DefaultPosixConstProvider_O_WRONLY(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_O_WRONLY);
+}
+
+static jfieldID DefaultPosixConstProvider_O_RDWR = 0;
+void jset_DefaultPosixConstProvider_O_RDWR(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_O_RDWR, value);
+}
+
+jint jget_DefaultPosixConstProvider_O_RDWR(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_O_RDWR);
+}
+
+static jfieldID DefaultPosixConstProvider_O_CREAT = 0;
+void jset_DefaultPosixConstProvider_O_CREAT(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_O_CREAT, value);
+}
+
+jint jget_DefaultPosixConstProvider_O_CREAT(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_O_CREAT);
+}
+
+static jfieldID DefaultPosixConstProvider_O_EXCL = 0;
+void jset_DefaultPosixConstProvider_O_EXCL(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_O_EXCL, value);
+}
+
+jint jget_DefaultPosixConstProvider_O_EXCL(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_O_EXCL);
+}
+
+static jfieldID DefaultPosixConstProvider_O_NOCTTY = 0;
+void jset_DefaultPosixConstProvider_O_NOCTTY(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_O_NOCTTY, value);
+}
+
+jint jget_DefaultPosixConstProvider_O_NOCTTY(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_O_NOCTTY);
+}
+
+static jfieldID DefaultPosixConstProvider_O_TRUNC = 0;
+void jset_DefaultPosixConstProvider_O_TRUNC(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_O_TRUNC, value);
+}
+
+jint jget_DefaultPosixConstProvider_O_TRUNC(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_O_TRUNC);
+}
+
+static jfieldID DefaultPosixConstProvider_O_APPEND = 0;
+void jset_DefaultPosixConstProvider_O_APPEND(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_O_APPEND, value);
+}
+
+jint jget_DefaultPosixConstProvider_O_APPEND(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_O_APPEND);
+}
+
+static jfieldID DefaultPosixConstProvider_O_NONBLOCK = 0;
+void jset_DefaultPosixConstProvider_O_NONBLOCK(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_O_NONBLOCK, value);
+}
+
+jint jget_DefaultPosixConstProvider_O_NONBLOCK(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_O_NONBLOCK);
+}
+
+static jfieldID DefaultPosixConstProvider_O_NDELAY = 0;
+void jset_DefaultPosixConstProvider_O_NDELAY(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_O_NDELAY, value);
+}
+
+jint jget_DefaultPosixConstProvider_O_NDELAY(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_O_NDELAY);
+}
+
+static jfieldID DefaultPosixConstProvider_O_SYNC = 0;
+void jset_DefaultPosixConstProvider_O_SYNC(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_O_SYNC, value);
+}
+
+jint jget_DefaultPosixConstProvider_O_SYNC(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_O_SYNC);
+}
+
+static jfieldID DefaultPosixConstProvider_O_ASYNC = 0;
+void jset_DefaultPosixConstProvider_O_ASYNC(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_O_ASYNC, value);
+}
+
+jint jget_DefaultPosixConstProvider_O_ASYNC(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_O_ASYNC);
+}
+
+static jfieldID DefaultPosixConstProvider_O_DIRECTORY = 0;
+void jset_DefaultPosixConstProvider_O_DIRECTORY(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_O_DIRECTORY, value);
+}
+
+jint jget_DefaultPosixConstProvider_O_DIRECTORY(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_O_DIRECTORY);
+}
+
+static jfieldID DefaultPosixConstProvider_O_NOFOLLOW = 0;
+void jset_DefaultPosixConstProvider_O_NOFOLLOW(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_O_NOFOLLOW, value);
+}
+
+jint jget_DefaultPosixConstProvider_O_NOFOLLOW(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_O_NOFOLLOW);
+}
+
+static jfieldID DefaultPosixConstProvider_O_CLOEXEC = 0;
+void jset_DefaultPosixConstProvider_O_CLOEXEC(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_O_CLOEXEC, value);
+}
+
+jint jget_DefaultPosixConstProvider_O_CLOEXEC(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_O_CLOEXEC);
+}
+
+static jfieldID DefaultPosixConstProvider_O_DSYNC = 0;
+void jset_DefaultPosixConstProvider_O_DSYNC(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_O_DSYNC, value);
+}
+
+jint jget_DefaultPosixConstProvider_O_DSYNC(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_O_DSYNC);
+}
+
+static jfieldID DefaultPosixConstProvider_S_IRUSR = 0;
+void jset_DefaultPosixConstProvider_S_IRUSR(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_S_IRUSR, value);
+}
+
+jint jget_DefaultPosixConstProvider_S_IRUSR(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_S_IRUSR);
+}
+
+static jfieldID DefaultPosixConstProvider_S_IWUSR = 0;
+void jset_DefaultPosixConstProvider_S_IWUSR(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_S_IWUSR, value);
+}
+
+jint jget_DefaultPosixConstProvider_S_IWUSR(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_S_IWUSR);
+}
+
+static jfieldID DefaultPosixConstProvider_S_IXUSR = 0;
+void jset_DefaultPosixConstProvider_S_IXUSR(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_S_IXUSR, value);
+}
+
+jint jget_DefaultPosixConstProvider_S_IXUSR(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_S_IXUSR);
+}
+
+static jfieldID DefaultPosixConstProvider_S_IRGRP = 0;
+void jset_DefaultPosixConstProvider_S_IRGRP(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_S_IRGRP, value);
+}
+
+jint jget_DefaultPosixConstProvider_S_IRGRP(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_S_IRGRP);
+}
+
+static jfieldID DefaultPosixConstProvider_S_IWGRP = 0;
+void jset_DefaultPosixConstProvider_S_IWGRP(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_S_IWGRP, value);
+}
+
+jint jget_DefaultPosixConstProvider_S_IWGRP(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_S_IWGRP);
+}
+
+static jfieldID DefaultPosixConstProvider_S_IXGRP = 0;
+void jset_DefaultPosixConstProvider_S_IXGRP(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_S_IXGRP, value);
+}
+
+jint jget_DefaultPosixConstProvider_S_IXGRP(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_S_IXGRP);
+}
+
+static jfieldID DefaultPosixConstProvider_S_IROTH = 0;
+void jset_DefaultPosixConstProvider_S_IROTH(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_S_IROTH, value);
+}
+
+jint jget_DefaultPosixConstProvider_S_IROTH(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_S_IROTH);
+}
+
+static jfieldID DefaultPosixConstProvider_S_IWOTH = 0;
+void jset_DefaultPosixConstProvider_S_IWOTH(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_S_IWOTH, value);
+}
+
+jint jget_DefaultPosixConstProvider_S_IWOTH(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_S_IWOTH);
+}
+
+static jfieldID DefaultPosixConstProvider_S_IXOTH = 0;
+void jset_DefaultPosixConstProvider_S_IXOTH(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_S_IXOTH, value);
+}
+
+jint jget_DefaultPosixConstProvider_S_IXOTH(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_S_IXOTH);
+}
+
+static jfieldID DefaultPosixConstProvider_S_IRWXU = 0;
+void jset_DefaultPosixConstProvider_S_IRWXU(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_S_IRWXU, value);
+}
+
+jint jget_DefaultPosixConstProvider_S_IRWXU(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_S_IRWXU);
+}
+
+static jfieldID DefaultPosixConstProvider_S_IRWXG = 0;
+void jset_DefaultPosixConstProvider_S_IRWXG(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_S_IRWXG, value);
+}
+
+jint jget_DefaultPosixConstProvider_S_IRWXG(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_S_IRWXG);
+}
+
+static jfieldID DefaultPosixConstProvider_S_IRWXO = 0;
+void jset_DefaultPosixConstProvider_S_IRWXO(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_S_IRWXO, value);
+}
+
+jint jget_DefaultPosixConstProvider_S_IRWXO(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_S_IRWXO);
+}
+
+static jmethodID DefaultPosixConstProvider_C_0 = 0;
+jobject jnew_DefaultPosixConstProvider(JNIEnv * env) {
+    jobject obj = (*env) -> NewObject(env, DefaultPosixConstProvider, DefaultPosixConstProvider_C_0);
+    if (obj == NULL) {
+        throw_internal_OutOfMemoryError(env, "NewObject");
+    }
+    return obj;
+}
+
+static jmethodID DefaultPosixConstProvider_M_O_ACCMODE_0 = 0;
+jint jcall_DefaultPosixConstProvider_O_ACCMODE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_O_ACCMODE_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_O_APPEND_0 = 0;
+jint jcall_DefaultPosixConstProvider_O_APPEND(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_O_APPEND_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_O_ASYNC_0 = 0;
+jint jcall_DefaultPosixConstProvider_O_ASYNC(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_O_ASYNC_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_O_CLOEXEC_0 = 0;
+jint jcall_DefaultPosixConstProvider_O_CLOEXEC(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_O_CLOEXEC_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_O_CREAT_0 = 0;
+jint jcall_DefaultPosixConstProvider_O_CREAT(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_O_CREAT_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_O_DIRECTORY_0 = 0;
+jint jcall_DefaultPosixConstProvider_O_DIRECTORY(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_O_DIRECTORY_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_O_DSYNC_0 = 0;
+jint jcall_DefaultPosixConstProvider_O_DSYNC(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_O_DSYNC_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_O_EXCL_0 = 0;
+jint jcall_DefaultPosixConstProvider_O_EXCL(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_O_EXCL_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_O_NDELAY_0 = 0;
+jint jcall_DefaultPosixConstProvider_O_NDELAY(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_O_NDELAY_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_O_NOCTTY_0 = 0;
+jint jcall_DefaultPosixConstProvider_O_NOCTTY(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_O_NOCTTY_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_O_NOFOLLOW_0 = 0;
+jint jcall_DefaultPosixConstProvider_O_NOFOLLOW(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_O_NOFOLLOW_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_O_NONBLOCK_0 = 0;
+jint jcall_DefaultPosixConstProvider_O_NONBLOCK(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_O_NONBLOCK_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_O_RDONLY_0 = 0;
+jint jcall_DefaultPosixConstProvider_O_RDONLY(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_O_RDONLY_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_O_RDWR_0 = 0;
+jint jcall_DefaultPosixConstProvider_O_RDWR(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_O_RDWR_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_O_SYNC_0 = 0;
+jint jcall_DefaultPosixConstProvider_O_SYNC(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_O_SYNC_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_O_TRUNC_0 = 0;
+jint jcall_DefaultPosixConstProvider_O_TRUNC(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_O_TRUNC_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_O_WRONLY_0 = 0;
+jint jcall_DefaultPosixConstProvider_O_WRONLY(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_O_WRONLY_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_S_IRGRP_0 = 0;
+jint jcall_DefaultPosixConstProvider_S_IRGRP(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_S_IRGRP_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_S_IROTH_0 = 0;
+jint jcall_DefaultPosixConstProvider_S_IROTH(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_S_IROTH_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_S_IRUSR_0 = 0;
+jint jcall_DefaultPosixConstProvider_S_IRUSR(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_S_IRUSR_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_S_IRWXG_0 = 0;
+jint jcall_DefaultPosixConstProvider_S_IRWXG(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_S_IRWXG_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_S_IRWXO_0 = 0;
+jint jcall_DefaultPosixConstProvider_S_IRWXO(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_S_IRWXO_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_S_IRWXU_0 = 0;
+jint jcall_DefaultPosixConstProvider_S_IRWXU(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_S_IRWXU_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_S_IWGRP_0 = 0;
+jint jcall_DefaultPosixConstProvider_S_IWGRP(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_S_IWGRP_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_S_IWOTH_0 = 0;
+jint jcall_DefaultPosixConstProvider_S_IWOTH(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_S_IWOTH_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_S_IWUSR_0 = 0;
+jint jcall_DefaultPosixConstProvider_S_IWUSR(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_S_IWUSR_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_S_IXGRP_0 = 0;
+jint jcall_DefaultPosixConstProvider_S_IXGRP(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_S_IXGRP_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_S_IXOTH_0 = 0;
+jint jcall_DefaultPosixConstProvider_S_IXOTH(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_S_IXOTH_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_S_IXUSR_0 = 0;
+jint jcall_DefaultPosixConstProvider_S_IXUSR(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_S_IXUSR_0);
 }
 
 static jfieldID Cmsghdr_cmsg_level = 0;
@@ -11432,6 +11852,13 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
+    DefaultPosixConstProvider = makeGlobalClassRef(env, "eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider");
+    if (DefaultPosixConstProvider == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider");
+        return JNI_FALSE;
+    }
+
     SpDeviceInfoData = makeGlobalClassRef(env, "eu/aschuetz/nativeutils/api/structs/SpDeviceInfoData");
     if (SpDeviceInfoData == 0) {
         (*env) -> ExceptionClear(env);
@@ -14733,6 +15160,419 @@ jboolean jnigenerator_init(JNIEnv * env) {
     if (DefaultLinuxConstProvider_M_TUNSETPERSIST_0 == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultLinuxConstProvider.TUNSETPERSIST()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_O_ACCMODE = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "O_ACCMODE", "I");
+    if (DefaultPosixConstProvider_O_ACCMODE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_O_ACCMODE_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_O_RDONLY = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "O_RDONLY", "I");
+    if (DefaultPosixConstProvider_O_RDONLY == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_O_RDONLY_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_O_WRONLY = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "O_WRONLY", "I");
+    if (DefaultPosixConstProvider_O_WRONLY == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_O_WRONLY_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_O_RDWR = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "O_RDWR", "I");
+    if (DefaultPosixConstProvider_O_RDWR == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_O_RDWR_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_O_CREAT = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "O_CREAT", "I");
+    if (DefaultPosixConstProvider_O_CREAT == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_O_CREAT_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_O_EXCL = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "O_EXCL", "I");
+    if (DefaultPosixConstProvider_O_EXCL == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_O_EXCL_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_O_NOCTTY = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "O_NOCTTY", "I");
+    if (DefaultPosixConstProvider_O_NOCTTY == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_O_NOCTTY_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_O_TRUNC = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "O_TRUNC", "I");
+    if (DefaultPosixConstProvider_O_TRUNC == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_O_TRUNC_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_O_APPEND = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "O_APPEND", "I");
+    if (DefaultPosixConstProvider_O_APPEND == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_O_APPEND_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_O_NONBLOCK = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "O_NONBLOCK", "I");
+    if (DefaultPosixConstProvider_O_NONBLOCK == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_O_NONBLOCK_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_O_NDELAY = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "O_NDELAY", "I");
+    if (DefaultPosixConstProvider_O_NDELAY == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_O_NDELAY_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_O_SYNC = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "O_SYNC", "I");
+    if (DefaultPosixConstProvider_O_SYNC == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_O_SYNC_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_O_ASYNC = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "O_ASYNC", "I");
+    if (DefaultPosixConstProvider_O_ASYNC == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_O_ASYNC_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_O_DIRECTORY = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "O_DIRECTORY", "I");
+    if (DefaultPosixConstProvider_O_DIRECTORY == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_O_DIRECTORY_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_O_NOFOLLOW = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "O_NOFOLLOW", "I");
+    if (DefaultPosixConstProvider_O_NOFOLLOW == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_O_NOFOLLOW_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_O_CLOEXEC = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "O_CLOEXEC", "I");
+    if (DefaultPosixConstProvider_O_CLOEXEC == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_O_CLOEXEC_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_O_DSYNC = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "O_DSYNC", "I");
+    if (DefaultPosixConstProvider_O_DSYNC == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_O_DSYNC_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_S_IRUSR = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "S_IRUSR", "I");
+    if (DefaultPosixConstProvider_S_IRUSR == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_S_IRUSR_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_S_IWUSR = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "S_IWUSR", "I");
+    if (DefaultPosixConstProvider_S_IWUSR == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_S_IWUSR_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_S_IXUSR = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "S_IXUSR", "I");
+    if (DefaultPosixConstProvider_S_IXUSR == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_S_IXUSR_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_S_IRGRP = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "S_IRGRP", "I");
+    if (DefaultPosixConstProvider_S_IRGRP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_S_IRGRP_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_S_IWGRP = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "S_IWGRP", "I");
+    if (DefaultPosixConstProvider_S_IWGRP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_S_IWGRP_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_S_IXGRP = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "S_IXGRP", "I");
+    if (DefaultPosixConstProvider_S_IXGRP == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_S_IXGRP_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_S_IROTH = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "S_IROTH", "I");
+    if (DefaultPosixConstProvider_S_IROTH == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_S_IROTH_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_S_IWOTH = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "S_IWOTH", "I");
+    if (DefaultPosixConstProvider_S_IWOTH == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_S_IWOTH_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_S_IXOTH = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "S_IXOTH", "I");
+    if (DefaultPosixConstProvider_S_IXOTH == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_S_IXOTH_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_S_IRWXU = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "S_IRWXU", "I");
+    if (DefaultPosixConstProvider_S_IRWXU == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_S_IRWXU_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_S_IRWXG = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "S_IRWXG", "I");
+    if (DefaultPosixConstProvider_S_IRWXG == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_S_IRWXG_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_S_IRWXO = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "S_IRWXO", "I");
+    if (DefaultPosixConstProvider_S_IRWXO == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_S_IRWXO_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_C_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "<init>", "()V");
+    if (DefaultPosixConstProvider_C_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.<init>()V");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_O_ACCMODE_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "O_ACCMODE", "()I");
+    if (DefaultPosixConstProvider_M_O_ACCMODE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.O_ACCMODE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_O_APPEND_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "O_APPEND", "()I");
+    if (DefaultPosixConstProvider_M_O_APPEND_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.O_APPEND()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_O_ASYNC_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "O_ASYNC", "()I");
+    if (DefaultPosixConstProvider_M_O_ASYNC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.O_ASYNC()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_O_CLOEXEC_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "O_CLOEXEC", "()I");
+    if (DefaultPosixConstProvider_M_O_CLOEXEC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.O_CLOEXEC()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_O_CREAT_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "O_CREAT", "()I");
+    if (DefaultPosixConstProvider_M_O_CREAT_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.O_CREAT()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_O_DIRECTORY_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "O_DIRECTORY", "()I");
+    if (DefaultPosixConstProvider_M_O_DIRECTORY_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.O_DIRECTORY()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_O_DSYNC_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "O_DSYNC", "()I");
+    if (DefaultPosixConstProvider_M_O_DSYNC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.O_DSYNC()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_O_EXCL_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "O_EXCL", "()I");
+    if (DefaultPosixConstProvider_M_O_EXCL_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.O_EXCL()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_O_NDELAY_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "O_NDELAY", "()I");
+    if (DefaultPosixConstProvider_M_O_NDELAY_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.O_NDELAY()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_O_NOCTTY_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "O_NOCTTY", "()I");
+    if (DefaultPosixConstProvider_M_O_NOCTTY_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.O_NOCTTY()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_O_NOFOLLOW_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "O_NOFOLLOW", "()I");
+    if (DefaultPosixConstProvider_M_O_NOFOLLOW_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.O_NOFOLLOW()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_O_NONBLOCK_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "O_NONBLOCK", "()I");
+    if (DefaultPosixConstProvider_M_O_NONBLOCK_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.O_NONBLOCK()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_O_RDONLY_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "O_RDONLY", "()I");
+    if (DefaultPosixConstProvider_M_O_RDONLY_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.O_RDONLY()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_O_RDWR_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "O_RDWR", "()I");
+    if (DefaultPosixConstProvider_M_O_RDWR_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.O_RDWR()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_O_SYNC_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "O_SYNC", "()I");
+    if (DefaultPosixConstProvider_M_O_SYNC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.O_SYNC()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_O_TRUNC_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "O_TRUNC", "()I");
+    if (DefaultPosixConstProvider_M_O_TRUNC_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.O_TRUNC()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_O_WRONLY_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "O_WRONLY", "()I");
+    if (DefaultPosixConstProvider_M_O_WRONLY_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.O_WRONLY()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_S_IRGRP_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "S_IRGRP", "()I");
+    if (DefaultPosixConstProvider_M_S_IRGRP_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.S_IRGRP()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_S_IROTH_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "S_IROTH", "()I");
+    if (DefaultPosixConstProvider_M_S_IROTH_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.S_IROTH()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_S_IRUSR_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "S_IRUSR", "()I");
+    if (DefaultPosixConstProvider_M_S_IRUSR_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.S_IRUSR()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_S_IRWXG_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "S_IRWXG", "()I");
+    if (DefaultPosixConstProvider_M_S_IRWXG_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.S_IRWXG()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_S_IRWXO_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "S_IRWXO", "()I");
+    if (DefaultPosixConstProvider_M_S_IRWXO_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.S_IRWXO()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_S_IRWXU_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "S_IRWXU", "()I");
+    if (DefaultPosixConstProvider_M_S_IRWXU_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.S_IRWXU()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_S_IWGRP_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "S_IWGRP", "()I");
+    if (DefaultPosixConstProvider_M_S_IWGRP_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.S_IWGRP()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_S_IWOTH_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "S_IWOTH", "()I");
+    if (DefaultPosixConstProvider_M_S_IWOTH_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.S_IWOTH()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_S_IWUSR_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "S_IWUSR", "()I");
+    if (DefaultPosixConstProvider_M_S_IWUSR_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.S_IWUSR()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_S_IXGRP_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "S_IXGRP", "()I");
+    if (DefaultPosixConstProvider_M_S_IXGRP_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.S_IXGRP()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_S_IXOTH_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "S_IXOTH", "()I");
+    if (DefaultPosixConstProvider_M_S_IXOTH_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.S_IXOTH()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_S_IXUSR_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "S_IXUSR", "()I");
+    if (DefaultPosixConstProvider_M_S_IXUSR_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.S_IXUSR()I");
         return JNI_FALSE;
     }
 
@@ -21036,6 +21876,11 @@ void jnigenerator_destroy(JNIEnv * env) {
         Group = 0;
     }
 
+    if (DefaultPosixConstProvider != 0) {
+        (*env) -> DeleteGlobalRef(env, DefaultPosixConstProvider);
+        DefaultPosixConstProvider = 0;
+    }
+
     if (SpDeviceInfoData != 0) {
         (*env) -> DeleteGlobalRef(env, SpDeviceInfoData);
         SpDeviceInfoData = 0;
@@ -21664,6 +22509,65 @@ void jnigenerator_destroy(JNIEnv * env) {
     DefaultLinuxConstProvider_M_TUNGETSNDBUF_0 = 0;
     DefaultLinuxConstProvider_M_TUNSETIFF_0 = 0;
     DefaultLinuxConstProvider_M_TUNSETPERSIST_0 = 0;
+    DefaultPosixConstProvider_O_ACCMODE = 0;
+    DefaultPosixConstProvider_O_RDONLY = 0;
+    DefaultPosixConstProvider_O_WRONLY = 0;
+    DefaultPosixConstProvider_O_RDWR = 0;
+    DefaultPosixConstProvider_O_CREAT = 0;
+    DefaultPosixConstProvider_O_EXCL = 0;
+    DefaultPosixConstProvider_O_NOCTTY = 0;
+    DefaultPosixConstProvider_O_TRUNC = 0;
+    DefaultPosixConstProvider_O_APPEND = 0;
+    DefaultPosixConstProvider_O_NONBLOCK = 0;
+    DefaultPosixConstProvider_O_NDELAY = 0;
+    DefaultPosixConstProvider_O_SYNC = 0;
+    DefaultPosixConstProvider_O_ASYNC = 0;
+    DefaultPosixConstProvider_O_DIRECTORY = 0;
+    DefaultPosixConstProvider_O_NOFOLLOW = 0;
+    DefaultPosixConstProvider_O_CLOEXEC = 0;
+    DefaultPosixConstProvider_O_DSYNC = 0;
+    DefaultPosixConstProvider_S_IRUSR = 0;
+    DefaultPosixConstProvider_S_IWUSR = 0;
+    DefaultPosixConstProvider_S_IXUSR = 0;
+    DefaultPosixConstProvider_S_IRGRP = 0;
+    DefaultPosixConstProvider_S_IWGRP = 0;
+    DefaultPosixConstProvider_S_IXGRP = 0;
+    DefaultPosixConstProvider_S_IROTH = 0;
+    DefaultPosixConstProvider_S_IWOTH = 0;
+    DefaultPosixConstProvider_S_IXOTH = 0;
+    DefaultPosixConstProvider_S_IRWXU = 0;
+    DefaultPosixConstProvider_S_IRWXG = 0;
+    DefaultPosixConstProvider_S_IRWXO = 0;
+    DefaultPosixConstProvider_C_0 = 0;
+    DefaultPosixConstProvider_M_O_ACCMODE_0 = 0;
+    DefaultPosixConstProvider_M_O_APPEND_0 = 0;
+    DefaultPosixConstProvider_M_O_ASYNC_0 = 0;
+    DefaultPosixConstProvider_M_O_CLOEXEC_0 = 0;
+    DefaultPosixConstProvider_M_O_CREAT_0 = 0;
+    DefaultPosixConstProvider_M_O_DIRECTORY_0 = 0;
+    DefaultPosixConstProvider_M_O_DSYNC_0 = 0;
+    DefaultPosixConstProvider_M_O_EXCL_0 = 0;
+    DefaultPosixConstProvider_M_O_NDELAY_0 = 0;
+    DefaultPosixConstProvider_M_O_NOCTTY_0 = 0;
+    DefaultPosixConstProvider_M_O_NOFOLLOW_0 = 0;
+    DefaultPosixConstProvider_M_O_NONBLOCK_0 = 0;
+    DefaultPosixConstProvider_M_O_RDONLY_0 = 0;
+    DefaultPosixConstProvider_M_O_RDWR_0 = 0;
+    DefaultPosixConstProvider_M_O_SYNC_0 = 0;
+    DefaultPosixConstProvider_M_O_TRUNC_0 = 0;
+    DefaultPosixConstProvider_M_O_WRONLY_0 = 0;
+    DefaultPosixConstProvider_M_S_IRGRP_0 = 0;
+    DefaultPosixConstProvider_M_S_IROTH_0 = 0;
+    DefaultPosixConstProvider_M_S_IRUSR_0 = 0;
+    DefaultPosixConstProvider_M_S_IRWXG_0 = 0;
+    DefaultPosixConstProvider_M_S_IRWXO_0 = 0;
+    DefaultPosixConstProvider_M_S_IRWXU_0 = 0;
+    DefaultPosixConstProvider_M_S_IWGRP_0 = 0;
+    DefaultPosixConstProvider_M_S_IWOTH_0 = 0;
+    DefaultPosixConstProvider_M_S_IWUSR_0 = 0;
+    DefaultPosixConstProvider_M_S_IXGRP_0 = 0;
+    DefaultPosixConstProvider_M_S_IXOTH_0 = 0;
+    DefaultPosixConstProvider_M_S_IXUSR_0 = 0;
     Cmsghdr_cmsg_level = 0;
     Cmsghdr_cmsg_type = 0;
     Cmsghdr_payload = 0;

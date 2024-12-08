@@ -102,18 +102,6 @@ public interface LinuxNativeUtil extends PosixNativeUtil {
      */
     Collection<IfNameIndex> if_nameindex() throws UnknownNativeErrorException;
 
-    /**
-     * returns the fd.
-     * -1 is only returned if the flag O_NONBLOCK is set and the operation would block.
-     */
-    int open(String path, int flags) throws AccessDeniedException, QuotaExceededException, IOException, FileSystemLoopException, InvalidPathException, FileNotFoundException, ReadOnlyFileSystemException, UnknownNativeErrorException;
-
-    /**
-     * returns the fd.
-     * -1 is only returned if the flag O_NONBLOCK is set and the operation would block.
-     */
-    int open(String path, int flags, int mode) throws AccessDeniedException, QuotaExceededException, IOException, FileSystemLoopException, InvalidPathException, FileNotFoundException, ReadOnlyFileSystemException, UnknownNativeErrorException;
-
     enum lseek_whence {
         SEEK_SET,
         SEEK_CUR,
@@ -371,11 +359,6 @@ public interface LinuxNativeUtil extends PosixNativeUtil {
      * Sets a custom payload socket option.
      */
     void setsockopt(int fd, int level, int optname, byte[] payload) throws InvalidFileDescriptorException, IllegalArgumentException, UnsupportedOperationException;
-
-    /**
-     * Close a file descriptor
-     */
-    void close(int fd) throws InvalidFileDescriptorException, IOException;
 
     /**
      * Changes the work directory of the entire jvm process.

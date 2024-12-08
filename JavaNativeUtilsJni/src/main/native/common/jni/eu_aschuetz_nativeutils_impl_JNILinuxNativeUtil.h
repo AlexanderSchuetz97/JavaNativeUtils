@@ -49,22 +49,6 @@ JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_i
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
- * Method:    open
- * Signature: (Ljava/lang/String;I)I
- */
-JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_open__Ljava_lang_String_2I
-  (JNIEnv *, jobject, jstring, jint);
-
-/*
- * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
- * Method:    open
- * Signature: (Ljava/lang/String;II)I
- */
-JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_open__Ljava_lang_String_2II
-  (JNIEnv *, jobject, jstring, jint, jint);
-
-/*
- * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
  * Method:    lseek
  * Signature: (IJLeu/aschuetz/nativeutils/api/LinuxNativeUtil/lseek_whence;)J
  */
@@ -294,14 +278,6 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_sets
  */
 JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_setsockopt__III_3B
   (JNIEnv *, jobject, jint, jint, jint, jbyteArray);
-
-/*
- * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
- * Method:    close
- * Signature: (I)V
- */
-JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_close
-  (JNIEnv *, jobject, jint);
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil

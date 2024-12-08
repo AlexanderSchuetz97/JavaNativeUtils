@@ -19,10 +19,8 @@
 //
 package eu.aschuetz.nativeutils.api;
 
-import eu.aschuetz.nativeutils.api.exceptions.FileIsDirectoryException;
-import eu.aschuetz.nativeutils.api.exceptions.QuotaExceededException;
-import eu.aschuetz.nativeutils.api.exceptions.ResourceBusyException;
-import eu.aschuetz.nativeutils.api.exceptions.UnknownNativeErrorException;
+import eu.aschuetz.nativeutils.api.consts.PosixConstProvider;
+import eu.aschuetz.nativeutils.api.exceptions.*;
 import eu.aschuetz.nativeutils.api.structs.Stat;
 import eu.aschuetz.nativeutils.api.structs.Utsname;
 
@@ -31,6 +29,13 @@ import java.io.IOException;
 import java.nio.file.*;
 
 public interface PosixNativeUtil extends NativeUtil {
+
+
+    /**
+     * Gets a constant provider for the current OS.
+     * Some OS/Cpu architectures use different numeric values for the same constants.
+     */
+    PosixConstProvider getPosixConstProvider();
 
     /**
      * Allocates a new pointer of the given size
@@ -117,4 +122,22 @@ public interface PosixNativeUtil extends NativeUtil {
      * gets information about the unix system.
      */
     Utsname uname();
+
+    /**
+     * returns the fd.
+     * -1 is only returned if the flag O_NONBLOCK is set and the operation would block.
+     */
+    int open(String path, int flags) throws AccessDeniedException, QuotaExceededException, IOException, FileSystemLoopException, InvalidPathException, FileNotFoundException, ReadOnlyFileSystemException, UnknownNativeErrorException;
+
+    /**
+     * returns the fd.
+     * -1 is only returned if the flag O_NONBLOCK is set and the operation would block.
+     */
+    int open(String path, int flags, int mode) throws AccessDeniedException, QuotaExceededException, IOException, FileSystemLoopException, InvalidPathException, FileNotFoundException, ReadOnlyFileSystemException, UnknownNativeErrorException;
+
+    /**
+     * Close a file descriptor
+     */
+    void close(int fd) throws InvalidFileDescriptorException, IOException;
+
 }

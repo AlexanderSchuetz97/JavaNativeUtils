@@ -9,6 +9,14 @@ extern "C" {
 #endif
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil
+ * Method:    _getConst
+ * Signature: (Leu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider;)V
+ */
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil__1getConst
+  (JNIEnv *, jclass, jobject);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil
  * Method:    stat
  * Signature: (Ljava/lang/String;)Leu/aschuetz/nativeutils/api/structs/Stat;
  */
@@ -38,6 +46,30 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil_unli
  */
 JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil_uname
   (JNIEnv *, jobject);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil
+ * Method:    open
+ * Signature: (Ljava/lang/String;I)I
+ */
+JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil_open__Ljava_lang_String_2I
+  (JNIEnv *, jobject, jstring, jint);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil
+ * Method:    open
+ * Signature: (Ljava/lang/String;II)I
+ */
+JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil_open__Ljava_lang_String_2II
+  (JNIEnv *, jobject, jstring, jint, jint);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil
+ * Method:    close
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil_close
+  (JNIEnv *, jobject, jint);
 
 #ifdef __cplusplus
 }

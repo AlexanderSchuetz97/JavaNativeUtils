@@ -50,6 +50,24 @@
                             <gen>true</gen>
                             <consts>
                                 <const>
+                                    <classname>eu.aschuetz.nativeutils.api.consts.DefaultPosixConstProvider</classname>
+                                    <headers>
+                                        <header>#include "posix_const_provider.h"</header>
+                                        <header>#include "../common/jnigenerator.h"</header>
+                                        <header>#include &lt;fcntl.h&gt;</header>
+                                        <header>#include &lt;sys/socket.h&gt;</header>
+                                        <header>#include &lt;sys/mman.h&gt;</header>
+                                        <header>#include &lt;sys/stat.h&gt;</header>
+                                        <header>#include &lt;sys/types.h&gt;</header>
+                                        <header>#include &lt;pthread.h&gt;</header>
+                                        <header>#include &lt;net/if.h&gt;</header>
+                                    </headers>
+                                    <constFilters>
+                                    </constFilters>
+                                    <headerFile>JavaNativeUtilsJni/src/main/native/posix/posix_const_provider.h</headerFile>
+                                    <codeFile>JavaNativeUtilsJni/src/main/native/posix/posix_const_provider.c</codeFile>
+                                </const>
+                                <const>
                                     <classname>eu.aschuetz.nativeutils.api.consts.DefaultLinuxConstProvider</classname>
                                     <headers>
                                         <header>#include "linux_const_provider.h"</header>
@@ -82,6 +100,9 @@
                                 </const>
                             </consts>
                             <structs>
+                                <struct>
+                                    <classname>eu.aschuetz.nativeutils.api.consts.DefaultPosixConstProvider</classname>
+                                </struct>
                                 <struct>
                                     <classname>eu.aschuetz.nativeutils.api.consts.DefaultLinuxConstProvider</classname>
                                 </struct>

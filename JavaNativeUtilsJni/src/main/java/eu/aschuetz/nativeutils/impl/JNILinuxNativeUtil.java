@@ -96,12 +96,6 @@ public class JNILinuxNativeUtil extends JNIPosixNativeUtil implements LinuxNativ
     public native Collection<IfNameIndex> if_nameindex() throws UnknownNativeErrorException;
 
     @Override
-    public native int open(String path, int flags) throws AccessDeniedException, QuotaExceededException, IOException, FileSystemLoopException, InvalidPathException, FileNotFoundException, ReadOnlyFileSystemException, UnknownNativeErrorException;
-
-    @Override
-    public native int open(String path, int flags, int mode) throws AccessDeniedException, QuotaExceededException, IOException, FileSystemLoopException, InvalidPathException, FileNotFoundException, ReadOnlyFileSystemException, UnknownNativeErrorException;
-
-    @Override
     public native long lseek(int fd, long off, lseek_whence whence);
 
     @Override
@@ -329,9 +323,6 @@ public class JNILinuxNativeUtil extends JNIPosixNativeUtil implements LinuxNativ
 
     @Override
     public native void setsockopt(int fd, int level, int optname, byte[] payload);
-
-    @Override
-    public native void close(int fd);
 
     @Override
     public native void chdir(String path) throws FileNotFoundException, NotDirectoryException, InvalidPathException, AccessDeniedException, FileSystemLoopException, IOException, UnknownNativeErrorException;

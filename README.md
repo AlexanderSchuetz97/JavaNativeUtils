@@ -220,6 +220,8 @@ if (NativeUtils.isNetBSD()) {
 * malloc & free
 * __get_cpuid_count (from cpuid.h)
 * stat
+* open
+* close
 * symlink
 * unlink
 * uname
@@ -405,7 +407,7 @@ to happen in the next 6 years.
 
 ## Future work
 This is just a list of things I am considering working on.
-I make no promises as to when or If or when I will be able to implement them.
+I make no promises as to when or if I will be able to implement them.
 
 #### Split the JNI native libraries into separate dependencies.
 Some of the shared objects contained within this library are relatively large and probably do not see much use.
@@ -419,7 +421,7 @@ I am considering adding amd64 support for OSX.
 I am considering adding aarch64 support for windows.
 
 #### Write an additional implementation of this library that uses the Java FFI interface
-I am planning to release an additional implementation of JavaNativeUtils
+I am considering to write an additional implementation of JavaNativeUtils
 that uses the Java FFI Interface instead of shared objects loaded via JNI to 
 achieve "most" tasks. There will be no implementation of the JVMNativeUtils as those
 functions are not provided by the Java FFI Interface.
