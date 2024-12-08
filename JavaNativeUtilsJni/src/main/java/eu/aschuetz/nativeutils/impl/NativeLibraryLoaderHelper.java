@@ -281,6 +281,12 @@ public class NativeLibraryLoaderHelper {
                 }
 
                 loadLib(tempFile, "java_native_utils_amd64_netbsd.so");
+            } else if ("openbsd".equalsIgnoreCase(tempOS)) {
+                if (!"amd64".equals(tempArch)) {
+                    throw new UnsatisfiedLinkError("Processor architecture is not supported on OpenBSD! Value: " + tempArch);
+                }
+
+                loadLib(tempFile, "java_native_utils_amd64_openbsd.so");
             } else {
                 throw new UnsatisfiedLinkError("Operating system is not windows, linux, netbsd or freebsd and thus not supported! Value: " + tempOS);
             }

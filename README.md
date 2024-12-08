@@ -216,12 +216,14 @@ if (NativeUtils.isNetBSD()) {
 * ClearCommError
 * ClearCommBreak
 
-#### FreeBSD & Netbsd
+#### FreeBSD & NetBSD & OpenBSD
 * malloc & free
 * __get_cpuid_count (from cpuid.h)
 * stat
 * open
 * close
+* read
+* write
 * symlink
 * unlink
 * uname
@@ -298,6 +300,13 @@ The library may or may not work with earlier or later versions of freebsd.
 
 I currently use netbsd 10.0 to cross compile and test.
 The library may or may not work with earlier or later versions of netbsd.
+
+#### OpenBSD (7.5)
+* amd64
+
+I currently use openbsd 7.5 to cross compile and test.
+The library may or may not work with earlier or later versions of openbsd.
+
 
 ### Unsupported OS
 

@@ -61,6 +61,8 @@ public class JNINativeUtilsProvider implements NativeUtilsProvider {
             return new JNIFreeBSDNativeUtil();
         } else if ("netbsd".equalsIgnoreCase(tempOS)) {
             return new JNINetBSDNativeUtil();
+        } else if ("openbsd".equalsIgnoreCase(tempOS)) {
+            return new JNIOpenBSDNativeUtil();
         } else {
             return new NoopNativeUtil();
         }

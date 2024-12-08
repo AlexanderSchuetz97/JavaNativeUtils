@@ -81,6 +81,10 @@ NETBSD_BUILD_DIR_AMD64=$(BUILD_BASE_DIR)/netbsd_amd64
 NETBSD_BUILD_DIR_AMD64_POSIX=$(NETBSD_BUILD_DIR_AMD64)/posix
 NETBSD_BUILD_DIR_AMD64_COMMON=$(NETBSD_BUILD_DIR_AMD64)/common
 
+OPENBSD_BUILD_DIR_AMD64=$(BUILD_BASE_DIR)/openbsd_amd64
+OPENBSD_BUILD_DIR_AMD64_POSIX=$(OPENBSD_BUILD_DIR_AMD64)/posix
+OPENBSD_BUILD_DIR_AMD64_COMMON=$(OPENBSD_BUILD_DIR_AMD64)/common
+
 TARGET_DIR=../resources
 
 #DEBUG_FLAGS=-ggdb -g3
@@ -90,9 +94,9 @@ WINDOWS_CFLAGS=-O3 $(DEBUG_FLAGS) -Werror -I. -I$(WINDOWS_JDK)/include -I$(WINDO
 
 LINUX_CFLAGS=-O3 $(DEBUG_FLAGS) -Werror -I. -I$(LINUX_JDK)/include -I$(LINUX_JDK)/include/linux -fPIC -fvisibility=hidden $(LINUX_ADDITIONAL_CC_FLAGS)
 
-#TODO ADD OPTIMIZE LATER
-FREEBSD_CFLAGS=-O3 $(DEBUG_FLAGS) -Werror -I. -I$(FREEBSD_JDK)/include -I$(FREEBSD_JDK)/include/freebsd -fPIC
-NETBSD_CFLAGS=-O3 $(DEBUG_FLAGS) -Werror -I. -I$(FREEBSD_JDK)/include -I$(FREEBSD_JDK)/include/freebsd -fPIC
+FREEBSD_CFLAGS=-O3 $(DEBUG_FLAGS) -Werror -I. -I$(FREEBSD_JDK)/include -I$(FREEBSD_JDK)/include/freebsd -fPIC -fvisibility=hidden
+NETBSD_CFLAGS=-O3 $(DEBUG_FLAGS) -Werror -I. -I$(NETBSD_JDK)/include -I$(NETBSD_JDK)/include/netbsd -fPIC -fvisibility=hidden
+OPENBSD_CFLAGS=-O3 $(DEBUG_FLAGS) -Werror -I. -I$(OPENBSD_JDK)/include -I$(OPENBSD_JDK)/include/openbsd -fPIC -fvisibility=hidden
 
 WINDOWS_LIBS=-lhid -lsetupapi -liphlpapi
 
@@ -100,6 +104,7 @@ LINUX_LIBS=-lrt -lc
 
 FREEBSD_LIBS=-lc
 NETBSD_LIBS=-lc
+OPENBSD_LIBS=
 
 COMMON_SOURCES=$(shell find common -name "*.c")
 COMMON_HEADERS=$(shell find common -name "*.h")
@@ -111,8 +116,10 @@ LINUX_SOURCES=$(shell find linux -name "*.c")
 LINUX_HEADERS=$(shell find linux -name "*.h")
 FREEBSD_SOURCES=$(shell find freebsd -name "*.c")
 FREEBSD_HEADERS=$(shell find freebsd -name "*.h")
-NETBSD_SOURCES=$(shell find freebsd -name "*.c")
-NETBSD_HEADERS=$(shell find freebsd -name "*.h")
+NETBSD_SOURCES=$(shell find netbsd -name "*.c")
+NETBSD_HEADERS=$(shell find netbsd -name "*.h")
+OPENBSD_SOURCES=$(shell find openbsd -name "*.c")
+OPENBSD_HEADERS=$(shell find openbsd -name "*.h")
 
 WINDOWS_OBJECTS_AMD64=$(addprefix $(WINDOWS_BUILD_DIR_AMD64)/,$(patsubst %.c,%.o,$(notdir $(WINDOWS_SOURCES)))) $(addprefix $(WINDOWS_BUILD_DIR_AMD64_COMMON)/,$(patsubst %.c,%.o,$(notdir $(COMMON_SOURCES))))
 WINDOWS_OBJECTS_I386=$(addprefix $(WINDOWS_BUILD_DIR_I386)/,$(patsubst %.c,%.o,$(notdir $(WINDOWS_SOURCES)))) $(addprefix $(WINDOWS_BUILD_DIR_I386_COMMON)/,$(patsubst %.c,%.o,$(notdir $(COMMON_SOURCES))))
@@ -132,6 +139,8 @@ LINUX_OBJECTS_S390X=$(addprefix $(LINUX_BUILD_DIR_S390X)/,$(patsubst %.c,%.o,$(n
 FREEBSD_OBJECTS_AMD64=$(addprefix $(FREEBSD_BUILD_DIR_AMD64_COMMON)/,$(patsubst %.c,%.o,$(notdir $(COMMON_SOURCES)))) $(addprefix $(FREEBSD_BUILD_DIR_AMD64_POSIX)/,$(patsubst %.c,%.o,$(notdir $(POSIX_SOURCES))))
 
 NETBSD_OBJECTS_AMD64=$(addprefix $(NETBSD_BUILD_DIR_AMD64_COMMON)/,$(patsubst %.c,%.o,$(notdir $(COMMON_SOURCES)))) $(addprefix $(NETBSD_BUILD_DIR_AMD64_POSIX)/,$(patsubst %.c,%.o,$(notdir $(POSIX_SOURCES))))
+
+OPENBSD_OBJECTS_AMD64=$(addprefix $(OPENBSD_BUILD_DIR_AMD64_COMMON)/,$(patsubst %.c,%.o,$(notdir $(COMMON_SOURCES)))) $(addprefix $(OPENBSD_BUILD_DIR_AMD64_POSIX)/,$(patsubst %.c,%.o,$(notdir $(POSIX_SOURCES))))
 
 #######################################################################################################################
 # FREEBSD AMD 64
@@ -200,6 +209,40 @@ $(NETBSD_BUILD_DIR_AMD64)/%.o: netbsd/**/%.c $(COMMON_HEADERS) $(POSIX_HEADERS) 
 	@echo "Compiling netbsd file $@ for amd64"
 	@mkdir -p $(NETBSD_BUILD_DIR_AMD64)
 	$(NETBSD_CC_AMD64) -c -o $@ $< $(NETBSD_CFLAGS)
+
+#######################################################################################################################
+# OPENBSD AMD 64
+#######################################################################################################################
+
+$(OPENBSD_BUILD_DIR_AMD64_COMMON)/%.o: common/%.c $(COMMON_HEADERS)
+	@echo "Compiling common file $@ for OPENBSD amd64"
+	@mkdir -p $(OPENBSD_BUILD_DIR_AMD64_COMMON)
+	$(OPENBSD_CC_AMD64) -c -o $@ $< $(OPENBSD_CFLAGS)
+
+$(OPENBSD_BUILD_DIR_AMD64_COMMON)/%.o: common/**/%.c $(COMMON_HEADERS)
+	@echo "Compiling common file $@ for OPENBSD amd64"
+	@mkdir -p $(OPENBSD_BUILD_DIR_AMD64_COMMON)
+	$(OPENBSD_CC_AMD64) -c -o $@ $< $(OPENBSD_CFLAGS)
+
+$(OPENBSD_BUILD_DIR_AMD64_POSIX)/%.o: posix/%.c $(COMMON_HEADERS) $(POSIX_HEADERS)
+	@echo "Compiling posix file $@ for OPENBSD amd64"
+	@mkdir -p $(OPENBSD_BUILD_DIR_AMD64_POSIX)
+	$(OPENBSD_CC_AMD64) -c -o $@ $< $(OPENBSD_CFLAGS)
+
+$(FREEBSD_BUILD_DIR_AMD64_POSIX)/%.o: posix/**/%.c $(COMMON_HEADERS) $(POSIX_HEADERS)
+	@echo "Compiling posix file $@ for OPENBSD amd64"
+	@mkdir -p $(OPENBSD_BUILD_DIR_AMD64_POSIX)
+	$(OPENBSD_CC_AMD64) -c -o $@ $< $(OPENBSD_CFLAGS)
+
+$(OPENBSD_BUILD_DIR_AMD64)/%.o: openbsd/%.c $(COMMON_HEADERS) $(POSIX_HEADERS) $(OPENBSD_HEADERS)
+	@echo "Compiling OPENBSD file $@ for amd64"
+	@mkdir -p $(OPENBSD_BUILD_DIR_AMD64)
+	$(OPENBSD_CC_AMD64) -c -o $@ $< $(OPENBSD_CFLAGS)
+
+$(OPENBSD_BUILD_DIR_AMD64)/%.o: openbsd/**/%.c $(COMMON_HEADERS) $(POSIX_HEADERS) $(OPENBSD_HEADERS)
+	@echo "Compiling OPENBSD file $@ for amd64"
+	@mkdir -p $(OPENBSD_BUILD_DIR_AMD64)
+	$(OPENBSD_CC_AMD64) -c -o $@ $< $(OPENBSD_CFLAGS)
 
 #######################################################################################################################
 # WINDOWS AMD 64
@@ -698,6 +741,13 @@ netbsd: $(NETBSD_OBJECTS_AMD64)
 	$(NETBSD_CC_AMD64) -shared -o $(TARGET_DIR)/java_native_utils_amd64_netbsd.so $(NETBSD_OBJECTS_AMD64) $(NETBSD_LIBS) -z noexecstack -z noseparate-code
 	@echo ""
 
+openbsd: $(OPENBSD_OBJECTS_AMD64)
+	@echo ""
+	@echo "Linking OPENBSD shared object for amd64"
+	@mkdir -p $(TARGET_DIR)
+	$(OPENBSD_CC_AMD64) -shared -o $(TARGET_DIR)/java_native_utils_amd64_openbsd.so $(OPENBSD_OBJECTS_AMD64) $(OPENBSD_LIBS) -z noexecstack -z noseparate-code
+	@echo ""
+
 clean:
 	rm -rf $(TARGET_DIR)/java_native_utils_i386.dll
 	rm -rf $(TARGET_DIR)/java_native_utils_amd64.dll
@@ -713,6 +763,7 @@ clean:
 	rm -rf $(TARGET_DIR)/java_native_utils_s390x.so
 	rm -rf $(TARGET_DIR)/java_native_utils_amd64_freebsd.so
 	rm -rf $(TARGET_DIR)/java_native_utils_amd64_netbsd.so
+	rm -rf $(TARGET_DIR)/java_native_utils_amd64_openbsd.so
 	rm -rf $(BUILD_BASE_DIR)
 	@echo "DONE"
 

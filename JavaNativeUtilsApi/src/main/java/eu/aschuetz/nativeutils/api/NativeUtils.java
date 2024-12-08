@@ -62,6 +62,10 @@ public final class NativeUtils {
         return get().isNetBSD();
     }
 
+    public static boolean isOpenBSD() {
+        return get().isOpenBSD();
+    }
+
     public static boolean isPosix() {
         return get().isPosix();
     }
@@ -110,6 +114,16 @@ public final class NativeUtils {
 
         throw new UnsupportedOperationException("NetBSD functions not supported.");
     }
+
+    public static OpenBSDNativeUtil getOpenBSDUtil() {
+        NativeUtil util = get();
+        if (util instanceof OpenBSDNativeUtil) {
+            return (OpenBSDNativeUtil) util;
+        }
+
+        throw new UnsupportedOperationException("OpenBSD functions not supported.");
+    }
+
 
     public static PosixNativeUtil getPosixUtil() {
         NativeUtil util = get();

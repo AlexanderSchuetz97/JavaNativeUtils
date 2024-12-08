@@ -36,4 +36,9 @@ public class JNINetBSDNativeUtil extends JNIPosixNativeUtil implements NetBSDNat
     public boolean isNetBSD() {
         return true;
     }
+
+    @Override
+    public boolean isOpenBSD() {
+        return false;
+    }
 }

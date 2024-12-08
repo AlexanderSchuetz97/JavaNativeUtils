@@ -72,6 +72,10 @@ public class JNILinuxNativeUtil extends JNIPosixNativeUtil implements LinuxNativ
         return false;
     }
 
+    @Override
+    public boolean isOpenBSD() {
+        return false;
+    }
 
     @Override
     public native int getFD(FileDescriptor fd);
