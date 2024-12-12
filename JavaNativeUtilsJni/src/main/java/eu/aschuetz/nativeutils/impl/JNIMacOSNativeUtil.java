@@ -19,9 +19,10 @@
 //
 package eu.aschuetz.nativeutils.impl;
 
+import eu.aschuetz.nativeutils.api.MacOSNativeUtil;
 import eu.aschuetz.nativeutils.api.OpenBSDNativeUtil;
 
-public class JNIOpenBSDNativeUtil extends JNIPosixNativeUtil implements OpenBSDNativeUtil {
+public class JNIMacOSNativeUtil extends JNIPosixNativeUtil implements MacOSNativeUtil {
     @Override
     public boolean isLinux() {
         return false;
@@ -39,11 +40,11 @@ public class JNIOpenBSDNativeUtil extends JNIPosixNativeUtil implements OpenBSDN
 
     @Override
     public boolean isOpenBSD() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isMacOS() {
-        return false;
+        return true;
     }
 }

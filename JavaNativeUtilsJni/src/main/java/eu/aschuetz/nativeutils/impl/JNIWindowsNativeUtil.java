@@ -593,6 +593,11 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
     }
 
     @Override
+    public boolean isMacOS() {
+        return false;
+    }
+
+    @Override
     public boolean isPosix() {
         return false;
     }

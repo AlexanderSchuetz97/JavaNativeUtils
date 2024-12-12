@@ -66,6 +66,10 @@ public final class NativeUtils {
         return get().isOpenBSD();
     }
 
+    public static boolean isMacOS() {
+        return get().isMacOS();
+    }
+
     public static boolean isPosix() {
         return get().isPosix();
     }
@@ -122,6 +126,15 @@ public final class NativeUtils {
         }
 
         throw new UnsupportedOperationException("OpenBSD functions not supported.");
+    }
+
+    public static MacOSNativeUtil getMacOSUtil() {
+        NativeUtil util = get();
+        if (util instanceof MacOSNativeUtil) {
+            return (MacOSNativeUtil) util;
+        }
+
+        throw new UnsupportedOperationException("MacOS functions not supported.");
     }
 
 

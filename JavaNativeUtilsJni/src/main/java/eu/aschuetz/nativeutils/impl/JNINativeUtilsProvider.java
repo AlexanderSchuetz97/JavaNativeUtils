@@ -63,6 +63,8 @@ public class JNINativeUtilsProvider implements NativeUtilsProvider {
             return new JNINetBSDNativeUtil();
         } else if ("openbsd".equalsIgnoreCase(tempOS)) {
             return new JNIOpenBSDNativeUtil();
+        } else if ("mac os x".equalsIgnoreCase(tempOS)) {
+            return new JNIMacOSNativeUtil();
         } else {
             return new NoopNativeUtil();
         }

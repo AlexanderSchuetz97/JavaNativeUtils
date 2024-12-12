@@ -101,7 +101,8 @@ public class NativeLibraryLoaderHelper {
         theMap.put("java_native_utils_amd64.dll", readLib("/java_native_utils_amd64.dll"));
         theMap.put("java_native_utils_i386.dll", readLib("/java_native_utils_i386.dll"));
         theMap.put("java_native_utils_amd64_freebsd.so", readLib("/java_native_utils_amd64_freebsd.so"));
-
+        theMap.put("java_native_utils_amd64_openbsd.so", readLib("/java_native_utils_amd64_openbsd.so"));
+        theMap.put("java_native_utils_amd64.dynlib", readLib("/java_native_utils_amd64.dynlib"));
         return theMap;
     }
 
@@ -287,6 +288,12 @@ public class NativeLibraryLoaderHelper {
                 }
 
                 loadLib(tempFile, "java_native_utils_amd64_openbsd.so");
+            } else if ("mac os x".equalsIgnoreCase(tempOS)) {
+                if (!"amd64".equals(tempArch)) {
+                    throw new UnsatisfiedLinkError("Processor architecture is not supported on MacOS! Value: " + tempArch);
+                }
+
+                loadLib(tempFile, "java_native_utils_amd64.dynlib");
             } else {
                 throw new UnsatisfiedLinkError("Operating system is not windows, linux, netbsd or freebsd and thus not supported! Value: " + tempOS);
             }

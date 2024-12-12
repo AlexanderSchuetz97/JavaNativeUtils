@@ -546,7 +546,7 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil__1mu
 }
 
 #ifndef __OFF64_T_TYPE
-#if defined(__NetBSD__) | defined(__OpenBSD__)
+#if defined(__NetBSD__) | defined(__OpenBSD__) | defined(__APPLE__)
 //Why?
 #define __OFF64_T_TYPE int64_t
 #else

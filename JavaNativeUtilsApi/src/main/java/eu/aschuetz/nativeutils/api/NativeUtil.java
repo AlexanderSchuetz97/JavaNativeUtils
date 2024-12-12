@@ -55,9 +55,14 @@ public interface NativeUtil {
     boolean isNetBSD();
 
     /**
-     * returns true if this NativeUtil is instanceof {@link OpenBSDNativeUtil}  and supports the NetBSD API functions.
+     * returns true if this NativeUtil is instanceof {@link OpenBSDNativeUtil}  and supports the OpenBSD API functions.
      */
     boolean isOpenBSD();
+
+    /**
+     * Returns true if this NativeUtil is instanceof {@link LinuxNativeUtil} and supports the macOS API functions.
+     */
+    boolean isMacOS();
 
     /**
      * returns true if this NativeUtil is instanceof {@link PosixNativeUtil}  and supports the POSIX API functions.

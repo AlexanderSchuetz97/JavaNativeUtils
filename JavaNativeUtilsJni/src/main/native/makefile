@@ -85,6 +85,10 @@ OPENBSD_BUILD_DIR_AMD64=$(BUILD_BASE_DIR)/openbsd_amd64
 OPENBSD_BUILD_DIR_AMD64_POSIX=$(OPENBSD_BUILD_DIR_AMD64)/posix
 OPENBSD_BUILD_DIR_AMD64_COMMON=$(OPENBSD_BUILD_DIR_AMD64)/common
 
+MACOS_BUILD_DIR_AMD64=$(BUILD_BASE_DIR)/macos_amd64
+MACOS_BUILD_DIR_AMD64_POSIX=$(MACOS_BUILD_DIR_AMD64)/posix
+MACOS_BUILD_DIR_AMD64_COMMON=$(MACOS_BUILD_DIR_AMD64)/common
+
 TARGET_DIR=../resources
 
 #DEBUG_FLAGS=-ggdb -g3
@@ -97,6 +101,7 @@ LINUX_CFLAGS=-O3 $(DEBUG_FLAGS) -Werror -I. -I$(LINUX_JDK)/include -I$(LINUX_JDK
 FREEBSD_CFLAGS=-O3 $(DEBUG_FLAGS) -Werror -I. -I$(FREEBSD_JDK)/include -I$(FREEBSD_JDK)/include/freebsd -fPIC -fvisibility=hidden
 NETBSD_CFLAGS=-O3 $(DEBUG_FLAGS) -Werror -I. -I$(NETBSD_JDK)/include -I$(NETBSD_JDK)/include/netbsd -fPIC -fvisibility=hidden
 OPENBSD_CFLAGS=-O3 $(DEBUG_FLAGS) -Werror -I. -I$(OPENBSD_JDK)/include -I$(OPENBSD_JDK)/include/openbsd -fPIC -fvisibility=hidden
+MACOS_CFLAGS=-O3 $(DEBUG_FLAGS) -Werror -I. -I$(MACOS_JDK)/include -I$(MACOS_JDK)/include/darwin -fPIC -fvisibility=hidden
 
 WINDOWS_LIBS=-lhid -lsetupapi -liphlpapi
 
@@ -105,6 +110,7 @@ LINUX_LIBS=-lrt -lc
 FREEBSD_LIBS=-lc
 NETBSD_LIBS=-lc
 OPENBSD_LIBS=
+MACOS_LIBS=
 
 COMMON_SOURCES=$(shell find common -name "*.c")
 COMMON_HEADERS=$(shell find common -name "*.h")
@@ -120,6 +126,8 @@ NETBSD_SOURCES=$(shell find netbsd -name "*.c")
 NETBSD_HEADERS=$(shell find netbsd -name "*.h")
 OPENBSD_SOURCES=$(shell find openbsd -name "*.c")
 OPENBSD_HEADERS=$(shell find openbsd -name "*.h")
+MACOS_SOURCES=$(shell find macos -name "*.c")
+MACOS_HEADERS=$(shell find macos -name "*.h")
 
 WINDOWS_OBJECTS_AMD64=$(addprefix $(WINDOWS_BUILD_DIR_AMD64)/,$(patsubst %.c,%.o,$(notdir $(WINDOWS_SOURCES)))) $(addprefix $(WINDOWS_BUILD_DIR_AMD64_COMMON)/,$(patsubst %.c,%.o,$(notdir $(COMMON_SOURCES))))
 WINDOWS_OBJECTS_I386=$(addprefix $(WINDOWS_BUILD_DIR_I386)/,$(patsubst %.c,%.o,$(notdir $(WINDOWS_SOURCES)))) $(addprefix $(WINDOWS_BUILD_DIR_I386_COMMON)/,$(patsubst %.c,%.o,$(notdir $(COMMON_SOURCES))))
@@ -141,6 +149,8 @@ FREEBSD_OBJECTS_AMD64=$(addprefix $(FREEBSD_BUILD_DIR_AMD64_COMMON)/,$(patsubst 
 NETBSD_OBJECTS_AMD64=$(addprefix $(NETBSD_BUILD_DIR_AMD64_COMMON)/,$(patsubst %.c,%.o,$(notdir $(COMMON_SOURCES)))) $(addprefix $(NETBSD_BUILD_DIR_AMD64_POSIX)/,$(patsubst %.c,%.o,$(notdir $(POSIX_SOURCES))))
 
 OPENBSD_OBJECTS_AMD64=$(addprefix $(OPENBSD_BUILD_DIR_AMD64_COMMON)/,$(patsubst %.c,%.o,$(notdir $(COMMON_SOURCES)))) $(addprefix $(OPENBSD_BUILD_DIR_AMD64_POSIX)/,$(patsubst %.c,%.o,$(notdir $(POSIX_SOURCES))))
+
+MACOS_OBJECTS_AMD64=$(addprefix $(MACOS_BUILD_DIR_AMD64_COMMON)/,$(patsubst %.c,%.o,$(notdir $(COMMON_SOURCES)))) $(addprefix $(MACOS_BUILD_DIR_AMD64_POSIX)/,$(patsubst %.c,%.o,$(notdir $(POSIX_SOURCES))))
 
 #######################################################################################################################
 # FREEBSD AMD 64
@@ -243,6 +253,40 @@ $(OPENBSD_BUILD_DIR_AMD64)/%.o: openbsd/**/%.c $(COMMON_HEADERS) $(POSIX_HEADERS
 	@echo "Compiling OPENBSD file $@ for amd64"
 	@mkdir -p $(OPENBSD_BUILD_DIR_AMD64)
 	$(OPENBSD_CC_AMD64) -c -o $@ $< $(OPENBSD_CFLAGS)
+
+#######################################################################################################################
+# MACOS AMD 64
+#######################################################################################################################
+
+$(MACOS_BUILD_DIR_AMD64_COMMON)/%.o: common/%.c $(COMMON_HEADERS)
+	@echo "Compiling common file $@ for MACOS amd64"
+	@mkdir -p $(MACOS_BUILD_DIR_AMD64_COMMON)
+	$(MACOS_CC_AMD64) -c -o $@ $< $(MACOS_CFLAGS)
+
+$(MACOS_BUILD_DIR_AMD64_COMMON)/%.o: common/**/%.c $(COMMON_HEADERS)
+	@echo "Compiling common file $@ for MACOS amd64"
+	@mkdir -p $(MACOS_BUILD_DIR_AMD64_COMMON)
+	$(MACOS_CC_AMD64) -c -o $@ $< $(MACOS_CFLAGS)
+
+$(MACOS_BUILD_DIR_AMD64_POSIX)/%.o: posix/%.c $(COMMON_HEADERS) $(POSIX_HEADERS)
+	@echo "Compiling posix file $@ for MACOS amd64"
+	@mkdir -p $(MACOS_BUILD_DIR_AMD64_POSIX)
+	$(MACOS_CC_AMD64) -c -o $@ $< $(MACOS_CFLAGS)
+
+$(FREEBSD_BUILD_DIR_AMD64_POSIX)/%.o: posix/**/%.c $(COMMON_HEADERS) $(POSIX_HEADERS)
+	@echo "Compiling posix file $@ for MACOS amd64"
+	@mkdir -p $(MACOS_BUILD_DIR_AMD64_POSIX)
+	$(MACOS_CC_AMD64) -c -o $@ $< $(MACOS_CFLAGS)
+
+$(MACOS_BUILD_DIR_AMD64)/%.o: macos/%.c $(COMMON_HEADERS) $(POSIX_HEADERS) $(MACOS_HEADERS)
+	@echo "Compiling MACOS file $@ for amd64"
+	@mkdir -p $(MACOS_BUILD_DIR_AMD64)
+	$(MACOS_CC_AMD64) -c -o $@ $< $(MACOS_CFLAGS)
+
+$(MACOS_BUILD_DIR_AMD64)/%.o: macos/**/%.c $(COMMON_HEADERS) $(POSIX_HEADERS) $(MACOS_HEADERS)
+	@echo "Compiling MACOS file $@ for amd64"
+	@mkdir -p $(MACOS_BUILD_DIR_AMD64)
+	$(MACOS_CC_AMD64) -c -o $@ $< $(MACOS_CFLAGS)
 
 #######################################################################################################################
 # WINDOWS AMD 64
@@ -639,7 +683,7 @@ $(LINUX_BUILD_DIR_S390X)/%.o: linux/**/%.c $(COMMON_HEADERS) $(LINUX_HEADERS) $(
 # Targets
 #######################################################################################################################
 
-all: windows_amd64 windows_i386 linux_amd64 linux_amd64_musl linux_i386 linux_armhf linux_armel linux_aarch64 linux_riscv64 linux_mips64el linux_ppc64le linux_s390x
+all: windows_amd64 windows_i386 linux_amd64 linux_amd64_musl linux_i386 linux_armhf linux_armel linux_aarch64 linux_riscv64 linux_mips64el linux_ppc64le linux_s390x macos_amd64
 	rm -rf $(BUILD_BASE_DIR)
 	@echo "DONE"
 
@@ -746,6 +790,13 @@ openbsd: $(OPENBSD_OBJECTS_AMD64)
 	@echo "Linking OPENBSD shared object for amd64"
 	@mkdir -p $(TARGET_DIR)
 	$(OPENBSD_CC_AMD64) -shared -o $(TARGET_DIR)/java_native_utils_amd64_openbsd.so $(OPENBSD_OBJECTS_AMD64) $(OPENBSD_LIBS) -z noexecstack -z noseparate-code
+	@echo ""
+
+macos_amd64: $(MACOS_OBJECTS_AMD64)
+	@echo ""
+	@echo "Linking MACOS shared object for amd64"
+	@mkdir -p $(TARGET_DIR)
+	$(MACOS_CC_AMD64) -shared -o $(TARGET_DIR)/java_native_utils_amd64.dynlib $(MACOS_OBJECTS_AMD64) $(MACOS_LIBS) -z noexecstack
 	@echo ""
 
 clean:

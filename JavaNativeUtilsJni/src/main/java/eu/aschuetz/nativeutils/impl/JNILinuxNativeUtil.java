@@ -79,6 +79,11 @@ public class JNILinuxNativeUtil extends JNIPosixNativeUtil implements LinuxNativ
     }
 
     @Override
+    public boolean isMacOS() {
+        return false;
+    }
+
+    @Override
     public native int getFD(FileDescriptor fd);
 
     @Override

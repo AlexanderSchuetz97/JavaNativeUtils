@@ -64,7 +64,7 @@ public class TestLibLoad {
             Assert.assertNotNull(e.getKey(), e.getValue());
         }
 
-        Assert.assertEquals(13, theMap.size());
+        Assert.assertEquals(15, theMap.size());
 
 
     }

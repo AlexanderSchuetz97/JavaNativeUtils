@@ -42,4 +42,9 @@ public class JNIFreeBSDNativeUtil extends JNIPosixNativeUtil implements FreeBSDN
     public boolean isOpenBSD() {
         return false;
     }
+
+    @Override
+    public boolean isMacOS() {
+        return false;
+    }
 }

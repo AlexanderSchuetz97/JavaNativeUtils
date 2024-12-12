@@ -5,3 +5,6 @@ RUN mkdir /windowsJDK
 RUN cd /windowsJDK && wget https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u292-b10/OpenJDK8U-jdk_x64_windows_hotspot_8u292b10.zip
 RUN cd /windowsJDK && unzip *.zip
 RUN wget https://musl.cc/x86_64-linux-musl-cross.tgz && tar -xvzf x86_64-linux-musl-cross.tgz
+RUN mkdir /zig && cd /zig && wget https://ziglang.org/download/0.13.0/zig-linux-x86_64-0.13.0.tar.xz && tar -xvf zig-linux-x86_64-0.13.0.tar.xz
+RUN mkdir /macJDK && cd /macJDK && wget https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u292-b10/OpenJDK8U-jdk_x64_mac_hotspot_8u292b10.tar.gz
+RUN cd /macJDK && tar -xvf OpenJDK8U-jdk_x64_mac_hotspot_8u292b10.tar.gz

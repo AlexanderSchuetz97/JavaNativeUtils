@@ -17,33 +17,7 @@
 // in the COPYING & COPYING.LESSER files in top level directory of JavaNativeUtils.
 // If not, see <https://www.gnu.org/licenses/>.
 //
-package eu.aschuetz.nativeutils.impl;
+package eu.aschuetz.nativeutils.api;
 
-import eu.aschuetz.nativeutils.api.OpenBSDNativeUtil;
-
-public class JNIOpenBSDNativeUtil extends JNIPosixNativeUtil implements OpenBSDNativeUtil {
-    @Override
-    public boolean isLinux() {
-        return false;
-    }
-
-    @Override
-    public boolean isFreeBSD() {
-        return false;
-    }
-
-    @Override
-    public boolean isNetBSD() {
-        return false;
-    }
-
-    @Override
-    public boolean isOpenBSD() {
-        return true;
-    }
-
-    @Override
-    public boolean isMacOS() {
-        return false;
-    }
+public interface MacOSNativeUtil extends PosixNativeUtil {
 }

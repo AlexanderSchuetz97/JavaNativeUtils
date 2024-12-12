@@ -32,6 +32,8 @@
 #include <endian.h>
 #elif defined(__OpenBSD__)
 #include <endian.h>
+#elif defined(__APPLE__)
+//NOTHING NEEDED
 #else
 #error
 #endif

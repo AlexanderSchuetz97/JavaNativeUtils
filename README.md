@@ -38,6 +38,12 @@ if (NativeUtils.isWindows()) {
     return;
 }
 
+if (NativeUtils.isMacOS()) {
+    MacOSNativeUtil util = NativeUtils.getMacOSUtil()
+    System.out.println(util.stat("/tmp"));
+    return;
+}
+
 if (NativeUtils.isFreeBSD()) {
     FreeBSDNativeUtil util = NativeUtils.getFreeBSDUtil()
     System.out.println(util.stat("/tmp"));
@@ -46,6 +52,12 @@ if (NativeUtils.isFreeBSD()) {
 
 if (NativeUtils.isNetBSD()) {
     NetBSDNativeUtil util = NativeUtils.getNetBSDUtil()
+    System.out.println(util.stat("/tmp"));
+    return;
+}
+
+if (NativeUtils.isOpenBSD()) {
+    OpenBSDNativeUtil util = NativeUtils.getOpenBSDUtil()
     System.out.println(util.stat("/tmp"));
     return;
 }
@@ -216,7 +228,7 @@ if (NativeUtils.isNetBSD()) {
 * ClearCommError
 * ClearCommBreak
 
-#### FreeBSD & NetBSD & OpenBSD
+#### FreeBSD & NetBSD & OpenBSD & MacOS
 * malloc & free
 * __get_cpuid_count (from cpuid.h)
 * stat
@@ -311,11 +323,17 @@ The library may or may not work with earlier or later versions of netbsd.
 I currently use openbsd 7.5 to cross compile and test.
 The library may or may not work with earlier or later versions of openbsd.
 
+### MacOS
+* amd64
+
+I currently use zig cc version 0.13 to cross compile and test on MacOS Ventura,
+The library may or may not work with earlier or later versions of MacOS.
+For more information see the manual page of the zig cc linker.
 
 ### Unsupported OS
 
-If an unsupported operating system or processor architecture is used then getWindowsUtil() getLinuxUtil() getNetBSDUtil() or getFreeBSDUtil() throws an exception.
-To check if the current system supports linux or windows syscalls use the isLinux() isWindows() isNetBSD() or isFreeBSD() method.
+If an unsupported operating system or processor architecture is used then getWindowsUtil() getLinuxUtil() or others throw an exception.
+To check if the current system supports linux or windows syscalls use the isLinux() isWindows() method.
 
 ### INFO: Linux using pthread_mutex and pthread_cond for IPC with a C Program
 Note that pthread_mutex and pthread_cond in shared memory for IPC with a C program will only work
@@ -426,9 +444,6 @@ I make no promises as to when or if I will be able to implement them.
 Some of the shared objects contained within this library are relatively large and probably do not see much use.
 It would probably be a good idea to move those to their own dependency so that each java project can only include
 what it actually uses in its bom/assembly.
-
-#### OSX support
-I am considering adding amd64 support for OSX.
 
 #### Windows aarch64
 I am considering adding aarch64 support for windows.

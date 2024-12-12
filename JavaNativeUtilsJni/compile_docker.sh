@@ -35,11 +35,13 @@ export LINUX_CC_MIPS64EL=/usr/bin/mips64el-linux-gnuabi64-gcc
 export LINUX_CC_PPC64LE=/usr/bin/powerpc64le-linux-gnu-gcc
 export LINUX_CC_S390X=/usr/bin/s390x-linux-gnu-gcc
 
+export MACOS_CC_AMD64="/zig/zig-linux-x86_64-0.13.0/zig cc -target x86_64-macos"
+
 export LINUX_JDK=/usr/lib/jvm/java-8-openjdk-amd64
 export WINDOWS_CC_AMD64=/usr/bin/x86_64-w64-mingw32-gcc-win32
 export WINDOWS_CC_I386=/usr/bin/i686-w64-mingw32-gcc
 export WINDOWS_JDK=/windowsJDK/jdk8u292-b10
-
+export MACOS_JDK=/macJDK/jdk8u292-b10/Contents/Home
 
 
 export LINUX_ADDITIONAL_CC_FLAGS="-D_FILE_OFFSET_BITS=64"
@@ -75,11 +77,8 @@ cd ../resources/
 
 #Container creates them as "root" this may cause issues...
 chmod 777 *.so
+chmod 777 *.dynlib
 chmod 777 *.dll
-
-rm -f java_native_utils_native_src.tar.gz
-tar -cvzf java_native_utils_native_src.tar.gz ../native/makefile ../native/linux ../native/common ../native/windows
-chmod 777 java_native_utils_native_src.tar.gz
 
 #Confirm success
 
@@ -197,6 +196,14 @@ if [[ $BUILD_TARGETS == *"linux_s390x"* ]] || [[ $BUILD_TARGETS == "all" ]]; the
     fi
 fi
 
+if [[ $BUILD_TARGETS == *"macos_amd64"* ]] || [[ $BUILD_TARGETS == "all" ]]; then
+    if [ -f java_native_utils_amd64.dynlib ]; then
+        echo "Building the macos amd64 dynlib succeeded"
+    else
+        echo "Building the macos amd64 dynlib failed!"
+        exit -1
+    fi
+fi
 
 
 cd ../../../

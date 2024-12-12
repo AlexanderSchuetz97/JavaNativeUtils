@@ -73,6 +73,15 @@ public class Main {
             OpenWriteReadTest.class
     );
 
+    private static List<Class> MAC_TESTS = (List) Arrays.asList(
+            PosixStatTest.class,
+            PosixLinkTests.class,
+            PosixCPUIDTest.class,
+            UnameTest.class,
+            PosixMMapTest.class,
+            OpenWriteReadTest.class
+    );
+
     private static List<Class> LINUX_TESTS = (List) Arrays.asList(
             ChdirTests.class,
             ChmodTest.class,
@@ -107,7 +116,7 @@ public class Main {
 
     public static Result runTests(String test) {
         NativeUtil nativeUtil = NativeUtils.get();
-        if (!nativeUtil.isLinux() && ! nativeUtil.isWindows() && !nativeUtil.isFreeBSD() && !nativeUtil.isNetBSD() && !nativeUtil.isOpenBSD()) {
+        if (!nativeUtil.isLinux() && ! nativeUtil.isWindows() && !nativeUtil.isFreeBSD() && !nativeUtil.isNetBSD() && !nativeUtil.isOpenBSD() && !nativeUtil.isMacOS()) {
             System.err.println("Lib failed to load!");
             System.exit(-1);
         }
@@ -197,6 +206,15 @@ public class Main {
 
         if (nativeUtil.isOpenBSD()) {
             System.out.println("OPEN BSD");
+            ArrayList<Class> ar = new ArrayList();
+            ar.addAll(COMMON_TESTS);
+            ar.addAll(OPENBSD_TESTS);
+
+            return junit.run(ar.toArray(new Class[0]));
+        }
+
+        if (nativeUtil.isMacOS()) {
+            System.out.println("MAC OS");
             ArrayList<Class> ar = new ArrayList();
             ar.addAll(COMMON_TESTS);
             ar.addAll(NETBSD_TESTS);

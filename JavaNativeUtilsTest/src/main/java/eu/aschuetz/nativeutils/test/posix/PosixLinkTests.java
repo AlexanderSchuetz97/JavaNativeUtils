@@ -116,7 +116,11 @@ public class PosixLinkTests {
         //Will not be green as root user...
         PosixNativeUtil utils = NativeUtils.getPosixUtil();
         try {
-            utils.symlink("/tmp", "/root/meep");
+            if (utils.isMacOS()) {
+                utils.symlink("/tmp", "/private/meep");
+            } else {
+                utils.symlink("/tmp", "/root/meep");
+            }
             //someone ran this as root...
             new File("/root/meep").delete();
             Assert.fail("AccessDeniedException expected");

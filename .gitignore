@@ -2,6 +2,7 @@
 .idea/
 *.class
 *.so
+*.dynlib
 *.log
 *.dll
 JavaNativeUtilsJni/src/main/native/build/*
