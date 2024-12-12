@@ -55,6 +55,8 @@ rm -rf src/main/native/common/jni
 mkdir -p src/main/native/common/jni
 rm -f src/main/resources/*.dll
 rm -f src/main/resources/*.so
+rm -f src/main/resources/*.dynlib
+
 
 
 #Building headers
