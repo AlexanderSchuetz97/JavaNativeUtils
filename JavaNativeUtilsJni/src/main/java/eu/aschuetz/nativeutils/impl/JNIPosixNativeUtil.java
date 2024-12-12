@@ -19,6 +19,7 @@
 //
 package eu.aschuetz.nativeutils.impl;
 
+import eu.aschuetz.nativeutils.api.LinuxNativeUtil;
 import eu.aschuetz.nativeutils.api.NativeMemory;
 import eu.aschuetz.nativeutils.api.PosixNativeUtil;
 import eu.aschuetz.nativeutils.api.consts.DefaultLinuxConstProvider;
@@ -215,5 +216,34 @@ public abstract class JNIPosixNativeUtil extends JNICommonNativeUtil implements 
     }
 
     @Override
+    public native long lseek(int fd, long off, PosixNativeUtil.lseek_whence whence);
+
+    @Override
     public native void close(int fd);
+
+    protected static native void _munmap(long ptr, long length) throws IllegalArgumentException, UnknownNativeErrorException;
+
+    protected static native long _mmap(int fd, long length, int flags, boolean read, boolean write, long offset) throws IllegalArgumentException, QuotaExceededException, InvalidFileDescriptorException, AccessDeniedException, IllegalStateException, UnsupportedOperationException;
+
+    protected static native void _msync(long ptr, long off, long len, boolean invalidate) throws AccessDeniedException, IllegalStateException, IllegalArgumentException;
+
+
+    @Override
+    public long mmap(int fd, final long length, int flags, boolean read, boolean write, long offset) throws IllegalArgumentException, QuotaExceededException, InvalidFileDescriptorException, AccessDeniedException, IllegalStateException, UnsupportedOperationException {
+        return _mmap(fd, length, flags, read, write, offset);
+    }
+
+    @Override
+    public void msync(long ptr, long off, long len, boolean invalidate) throws AccessDeniedException, IllegalStateException, IllegalArgumentException {
+        if (off < 0 || len < 0) {
+            throw new IllegalArgumentException("len/off");
+        }
+
+        _msync(ptr, off, len, invalidate);
+    }
+
+    @Override
+    public void munmap(long ptr, long size) throws UnknownNativeErrorException {
+        _munmap(ptr, size);
+    }
 }

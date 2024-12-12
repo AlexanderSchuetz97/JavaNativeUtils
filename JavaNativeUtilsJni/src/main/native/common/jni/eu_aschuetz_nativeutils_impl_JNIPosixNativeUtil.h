@@ -97,11 +97,43 @@ JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil_writ
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil
+ * Method:    lseek
+ * Signature: (IJLeu/aschuetz/nativeutils/api/PosixNativeUtil/lseek_whence;)J
+ */
+JNIEXPORT jlong JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil_lseek
+  (JNIEnv *, jobject, jint, jlong, jobject);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil
  * Method:    close
  * Signature: (I)V
  */
 JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil_close
   (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil
+ * Method:    _munmap
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil__1munmap
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil
+ * Method:    _mmap
+ * Signature: (IJIZZJ)J
+ */
+JNIEXPORT jlong JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil__1mmap
+  (JNIEnv *, jclass, jint, jlong, jint, jboolean, jboolean, jlong);
+
+/*
+ * Class:     eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil
+ * Method:    _msync
+ * Signature: (JJJZ)V
+ */
+JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIPosixNativeUtil__1msync
+  (JNIEnv *, jclass, jlong, jlong, jlong, jboolean);
 
 #ifdef __cplusplus
 }

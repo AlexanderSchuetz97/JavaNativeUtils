@@ -60,52 +60,7 @@ JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_getF
 	return getFD(env, fdo);
 }
 
-/*
- * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
- * Method:    lseek
- * Signature: (IJLeu/aschuetz/nativeutils/api/LinuxNativeUtil/lseek_whence;)J
- */
-JNIEXPORT jlong JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_lseek
-  (JNIEnv * env, jobject inst, jint fd, jlong off, jobject jwhence) {
-	int whence;
-	int ordinal = jenum_ordinal(env, jwhence);
-	switch(ordinal) {
-	case(0):
-			whence = SEEK_SET;
-			break;
-	case(1):
-			whence = SEEK_CUR;
-			break;
-	case(2):
-			whence = SEEK_END;
-			break;
-	default:
-		jthrowCC_IllegalArgumentException_1(env, "whence");
-		return -1;
-	}
 
-	off_t res = lseek((int) fd, (off_t) off, whence);
-	if (res == -1) {
-		int err = errno;
-		switch(err) {
-		case(ESPIPE):
-		case(EBADF):
-			jthrow_InvalidFileDescriptorException(env);
-			return -1;
-		case(EINVAL):
-			jthrowCC_IOException_1(env, "the resulting file offset would be negative, or beyond the end of a seekable device.");
-			return -1;
-		case(EOVERFLOW):
-			jthrowCC_IOException_1(env, "The resulting file offset cannot be represented in a 64 bit number");
-			return -1;
-		default:
-			jthrow_UnknownNativeErrorException_1(env, err);
-			return -1;
-		}
-	}
-
-	return (jlong) res;
-}
 
 
 
@@ -324,101 +279,6 @@ JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_poll
 	return result;
 }
 
-
-/*
- * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
- * Method:    _munmap
- * Signature: (JJ)J
- */
-JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil__1munmap
-  (JNIEnv * env, jclass clazz, jlong ptr, jlong size) {
-	void * vptr = (void *) (uintptr_t) ptr;
-	if (vptr == NULL) {
-		jthrowCC_NullPointerException_1(env, "ptr");
-		return;
-	}
-
-	int res = munmap(vptr, (size_t) size);
-
-	if (res != -1) {
-		return;
-	}
-
-	int err = errno;
-	if (err == EINVAL) {
-		jthrowCC_IllegalArgumentException_1(env, "alignment of size/ptr is wrong");
-		return;
-	}
-
-	jthrow_UnknownNativeErrorException_1(env, err);
-}
-
-#ifndef __OFF64_T_TYPE
-#define __OFF64_T_TYPE off64_t
-#endif
-
-/*
- * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
- * Method:    _mmap
- * Signature: (IJIZZJ)V
- */
-JNIEXPORT jlong JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil__1mmap
-  (JNIEnv * env, jclass clazz, jint fd, jlong length, jint flags, jboolean read, jboolean write, jlong offset) {
-
-	int prot;
-	if (read && write) {
-		prot = PROT_READ | PROT_WRITE;
-	} else if (read) {
-		prot = PROT_READ;
-	} else if (write) {
-		prot = PROT_WRITE;
-	} else {
-		prot = PROT_NONE;
-	}
-
-	void * res = mmap64(NULL, (size_t) length, prot, flags, fd, (__OFF64_T_TYPE) offset);
-	if (res != MAP_FAILED) {
-		return (jlong) (uintptr_t) res;
-	}
-
-	int err = errno;
-	switch(err) {
-	case(EACCES):
-		jthrowCC_IllegalStateException_1(env, "FD is incompatible with the requested flags.");
-		return -1;
-	case(EAGAIN):
-		jthrowCC_IllegalArgumentException_1(env, "The file has been locked, or too much memory has been locked");
-		return -1;
-	case(EBADF):
-		jthrow_InvalidFileDescriptorException(env);
-		return -1;
-	case(EINVAL):
-		jthrowCC_IllegalArgumentException_1(env, "alignment of arguments is invalid");
-		return -1;
-	case(ENFILE):
-		jthrowCC_QuotaExceededException_1(env, NULL, NULL, "The system-wide limit on the total number of open files has been reached.");
-		return -1;
-	case(ENODEV):
-		jthrowCC_UnsupportedOperationException_1(env, "The underlying filesystem of the specified file does not support memory mapping.");
-		return -1;
-	case(ENOMEM):
-		jthrowCC_OutOfMemoryError_1(env, "not enough memory to create mapping or the maximum number of memory mappings has been reached");
-		return -1;
-	case(EOVERFLOW):
-		jthrowCC_OutOfMemoryError_1(env, "mapping is too large for 32bit architecture");
-		return -1;
-	case(EPERM):
-		jthrowCC_AccessDeniedException_1(env, NULL, NULL, "The operation was prevented by a file seal or the MAP_HUGETLB was present and the process is not privileged.");
-		return -1;
-	case(ETXTBSY):
-		jthrowCC_IllegalStateException_1(env, "MAP_DENYWRITE was set but the object specified by fd is open for writing.");
-		return -1;
-	default:
-		jthrow_UnknownNativeErrorException_1(env, err);
-		return -1;
-	}
-}
-
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
  * Method:    shm_open
@@ -520,47 +380,7 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_shm_
 
 
 
-/*
- * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
- * Method:    _msync
- * Signature: (JJJZ)J
- */
-JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil__1msync
-  (JNIEnv * env, jclass clazz, jlong ptr, jlong off, jlong len, jboolean invalidate) {
-	void * vptr = (void *) (uintptr_t) ptr;
-	if (vptr == NULL) {
-		jthrowCC_NullPointerException_1(env, "ptr");
-		return;
-	}
 
-	vptr+=off;
-	int flags = MS_SYNC;
-
-	if (invalidate) {
-		flags |= MS_INVALIDATE;
-	}
-
-	if (msync(vptr, len, flags) == 0) {
-		return;
-	}
-
-	int err = errno;
-
-	switch(err) {
-	case(EBUSY):
-		jthrowCC_AccessDeniedException_1(env, NULL, NULL, "cant invalidate region due to memory lock");
-		return;
-	case(EINVAL):
-		jthrowCC_IllegalArgumentException_1(env, "ptr+off is not a multiple of PAGESIZE");
-		return;
-	case(ENOMEM):
-		jthrowCC_IllegalStateException_1(env, "The indicated memory (or part of it) was not mapped.");
-		return;
-	default:
-		jthrow_UnknownNativeErrorException_1(env, err);
-		return;
-	}
-}
 
 void handle_ioctl_err(JNIEnv* env, int err) {
 	switch(err) {

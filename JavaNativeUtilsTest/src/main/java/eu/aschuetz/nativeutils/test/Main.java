@@ -51,6 +51,7 @@ public class Main {
             PosixLinkTests.class,
             PosixCPUIDTest.class,
             UnameTest.class,
+            PosixMMapTest.class,
             OpenWriteReadTest.class
             );
 
@@ -59,6 +60,7 @@ public class Main {
             PosixLinkTests.class,
             PosixCPUIDTest.class,
             UnameTest.class,
+            PosixMMapTest.class,
             OpenWriteReadTest.class
     );
 
@@ -67,6 +69,7 @@ public class Main {
             PosixLinkTests.class,
             PosixCPUIDTest.class,
             UnameTest.class,
+            PosixMMapTest.class,
             OpenWriteReadTest.class
     );
 
@@ -77,7 +80,7 @@ public class Main {
             IfTests.class,
             LinkLinkTests.class,
             LinuxStatTest.class,
-            MMapTest.class,
+            PosixMMapTest.class,
             MallocTrimTest.class,
             PTTest.class,
             SemTest.class,

@@ -3,6 +3,7 @@ version: '3'
 services:
 
   java-native-utils-test-aarch64:
+    platform: "linux/arm64/v8"
     build:
       context: image
     container_name: java-native-utils-test-aarch64

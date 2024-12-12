@@ -4,6 +4,7 @@ import eu.aschuetz.nativeutils.api.consts.DefaultPosixConstProvider;
 import eu.aschuetz.nativeutils.api.consts.PosixConstProvider;
 
 public class PosixConst {
+    //open flags
     public static final int O_ACCMODE;
     public static final int O_RDONLY;
     public static final int O_WRONLY;
@@ -34,6 +35,10 @@ public class PosixConst {
     public static final int S_IRWXU;
     public static final int S_IRWXG;
     public static final int S_IRWXO;
+
+    //FOR MMAP FLAGS
+    public static final int MAP_SHARED;
+    public static final int MAP_PRIVATE;
 
     static {
 
@@ -78,5 +83,7 @@ public class PosixConst {
         S_IRWXU = provider.S_IRWXU();
         S_IRWXG = provider.S_IRWXG();
         S_IRWXO = provider.S_IRWXO();
+        MAP_PRIVATE = provider.MAP_PRIVATE();
+        MAP_SHARED = provider.MAP_SHARED();
     }
 }

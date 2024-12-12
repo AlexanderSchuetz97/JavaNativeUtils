@@ -19,6 +19,7 @@
 //
 package eu.aschuetz.nativeutils.impl;
 
+import eu.aschuetz.nativeutils.api.PosixNativeUtil;
 import eu.aschuetz.nativeutils.api.consts.DefaultLinuxConstProvider;
 import eu.aschuetz.nativeutils.api.LinuxNativeUtil;
 import eu.aschuetz.nativeutils.api.NativeMemory;
@@ -100,7 +101,24 @@ public class JNILinuxNativeUtil extends JNIPosixNativeUtil implements LinuxNativ
     public native Collection<IfNameIndex> if_nameindex() throws UnknownNativeErrorException;
 
     @Override
-    public native long lseek(int fd, long off, lseek_whence whence);
+    public long lseek(int fd, long off, LinuxNativeUtil.lseek_whence whence) throws IOException, InvalidFileDescriptorException, UnknownNativeErrorException {
+        PosixNativeUtil.lseek_whence mapped;
+        switch (whence) {
+            case SEEK_SET:
+                mapped = PosixNativeUtil.lseek_whence.SEEK_SET;
+                break;
+            case SEEK_CUR:
+                mapped = PosixNativeUtil.lseek_whence.SEEK_CUR;
+                break;
+            case SEEK_END:
+                mapped = PosixNativeUtil.lseek_whence.SEEK_END;
+                break;
+            default:
+                //DEAD CODE
+                throw new IllegalArgumentException();
+        }
+        return super.lseek(fd, off, mapped);
+    }
 
     @Override
     public native byte[] to_struct_timeval(long timestamp);
@@ -143,33 +161,6 @@ public class JNILinuxNativeUtil extends JNIPosixNativeUtil implements LinuxNativ
 
     @Override
     public native Collection<Cmsghdr> parseCMSG_HDR(byte[] msg_control, int msg_controllen);
-
-
-    protected static native void _munmap(long ptr, long length) throws IllegalArgumentException, UnknownNativeErrorException;
-
-    protected static native long _mmap(int fd, long length, int flags, boolean read, boolean write, long offset) throws IllegalArgumentException, QuotaExceededException, InvalidFileDescriptorException, AccessDeniedException, IllegalStateException, UnsupportedOperationException;
-
-    protected static native void _msync(long ptr, long off, long len, boolean invalidate) throws AccessDeniedException, IllegalStateException, IllegalArgumentException;
-
-
-    @Override
-    public long mmap(int fd, final long length, int flags, boolean read, boolean write, long offset) throws IllegalArgumentException, QuotaExceededException, InvalidFileDescriptorException, AccessDeniedException, IllegalStateException, UnsupportedOperationException {
-        return _mmap(fd, length, flags, read, write, offset);
-    }
-
-    @Override
-    public void msync(long ptr, long off, long len, boolean invalidate) throws AccessDeniedException, IllegalStateException, IllegalArgumentException {
-        if (off < 0 || len < 0) {
-            throw new IllegalArgumentException("len/off");
-        }
-
-        _msync(ptr, off, len, invalidate);
-    }
-
-    @Override
-    public void munmap(long ptr, long size) throws UnknownNativeErrorException {
-        _munmap(ptr, size);
-    }
 
 
     @Override
@@ -449,7 +440,5 @@ public class JNILinuxNativeUtil extends JNIPosixNativeUtil implements LinuxNativ
 
     @Override
     public native Stat lstat(String path) throws InvalidFileDescriptorException;
-
-
 
 }

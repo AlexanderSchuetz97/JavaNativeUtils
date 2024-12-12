@@ -3,6 +3,7 @@ version: '3'
 services:
 
   java-native-utils-test-armel:
+    platform: "linux/arm/v5"
     build:
       context: image
     container_name: java-native-utils-test-armel

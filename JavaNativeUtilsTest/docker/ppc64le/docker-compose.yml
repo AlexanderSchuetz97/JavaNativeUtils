@@ -3,6 +3,7 @@ version: '3'
 services:
 
   java-native-utils-test-ppc64le:
+    platform: "linux/ppc64le"
     build:
       context: image
     container_name: java-native-utils-test-ppc64le

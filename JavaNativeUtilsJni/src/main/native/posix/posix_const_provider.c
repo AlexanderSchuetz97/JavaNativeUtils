@@ -39,4 +39,6 @@ void jfetchconst_DefaultPosixConstProvider(JNIEnv * env, jobject instance) {
    jset_DefaultPosixConstProvider_S_IRWXU(env, instance, (jint) S_IRWXU);
    jset_DefaultPosixConstProvider_S_IRWXG(env, instance, (jint) S_IRWXG);
    jset_DefaultPosixConstProvider_S_IRWXO(env, instance, (jint) S_IRWXO);
+   jset_DefaultPosixConstProvider_MAP_SHARED(env, instance, (jint) MAP_SHARED);
+   jset_DefaultPosixConstProvider_MAP_PRIVATE(env, instance, (jint) MAP_PRIVATE);
 }

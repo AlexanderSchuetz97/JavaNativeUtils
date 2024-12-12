@@ -37,4 +37,8 @@ public interface PosixConstProvider {
     int S_IRWXU() ;
     int S_IRWXG() ;
     int S_IRWXO() ;
+
+    //FOR MMAP FLAGS
+    int MAP_SHARED();
+    int MAP_PRIVATE();
 }

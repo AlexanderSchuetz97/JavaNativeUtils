@@ -814,7 +814,13 @@ void jset_DefaultPosixConstProvider_S_IRWXG(JNIEnv * env, jobject instance, jint
 jint jget_DefaultPosixConstProvider_S_IRWXG(JNIEnv * env, jobject instance);
 void jset_DefaultPosixConstProvider_S_IRWXO(JNIEnv * env, jobject instance, jint value);
 jint jget_DefaultPosixConstProvider_S_IRWXO(JNIEnv * env, jobject instance);
+void jset_DefaultPosixConstProvider_MAP_SHARED(JNIEnv * env, jobject instance, jint value);
+jint jget_DefaultPosixConstProvider_MAP_SHARED(JNIEnv * env, jobject instance);
+void jset_DefaultPosixConstProvider_MAP_PRIVATE(JNIEnv * env, jobject instance, jint value);
+jint jget_DefaultPosixConstProvider_MAP_PRIVATE(JNIEnv * env, jobject instance);
 jobject jnew_DefaultPosixConstProvider(JNIEnv * env);
+jint jcall_DefaultPosixConstProvider_MAP_PRIVATE(JNIEnv * env, jobject instance);
+jint jcall_DefaultPosixConstProvider_MAP_SHARED(JNIEnv * env, jobject instance);
 jint jcall_DefaultPosixConstProvider_O_ACCMODE(JNIEnv * env, jobject instance);
 jint jcall_DefaultPosixConstProvider_O_APPEND(JNIEnv * env, jobject instance);
 jint jcall_DefaultPosixConstProvider_O_ASYNC(JNIEnv * env, jobject instance);

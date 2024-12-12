@@ -14,12 +14,12 @@ Maven:
 <dependency>
     <groupId>eu.aschuetz</groupId>
     <artifactId>JavaNativeUtilsApi</artifactId>
-    <version>4.7</version>
+    <version>4.8</version>
 </dependency>
 <dependency>
     <groupId>eu.aschuetz</groupId>
     <artifactId>JavaNativeUtilsJni</artifactId>
-    <version>4.7</version>
+    <version>4.8</version>
 </dependency>
 ````
 Note: for versions older than 4.0 use groupId io.github.alexanderschuetz97 artifactId JavaNativeUtils
@@ -224,6 +224,10 @@ if (NativeUtils.isNetBSD()) {
 * close
 * read
 * write
+* lseek
+* mmap
+* msync
+* munmap
 * symlink
 * unlink
 * uname

@@ -3,6 +3,7 @@ version: '3'
 services:
 
   java-native-utils-test-armhf:
+    platform: "linux/arm/v7"
     build:
       context: image
     container_name: java-native-utils-test-armhf

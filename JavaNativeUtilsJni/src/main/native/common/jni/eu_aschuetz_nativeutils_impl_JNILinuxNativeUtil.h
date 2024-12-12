@@ -49,14 +49,6 @@ JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_i
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
- * Method:    lseek
- * Signature: (IJLeu/aschuetz/nativeutils/api/LinuxNativeUtil/lseek_whence;)J
- */
-JNIEXPORT jlong JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_lseek
-  (JNIEnv *, jobject, jint, jlong, jobject);
-
-/*
- * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
  * Method:    to_struct_timeval
  * Signature: (J)[B
  */
@@ -166,30 +158,6 @@ JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_getp
  */
 JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil_parseCMSG_1HDR
   (JNIEnv *, jobject, jbyteArray, jint);
-
-/*
- * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
- * Method:    _munmap
- * Signature: (JJ)V
- */
-JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil__1munmap
-  (JNIEnv *, jclass, jlong, jlong);
-
-/*
- * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
- * Method:    _mmap
- * Signature: (IJIZZJ)J
- */
-JNIEXPORT jlong JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil__1mmap
-  (JNIEnv *, jclass, jint, jlong, jint, jboolean, jboolean, jlong);
-
-/*
- * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil
- * Method:    _msync
- * Signature: (JJJZ)V
- */
-JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil__1msync
-  (JNIEnv *, jclass, jlong, jlong, jlong, jboolean);
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNILinuxNativeUtil

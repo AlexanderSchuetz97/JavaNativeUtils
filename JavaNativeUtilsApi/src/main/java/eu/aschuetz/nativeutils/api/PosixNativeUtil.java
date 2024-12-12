@@ -180,4 +180,46 @@ public interface PosixNativeUtil extends NativeUtil {
      */
     int write(int fd, ByteBuffer buf, int len) throws InvalidFileDescriptorException, IllegalArgumentException, IOException, UnknownNativeErrorException;
 
+    /**
+     * Maps a file descriptor into memory.
+     * Note: the native parameter addr to mmap is always 0.
+     *
+     * @param fd the file descriptor.
+     * @param length
+     * @param flags
+     * @param read
+     * @param write
+     * @param offset file offset for the memory mapping. Only matters if the fd refers to a file.
+     * @return A memory mapping that MUST BE FREED by using the cl
+     */
+    long mmap(int fd, long length, int flags, boolean read, boolean write, long offset) throws IllegalArgumentException, QuotaExceededException, InvalidFileDescriptorException, AccessDeniedException, IllegalStateException, UnsupportedOperationException;
+
+    enum lseek_whence {
+        SEEK_SET,
+        SEEK_CUR,
+        SEEK_END
+    }
+    long lseek(int fd, long off, lseek_whence whence) throws IOException, InvalidFileDescriptorException, UnknownNativeErrorException;
+
+    /**
+     * Sync memory mapping to disk
+     *
+     * @param ptr pointer to the address
+     * @param off offset from the pointer
+     * @param len length of the memory to sync
+     * @param invalidate invalidate memory mappings of other processes
+     * @throws AccessDeniedException if a memory lock exists for the region and the invalidate flag is set to true.
+     * @throws IllegalStateException if the memory or a part of it is not mapped by mmap
+     * @throws IllegalArgumentException if ptr+off % getpagesize() != 0
+     */
+    void msync(long ptr, long off, long len, boolean invalidate) throws AccessDeniedException, IllegalStateException, IllegalArgumentException, UnknownNativeErrorException;
+
+    /**
+     * Unmap a pointer
+     * @param ptr pointer to the address
+     * @param size size of the memory mapping
+     * @throws IllegalArgumentException if ptr/size do not correspond to a valid memory mapping.
+     * @throws UnknownNativeErrorException
+     */
+    void munmap(long ptr, long size) throws UnknownNativeErrorException;
 }

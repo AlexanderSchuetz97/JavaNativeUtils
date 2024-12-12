@@ -3725,6 +3725,24 @@ jint jget_DefaultPosixConstProvider_S_IRWXO(JNIEnv * env, jobject instance) {
    return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_S_IRWXO);
 }
 
+static jfieldID DefaultPosixConstProvider_MAP_SHARED = 0;
+void jset_DefaultPosixConstProvider_MAP_SHARED(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_MAP_SHARED, value);
+}
+
+jint jget_DefaultPosixConstProvider_MAP_SHARED(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_MAP_SHARED);
+}
+
+static jfieldID DefaultPosixConstProvider_MAP_PRIVATE = 0;
+void jset_DefaultPosixConstProvider_MAP_PRIVATE(JNIEnv * env, jobject instance, jint value) {
+   (*env)->SetIntField(env, instance, DefaultPosixConstProvider_MAP_PRIVATE, value);
+}
+
+jint jget_DefaultPosixConstProvider_MAP_PRIVATE(JNIEnv * env, jobject instance) {
+   return (*env)->GetIntField(env, instance, DefaultPosixConstProvider_MAP_PRIVATE);
+}
+
 static jmethodID DefaultPosixConstProvider_C_0 = 0;
 jobject jnew_DefaultPosixConstProvider(JNIEnv * env) {
     jobject obj = (*env) -> NewObject(env, DefaultPosixConstProvider, DefaultPosixConstProvider_C_0);
@@ -3732,6 +3750,16 @@ jobject jnew_DefaultPosixConstProvider(JNIEnv * env) {
         throw_internal_OutOfMemoryError(env, "NewObject");
     }
     return obj;
+}
+
+static jmethodID DefaultPosixConstProvider_M_MAP_PRIVATE_0 = 0;
+jint jcall_DefaultPosixConstProvider_MAP_PRIVATE(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_MAP_PRIVATE_0);
+}
+
+static jmethodID DefaultPosixConstProvider_M_MAP_SHARED_0 = 0;
+jint jcall_DefaultPosixConstProvider_MAP_SHARED(JNIEnv * env, jobject instance) {
+    return (*env) -> CallIntMethod(env, instance, DefaultPosixConstProvider_M_MAP_SHARED_0);
 }
 
 static jmethodID DefaultPosixConstProvider_M_O_ACCMODE_0 = 0;
@@ -15366,10 +15394,38 @@ jboolean jnigenerator_init(JNIEnv * env) {
         return JNI_FALSE;
     }
 
+    DefaultPosixConstProvider_MAP_SHARED = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "MAP_SHARED", "I");
+    if (DefaultPosixConstProvider_MAP_SHARED == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_MAP_SHARED_I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_MAP_PRIVATE = (*env) -> GetFieldID(env, DefaultPosixConstProvider, "MAP_PRIVATE", "I");
+    if (DefaultPosixConstProvider_MAP_PRIVATE == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider_MAP_PRIVATE_I");
+        return JNI_FALSE;
+    }
+
     DefaultPosixConstProvider_C_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "<init>", "()V");
     if (DefaultPosixConstProvider_C_0 == 0) {
         (*env) -> ExceptionClear(env);
         (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.<init>()V");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_MAP_PRIVATE_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "MAP_PRIVATE", "()I");
+    if (DefaultPosixConstProvider_M_MAP_PRIVATE_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.MAP_PRIVATE()I");
+        return JNI_FALSE;
+    }
+
+    DefaultPosixConstProvider_M_MAP_SHARED_0 = (*env) -> GetMethodID(env, DefaultPosixConstProvider, "MAP_SHARED", "()I");
+    if (DefaultPosixConstProvider_M_MAP_SHARED_0 == 0) {
+        (*env) -> ExceptionClear(env);
+        (*env) -> ThrowNew(env, Exception, "cant find eu/aschuetz/nativeutils/api/consts/DefaultPosixConstProvider.MAP_SHARED()I");
         return JNI_FALSE;
     }
 
@@ -22538,7 +22594,11 @@ void jnigenerator_destroy(JNIEnv * env) {
     DefaultPosixConstProvider_S_IRWXU = 0;
     DefaultPosixConstProvider_S_IRWXG = 0;
     DefaultPosixConstProvider_S_IRWXO = 0;
+    DefaultPosixConstProvider_MAP_SHARED = 0;
+    DefaultPosixConstProvider_MAP_PRIVATE = 0;
     DefaultPosixConstProvider_C_0 = 0;
+    DefaultPosixConstProvider_M_MAP_PRIVATE_0 = 0;
+    DefaultPosixConstProvider_M_MAP_SHARED_0 = 0;
     DefaultPosixConstProvider_M_O_ACCMODE_0 = 0;
     DefaultPosixConstProvider_M_O_APPEND_0 = 0;
     DefaultPosixConstProvider_M_O_ASYNC_0 = 0;

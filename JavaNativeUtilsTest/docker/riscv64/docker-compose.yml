@@ -3,6 +3,7 @@ version: '3'
 services:
 
   java-native-utils-test-risc64:
+    platform: "linux/riscv64"
     build:
       context: image
     container_name: java-native-utils-test-risc64

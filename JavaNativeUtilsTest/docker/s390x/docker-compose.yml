@@ -3,6 +3,7 @@ version: '3'
 services:
 
   java-native-utils-test-s390x:
+    platform: "linux/s390x"
     build:
       context: image
     container_name: java-native-utils-test-s390x

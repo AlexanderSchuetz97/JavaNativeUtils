@@ -33,6 +33,8 @@ public class DefaultPosixConstProvider implements PosixConstProvider {
     int S_IRWXG = S_IRWXU >> 3;
     int S_IRWXO = S_IRWXG >> 3;
 
+    int MAP_SHARED = 1;
+    int MAP_PRIVATE = 2;
 
     @Override
     public int O_ACCMODE() {
@@ -177,5 +179,15 @@ public class DefaultPosixConstProvider implements PosixConstProvider {
     @Override
     public int S_IRWXO() {
         return S_IRWXO;
+    }
+
+    @Override
+    public int MAP_SHARED() {
+        return MAP_SHARED;
+    }
+
+    @Override
+    public int MAP_PRIVATE() {
+        return MAP_PRIVATE;
     }
 }
