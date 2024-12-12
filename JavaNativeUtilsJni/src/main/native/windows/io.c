@@ -281,7 +281,7 @@ JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_De
 		if (outBuffer != NULL) {
 			(*env)->ReleaseByteArrayElements(env, outBuffer, out, JNI_OK);
 		}
-		return resLen;
+		return (jint) resLen;
 	}
 
 	if (inBuffer != NULL) {
@@ -324,7 +324,7 @@ JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_De
 
 	WINBOOL succ = DeviceIoControl(h, (DWORD) ctrlCode, inP, inLen, outP, outLen, &resLen, NULL);
 	if (succ) {
-		return resLen;
+		return (jint) resLen;
 	}
 
 	jthrow_UnknownNativeErrorException_1(env, GetLastError());
@@ -391,7 +391,7 @@ JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_Re
 	}
 
 	(*env)->ReleaseByteArrayElements(env, jbuf, buf, JNI_OK);
-	return read;
+	return (jint) read;
 }
 
 /*
@@ -414,11 +414,11 @@ JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_Re
 
 	if (!ReadFile(h, (LPVOID) (uintptr_t) ptr, len, &read, NULL)) {
 		DWORD err = GetLastError();
-		jthrow_UnknownNativeErrorException_1(env, err);
+		jthrow_UnknownNativeErrorException_1(env, (jlong) err);
 		return -1;
 	}
 
-	return read;
+	return (jint) read;
 }
 
 
@@ -449,8 +449,13 @@ JNIEXPORT jlong JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_R
 		return 0;
 	}
 
+    LPOVERLAPPED lp = NULL;
+    if (overlapped != 0) {
+        lp = (LPOVERLAPPED) (uintptr_t) overlapped;
+    } else {
+        lp = malloc(sizeof(OVERLAPPED));
+    }
 
-	LPOVERLAPPED lp = overlapped != 0 ? (LPOVERLAPPED) (uintptr_t) overlapped : malloc(sizeof(OVERLAPPED));
 	if (lp == NULL) {
 		jthrowCC_OutOfMemoryError_1(env, "malloc");
 		return 0;
@@ -534,7 +539,7 @@ JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_Wr
 	}
 
 	(*env)->ReleaseByteArrayElements(env, jbuf, buf, JNI_ABORT);
-	return read;
+	return (jint) read;
 }
 
 /*
@@ -561,7 +566,7 @@ JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_Wr
 		return -1;
 	}
 
-	return read;
+	return (jint) read;
 }
 
 
@@ -590,8 +595,13 @@ JNIEXPORT jlong JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_W
 		return 0;
 	}
 
+    LPOVERLAPPED lp = NULL;
+    if (overlapped != 0) {
+        lp = (LPOVERLAPPED) (uintptr_t) overlapped;
+    } else {
+        lp = malloc(sizeof(OVERLAPPED));
+    }
 
-	LPOVERLAPPED lp = overlapped != 0 ? (LPOVERLAPPED) (uintptr_t) overlapped : malloc(sizeof(OVERLAPPED));
 	if (lp == NULL) {
 		jthrowCC_OutOfMemoryError_1(env, "malloc");
 		return 0;
@@ -641,7 +651,7 @@ JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_Ge
 
 	DWORD res = 0;
 	if (GetOverlappedResult(hdl, lpo, &res, wait)) {
-		return res;
+		return (jint) res;
 	}
 
 	DWORD err = GetLastError();

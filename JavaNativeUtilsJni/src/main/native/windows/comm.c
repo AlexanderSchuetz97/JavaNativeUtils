@@ -218,7 +218,7 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_Se
         return;
     }
 
-    memset((void*) cfg, 0, sizeof(COMMCONFIG));
+    memset((void*) cfg, 0, size);
     cfg->dwSize = sizeof(COMMCONFIG);
     cfg->wVersion = jget_CommConfig_wVersion(env, jcfg);
     cfg->dwProviderSubType = jget_CommConfig_wVersion(env, jcfg);
@@ -300,7 +300,7 @@ JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_Se
         return;
     }
 
-    memset((void*) cfg, 0, sizeof(COMMCONFIG));
+    memset((void*) cfg, 0, size);
     cfg->dwSize = sizeof(COMMCONFIG);
     cfg->wVersion = jget_CommConfig_wVersion(env, jcfg);
     cfg->dwProviderSubType = jget_CommConfig_wVersion(env, jcfg);
@@ -350,6 +350,11 @@ JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
 
     const char* ptr = (*env)->GetStringUTFChars(env, jname, NULL);
 
+    if (ptr == NULL) {
+        jthrowCC_OutOfMemoryError_1(env, "GetStringUTFChars");
+        return NULL;
+    }
+
     DWORD size = sizeof(COMMCONFIG);
 
     WINBOOL res = GetDefaultCommConfigA(ptr, &cfg, &size);
@@ -372,7 +377,7 @@ JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
 (JNIEnv *env, jobject inst, jlong jhandle) {
     HANDLE h = (HANDLE) (uintptr_t) jhandle;
     COMMTIMEOUTS timeouts;
-    memset((void*) &timeouts, 0, sizeof(COMMTIMEOUTS ));
+    memset((void*) &timeouts, 0, sizeof(COMMTIMEOUTS));
 
     if (GetCommTimeouts(h, &timeouts)) {
         jobject jcfg = jnew_CommTimeouts(env);
@@ -385,7 +390,7 @@ JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
     }
 
     jthrow_UnknownNativeErrorException_1(env, (jlong) GetLastError());
-
+    return NULL;
 }
 
 JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_GetCommState
@@ -405,6 +410,7 @@ JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
     }
 
     jthrow_UnknownNativeErrorException_1(env, (jlong) GetLastError());
+    return NULL;
 }
 
 JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_GetCommProperties
@@ -424,6 +430,7 @@ JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
     }
 
     jthrow_UnknownNativeErrorException_1(env, (jlong) GetLastError());
+    return NULL;
 }
 
 JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_GetCommModemStatus
@@ -466,6 +473,7 @@ JNIEXPORT jobject JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
     }
 
     jthrow_UnknownNativeErrorException_1(env, (jlong) GetLastError());
+    return NULL;
 }
 
 JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_EscapeCommFunction
@@ -497,6 +505,7 @@ JNIEXPORT jint JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_Cl
     }
 
     jthrow_UnknownNativeErrorException_1(env, (jlong) GetLastError());
+    return 0;
 }
 
 JNIEXPORT void JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_ClearCommBreak
