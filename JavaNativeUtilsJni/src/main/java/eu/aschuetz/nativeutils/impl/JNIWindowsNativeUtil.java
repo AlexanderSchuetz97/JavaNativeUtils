@@ -192,7 +192,16 @@ public class JNIWindowsNativeUtil extends JNICommonNativeUtil implements Windows
     public native String strerror_s(int errno);
 
     @Override
-    public native String FormatMessageA(int lastError);
+    public String FormatMessageA(int lastError) {
+        return FormatMessageA(lastError, 1033);
+    }
+
+    @Override
+    public String FormatMessageA(int dwMessageId, int dwLanguageId) {
+        return _FormatMessageA(dwMessageId, dwLanguageId);
+    }
+
+    private static native String _FormatMessageA(int dwMessageId, int dwLanguageId);
 
     @Override
     public native String GetVolumePathNameW(String path);

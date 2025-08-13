@@ -14,12 +14,12 @@ Maven:
 <dependency>
     <groupId>eu.aschuetz</groupId>
     <artifactId>JavaNativeUtilsApi</artifactId>
-    <version>4.8</version>
+    <version>4.9</version>
 </dependency>
 <dependency>
     <groupId>eu.aschuetz</groupId>
     <artifactId>JavaNativeUtilsJni</artifactId>
-    <version>4.8</version>
+    <version>4.9</version>
 </dependency>
 ````
 Note: for versions older than 4.0 use groupId io.github.alexanderschuetz97 artifactId JavaNativeUtils
@@ -113,7 +113,7 @@ if (NativeUtils.isOpenBSD()) {
 * ftruncate
 * truncate
 * memfd_create
-* malloc_trim (only glibc)
+* malloc_trim (only glibc, throws UnsupportedOperationException on libc-musl)
 * madvise
 * pthread_condattr_destroy
 * pthread_condattr_init
@@ -277,7 +277,7 @@ Accessing sun.misc.Unsafe is also non-trivial in newer Java Versions depending o
 
 
 ## Dependencies
-* Java 7 or newer
+* Java 7 or newer (Tested with java 7, 8, 11, 17 and 21)
 
 ### Supported Operating Systems / Architectures
 #### Windows (Vista or newer)
@@ -308,25 +308,25 @@ The others are only tested using qemu usermode emulation.
 #### FreeBSD (14.1)
 * amd64
 
-I currently use freebsd 14.1 to cross compile and test. 
+I currently use freebsd 14.1 to cross-compile and test. 
 The library may or may not work with earlier or later versions of freebsd.
 
 #### NetBSD (10.0)
 * amd64
 
-I currently use netbsd 10.0 to cross compile and test.
+I currently use netbsd 10.0 to cross-compile and test.
 The library may or may not work with earlier or later versions of netbsd.
 
 #### OpenBSD (7.7)
 * amd64
 
-I currently use openbsd 7.7 to cross compile and test.
+I currently use openbsd 7.7 to cross-compile and test.
 The library may or may not work with earlier or later versions of openbsd.
 
 ### MacOS
 * amd64
 
-I currently use zig cc version 0.13 to cross compile and test on MacOS Ventura,
+I currently use zig cc version 0.13 to cross-compile and test on MacOS Ventura,
 The library may or may not work with earlier or later versions of MacOS.
 For more information see the manual page of the zig cc linker.
 
@@ -352,7 +352,7 @@ The build environment for JavaNativeUtils will always use glibc version 2.2.5 fo
 glibc version 2.3.2 for pthread_cond.
 
 All information regarding glibc versions was only verified for the amd64 architecture. If you
-intend to use the other architectures then you will have to use objdump to verify that
+intend to use the other architectures, then you will have to use objdump to verify that
 the symbols for pthread_cond and pthread_mutex are the same on the c program and the respective shared object file
 of JavaNativeUtils.
 
@@ -361,27 +361,52 @@ of JavaNativeUtils.
 #### Windows:
 Building JavaNativeUtils on Windows natively is not possible.
 You may have some luck using WSL2, however building in for example a Debian VM is probably
-a more useful way to spend your time compared getting docker+qemu+binfmt_misc to work in WSL2.
+a more useful way to spend your time compared to getting docker+qemu+binfmt_misc to work in WSL2.
 
 #### Linux:
 Requirements:
 * bash
 * docker
 * docker-compose
+  * Note: This project uses the "newer" file format of docker-compose. 
+  If you are using older distributions such as Debian 11 for example, then the docker version from the official repository for that release will be too old. 
+  Install the latest docker version from the relevant third party repository in this case.
 * jdk 8
-  * Note: for various reasons you must use a JDK 8 to compile... 
-  * The compiled library will work when used by any java version between including java 7 and including java 21.
+  * For various reasons, you must use a JDK 8 to compile... 
+  If you are using the provided ./mvnw script then simply using "export JAVA_HOME=/path/to/jdk8" will be enough
+  The compiled library will work when used by any java version between including java 7 and including java 21.
+  * Usually jdk 8 does not need to be installed as a system package, 
+  simply grabbing the latest build from eclipse-temurin, for example, and extracting it to somewhere will usually be enough.
+  I still recommend installing at least some version of java from your official package repository as that will ensure that all required 
+  shared libraries are present. (Usually some X11/libpng/libjpeg shared libraries)
 
 Building for the first time will build the docker image to compile the native libraries. 
 This will take a few minutes depending on your internet connection speed. You will only have to do this once
-unless you delete/remove the containers/images.
+unless you delete/remove the containers/images. This will also download required binaries for cross-compiler linkage
+from various ftp servers. Some of these ftp servers are very slow, so downloading may take more than 30 minutes.
 
 To build:
 1. clone the git repository
 2. run:
 ````
-maven -Dmaven.test.skip=true -Dgpg.skip clean install
+./mvnw -Dmaven.test.skip=true -Dgpg.skip clean install
 ````
+
+### Build failure if OpenBSD binaries are no longer available
+OpenBSD will delete their binaries from their ftp server rather regularly.
+Meaning that the links in the buildscripts do occasionally expire. 
+This will cause the build to fail if the build container has not yet been built on your local system. 
+To circumvent this either update the openbsd links or disable the build for openbsd.
+
+If this occurs to you then please let me know via github issue and I will probably update the links to their latest 
+version in a reasonable timeframe. Pull Requests that do this are also welcome.
+
+The two relevant files for this are:
+* JavaNativeUtilsJni/docker/bsd/image/Dockerfile
+  * Either comment all lines relating to OpenBSD or update the links
+* JavaNativeUtilsJni/compile_docker_bsd.sh
+  * Remove the openbsd target from the make command if you want to disable building for openbsd.
+  * Comment the "exit 1" line that fails the build if the openbsd build failed if you want to disable building for openbsd.
 
 ### How to run foreign architecture tests using QEMU+docker+binfmt_misc
 To run non amd64 tests you may use the run bash script dockertest.sh in the repository root.
@@ -413,16 +438,16 @@ recompiling your program with a custom .jar of JavaNativeUtils. This is especial
 cannot compile JavaNativeUtils locally for whatever reason, since you can just compile a debug so/dll
 in a Virtual Machine and just "move" a single shared object file to your actual development machine.
 
-For debugging the windows native part I use gdbserver.exe to start the jvm. It should also be possible to attach 
+For debugging the Windows native part, I use gdbserver.exe to start the jvm. It should also be possible to attach 
 proprietary debuggers on windows or build a PDB for them by adjusting the makefile 
 and building a custom debug dll manually. I have never compiled JavaNativeUtils with anything 
-other than Clang or GCC, using for example the MSVC may work, 
+other than Clang or GCC, using, for example, the MSVC compiler may work, 
 but will probably require significant modification of the makefile.
 
 ## Will this library be obsoleted by the Java FFI Interface (Project Panama)
 Probably yes. The Java FFI Interface allows a Java developer to perform most of the actions
 that this library permits without writing C code. The only exception would be bypassing the "Reflection" checks. 
-It will however require a significant amount of Java code to be written by the developer 
+It will, however, require a significant amount of Java code to be written by the developer 
 to perform the same things this library does. 
 The main advantage of the FFI Interface vs this library is probably going to be that it can work with any .dll/.so file
 and on any CPU architecture.
@@ -453,3 +478,4 @@ I am considering to write an additional implementation of JavaNativeUtils
 that uses the Java FFI Interface instead of shared objects loaded via JNI to 
 achieve "most" tasks. There will be no implementation of the JVMNativeUtils as those
 functions are not provided by the Java FFI Interface.
+

@@ -352,9 +352,38 @@ public interface WindowsNativeUtil extends NativeUtil {
 
     /**
      * Returns a english string repesentation of the native error code
-     * This only works for all calls to methods that start with a capital case letter.
+     * This only works for error codes of all calls to methods that start with a capital case letter.
+     *
+     * This function has more internal logic than just plainly calling FormatMessageA.
+     * Should for some reason the english language not be available on the system, then this function
+     * will automatically fall back to a generic error message that contains the raw error code.
+     *
+     * @deprecated
+     * FormatMessageA(code, 1033) has the same effect as this call.
+     * This function may be eventually removed in a future version.
      */
+    @Deprecated
     String FormatMessageA(int lastError);
+
+    /**
+     * Returns a string repesentation of the native error code
+     * This only works for error codes of all calls to methods that start with a capital case letter.
+     *
+     * This function has more internal logic than just plainly calling FormatMessageA.
+     * Should for some reason the requested language or code not be available on the system, then this function
+     * will automatically fall back to a generic error message that contains the raw error code.
+     *
+     * This function is intended for use in a catch block and therefore doesn't throw an exception itself even for invalid inputs.
+     *
+     * @param dwLanguageId
+     * This parameter is usually created on the C side using the MAKELANGID makro.
+     * Commonly used values are:
+     * - 1033 for english
+     * - 0 for OS default
+     * See the microsoft language constants documentation for more information
+     *
+     */
+    String FormatMessageA(int dwMessageId, int dwLanguageId);
 
     String GetVolumePathNameW(String path) throws UnknownNativeErrorException;
 

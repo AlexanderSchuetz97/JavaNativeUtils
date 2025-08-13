@@ -6,7 +6,7 @@
 
     <groupId>eu.aschuetz</groupId>
     <artifactId>JavaNativeUtils</artifactId>
-    <version>4.8</version>
+    <version>4.9</version>
     <packaging>pom</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -110,6 +110,7 @@
                     <target>7</target>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 </project>

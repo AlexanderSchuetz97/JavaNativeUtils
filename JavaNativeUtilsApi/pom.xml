@@ -6,11 +6,12 @@
     <parent>
         <groupId>eu.aschuetz</groupId>
         <artifactId>JavaNativeUtils</artifactId>
-        <version>4.8</version>
+        <version>4.9</version>
     </parent>
 
     <artifactId>JavaNativeUtilsApi</artifactId>
     <packaging>jar</packaging>
+    <name>${project.groupId}:${project.artifactId}</name>
 
     <properties>
         <maven.compiler.source>7</maven.compiler.source>

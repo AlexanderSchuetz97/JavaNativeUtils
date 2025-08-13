@@ -6,7 +6,7 @@
     <parent>
         <groupId>eu.aschuetz</groupId>
         <artifactId>JavaNativeUtils</artifactId>
-        <version>4.8</version>
+        <version>4.9</version>
     </parent>
 
     <artifactId>JavaNativeUtilsTest</artifactId>

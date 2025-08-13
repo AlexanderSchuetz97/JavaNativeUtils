@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 #undef eu_aschuetz_nativeutils_impl_NativeLibraryLoaderHelper_EXPECTED_NATIVE_LIB_VERSION
-#define eu_aschuetz_nativeutils_impl_NativeLibraryLoaderHelper_EXPECTED_NATIVE_LIB_VERSION 11L
+#define eu_aschuetz_nativeutils_impl_NativeLibraryLoaderHelper_EXPECTED_NATIVE_LIB_VERSION 12L
 /*
  * Class:     eu_aschuetz_nativeutils_impl_NativeLibraryLoaderHelper
  * Method:    getNativeLibVersion

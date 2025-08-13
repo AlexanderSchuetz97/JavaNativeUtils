@@ -241,11 +241,11 @@ JNIEXPORT jstring JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil
- * Method:    FormatMessageA
- * Signature: (I)Ljava/lang/String;
+ * Method:    _FormatMessageA
+ * Signature: (II)Ljava/lang/String;
  */
-JNIEXPORT jstring JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil_FormatMessageA
-  (JNIEnv *, jobject, jint);
+JNIEXPORT jstring JNICALL Java_eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil__1FormatMessageA
+  (JNIEnv *, jclass, jint, jint);
 
 /*
  * Class:     eu_aschuetz_nativeutils_impl_JNIWindowsNativeUtil

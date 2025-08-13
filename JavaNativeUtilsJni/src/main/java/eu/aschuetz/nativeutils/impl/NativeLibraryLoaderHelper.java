@@ -38,7 +38,7 @@ import java.util.UUID;
  */
 public class NativeLibraryLoaderHelper {
 
-    private static final int EXPECTED_NATIVE_LIB_VERSION = 11;
+    private static final int EXPECTED_NATIVE_LIB_VERSION = 12;
 
     /**
      * Flag to indicate if already loaded.
